@@ -1,0 +1,9 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "Rbiomass",
+  author   = c(person("Kea Rutherford"), person("John Battles")),
+  organization  = "Battles Lab: Forest Ecologu and Ecosystem Dynamics",
+  address = "Berkeley, CA",
+  year = 2023,
+  url = "https://github.com/kearutherford/Rbiomass"
+)

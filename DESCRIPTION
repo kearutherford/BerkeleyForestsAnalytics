@@ -1,12 +1,19 @@
 Package: Rbiomass
-Title: What the Package Does (One Line, Title Case)
+Title: Estimate Above-ground Stem, Bark, and Branch Tree Biomass
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Kea", "Rutherford", email = "krutherford@berkeley.edu", role = c("aut", "cre"))
+Description: Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations
+    to estimate above-ground stem, bark, and branch tree biomass. The package 
+    uses the California equation set and should not be used for data from other regions.
+URL: https://github.com/kearutherford/Rbiomass
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

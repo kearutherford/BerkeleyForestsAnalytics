@@ -20,6 +20,16 @@
 #' \item total_bio_kg: biomass of tree (stem + bark + branches) in kilograms
 #' }
 #'
+#'@examples
+#'TreeBiomass(data = demo_data,
+#'            site = "Forest",
+#'            plot = "Plot_id",
+#'            species = "SPP",
+#'            dbh = "DBH_CM",
+#'            ht = "HT_M",
+#'            sp_codes = "4letter",
+#'            units = "metric")
+#'
 #' @export
 
 TreeBiomass <- function(data, site, plot, species, dbh, ht, sp_codes = "4letter", units = "metric") {

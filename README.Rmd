@@ -64,12 +64,12 @@ The original dataframe will be returned, with four new columns:
 
 ## Demonstration
 
-```r
+```{r}
 # investigate input dataframe
-demo_data
+Rbiomass::demo_data
 ```
 
-```r
+```{r}
 # call the TreeBiomass() function in the Rbiomass package
 tree_bio_demo <- TreeBiomass(data = demo_data,
                              site = "Forest",
