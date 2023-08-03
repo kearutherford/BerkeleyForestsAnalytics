@@ -1,6 +1,6 @@
 Package: Rbiomass
 Title: Estimate Above-ground Stem, Bark, and Branch Tree Biomass
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Kea", "Rutherford", email = "krutherford@berkeley.edu", role = c("aut", "cre"))
 Description: Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations

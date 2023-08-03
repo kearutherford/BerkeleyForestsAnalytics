@@ -18,7 +18,9 @@ To install the `Rbiomass` package from GitHub:
 # install and load devtools
 install.packages("devtools")
 library(devtools)
+```
 
+```r
 # install and load Rbiomass
 devtools::install_github('kearutherford/Rbiomass')
 library(Rbiomass)
@@ -64,9 +66,13 @@ The original dataframe will be returned, with four new columns:
 
 ## Demonstration
 
+```{r, include = FALSE}
+library(Rbiomass)
+```
+
 ```{r}
 # investigate input dataframe
-Rbiomass::demo_data
+demo_data
 ```
 
 ```{r}

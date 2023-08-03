@@ -14,7 +14,9 @@ To install the `Rbiomass` package from GitHub:
 # install and load devtools
 install.packages("devtools")
 library(devtools)
+```
 
+``` r
 # install and load Rbiomass
 devtools::install_github('kearutherford/Rbiomass')
 library(Rbiomass)
@@ -90,6 +92,13 @@ equivalent to the `stem_bio_kg`.*
 demo_data
 ```
 
+    ##   Forest Plot_id  SPP Status DBH_CM HT_M
+    ## 1   SEKI       1 CADE      L   10.3  5.1
+    ## 2   SEKI       2 PIPO      D   44.7 26.4
+    ## 3   SEKI       3 QUKE      L   19.1  8.0
+    ## 4   SEKI       4 ABCO      L   32.8 23.3
+    ## 5   SEKI       5 PSME      L   13.8 11.1
+
 ``` r
 # call the TreeBiomass() function in the Rbiomass package
 tree_bio_demo <- TreeBiomass(data = demo_data,
@@ -104,19 +113,32 @@ tree_bio_demo <- TreeBiomass(data = demo_data,
 tree_bio_demo
 ```
 
+    ##   Forest Plot_id  SPP Status DBH_CM HT_M stem_bio_kg bark_bio_kg branch_bio_kg
+    ## 1   SEKI       1 CADE      L   10.3  5.1       24.23        1.30          2.26
+    ## 2   SEKI       2 PIPO      D   44.7 26.4      573.15       71.73        159.58
+    ## 3   SEKI       3 QUKE      L   19.1  8.0       87.99          NA            NA
+    ## 4   SEKI       4 ABCO      L   32.8 23.3      260.42      111.93         44.08
+    ## 5   SEKI       5 PSME      L   13.8 11.1       42.81        7.91          6.81
+    ##   total_bio_kg
+    ## 1        27.79
+    ## 2       804.46
+    ## 3        87.99
+    ## 4       416.43
+    ## 5        57.53
+
 ### Notice in the output dataframe:
 
--   QUKE (California black oak) has `NA` `bark_bio_kg` and
-    `branch_bio_kg`. For some hardwood species, the `stem_bio_kg`
-    includes bark and branch biomass. In these cases, bark and branch
-    biomass are not available as separate components of total biomass.
+- QUKE (California black oak) has `NA` `bark_bio_kg` and
+  `branch_bio_kg`. For some hardwood species, the `stem_bio_kg` includes
+  bark and branch biomass. In these cases, bark and branch biomass are
+  not available as separate components of total biomass.
 
--   The column names of the input dataframe will remain intact in the
-    output dataframe.
+- The column names of the input dataframe will remain intact in the
+  output dataframe.
 
--   The `status` column, which is not directly used in the biomass
-    calculations, remains in the output dataframe. Any additional
-    columns in the input dataframe will remain in the output dataframe.
+- The `status` column, which is not directly used in the biomass
+  calculations, remains in the output dataframe. Any additional columns
+  in the input dataframe will remain in the output dataframe.
 
 ## Species code tables
 
