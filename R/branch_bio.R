@@ -11,7 +11,22 @@ BranchBiomass <- function(tree_data) {
     # Part I: assign biomass equation numbers
     ############################################################################
 
+    # Trees with NA species codes will have NA biomass estimates
     if(is.na(tree_data$species[i])) {
+
+      tree_data$branch_eq[i] = "E0"
+
+    # Trees with DBH and/or height values outside of allometric equation cutoffs
+    # will have NA biomass estimates
+    } else if (tree_data$status[i] == 1 & tree_data$dbh_in[i] < 1.0) {
+
+      tree_data$branch_eq[i] = "E0"
+
+    } else if (tree_data$status[i] == 0 & tree_data$dbh_in[i] < 5.0) {
+
+      tree_data$branch_eq[i] = "E0"
+
+    } else if (tree_data$ht_ft[i] < 4.5) {
 
       tree_data$branch_eq[i] = "E0"
 
@@ -172,7 +187,7 @@ BranchBiomass <- function(tree_data) {
 
     } else {
 
-      tree_data$total_bio_kg[i] <- round((sum(tree_data$stem_bio_kg[i], tree_data$bark_bio_kg[i], tree_data$branch_bio_kg[i], na.rm = TRUE)),2)
+      tree_data$total_bio_kg[i] <- sum(tree_data$stem_bio_kg[i], tree_data$bark_bio_kg[i], tree_data$branch_bio_kg[i], na.rm = TRUE)
 
     }
 

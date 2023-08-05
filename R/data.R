@@ -30,10 +30,10 @@
 sp_code_names <- data.frame(
   letter = c("PSME", "PIJE", "PIPO", "PISA", "TSHE", "TOCA", "TABR", "PICO", "UNCO", "ABMA", "CADE", "PILA",
              "PIMO", "JUOC", "ABCO", "SESE", "SEGI", "CONU", "ALRH", "POTR", "UMCA", "NODE", "ACMA", "QUKE",
-             "ARME", "QUCH", "QUAG", "CHCH", "ABPR", "ABGR", "TSME", "UNHA", "SASP", NA),
+             "ARME", "QUCH", "QUAG", "CHCH", "ABPR", "ABGR", "TSME", "UNHA", "UNTR", "SASP", NA),
   fia = c("202", "116", "122", "127", "263", "251", "231", "108", "298", "20", "81", "117", "119", "64", "15",
           "211", "212", "492", "352", "746", "981", "631", "312", "818", "361", "805", "801", "431", "22", "17",
-          "264", "998", "920", NA)
+          "264", "998", "999", "920", NA)
 )
 
 

@@ -1,4 +1,4 @@
-ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, sp_codes_val, units_val) {
+ValidateData <- function(data_val, site_val, plot_val, ef_val, status_val, sp_val, dbh_val, ht_val, sp_codes_val, units_val) {
 
   # coerce tibble inputs into data.frame
   data_val <- as.data.frame(data_val)
@@ -14,6 +14,14 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
 
   if(!(plot_val %in% colnames(data_val))) {
     stop('There is no column named "', plot_val, '" in the provided dataframe.')
+  }
+
+  if(!(ef_val %in% colnames(data_val))) {
+    stop('There is no column named "', ef_val, '" in the provided dataframe.')
+  }
+
+  if(!(status_val %in% colnames(data_val))) {
+    stop('There is no column named "', status_val, '" in the provided dataframe.')
   }
 
   if(!(sp_val %in% colnames(data_val))) {
@@ -32,6 +40,11 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
   ###########################################################
   # Check that column classes are as expected
   ###########################################################
+
+  if(!is.numeric(data_val[[ef_val]])) {
+    stop('The parameter sph requires a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val[[ef_val]]))
+  }
 
   if(!is.numeric(data_val[[dbh_val]])) {
     stop('The parameter dbh requires a numerical variable.\n',
@@ -62,6 +75,24 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
 
 
   ###########################################################
+  # Check that status is as expected
+  ###########################################################
+
+  data_val[[status_val]] <- as.factor(data_val[[status_val]]) # coerce status_val into factor
+
+  if(!all(is.element(data_val[[status_val]],
+                     c("0","1")))) {
+
+    unrecognized_status <- paste0(unique(data_val[!is.element(data_val[[status_val]],
+                                                  c("0", "1")), status_val]),
+                           sep = " ")
+
+    stop('Status must be 0 or 1!\n',
+         'Unrecognized status codes: ', unrecognized_status)
+  }
+
+
+  ###########################################################
   # Check that species codes are as expected
   ###########################################################
 
@@ -86,12 +117,12 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
     if(!all(is.element(data_val[[sp_val]],
                        sp_code_names$letter))) {
 
-      unrecognized <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
-                                                  sp_code_names$letter), sp_val]),
+      unrecognized_sp <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
+                                                sp_code_names$letter), sp_val]),
                              sep = " ")
 
       stop('Not all species codes were recognized!\n',
-           'Unrecognized codes: ', unrecognized)
+           'Unrecognized codes: ', unrecognized_sp)
     }
 
   } else if (sp_codes_val == "fia") {
@@ -105,12 +136,12 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
     if(!all(is.element(data_val[[sp_val]],
                        sp_code_names$fia))) {
 
-      unrecognized <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
-                                                         sp_code_names$fia), sp_val]),
+      unrecognized_sp <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
+                                                sp_code_names$fia), sp_val]),
                              sep = " ")
 
       stop('Not all species codes were recognized!\n',
-           'Unrecognized codes: ', unrecognized)
+           'Unrecognized codes: ', unrecognized_sp)
     }
   }
 
@@ -135,39 +166,61 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
   }
 
   # Check for allometric equation cutoffs --------------------------------------
+
+  live_trees <- subset(data_val, data_val[[status_val]] == 1)
+  dead_trees <- subset(data_val, data_val[[status_val]] == 0)
+
   if (units_val == "metric") {
 
-    if (min(data_val[[dbh_val]], na.rm = TRUE) < 2.5) {
-      warning('The allometric equations are for trees with DBH >= 2.5cm.\n',
-              'You inputted trees with DBH < 2.5cm. These trees were filtered out.\n',
-              ' \n')
+    if(nrow(live_trees) > 0) {
+
+      if (min(live_trees[[dbh_val]], na.rm = TRUE) < 2.5) {
+          warning('The allometric equations are for live trees with DBH >= 2.5cm.\n',
+                  'You inputted live trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
+                  ' \n')
+      }
+    }
+
+    if(nrow(dead_trees) > 0) {
+
+      if (min(dead_trees[[dbh_val]], na.rm = TRUE) < 12.7) {
+          warning('The allometric equations are for dead trees with DBH >= 12.7cm.\n',
+                  'You inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n',
+                  ' \n')
+      }
     }
 
     if (min(data_val[[ht_val]], na.rm = TRUE) < 1.37) {
-      warning('The allometric equations are for trees with height >= 1.37m.\n',
-              'You inputted trees with height < 1.37m. These trees were filtered out.\n',
-              ' \n')
+        warning('The allometric equations are for trees with height >= 1.37m.\n',
+                'You inputted trees with height < 1.37m. These trees will have NA biomass estimates.\n',
+                ' \n')
     }
-
-    data_filter_dbh <- subset(data_val, data_val[[dbh_val]] >= 2.5 | is.na(data_val[[dbh_val]]))
-    data_filter <- subset(data_filter_dbh, data_filter_dbh[[ht_val]] >= 1.37 | is.na(data_filter_dbh[[ht_val]]))
 
   } else if (units_val == "imperial") {
 
-    if (min(data_val[[dbh_val]], na.rm = TRUE) < 1.0) {
-      warning('The allometric equations are for trees with DBH >= 1.0in.\n',
-              'You inputted trees with DBH < 1.0in. These trees were filtered out.\n',
-              ' \n')
+    if(nrow(live_trees) > 0) {
+
+      if (min(live_trees[[dbh_val]], na.rm = TRUE) < 1.0) {
+          warning('The allometric equations are for live trees with DBH >= 1.0in.\n',
+                  'You inputted live trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
+                  ' \n')
+      }
+    }
+
+    if(nrow(dead_trees) > 0) {
+
+      if (min(dead_trees[[dbh_val]], na.rm = TRUE) < 5.0) {
+        warning('The allometric equations are for dead trees with DBH >= 5.0in.\n',
+                'You inputted dead trees with DBH < 5.0in. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
     }
 
     if (min(data_val[[ht_val]], na.rm = TRUE) < 4.5) {
       warning('The allometric equations are for trees with height >= 4.5ft.\n',
-              'You inputted trees with height < 4.5ft. These trees were filtered out.\n',
+              'You inputted trees with height < 4.5ft. These trees will have NA biomass estimates.\n',
               ' \n')
     }
-
-    data_filter_dbh <- subset(data_val, data_val[[dbh_val]] >= 1.0 | is.na(data_val[[dbh_val]]))
-    data_filter <- subset(data_filter_dbh, data_filter_dbh[[ht_val]] >= 4.5 | is.na(data_filter_dbh[[ht_val]]))
 
   }
 
@@ -178,19 +231,19 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
 
   if (units_val == "metric") {
 
-    data_filter$dbh_in <- data_filter[[dbh_val]]/2.54
-    data_filter$ht_ft <- data_filter[[ht_val]]*3.281
+    data_val$dbh_in <- data_val[[dbh_val]]/2.54
+    data_val$ht_ft <- data_val[[ht_val]]*3.281
 
-    colnames(data_filter)[which(names(data_filter) == colnames(data_filter[dbh_val]))] <- "dbh_cm"
-    colnames(data_filter)[which(names(data_filter) == colnames(data_filter[ht_val]))] <- "ht_m"
+    colnames(data_val)[which(names(data_val) == colnames(data_val[dbh_val]))] <- "dbh_cm"
+    colnames(data_val)[which(names(data_val) == colnames(data_val[ht_val]))] <- "ht_m"
 
   } else if (units_val == "imperial") {
 
-    data_filter$dbh_cm <- data_filter[[dbh_val]]*2.54
-    data_filter$ht_m <- data_filter[[ht_val]]/3.281
+    data_val$dbh_cm <- data_val[[dbh_val]]*2.54
+    data_val$ht_m <- data_val[[ht_val]]/3.281
 
-    colnames(data_filter)[which(names(data_filter) == colnames(data_filter[dbh_val]))] <- "dbh_in"
-    colnames(data_filter)[which(names(data_filter) == colnames(data_filter[ht_val]))] <- "ht_ft"
+    colnames(data_val)[which(names(data_val) == colnames(data_val[dbh_val]))] <- "dbh_in"
+    colnames(data_val)[which(names(data_val) == colnames(data_val[ht_val]))] <- "ht_ft"
 
   }
 
@@ -200,14 +253,16 @@ ValidateData <- function(data_val, site_val, plot_val, sp_val, dbh_val, ht_val, 
   ###########################################################
 
   # coerce site and plot into characters ---------------------------------------
-  data_filter[[site_val]] <- as.character(data_filter[[site_val]])
-  data_filter[[plot_val]] <- as.character(data_filter[[plot_val]])
+  data_val[[site_val]] <- as.character(data_val[[site_val]])
+  data_val[[plot_val]] <- as.character(data_val[[plot_val]])
 
   # rename other columns to use moving forward ---------------------------------
-  colnames(data_filter)[which(names(data_filter) == colnames(data_filter[site_val]))] <- "site"
-  colnames(data_filter)[which(names(data_filter) == colnames(data_filter[plot_val]))] <- "plot"
-  colnames(data_filter)[which(names(data_filter) == colnames(data_filter[sp_val]))] <- "species"
+  colnames(data_val)[which(names(data_val) == colnames(data_val[site_val]))] <- "site"
+  colnames(data_val)[which(names(data_val) == colnames(data_val[plot_val]))] <- "plot"
+  colnames(data_val)[which(names(data_val) == colnames(data_val[ef_val]))] <- "ef"
+  colnames(data_val)[which(names(data_val) == colnames(data_val[status_val]))] <- "status"
+  colnames(data_val)[which(names(data_val) == colnames(data_val[sp_val]))] <- "species"
 
-  return(data_filter)
+  return(data_val)
 
 }

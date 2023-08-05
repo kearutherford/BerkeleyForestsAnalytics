@@ -1,4 +1,4 @@
-Final <- function(data_1, data_2, site_orig, plot_orig, sp_orig, dbh_orig, ht_orig, units_orig) {
+Final <- function(data_1, data_2, site_orig, plot_orig, ef_orig, status_orig, sp_orig, dbh_orig, ht_orig, units_orig) {
 
   if (units_orig == "metric") {
 
@@ -16,6 +16,8 @@ Final <- function(data_1, data_2, site_orig, plot_orig, sp_orig, dbh_orig, ht_or
 
   names(final_df)[names(final_df) == "site"] <- colnames(data_1[site_orig])
   names(final_df)[names(final_df) == "plot"] <- colnames(data_1[plot_orig])
+  names(final_df)[names(final_df) == "ef"] <- colnames(data_1[ef_orig])
+  names(final_df)[names(final_df) == "status"] <- colnames(data_1[status_orig])
   names(final_df)[names(final_df) == "species"] <- colnames(data_1[sp_orig])
 
   rownames(final_df) <- NULL
