@@ -9,7 +9,8 @@ StemBiomass <- function(tree_data) {
   for (i in 1:n) {
 
     # Trees with NA species codes or status codes will have NA biomass estimates
-    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i])) {
+    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i]) |
+       is.na(tree_data$dbh_in[i]) | is.na(tree_data$ht_ft[i])) {
 
       tree_data$vol_eq[i] = "E0"
       tree_data$eq_group[i] = "G2"

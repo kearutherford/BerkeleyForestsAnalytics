@@ -12,7 +12,8 @@ BranchBiomass <- function(tree_data) {
     ############################################################################
 
     # Trees with NA species codes or status codes will have NA biomass estimates
-    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i])) {
+    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i]) |
+       is.na(tree_data$dbh_in[i]) | is.na(tree_data$ht_ft[i])) {
 
       tree_data$branch_eq[i] = "E0"
 
