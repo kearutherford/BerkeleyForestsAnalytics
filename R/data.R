@@ -42,10 +42,9 @@ sp_code_names <- data.frame(
 #####################################################################
 
 good_trees <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
-  Plot_id = c(1,2,3,4,5),
+  Plot = c(1,2,3,4,5),
+  Live = c(1, 1, 1, 1, 1),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
-  Status = c("L", "D", "L", "L", "L"),
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8),
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1)
 )
@@ -53,8 +52,7 @@ good_trees <- data.frame(
 
 bad_trees <- data.frame(
 
-  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
-  Plot_id = c(1,2,3,4,5),
+  Live = c(1, 1, 1, 1, 1),
 
   SPP4 = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
   SPP4_NA = c("CADE", NA, "QUKE", "ABCO", "PSME"), # NA value

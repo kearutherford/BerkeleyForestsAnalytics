@@ -10,8 +10,8 @@ BarkBiomass <- function(tree_data) {
     # Part I: assign biomass equation numbers
     ############################################################################
 
-    # Trees with NA species codes will have NA biomass estimates
-    if(is.na(tree_data$species[i])) {
+    # Trees with NA species codes or status codes will have NA biomass estimates
+    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i])) {
 
       tree_data$bark_eq[i] = "E0"
 
@@ -205,6 +205,7 @@ BarkBiomass <- function(tree_data) {
 
   }
 
+  tree_data$bark_bio_tons <- round((tree_data$bark_bio_kg*0.0011023),2)
   tree_data$bark_bio_kg <- round(tree_data$bark_bio_kg,2)
   tree_data_return <- subset(tree_data, select = -c(bark_eq))
 

@@ -8,8 +8,8 @@ StemBiomass <- function(tree_data) {
 
   for (i in 1:n) {
 
-    # Trees with NA species codes will have NA biomass estimates
-    if(is.na(tree_data$species[i])) {
+    # Trees with NA species codes or status codes will have NA biomass estimates
+    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i])) {
 
       tree_data$vol_eq[i] = "E0"
       tree_data$eq_group[i] = "G2"
@@ -554,10 +554,11 @@ StemBiomass <- function(tree_data) {
 
   }
 
-  tree_data$stem_bio_tons <- ((tree_data$CVTS*tree_data$density)/2000)
-  tree_data$stem_bio_kg <- round(tree_data$stem_bio_tons*907.18474,2)
+  tree_data$stem_bio <- ((tree_data$CVTS*tree_data$density)/2000)
+  tree_data$stem_bio_tons <- round(tree_data$stem_bio,2)
+  tree_data$stem_bio_kg <- round(tree_data$stem_bio*907.18474,2)
 
-  tree_data_return <- subset(tree_data, select = -c(vol_eq, eq_group, CVTS, stem_bio_tons))
+  tree_data_return <- subset(tree_data, select = -c(vol_eq, eq_group, CVTS, stem_bio))
 
   return(tree_data_return)
 

@@ -2,14 +2,13 @@
 test_that("Data frames have expected column names", {
 
   expect_named((TreeBiomass(data = good_trees,
-                            site = "Forest",
-                            plot = "Plot_id",
+                            status = "Live",
                             sp = "SPP",
                             dbh = "DBH_CM",
                             ht = "HT_M",
                             sp_codes = "4letter",
                             units = "metric")),
-               c("Forest", "Plot_id", "SPP", "Status", "DBH_CM", "HT_M", "stem_bio_kg", "bark_bio_kg", "branch_bio_kg", "total_bio_kg"))
+               c("Plot", "Live", "SPP", "DBH_CM", "HT_M", "stem_bio_kg", "bark_bio_kg", "branch_bio_kg", "total_bio_kg"))
 
 })
 
@@ -21,8 +20,7 @@ test_that("Package and hand calculations match", {
 
   # 4letter and metric --------------------------
   results_by_package1 <- TreeBiomass(data = results_by_hand,
-                                     site = "SITE",
-                                     plot = "PLOT",
+                                     status = "Live",
                                      sp = "SP4",
                                      dbh = "DBH_CM",
                                      ht = "HT_M",
@@ -43,8 +41,7 @@ test_that("Package and hand calculations match", {
 
   # fia and metric -----------------------------
   results_by_package2 <- TreeBiomass(data = results_by_hand,
-                                     site = "SITE",
-                                     plot = "PLOT",
+                                     status = "Live",
                                      sp = "FIA",
                                      dbh = "DBH_CM",
                                      ht = "HT_M",
@@ -65,8 +62,7 @@ test_that("Package and hand calculations match", {
 
   # 4letter and imperial  -----------------------
   results_by_package3 <- TreeBiomass(data = results_by_hand,
-                                     site = "SITE",
-                                     plot = "PLOT",
+                                     status = "Live",
                                      sp = "SP4",
                                      dbh = "DBH_IN",
                                      ht = "HT_FT",

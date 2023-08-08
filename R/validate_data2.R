@@ -1,4 +1,4 @@
-ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes_val, units_val) {
+ValidateData2 <- function(data_val, site_val, plot_val) {
 
   # coerce tibble inputs into data.frame
   data_val <- as.data.frame(data_val)
@@ -74,8 +74,8 @@ ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes
                      c("0","1", NA)))) {
 
     unrecognized_status <- paste0(unique(data_val[!is.element(data_val[[status_val]],
-                                                  c("0", "1", NA)), status_val]),
-                           sep = " ")
+                                                              c("0", "1", NA)), status_val]),
+                                  sep = " ")
 
     stop('Status must be 0 or 1!\n',
          'Unrecognized status codes: ', unrecognized_status)
@@ -108,8 +108,8 @@ ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes
                        sp_code_names$letter))) {
 
       unrecognized_sp <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
-                                                sp_code_names$letter), sp_val]),
-                             sep = " ")
+                                                            sp_code_names$letter), sp_val]),
+                                sep = " ")
 
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
@@ -127,8 +127,8 @@ ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes
                        sp_code_names$fia))) {
 
       unrecognized_sp <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
-                                                sp_code_names$fia), sp_val]),
-                             sep = " ")
+                                                            sp_code_names$fia), sp_val]),
+                                sep = " ")
 
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
@@ -165,25 +165,25 @@ ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes
     if(nrow(live_trees) > 0) {
 
       if (min(live_trees[[dbh_val]], na.rm = TRUE) < 2.5) {
-          warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\n',
-                  'You inputted live trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
-                  ' \n')
+        warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\n',
+                'You inputted live trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
+                ' \n')
       }
     }
 
     if(nrow(dead_trees) > 0) {
 
       if (min(dead_trees[[dbh_val]], na.rm = TRUE) < 12.7) {
-          warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.',
-                  'You inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n',
-                  ' \n')
+        warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.',
+                'You inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n',
+                ' \n')
       }
     }
 
     if (min(data_val[[ht_val]], na.rm = TRUE) < 1.37) {
-        warning('The allometric equations are for trees with height >= 1.37m.\n',
-                'You inputted trees with height < 1.37m. These trees will have NA biomass estimates.\n',
-                ' \n')
+      warning('The allometric equations are for trees with height >= 1.37m.\n',
+              'You inputted trees with height < 1.37m. These trees will have NA biomass estimates.\n',
+              ' \n')
     }
 
   } else if (units_val == "imperial") {
@@ -191,9 +191,9 @@ ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes
     if(nrow(live_trees) > 0) {
 
       if (min(live_trees[[dbh_val]], na.rm = TRUE) < 1.0) {
-          warning('The allometric equations are for live trees with DBH >= 1.0in and dead trees with DBH >= 5.0in.\n',
-                  'You inputted live trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
-                  ' \n')
+        warning('The allometric equations are for live trees with DBH >= 1.0in and dead trees with DBH >= 5.0in.\n',
+                'You inputted live trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
+                ' \n')
       }
     }
 
@@ -249,31 +249,3 @@ ValidateData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_codes
   return(data_val)
 
 }
-
-
-Final <- function(data_1, data_2, status_orig, sp_orig, dbh_orig, ht_orig, units_orig) {
-
-  if (units_orig == "metric") {
-
-    final_df <- subset(data_2, select = -c(dbh_in, ht_ft, stem_bio_tons, bark_bio_tons, branch_bio_tons, total_bio_tons))
-    names(final_df)[names(final_df) == "dbh_cm"] <- colnames(data_1[dbh_orig])
-    names(final_df)[names(final_df) == "ht_m"] <- colnames(data_1[ht_orig])
-
-  } else if (units_orig == "imperial") {
-
-    final_df <- subset(data_2, select = -c(dbh_cm, ht_m, stem_bio_kg, bark_bio_kg, branch_bio_kg, total_bio_kg))
-    names(final_df)[names(final_df) == "dbh_in"] <- colnames(data_1[dbh_orig])
-    names(final_df)[names(final_df) == "ht_ft"] <- colnames(data_1[ht_orig])
-
-  }
-
-  names(final_df)[names(final_df) == "status"] <- colnames(data_1[status_orig])
-  names(final_df)[names(final_df) == "species"] <- colnames(data_1[sp_orig])
-
-  rownames(final_df) <- NULL
-
-  return(final_df)
-
-}
-
-utils::globalVariables(c("bark_eq", "branch_eq", "density", "dbh_in", "ht_ft", "dbh_cm", "ht_m", "vol_eq", "eq_group", "CVTS", "stem_bio_tons"))

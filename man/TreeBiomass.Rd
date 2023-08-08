@@ -6,8 +6,7 @@
 \usage{
 TreeBiomass(
   data,
-  site,
-  plot,
+  status,
   species,
   dbh,
   ht,
@@ -18,9 +17,7 @@ TreeBiomass(
 \arguments{
 \item{data}{A dataframe or tibble. Each row must be an observation of an individual tree.}
 
-\item{site}{Must be a variable (column) in the provided dataframe or tibble. Decscribes the broader location or forest where the data were collected. The class of this variable will be coerced to character.}
-
-\item{plot}{Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.}
+\item{status}{Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.}
 
 \item{species}{Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.}
 
@@ -46,8 +43,7 @@ Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate 
 }
 \examples{
 TreeBiomass(data = demo_data,
-           site = "Forest",
-           plot = "Plot_id",
+           status = "Live",
            species = "SPP",
            dbh = "DBH_CM",
            ht = "HT_M",

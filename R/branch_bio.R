@@ -11,8 +11,8 @@ BranchBiomass <- function(tree_data) {
     # Part I: assign biomass equation numbers
     ############################################################################
 
-    # Trees with NA species codes will have NA biomass estimates
-    if(is.na(tree_data$species[i])) {
+    # Trees with NA species codes or status codes will have NA biomass estimates
+    if(is.na(tree_data$species[i]) | is.na(tree_data$status[i])) {
 
       tree_data$branch_eq[i] = "E0"
 
@@ -179,15 +179,18 @@ BranchBiomass <- function(tree_data) {
     # Part III: calculate total biomass
     ############################################################################
 
+    tree_data$branch_bio_tons[i] <- round((tree_data$branch_bio_kg[i]*0.0011023),2)
     tree_data$branch_bio_kg[i] <- round(tree_data$branch_bio_kg[i],2)
 
     if (is.na(tree_data$stem_bio_kg[i]) & is.na(tree_data$bark_bio_kg[i]) & is.na(tree_data$branch_bio_kg[i])) {
 
       tree_data$total_bio_kg[i] <- NA
+      tree_data$total_bio_tons[i] <- NA
 
     } else {
 
       tree_data$total_bio_kg[i] <- sum(tree_data$stem_bio_kg[i], tree_data$bark_bio_kg[i], tree_data$branch_bio_kg[i], na.rm = TRUE)
+      tree_data$total_bio_tons[i] <- sum(tree_data$stem_bio_tons[i], tree_data$bark_bio_tons[i], tree_data$branch_bio_tons[i], na.rm = TRUE)
 
     }
 
