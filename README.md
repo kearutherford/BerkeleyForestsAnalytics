@@ -22,11 +22,9 @@ devtools::install_github('kearutherford/Rbiomass')
 library(Rbiomass)
 ```
 
-## Using Rbiomass
+## `TreeBiomass()`
 
-### `TreeBiomass()`
-
-**Inputs**
+### Inputs
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
@@ -62,7 +60,7 @@ library(Rbiomass)
     (kilograms) or imperial (US tons) units. Must be set to either
     “metric” or “imperial”. The default is set to “metric”.
 
-**Outputs**
+### Outputs
 
 The original dataframe will be returned, with four new columns:
 
@@ -84,7 +82,7 @@ available as separate components of total biomass. `bark_bio` and
 `branch_bio` will appear as `NA` and the `total_bio` will be equivalent
 to the `stem_bio`.*
 
-**Demonstration**
+### Demonstration
 
 ``` r
 # investigate input dataframe
@@ -136,7 +134,7 @@ tree_bio_demo
     ## 8         15.06        54.27
     ## 9          9.09        68.41
 
-**Notice in the output dataframe:**
+### Notice in the output dataframe:
 
 -   QUKE (California black oak) has `NA` `bark_bio_kg` and
     `branch_bio_kg`. For some hardwood species, the `stem_bio_kg`
@@ -151,9 +149,9 @@ tree_bio_demo
     Any additional columns in the input dataframe will remain in the
     output dataframe.
 
-### `SummaryBiomass()`
+## `SummaryBiomass()`
 
-**Inputs**
+### Inputs
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
@@ -208,7 +206,7 @@ tree_bio_demo
     by plot as well as species. Must be set to either “by_plot” or
     “by_species.” The default is set to “by_plot”.
 
-**Outputs**
+### Outputs
 
 A dataframe with the following columns:
 
@@ -224,7 +222,7 @@ A dataframe with the following columns:
 5.  `dead_Mg_ha` (or `dead_ton_ac`): above-ground dead tree biomass in
     megagrams per hectare (or US tons per acre)
 
-**Demonstrations**
+### Demonstration of results summarized by plot
 
 ``` r
 # investigate input dataframe
@@ -263,6 +261,8 @@ sum_bio_demo1
     ## 2 SEKI    2      26.34       0.00
     ## 3 YOMI    1       6.16       0.00
     ## 4 YOMI    2      28.60       6.13
+
+### Demonstration of results summarized by plot as well as species
 
 ``` r
 # call the SummaryBiomass() function in the Rbiomass package
