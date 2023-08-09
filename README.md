@@ -24,86 +24,88 @@ library(Rbiomass)
 
 ## Using Rbiomass
 
-The top-level function in the `Rbiomass` package is `TreeBiomass()`,
-which takes the following inputs:
+### `TreeBiomass()`
 
-### Inputs
+**Inputs**
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
 
-2.  `site` Must be a variable (column) in the provided dataframe or
-    tibble. Decscribes the broader location or forest where the data
-    were collected. The class of this variable will be coerced to
-    character.
+2.  `status` Must be a variable (column) in the provided dataframe or
+    tibble. Specifies whether the individual tree is alive (1) or dead
+    (0). The class of this variable will be coerced to factor.
 
-3.  `plot` Must be a variable (column) in the provided dataframe or
-    tibble. Identifies the plot in which the individual tree was
-    measured. The class of this variable will be coerced to character.
-
-4.  `species` Must be a variable (column) in the provided dataframe or
+3.  `species` Must be a variable (column) in the provided dataframe or
     tibble. Specifies the species of the individual tree. Must follow
     four-letter species code or FIA naming conventions (see species code
     tables below). The class of this variable will be coerced to
     character.
 
-5.  `dbh` Must be a **numeric** variable (column) in the provided
+4.  `dbh` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the diameter at breast height (DBH) of
     the individual tree in either centimeters or inches.
 
-6.  `ht` Must be a **numeric** variable (column) in the provided
+5.  `ht` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the height of the individual tree in
     either meters or feet.
 
-7.  `sp_codes` Not a variable (column) in the provided dataframe or
+6.  `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
     four-letter code or FIA naming convention (see species code tables
     below). Must be set to either “4letter” or “fia”. The default is set
     to “4letter”.
 
-8.  `units` Not a variable (column) in the provided dataframe or tibble.
+7.  `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies whether the dbh and ht variables were measured using
     metric (centimeters and meters) or imperial (inches and feet) units.
-    Must be set to either “metric” or “imperial”. The default is set to
-    “metric”.
+    Also specifies whether the results will be given in metric
+    (kilograms) or imperial (US tons) units. Must be set to either
+    “metric” or “imperial”. The default is set to “metric”.
 
-### Outputs
+**Outputs**
 
 The original dataframe will be returned, with four new columns:
 
-1.  `stem_bio_kg` biomass of stem (or bole) in kilograms
+1.  `stem_bio_kg` (or `stem_bio_tons`): biomass of stem in kilograms (or
+    US tons)
 
-2.  `bark_bio_kg` biomass of bark in kilograms
+2.  `bark_bio_kg` (or `bark_bio_tons`): biomass of bark in kilograms (or
+    US tons)
 
-3.  `branch_bio_kg` biomass of branches in kilograms
+3.  `branch_bio_kg` (or `branch_bio_tons`): biomass of branches in
+    kilograms (or US tons)
 
-4.  `total_bio_kg` biomass of tree (stem + bark + branches) in kilograms
+4.  `total_bio_kg` (or `total_bio_kg`): biomass of tree (stem + bark +
+    branches) in kilograms (or US tons)
 
-*Important note: For some hardwood species, the `stem_bio_kg` includes
-bark and branch biomass. In these cases, bark and branch biomass are not
-available as separate components of total biomass. `bark_bio_kg` and
-`branch_bio_kg` will appear as `NA` and the `total_bio_kg` will be
-equivalent to the `stem_bio_kg`.*
+*Important note: For some hardwood species, the `stem_bio` includes bark
+and branch biomass. In these cases, bark and branch biomass are not
+available as separate components of total biomass. `bark_bio` and
+`branch_bio` will appear as `NA` and the `total_bio` will be equivalent
+to the `stem_bio`.*
 
-## Demonstration
+**Demonstration**
 
 ``` r
 # investigate input dataframe
 demo_data
 ```
 
-    ##   Forest Plot_id  SPP Status DBH_CM HT_M
-    ## 1   SEKI       1 CADE      L   10.3  5.1
-    ## 2   SEKI       2 PIPO      D   44.7 26.4
-    ## 3   SEKI       3 QUKE      L   19.1  8.0
-    ## 4   SEKI       4 ABCO      L   32.8 23.3
-    ## 5   SEKI       5 PSME      L   13.8 11.1
+    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
+    ## 1   SEKI       1  50    1 PSME   10.3  5.1
+    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
+    ## 3   SEKI       2  50    1 PSME   19.1  8.0
+    ## 4   SEKI       2  50    1 PSME   32.8 23.3
+    ## 5   YOMI       1  50    1 ABCO   13.8 11.1
+    ## 6   YOMI       1  50    1 CADE   20.2  8.5
+    ## 7   YOMI       2  50    1 QUKE   31.7 22.3
+    ## 8   YOMI       2  50    0 ABCO   13.1  9.7
+    ## 9   YOMI       2  50    0 PSME   15.8 10.6
 
 ``` r
 # call the TreeBiomass() function in the Rbiomass package
 tree_bio_demo <- TreeBiomass(data = demo_data,
-                             site = "Forest",
-                             plot = "Plot_id",
+                             status = "Live",
                              species = "SPP",
                              dbh = "DBH_CM",
                              ht = "HT_M",
@@ -113,32 +115,188 @@ tree_bio_demo <- TreeBiomass(data = demo_data,
 tree_bio_demo
 ```
 
-    ##   Forest Plot_id  SPP Status DBH_CM HT_M stem_bio_kg bark_bio_kg branch_bio_kg
-    ## 1   SEKI       1 CADE      L   10.3  5.1       24.23        1.30          2.26
-    ## 2   SEKI       2 PIPO      D   44.7 26.4      573.15       71.73        159.58
-    ## 3   SEKI       3 QUKE      L   19.1  8.0       87.99          NA            NA
-    ## 4   SEKI       4 ABCO      L   32.8 23.3      260.42      111.93         44.08
-    ## 5   SEKI       5 PSME      L   13.8 11.1       42.81        7.91          6.81
-    ##   total_bio_kg
-    ## 1        27.79
-    ## 2       804.46
-    ## 3        87.99
-    ## 4       416.43
-    ## 5        57.53
+    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M stem_bio_kg bark_bio_kg
+    ## 1   SEKI       1  50    1 PSME   10.3  5.1       20.08        3.88
+    ## 2   SEKI       1  50    0 ABCO   44.7 26.4      535.66      260.36
+    ## 3   SEKI       2  50    1 PSME   19.1  8.0       40.52       17.42
+    ## 4   SEKI       2  50    1 PSME   32.8 23.3      347.02       64.81
+    ## 5   YOMI       1  50    1 ABCO   13.8 11.1       32.46       10.56
+    ## 6   YOMI       1  50    1 CADE   20.2  8.5       42.34        8.91
+    ## 7   YOMI       2  50    1 QUKE   31.7 22.3      572.06          NA
+    ## 8   YOMI       2  50    0 ABCO   13.1  9.7       30.05        9.16
+    ## 9   YOMI       2  50    0 PSME   15.8 10.6       48.34       10.98
+    ##   branch_bio_kg total_bio_kg
+    ## 1          3.64        27.60
+    ## 2         78.41       874.43
+    ## 3         13.64        71.58
+    ## 4         43.34       455.17
+    ## 5         15.62        58.64
+    ## 6         13.41        64.66
+    ## 7            NA       572.06
+    ## 8         15.06        54.27
+    ## 9          9.09        68.41
 
-### Notice in the output dataframe:
+**Notice in the output dataframe:**
 
-- QUKE (California black oak) has `NA` `bark_bio_kg` and
-  `branch_bio_kg`. For some hardwood species, the `stem_bio_kg` includes
-  bark and branch biomass. In these cases, bark and branch biomass are
-  not available as separate components of total biomass.
+-   QUKE (California black oak) has `NA` `bark_bio_kg` and
+    `branch_bio_kg`. For some hardwood species, the `stem_bio_kg`
+    includes bark and branch biomass. In these cases, bark and branch
+    biomass are not available as separate components of total biomass.
 
-- The column names of the input dataframe will remain intact in the
-  output dataframe.
+-   The column names of the input dataframe will remain intact in the
+    output dataframe.
 
-- The `status` column, which is not directly used in the biomass
-  calculations, remains in the output dataframe. Any additional columns
-  in the input dataframe will remain in the output dataframe.
+-   The `Forest`, `Plot_id`, and `SPH` columns, which are not directly
+    used in the biomass calculations, remain in the output dataframe.
+    Any additional columns in the input dataframe will remain in the
+    output dataframe.
+
+### `SummaryBiomass()`
+
+**Inputs**
+
+1.  `data` A dataframe or tibble. Each row must be an observation of an
+    individual tree.
+
+2.  `site` Must be a variable (column) in the provided dataframe or
+    tibble. Describes the broader location or forest where the data were
+    collected. The class of this variable will be coerced to character.
+
+3.  `plot` Must be a variable (column) in the provided dataframe or
+    tibble. Identifies the plot in which the individual tree was
+    measured. The class of this variable will be coerced to character.
+
+4.  `exp_factor` Must be a numeric variable (column) in the provided
+    dataframe or tibble. The expansion factor specifies the number of
+    trees per hectare (or per acre) that a given plot tree represents.
+
+5.  `status` Must be a variable (column) in the provided dataframe or
+    tibble. Specifies whether the individual tree is alive (1) or dead
+    (0). The class of this variable will be coerced to factor.
+
+6.  `species` Must be a variable (column) in the provided dataframe or
+    tibble. Specifies the species of the individual tree. Must follow
+    four-letter species code or FIA naming conventions (see species code
+    tables below). The class of this variable will be coerced to
+    character.
+
+7.  `dbh` Must be a **numeric** variable (column) in the provided
+    dataframe or tibble. Provides the diameter at breast height (DBH) of
+    the individual tree in either centimeters or inches.
+
+8.  `ht` Must be a **numeric** variable (column) in the provided
+    dataframe or tibble. Provides the height of the individual tree in
+    either meters or feet.
+
+9.  `sp_codes` Not a variable (column) in the provided dataframe or
+    tibble. Specifies whether the species variable follows the
+    four-letter code or FIA naming convention (see species code tables
+    below). Must be set to either “4letter” or “fia”. The default is set
+    to “4letter”.
+
+10. `units` Not a variable (column) in the provided dataframe or tibble.
+    Specifies (1) whether the dbh and ht variables were measured using
+    metric (centimeters and meters) or imperial (inches and feet)
+    units; (2) whether the expansion factor is in stems per hectare or
+    stems per acre; and (3) whether results will be given in metric
+    (megagrams per hectare) or imperial (US tons per acre) units. Must
+    be set to either “metric” or “imperial”. The default is set to
+    “metric”.
+
+11. `results` Not a variable (column) in the provided dataframe or
+    tibble. Specifies whether the results will be summarized by plot or
+    by plot as well as species. Must be set to either “by_plot” or
+    “by_species.” The default is set to “by_plot”.
+
+**Outputs**
+
+A dataframe with the following columns:
+
+1.  `site`: as described above
+
+2.  `plot`: as described above
+
+3.  `species`: if results argument was set to “by_species”
+
+4.  `live_Mg_ha` (or `live_ton_ac`): above-ground live tree biomass in
+    megagrams per hectare (or US tons per acre)
+
+5.  `dead_Mg_ha` (or `dead_ton_ac`): above-ground dead tree biomass in
+    megagrams per hectare (or US tons per acre)
+
+**Demonstrations**
+
+``` r
+# investigate input dataframe
+demo_data
+```
+
+    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
+    ## 1   SEKI       1  50    1 PSME   10.3  5.1
+    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
+    ## 3   SEKI       2  50    1 PSME   19.1  8.0
+    ## 4   SEKI       2  50    1 PSME   32.8 23.3
+    ## 5   YOMI       1  50    1 ABCO   13.8 11.1
+    ## 6   YOMI       1  50    1 CADE   20.2  8.5
+    ## 7   YOMI       2  50    1 QUKE   31.7 22.3
+    ## 8   YOMI       2  50    0 ABCO   13.1  9.7
+    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+
+``` r
+# call the SummaryBiomass() function in the Rbiomass package
+# keep default sp_codes and units
+sum_bio_demo1 <- SummaryBiomass(data = demo_data,
+                                site = "Forest",
+                                plot = "Plot_id",
+                                exp_factor = "SPH",
+                                status = "Live",
+                                species = "SPP",
+                                dbh = "DBH_CM",
+                                ht = "HT_M",
+                                results = "by_plot")
+
+sum_bio_demo1
+```
+
+    ##   site plot live_Mg_ha dead_Mg_ha
+    ## 1 SEKI    1       1.38      43.72
+    ## 2 SEKI    2      26.34       0.00
+    ## 3 YOMI    1       6.16       0.00
+    ## 4 YOMI    2      28.60       6.13
+
+``` r
+# call the SummaryBiomass() function in the Rbiomass package
+# keep default sp_codes and units
+sum_bio_demo2 <- SummaryBiomass(data = demo_data,
+                                site = "Forest",
+                                plot = "Plot_id",
+                                exp_factor = "SPH",
+                                status = "Live",
+                                species = "SPP",
+                                dbh = "DBH_CM",
+                                ht = "HT_M",
+                                results = "by_species")
+
+sum_bio_demo2
+```
+
+    ##    site plot species live_Mg_ha dead_Mg_ha
+    ## 1  SEKI    1    PSME       1.38       0.00
+    ## 2  SEKI    1    ABCO       0.00      43.72
+    ## 3  SEKI    1    CADE       0.00       0.00
+    ## 4  SEKI    1    QUKE       0.00       0.00
+    ## 5  SEKI    2    PSME      26.34       0.00
+    ## 6  SEKI    2    ABCO       0.00       0.00
+    ## 7  SEKI    2    CADE       0.00       0.00
+    ## 8  SEKI    2    QUKE       0.00       0.00
+    ## 9  YOMI    1    PSME       0.00       0.00
+    ## 10 YOMI    1    ABCO       2.93       0.00
+    ## 11 YOMI    1    CADE       3.23       0.00
+    ## 12 YOMI    1    QUKE       0.00       0.00
+    ## 13 YOMI    2    PSME       0.00       3.42
+    ## 14 YOMI    2    ABCO       0.00       2.71
+    ## 15 YOMI    2    CADE       0.00       0.00
+    ## 16 YOMI    2    QUKE      28.60       0.00
 
 ## Species code tables
 
@@ -184,6 +342,7 @@ tree_bio_demo
 | Willow species       | Salix spp.                   | SASP          | 920      |
 | California-laurel    | Umbellularia californica     | UMCA          | 981      |
 | Unknown hardwood     | NA                           | UNHA          | 998      |
+| Unknown tree         | NA                           | UNTR          | 999      |
 
 *Note: Four-letter species codes are the first two letters of the genus
 followed by the first two letters of the species.*

@@ -1,7 +1,7 @@
 
 test_that("Properly formatted data frames throw no errors, warnings, or messages", {
 
-  expect_no_error(ValidateData(data_val = good_trees,
+  expect_no_error(ValidateTreeData(data_val = good_trees,
                                status_val = "Live",
                                sp_val = "SPP",
                                dbh_val = "DBH_CM",
@@ -9,7 +9,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                sp_codes_val = "4letter",
                                units = "metric"))
 
-  expect_no_warning(ValidateData(data_val = good_trees,
+  expect_no_warning(ValidateTreeData(data_val = good_trees,
                                  status_val = "Live",
                                  sp_val = "SPP",
                                  dbh_val = "DBH_CM",
@@ -17,7 +17,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                  sp_codes_val = "4letter",
                                  units = "metric"))
 
-  expect_no_message(ValidateData(data_val = good_trees,
+  expect_no_message(ValidateTreeData(data_val = good_trees,
                                  status_val = "Live",
                                  sp_val = "SPP",
                                  dbh_val = "DBH_CM",
@@ -30,7 +30,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
 
 test_that("Data frames have expected column names", {
 
-  expect_named((ValidateData(data_val = good_trees,
+  expect_named((ValidateTreeData(data_val = good_trees,
                              status_val = "Live",
                              sp_val = "SPP",
                              dbh_val = "DBH_CM",
@@ -44,7 +44,7 @@ test_that("Data frames have expected column names", {
 
 test_that("Unrecognized column names throw an error", {
 
-  expect_error(ValidateData(data_val = good_trees,
+  expect_error(ValidateTreeData(data_val = good_trees,
                             status_val = "Liv", # intentional error here
                             sp_val = "SPP",
                             dbh_val = "DBH_CM",
@@ -53,7 +53,7 @@ test_that("Unrecognized column names throw an error", {
                             units = "metric"),
                'There is no column named "Liv" in the provided dataframe.')
 
-  expect_error(ValidateData(data_val = good_trees,
+  expect_error(ValidateTreeData(data_val = good_trees,
                             status_val = "Live",
                             sp_val = "SPPP", # intentional error here
                             dbh_val = "DBH_CM",
@@ -62,7 +62,7 @@ test_that("Unrecognized column names throw an error", {
                             units = "metric"),
                'There is no column named "SPPP" in the provided dataframe.')
 
-  expect_error(ValidateData(data_val = good_trees,
+  expect_error(ValidateTreeData(data_val = good_trees,
                             status_val = "Live",
                             sp_val = "SPP",
                             dbh_val = "DBH_CN", # intentional error here
@@ -71,7 +71,7 @@ test_that("Unrecognized column names throw an error", {
                             units = "metric"),
                'There is no column named "DBH_CN" in the provided dataframe.')
 
-  expect_error(ValidateData(data_val = good_trees,
+  expect_error(ValidateTreeData(data_val = good_trees,
                             status_val = "Live",
                             sp_val = "SPP",
                             dbh_val = "DBH_CM",
@@ -85,7 +85,7 @@ test_that("Unrecognized column names throw an error", {
 
 test_that("Invalid settings throw an error", {
 
-  expect_error((ValidateData(data_val = good_trees,
+  expect_error((ValidateTreeData(data_val = good_trees,
                              status_val = "Live",
                              sp_val = "SPP",
                              dbh_val = "DBH_CM",
@@ -94,7 +94,7 @@ test_that("Invalid settings throw an error", {
                              units = "metric")),
                'The "sp_codes" parameter must be set to either "4letter" or "fia."')
 
-  expect_error((ValidateData(data_val = good_trees,
+  expect_error((ValidateTreeData(data_val = good_trees,
                              status_val = "Live",
                              sp_val = "SPP",
                              dbh_val = "DBH_CM",
@@ -108,7 +108,7 @@ test_that("Invalid settings throw an error", {
 
 test_that("Column class handling works", {
 
-  expect_error(ValidateData(data_val = bad_trees,
+  expect_error(ValidateTreeData(data_val = bad_trees,
                             status_val = "Live",
                             sp_val = "SPP4",
                             dbh_val = "DBH_CM_bad1", # intentional error here
@@ -117,7 +117,7 @@ test_that("Column class handling works", {
                             units = "metric"),
                'The parameter dbh requires a numerical variable.\nYou have input a variable of class: character')
 
-  expect_error(ValidateData(data_val = bad_trees,
+  expect_error(ValidateTreeData(data_val = bad_trees,
                             status_val = "Live",
                             sp_val = "SPP4",
                             dbh_val = "DBH_CM",
@@ -131,7 +131,7 @@ test_that("Column class handling works", {
 
 test_that("Species code handling works", {
 
-  expect_error(ValidateData(data_val = bad_trees,
+  expect_error(ValidateTreeData(data_val = bad_trees,
                             status_val = "Live",
                             sp_val = "SPP4_bad1",
                             dbh_val = "DBH_CM",
@@ -140,7 +140,7 @@ test_that("Species code handling works", {
                             units = "metric"),
                'Not all species codes were recognized!\nUnrecognized codes: CADD')
 
-  expect_error(ValidateData(data_val = bad_trees,
+  expect_error(ValidateTreeData(data_val = bad_trees,
                             status_val = "Live",
                             sp_val = "SPP4_bad2",
                             dbh_val = "DBH_CM",
@@ -149,7 +149,7 @@ test_that("Species code handling works", {
                             units = "metric"),
                'No species codes recognized!\nCheck how you set the "sp_codes" parameter.')
 
-  expect_error(ValidateData(data_val = bad_trees,
+  expect_error(ValidateTreeData(data_val = bad_trees,
                             status_val = "Live",
                             sp_val = "SPP_fia_bad1",
                             dbh_val = "DBH_CM",
@@ -158,7 +158,7 @@ test_that("Species code handling works", {
                             units = "metric"),
                'Not all species codes were recognized!\nUnrecognized codes: 1222')
 
-  expect_error(ValidateData(data_val = bad_trees,
+  expect_error(ValidateTreeData(data_val = bad_trees,
                             status_val = "Live",
                             sp_val = "SPP_fia_bad2",
                             dbh_val = "DBH_CM",
@@ -172,7 +172,7 @@ test_that("Species code handling works", {
 
 test_that("DBH and ht range handling works", {
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4",
                               dbh_val = "DBH_CM_bad2",
@@ -181,7 +181,7 @@ test_that("DBH and ht range handling works", {
                               units = "metric"),
                  'The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\nYou inputted live trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n')
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4",
                               dbh_val = "DBH_CM",
@@ -190,7 +190,7 @@ test_that("DBH and ht range handling works", {
                               units = "metric"),
                  'The allometric equations are for trees with height >= 1.37m.\nYou inputted trees with height < 1.37m. These trees will have NA biomass estimates.\n')
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4",
                               dbh_val = "DBH_IN_bad1",
@@ -199,7 +199,7 @@ test_that("DBH and ht range handling works", {
                               units = "imperial"),
                  'The allometric equations are for live trees with DBH >= 1.0in and dead trees with DBH >= 5.0in.\nYou inputted live trees with DBH < 1.0in. These trees will have NA biomass estimates.\n')
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4",
                               dbh_val = "DBH_CM",
@@ -213,7 +213,7 @@ test_that("DBH and ht range handling works", {
 
 test_that("NA handling works", {
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4_NA",
                               dbh_val = "DBH_CM",
@@ -222,7 +222,7 @@ test_that("NA handling works", {
                               units = "metric"))
 
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4",
                               dbh_val = "DBH_NA",
@@ -230,7 +230,7 @@ test_that("NA handling works", {
                               sp_codes_val = "4letter",
                               units = "metric"))
 
-  expect_warning(ValidateData(data_val = bad_trees,
+  expect_warning(ValidateTreeData(data_val = bad_trees,
                               status_val = "Live",
                               sp_val = "SPP4",
                               dbh_val = "DBH_CM",

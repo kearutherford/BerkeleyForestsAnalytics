@@ -16,14 +16,14 @@
 #' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 #' @param ht Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
 #' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
-#' @param units Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param units Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #'
 #' @return The original dataframe, with four new columns:
 #' \itemize{
-#' \item stem_bio_kg: biomass of stem (or bole) in kilograms
-#' \item bark_bio_kg: biomass of bark in kilograms
-#' \item branch_bio_kg: biomass of branches in kilograms
-#' \item total_bio_kg: biomass of tree (stem + bark + branches) in kilograms
+#' \item stem_bio_kg (or stem_bio_tons): biomass of stem in kilograms (or tons)
+#' \item bark_bio_kg (or bark_bio_tons): biomass of bark in kilograms (or tons)
+#' \item branch_bio_kg (or branch_bio_tons): biomass of branches in kilograms (or tons)
+#' \item total_bio_kg (or total_bio_kg): biomass of tree (stem + bark + branches) in kilograms (or tons)
 #' }
 #'
 #'@examples
@@ -360,4 +360,5 @@ FinalTreeDF <- function(data_1, data_2, status_orig, sp_orig, dbh_orig, ht_orig,
 
 }
 
-utils::globalVariables(c("bark_eq", "branch_eq", "density", "dbh_in", "ht_ft", "dbh_cm", "ht_m", "vol_eq", "eq_group", "CVTS", "stem_bio_tons"))
+utils::globalVariables(c("bark_eq", "branch_eq", "density", "dbh_in", "ht_ft", "dbh_cm", "ht_m", "vol_eq", "eq_group", "CVTS",
+                         "stem_bio_tons", "bark_bio_tons", "branch_bio_tons", "total_bio_tons", "stem_bio_kg", "bark_bio_kg", "branch_bio_kg", "total_bio_kg"))

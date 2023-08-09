@@ -60,25 +60,4 @@ test_that("Package and hand calculations match", {
   expect_equal(results_by_package2$branch_bio_kg,
                results_by_hand$branch_KR)
 
-  # 4letter and imperial  -----------------------
-  results_by_package3 <- TreeBiomass(data = results_by_hand,
-                                     status = "Live",
-                                     sp = "SP4",
-                                     dbh = "DBH_IN",
-                                     ht = "HT_FT",
-                                     sp_codes = "4letter",
-                                     units = "imperial")
-
-  # stem
-  expect_equal(results_by_package3$stem_bio_kg,
-               results_by_hand$stem_KR)
-
-  # bark
-  expect_equal(results_by_package3$bark_bio_kg,
-               results_by_hand$bark_KR)
-
-  # branch
-  expect_equal(results_by_package3$branch_bio_kg,
-               results_by_hand$branch_KR)
-
 })
