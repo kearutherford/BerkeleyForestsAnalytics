@@ -143,7 +143,7 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
 
   if ('TRUE' %in% is.na(data_val[[status_val]])) {
 
-    warning('There are missing (NA) status codes in the provided data frame.\n',
+    warning('There are missing status codes in the provided dataframe.\n',
             'Trees with NA status codes will have NA biomass estimates.\n',
             ' \n')
   }
@@ -168,9 +168,9 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
 
   if ('TRUE' %in% is.na(data_val[[sp_val]])) {
 
-    warning('There are missing (NA) species codes in the provided data frame.\n',
+    warning('There are missing species codes in the provided dataframe.\n',
             'Trees with NA species codes will have NA biomass estimates.\n',
-            'Consider assigning unknown conifer (UNCO), unknown hardwood (UNHA), or unknown tree (UNTR), as appropriate.\n',
+            'Consider assigning unknown conifer, unknown hardwood, or unknown tree, as appropriate.\n',
             ' \n')
   }
 
@@ -221,14 +221,14 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(data_val[[dbh_val]])) {
 
-    warning('There are missing (NA) DBH values in the provided data frame.\n',
+    warning('There are missing DBH values in the provided dataframe.\n',
             'Trees with NA DBH will have NA biomass estimates.\n',
             ' \n')
   }
 
   if ('TRUE' %in% is.na(data_val[[ht_val]])) {
 
-    warning('There are missing (NA) tree height values in the provided data frame.\n',
+    warning('There are missing tree height values in the provided dataframe.\n',
             'Trees with NA height will have NA biomass estimates.\n',
             ' \n')
   }
@@ -252,7 +252,7 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
     if(nrow(dead_trees) > 0) {
 
       if (min(dead_trees[[dbh_val]], na.rm = TRUE) < 12.7) {
-          warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.',
+          warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\n',
                   'You inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n',
                   ' \n')
       }

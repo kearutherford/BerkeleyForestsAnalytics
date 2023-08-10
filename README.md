@@ -22,7 +22,7 @@ devtools::install_github('kearutherford/Rbiomass')
 library(Rbiomass)
 ```
 
-## `TreeBiomass()`
+## TreeBiomass( )
 
 ### Inputs
 
@@ -149,7 +149,7 @@ tree_bio_demo
     Any additional columns in the input dataframe will remain in the
     output dataframe.
 
-## `SummaryBiomass()`
+## SummaryBiomass( )
 
 ### Inputs
 
@@ -195,11 +195,11 @@ tree_bio_demo
 10. `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies (1) whether the dbh and ht variables were measured using
     metric (centimeters and meters) or imperial (inches and feet)
-    units; (2) whether the expansion factor is in stems per hectare or
-    stems per acre; and (3) whether results will be given in metric
-    (megagrams per hectare) or imperial (US tons per acre) units. Must
-    be set to either “metric” or “imperial”. The default is set to
-    “metric”.
+    units; (2) whether the expansion factor is in metric (stems per
+    hectare) or imperial (stems per acre) units; and (3) whether results
+    will be given in metric (megagrams per hectare) or imperial (US tons
+    per acre) units. Must be set to either “metric” or “imperial”. The
+    default is set to “metric”.
 
 11. `results` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the results will be summarized by plot or
@@ -262,7 +262,7 @@ sum_bio_demo1
     ## 3 YOMI    1       6.16       0.00
     ## 4 YOMI    2      28.60       6.13
 
-### Demonstration of results summarized by plot as well as species
+### Demonstration of results summarized by plot as well as by species
 
 ``` r
 # call the SummaryBiomass() function in the Rbiomass package

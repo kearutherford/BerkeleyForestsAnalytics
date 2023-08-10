@@ -39,8 +39,8 @@ sp_code_names <- data.frame(
 
 
 ######################################################################
-# dataframes used for package tests
-#####################################################################
+# dataframes used for TreeBiomass function tests
+######################################################################
 
 good_trees_metric <- data.frame(
   Plot = c(1,2,3,4,5),
@@ -73,6 +73,7 @@ bad_trees <- data.frame(
   SPP_fia_bad2 = c("8111", "1222", "8188", "1555", "2022"), # all wrong
 
   DBH_CM = c(15.3, 44.7, 19.1, 32.8, 13.8),
+  DBH_IN = c(6.0, 17.6, 7.5, 12.9, 5.4),
   DBH_NA = c(15.3, NA, 19.1, 32.8, 13.8), # NA value
   DBH_CM_bad1 = as.character(c(15.3, 44.7, 19.1, 32.8, 13.8)), # wrong class
   DBH_CM_bad2 = c(2.2, 44.7, 19.1, 32.8, 13.8), # below 2.5 cm cutoff for live trees (use with Live_v1)
@@ -81,8 +82,53 @@ bad_trees <- data.frame(
   DBH_IN_bad2 = c(4.1, 17.6, 7.5, 12.9, 5.4), # below 5.0 in cutoff for dead trees (use with Live_v2)
 
   HT_M = c(9.1, 26.4, 8.0, 23.3, 11.1),
+  HT_FT = c(29.9, 86.6, 26.2, 76.4, 36.4),
   HT_NA = c(9.1, NA, 8.0, 23.3, 11.1), # NA value
   HT_M_bad1 = as.factor(c(9.1, 26.4, 8.0, 23.3, 11.1)), # wrong class
   HT_M_bad2 = c(1.27, 26.4, 8.0, 23.3, 11.1), # below 1.37 m cutoff
   HT_FT_bad1 = c(4.3, 86.6, 26.2, 76.4, 36.4) # below 4.5 ft in cutoff
 )
+
+
+######################################################################
+# dataframes used for SummaryBiomass function tests
+######################################################################
+
+good_sum_metric <- data.frame(
+  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
+  SPH = c(50,50,50,50,50,50,50,50,50),
+  Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
+  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
+  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+good_sum_imperial <- data.frame(
+  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
+  SPH = c(50,50,50,50,50,50,50,50,50),
+  Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
+  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
+  DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
+  HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
+)
+
+bad_sum <- data.frame(
+
+  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  Forest_NA = c("SEKI", NA, "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+
+  Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
+  Plot_id_NA = as.character(c(1,NA,2,2,1,1,2,2,2)), # NA value
+
+  SPH = c(50,50,50,50,50,50,50,50,50),
+  SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
+  SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+
+  Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
+  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
+  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+

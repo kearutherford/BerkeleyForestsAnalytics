@@ -37,7 +37,7 @@ SummaryBiomass(
 
 \item{sp_codes}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".}
 
-\item{units}{Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in stems per hectare or stems per acre; and (3) whether results will be given in metric (megagrams per hectare) or imperial (US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".}
+\item{units}{Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric (megagrams per hectare) or imperial (US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".}
 
 \item{results}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by plot or by plot as well as species. Must be set to either "by_plot" or "by_species." The default is set to "by_plot".}
 }

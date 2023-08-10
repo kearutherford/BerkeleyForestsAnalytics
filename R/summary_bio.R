@@ -19,7 +19,7 @@
 #' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 #' @param ht Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
 #' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
-#' @param units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in stems per hectare or stems per acre; and (3) whether results will be given in metric (megagrams per hectare) or imperial (US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric (megagrams per hectare) or imperial (US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #' @param results Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by plot or by plot as well as species. Must be set to either "by_plot" or "by_species." The default is set to "by_plot".
 #'
 #' @return A dataframe with the following columns:
@@ -70,8 +70,8 @@ SummaryBiomass <- function(data, site, plot, exp_factor, status, species, dbh, h
 
   } else if (results == "by_species") {
 
-  step3 <- SumBySpecies(bio_data = step2,
-                        bio_units = units)
+    step3 <- SumBySpecies(bio_data = step2,
+                          bio_units = units)
 
   }
 
@@ -135,19 +135,19 @@ ValidateSumData <- function(data_val, site_val, plot_val, ef_val, results_val, s
 
   if ('TRUE' %in% is.na(data_val[[site_val]])) {
 
-    stop('There are missing (NA) site names in the provided data frame.\n')
+    stop('There are missing site names in the provided dataframe.')
 
   }
 
   if ('TRUE' %in% is.na(data_val[[plot_val]])) {
 
-    stop('There are missing (NA) plot names in the provided data frame.\n')
+    stop('There are missing plot names in the provided dataframe.\n')
 
   }
 
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
-    stop('There are missing (NA) expansion factors in the provided data frame.\n')
+    stop('There are missing expansion factors in the provided dataframe.\n')
 
   }
 
