@@ -5,6 +5,42 @@
 ################################################################################
 ################################################################################
 
+#' @title ForestComp
+#'
+#' @description
+#' Compiles forest composition at the plot level. Measured as relative basal area or relative density for live trees.
+#'
+#' @param data A dataframe or tibble. Each row must be an observation of an individual tree.
+#' @param site Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+#' @param plot Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+#' @param exp_factor Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+#' @param status Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
+#' @param species Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. The class of this variable will be coerced to character.
+#' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+#' @param relative Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".
+#' @param units Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh variable was measured using metric (centimeters) or imperial (inches) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#'
+#' @return A dataframe with the following columns:
+#' \itemize{
+#' \item site: as described above
+#' \item plot: as described above
+#' \item species: as described above
+#' \item dominance: relative basal area (or relative density) in percent (%)
+#' }
+#'
+#'@examples
+#'ForestComp(data = demo_data,
+#'           site = "Forest",
+#'           plot = "Plot_id",
+#'           exp_factor = "SPH",
+#'           status = "Live",
+#'           species = "SPP",
+#'           dbh = "DBH_CM",
+#'           relative = "BA",
+#'           units = "metric")
+#'
+#' @export
+
 ForestComp <- function(data, site, plot, exp_factor, status, species, dbh, relative = "BA", units = "metric") {
 
   # Check and prep input data

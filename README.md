@@ -1,14 +1,13 @@
 
-# Rbiomass
+# Berkeley Forest Analytics
 
-The `Rbiomass` package uses Forest Inventory and Analysis (FIA) Regional
-Biomass Equations to estimate above-ground stem, bark, and branch tree
-biomass. The package uses the California equation set and should not be
-used for data from other regions.
+The `UCBForestAnalytics` package is a suite of open-source R functions
+designed to produce standard metrics for forest management and ecology
+from field inventory data.
 
 ## Installation instructions
 
-To install the `Rbiomass` package from GitHub:
+To install the `UCBForestAnalytics` package from GitHub:
 
 ``` r
 # install and load devtools
@@ -22,7 +21,15 @@ devtools::install_github('kearutherford/Rbiomass')
 library(Rbiomass)
 ```
 
-## TreeBiomass( )
+## Biomass estimations
+
+The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest
+Inventory and Analysis (FIA) Regional Biomass Equations to estimate
+above-ground stem, bark, and branch tree biomass. The functions use the
+California equation set and should not be used for data from other
+regions.
+
+### :eight_spoked_asterisk: `TreeBiomass ( )`
 
 ### Inputs
 
@@ -134,22 +141,24 @@ tree_bio_demo
     ## 8         15.06        54.27
     ## 9          9.09        68.41
 
-### Notice in the output dataframe:
+**Notice in the output dataframe:**
 
--   QUKE (California black oak) has `NA` `bark_bio_kg` and
-    `branch_bio_kg`. For some hardwood species, the `stem_bio_kg`
-    includes bark and branch biomass. In these cases, bark and branch
-    biomass are not available as separate components of total biomass.
+- QUKE (California black oak) has `NA` `bark_bio_kg` and
+  `branch_bio_kg`. For some hardwood species, the `stem_bio_kg` includes
+  bark and branch biomass. In these cases, bark and branch biomass are
+  not available as separate components of total biomass.
 
--   The column names of the input dataframe will remain intact in the
-    output dataframe.
+- The column names of the input dataframe will remain intact in the
+  output dataframe.
 
--   The `Forest`, `Plot_id`, and `SPH` columns, which are not directly
-    used in the biomass calculations, remain in the output dataframe.
-    Any additional columns in the input dataframe will remain in the
-    output dataframe.
+- The `Forest`, `Plot_id`, and `SPH` columns, which are not directly
+  used in the biomass calculations, remain in the output dataframe. Any
+  additional columns in the input dataframe will remain in the output
+  dataframe.
 
-## SummaryBiomass( )
+<br>
+
+### :eight_spoked_asterisk: `SummaryBiomass( )`
 
 ### Inputs
 
@@ -222,7 +231,9 @@ A dataframe with the following columns:
 5.  `dead_Mg_ha` (or `dead_ton_ac`): above-ground dead tree biomass in
     megagrams per hectare (or US tons per acre)
 
-### Demonstration of results summarized by plot
+### Demonstrations
+
+**Results summarized by plot:**
 
 ``` r
 # investigate input dataframe
@@ -262,7 +273,9 @@ sum_bio_demo1
     ## 3 YOMI    1       6.16       0.00
     ## 4 YOMI    2      28.60       6.13
 
-### Demonstration of results summarized by plot as well as by species
+<br>
+
+**Results summarized by plot as well as by species:**
 
 ``` r
 # call the SummaryBiomass() function in the Rbiomass package
@@ -298,9 +311,20 @@ sum_bio_demo2
     ## 15 YOMI    2    CADE       0.00       0.00
     ## 16 YOMI    2    QUKE      28.60       0.00
 
-## Species code tables
+<br>
 
-### Softwoods :evergreen_tree:
+## Forest composition and structure compilations
+
+The forest composition and structure functions (`TreeBiomass` and
+`SummaryBiomass`) assist with common plot-level data compilations. These
+functions help ensure that best practices in data compilation are
+observed.
+
+## Background information
+
+### Species code tables
+
+**Softwoods**
 
 | common name        | scientific name           | 4-letter code | FIA code |
 |:-------------------|:--------------------------|:--------------|:---------|
@@ -325,7 +349,9 @@ sum_bio_demo2
 | Mountain hemlock   | Tsuga mertensiana         | TSME          | 264      |
 | Unknown conifer    | NA                        | UNCO          | 298      |
 
-### Hardwoods :deciduous_tree:
+<br>
+
+**Hardwoods**
 
 | common name          | scientific name              | 4-letter code | FIA code |
 |:---------------------|:-----------------------------|:--------------|:---------|
