@@ -324,3 +324,5 @@ StrCalc <- function(str_data, str_units) {
   return(fill_df)
 
 }
+
+utils::globalVariables(c("dbh", "ef", "ht"))

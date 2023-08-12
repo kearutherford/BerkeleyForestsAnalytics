@@ -300,7 +300,7 @@ A dataframe with the following columns:
 
 5. `qmd_cm` (or `qmd_in`): quadratic mean diameter in centimeters (or inches). Weighted by the expansion factor.
 
-6. `dhb_cm` (or `dbh_in`): diameter at breast hegiht in centimeters (or inches). Weighted by the expansion factor.
+6. `dbh_cm` (or `dbh_in`): diameter at breast hegiht in centimeters (or inches). Weighted by the expansion factor.
 
 7. `ht_m` (or `ht_ft`): average height in meters (or feet) if ht argument was set. Weighted by the expansion factor.
 

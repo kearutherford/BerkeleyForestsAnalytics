@@ -153,3 +153,51 @@ bad_sum <- data.frame(
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
 )
 
+
+######################################################################
+# dataframes used for ForestComp function tests
+######################################################################
+
+good_comp_metric <- data.frame(
+  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
+  SPH = c(50,50,50,50,50,50,50,50,50),
+  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+good_comp_imperial <- data.frame(
+  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
+  SPH = c(50,50,50,50,50,50,50,50,50),
+  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
+  HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
+)
+
+bad_comp <- data.frame(
+  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  Forest_NA = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+
+  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
+  Plot_id_NA = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
+
+  SPH = c(50,50,50,50,50,50,50,50,50),
+  SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
+  SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+
+  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  Live_NA = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
+  Live_bad = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
+
+  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  SPP_NA = c("PSME", NA, "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
+
+  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
+  DBH_bad = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)) # wrong class
+)
+
