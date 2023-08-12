@@ -108,7 +108,7 @@ demo_data
     ## 9   YOMI       2  50    0 PSME   15.8 10.6
 
 ``` r
-# call the TreeBiomass() function in the Rbiomass package
+# call the TreeBiomass() function in the UCBForestAnalytics package
 tree_bio_demo <- TreeBiomass(data = demo_data,
                              status = "Live",
                              species = "SPP",
@@ -233,8 +233,6 @@ A dataframe with the following columns:
 
 ### Demonstrations
 
-**Results summarized by plot:**
-
 ``` r
 # investigate input dataframe
 demo_data
@@ -251,9 +249,13 @@ demo_data
     ## 8   YOMI       2  50    0 ABCO   13.1  9.7
     ## 9   YOMI       2  50    0 PSME   15.8 10.6
 
+<br>
+
+**Results summarized by plot:**
+
 ``` r
-# call the SummaryBiomass() function in the Rbiomass package
-# keep default sp_codes and units
+# call the SummaryBiomass() function in the UCBForestAnalytics package
+# keep default sp_codes (= "4letter") and units (= "metric")
 sum_bio_demo1 <- SummaryBiomass(data = demo_data,
                                 site = "Forest",
                                 plot = "Plot_id",
@@ -278,8 +280,8 @@ sum_bio_demo1
 **Results summarized by plot as well as by species:**
 
 ``` r
-# call the SummaryBiomass() function in the Rbiomass package
-# keep default sp_codes and units
+# call the SummaryBiomass() function in the UCBForestAnalytics package
+# keep default sp_codes (= "4letter") and units (= "metric")
 sum_bio_demo2 <- SummaryBiomass(data = demo_data,
                                 site = "Forest",
                                 plot = "Plot_id",
@@ -315,10 +317,274 @@ sum_bio_demo2
 
 ## Forest composition and structure compilations
 
-The forest composition and structure functions (`TreeBiomass` and
-`SummaryBiomass`) assist with common plot-level data compilations. These
+The forest composition and structure functions (`ForestComp` and
+`ForestStr`) assist with common plot-level data compilations. These
 functions help ensure that best practices in data compilation are
 observed.
+
+### :eight_spoked_asterisk: `ForestComp( )`
+
+### Inputs
+
+1.  `data` A dataframe or tibble. Each row must be an observation of an
+    individual tree.
+
+2.  `site` Must be a variable (column) in the provided dataframe or
+    tibble. Describes the broader location or forest where the data were
+    collected. The class of this variable will be coerced to character.
+
+3.  `plot` Must be a variable (column) in the provided dataframe or
+    tibble. Identifies the plot in which the individual tree was
+    measured. The class of this variable will be coerced to character.
+
+4.  `exp_factor` Must be a numeric variable (column) in the provided
+    dataframe or tibble. The expansion factor specifies the number of
+    trees per hectare (or per acre) that a given plot tree represents.
+
+5.  `status` Must be a variable (column) in the provided dataframe or
+    tibble. Specifies whether the individual tree is alive (1) or dead
+    (0). The class of this variable will be coerced to factor.
+
+6.  `species` Must be a variable (column) in the provided dataframe or
+    tibble. Specifies the species of the individual tree. The class of
+    this variable will be coerced to character.
+
+7.  `dbh` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the diameter at breast height (DBH) of the
+    individual tree in either centimeters or inches.
+
+8.  `relative` Not a variable (column) in the provided dataframe or
+    tibble. Specifies whether forest composition should be measured as
+    relative basal area or relative density. Must be set to either “BA”
+    or “density”. The default is set to “BA”.
+
+9.  `units` Not a variable (column) in the provided dataframe or tibble.
+    Specifies whether the dbh variable was measured using metric
+    (centimeters) or imperial (inches) units. Must be set to either
+    “metric” or “imperial”. The default is set to “metric”.
+
+### Outputs
+
+A dataframe with the following columns:
+
+1.  `site`: as described above
+
+2.  `plot`: as described above
+
+3.  `species`: as described above
+
+4.  `dominance`: relative basal area (or relative density) in percent
+    (%). Only compiled for LIVE trees.
+
+### Demonstrations
+
+``` r
+# investigate input dataframe
+demo_comp_data
+```
+
+    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
+    ## 1   SEKI       1  50    1 PSME   10.3  5.1
+    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
+    ## 3   SEKI       1  50    1 ABCO   19.1  8.0
+    ## 4   YOMI       1  50    1 PSME   32.8 23.3
+    ## 5   YOMI       1  50    1 CADE   13.8 11.1
+    ## 6   YOMI       2  50    1 CADE   20.2  8.5
+    ## 7   YOMI       2  50    1 CADE   31.7 22.3
+    ## 8   YOMI       2  50    1 ABCO   13.1  9.7
+    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+
+<br>
+
+**Composition measured as relative basal area:**
+
+``` r
+# call the ForestComp() function in the UCBForestAnalystics package
+# keep default relative (= "BA") and units (= "metric")
+comp_demo <- ForestComp(data = demo_comp_data,
+                        site = "Forest",
+                        plot = "Plot_id",
+                        exp_factor = "SPH",
+                        status = "Live",
+                        species = "SPP",
+                        dbh = "DBH_CM")
+```
+
+    ## The following species were present: PSME  ABCO  CADE   
+    ## Use this list to check for species code typos.
+
+``` r
+comp_demo
+```
+
+    ##   site plot species dominance
+    ## 1 SEKI    1    PSME      22.5
+    ## 2 SEKI    1    ABCO      77.5
+    ## 3 SEKI    1    CADE       0.0
+    ## 4 YOMI    1    PSME      85.0
+    ## 5 YOMI    1    ABCO       0.0
+    ## 6 YOMI    1    CADE      15.0
+    ## 7 YOMI    2    PSME       0.0
+    ## 8 YOMI    2    ABCO      10.8
+    ## 9 YOMI    2    CADE      89.2
+
+<br>
+
+**Composition measured as relative density:**
+
+``` r
+# call the ForestComp() function in the UCBForestAnalystics package
+comp_demo2 <- ForestComp(data = demo_comp_data,
+                         site = "Forest",
+                         plot = "Plot_id",
+                         exp_factor = "SPH",
+                         status = "Live",
+                         species = "SPP",
+                         dbh = "DBH_CM",
+                         relative = "density",
+                         units = "metric")
+```
+
+    ## The following species were present: PSME  ABCO  CADE   
+    ## Use this list to check for species code typos.
+
+``` r
+comp_demo2
+```
+
+    ##   site plot species dominance
+    ## 1 SEKI    1    PSME      50.0
+    ## 2 SEKI    1    ABCO      50.0
+    ## 3 SEKI    1    CADE       0.0
+    ## 4 YOMI    1    PSME      50.0
+    ## 5 YOMI    1    ABCO       0.0
+    ## 6 YOMI    1    CADE      50.0
+    ## 7 YOMI    2    PSME       0.0
+    ## 8 YOMI    2    ABCO      33.3
+    ## 9 YOMI    2    CADE      66.7
+
+<br>
+
+### :eight_spoked_asterisk: `ForestStr( )`
+
+### Inputs
+
+1.  `data` A dataframe or tibble. Each row must be an observation of an
+    individual tree.
+
+2.  `site` Must be a variable (column) in the provided dataframe or
+    tibble. Describes the broader location or forest where the data were
+    collected. The class of this variable will be coerced to character.
+
+3.  `plot` Must be a variable (column) in the provided dataframe or
+    tibble. Identifies the plot in which the individual tree was
+    measured. The class of this variable will be coerced to character.
+
+4.  `exp_factor` Must be a numeric variable (column) in the provided
+    dataframe or tibble. The expansion factor specifies the number of
+    trees per hectare (or per acre) that a given plot tree represents.
+
+5.  `dbh` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the diameter at breast height (DBH) of the
+    individual tree in either centimeters or inches.
+
+6.  `ht` Default is set to “ignore”, which indicates that tree heights
+    were not taken. If heights were taken, it can be set to a numeric
+    variable (column) in the provided dataframe or tibble, providing the
+    height of the individual tree in either meters or feet.
+
+7.  `units` Not a variable (column) in the provided dataframe or tibble.
+    Specifies (1) whether the dbh and ht variables were measured using
+    metric (centimeters and meters) or imperial (inches and feet)
+    units; (2) whether the expansion factor is in metric (stems per
+    hectare) or imperial (stems per acre) units; and (3) whether results
+    will be given in metric or imperial units. Must be set to either
+    “metric” or “imperial”. The default is set to “metric”.
+
+### Outputs
+
+A dataframe with the following columns:
+
+1.  `site`: as described above
+
+2.  `plot`: as described above
+
+3.  `sph` (or `spa`): stems per hectare (or stems per acre)
+
+4.  `ba_m2_ha` (or `ba_ft2_ac`): basal area in meters squared per
+    hectare (or feet squared per acre)
+
+5.  `qmd_cm` (or `qmd_in`): quadratic mean diameter in centimeters (or
+    inches). Weighted by the expansion factor.
+
+6.  `dhb_cm` (or `dbh_in`): diameter at breast hegiht in centimeters (or
+    inches). Weighted by the expansion factor.
+
+7.  `ht_m` (or `ht_ft`): average height in meters (or feet) if ht
+    argument was set. Weighted by the expansion factor.
+
+### Demonstrations
+
+``` r
+# investigate input dataframe
+demo_comp_data
+```
+
+    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
+    ## 1   SEKI       1  50    1 PSME   10.3  5.1
+    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
+    ## 3   SEKI       1  50    1 ABCO   19.1  8.0
+    ## 4   YOMI       1  50    1 PSME   32.8 23.3
+    ## 5   YOMI       1  50    1 CADE   13.8 11.1
+    ## 6   YOMI       2  50    1 CADE   20.2  8.5
+    ## 7   YOMI       2  50    1 CADE   31.7 22.3
+    ## 8   YOMI       2  50    1 ABCO   13.1  9.7
+    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+
+<br>
+
+**If tree heights were not measured:**
+
+``` r
+# call the ForestStr() function in the UCBForestAnalystics package
+# keep default ht (= "ignore") and units (= "metric")
+str_demo <- ForestStr(data = demo_comp_data,
+                      site = "Forest",
+                      plot = "Plot_id",
+                      exp_factor = "SPH",
+                      dbh = "DBH_CM")
+
+str_demo
+```
+
+    ##   site plot sph ba_m2_ha qmd_cm dbh_cm
+    ## 1 SEKI    1 150     9.70   28.7   24.7
+    ## 2 YOMI    1 100     4.97   25.2   23.3
+    ## 3 YOMI    2 200     7.20   21.4   20.2
+
+<br>
+
+**If tree heights were measured:**
+
+``` r
+# call the ForestStr() function in the UCBForestAnalystics package
+str_demo2 <- ForestStr(data = demo_comp_data,
+                       site = "Forest",
+                       plot = "Plot_id",
+                       exp_factor = "SPH",
+                       dbh = "DBH_CM",
+                       ht = "HT_M",
+                       units = "metric")
+
+str_demo2
+```
+
+    ##   site plot sph ba_m2_ha qmd_cm dbh_cm ht_m
+    ## 1 SEKI    1 150     9.70   28.7   24.7 13.2
+    ## 2 YOMI    1 100     4.97   25.2   23.3 17.2
+    ## 3 YOMI    2 200     7.20   21.4   20.2 12.8
+
+<br>
 
 ## Background information
 

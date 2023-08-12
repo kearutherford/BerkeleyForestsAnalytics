@@ -34,16 +34,16 @@ SumBySpecies <- function(bio_data, bio_units) {
             temp_df <- data.frame(site = f,
                                   plot = p,
                                   species = unique(bio_data$species),
-                                  live_Mg_ha = format(round(0), nsmall = 2),
-                                  dead_Mg_ha = format(round(0), nsmall = 2))
+                                  live_Mg_ha = 0,
+                                  dead_Mg_ha = 0)
 
             for(sp in species_ids) {
 
                 single_sp_L <- subset(all_trees, species == sp & status == 1)
                 single_sp_D <- subset(all_trees, species == sp & status == 0)
 
-                sum_total_live <- format(round(sum(single_sp_L$Mg_tree, na.rm = TRUE),2), nsmall = 2)
-                sum_total_dead <- format(round(sum(single_sp_D$Mg_tree, na.rm = TRUE),2), nsmall = 2)
+                sum_total_live <- round(sum(single_sp_L$Mg_tree, na.rm = TRUE),2)
+                sum_total_dead <- round(sum(single_sp_D$Mg_tree, na.rm = TRUE),2)
 
                 temp_df[temp_df$species == sp, "live_Mg_ha"] <- sum_total_live
                 temp_df[temp_df$species == sp, "dead_Mg_ha"] <- sum_total_dead
@@ -85,16 +85,16 @@ SumBySpecies <- function(bio_data, bio_units) {
         temp_df <- data.frame(site = f,
                               plot = p,
                               species = unique(bio_data$species),
-                              live_ton_ac = format(round(0), nsmall = 2),
-                              dead_ton_ac = format(round(0), nsmall = 2))
+                              live_ton_ac = 0,
+                              dead_ton_ac = 0)
 
         for(sp in species_ids) {
 
           single_sp_L <- subset(all_trees, species == sp & status == 1)
           single_sp_D <- subset(all_trees, species == sp & status == 0)
 
-          sum_total_live <- format(round(sum(single_sp_L$ton_tree, na.rm = TRUE),2), nsmall = 2)
-          sum_total_dead <- format(round(sum(single_sp_D$ton_tree, na.rm = TRUE),2), nsmall = 2)
+          sum_total_live <- round(sum(single_sp_L$ton_tree, na.rm = TRUE),2)
+          sum_total_dead <- round(sum(single_sp_D$ton_tree, na.rm = TRUE),2)
 
           temp_df[temp_df$species == sp, "live_ton_ac"] <- sum_total_live
           temp_df[temp_df$species == sp, "dead_ton_ac"] <- sum_total_dead
@@ -146,10 +146,10 @@ SumByPlot <- function(bio_data, bio_units) {
         live_trees <- subset(all_plots, plot == p & status == 1)
         dead_trees <- subset(all_plots, plot == p & status == 0)
 
-        sum_total_live <- format(round(sum(live_trees$Mg_tree, na.rm = TRUE),2), nsmall = 2)
-        sum_total_dead <- format(round(sum(dead_trees$Mg_tree, na.rm = TRUE),2), nsmall = 2)
+        sum_total_live <- round(sum(live_trees$Mg_tree, na.rm = TRUE),2)
+        sum_total_dead <- round(sum(dead_trees$Mg_tree, na.rm = TRUE),2)
 
-        fill_df[nrow(fill_df) + 1, ] <- format(round(0), nsmall = 2)
+        fill_df[nrow(fill_df) + 1, ] <- NA
         n <- nrow(fill_df)
 
         fill_df$site[n] <- f
@@ -187,10 +187,10 @@ SumByPlot <- function(bio_data, bio_units) {
         live_trees <- subset(all_plots, plot == p & status == 1)
         dead_trees <- subset(all_plots, plot == p & status == 0)
 
-        sum_total_live <- format(round(sum(live_trees$ton_tree, na.rm = TRUE),2), nsmall = 2)
-        sum_total_dead <- format(round(sum(dead_trees$ton_tree, na.rm = TRUE),2), nsmall = 2)
+        sum_total_live <- round(sum(live_trees$ton_tree, na.rm = TRUE),2)
+        sum_total_dead <- round(sum(dead_trees$ton_tree, na.rm = TRUE),2)
 
-        fill_df[nrow(fill_df) + 1, ] <- format(round(0), nsmall = 2)
+        fill_df[nrow(fill_df) + 1, ] <- NA
         n <- nrow(fill_df)
 
         fill_df$site[n] <- f
