@@ -22,6 +22,37 @@ test_that("Dataframes have expected column names", {
 })
 
 
+test_that("Final column classes are as expected", {
+
+  trial_metric <- TreeBiomass(data = good_trees_metric,
+                              status = "Live",
+                              sp = "SPP",
+                              dbh = "DBH_CM",
+                              ht = "HT_M",
+                              sp_codes = "4letter",
+                              units = "metric")
+
+  expect_equal(class(trial_metric$stem_bio_kg), "numeric")
+  expect_equal(class(trial_metric$bark_bio_kg), "numeric")
+  expect_equal(class(trial_metric$branch_bio_kg), "numeric")
+  expect_equal(class(trial_metric$total_bio_kg), "numeric")
+
+  trial_imperial <- TreeBiomass(data = good_trees_imperial,
+                                status = "Live",
+                                sp = "SPP",
+                                dbh = "DBH_IN",
+                                ht = "HT_FT",
+                                sp_codes = "4letter",
+                                units = "imperial")
+
+  expect_equal(class(trial_imperial$stem_bio_tons), "numeric")
+  expect_equal(class(trial_imperial$bark_bio_tons), "numeric")
+  expect_equal(class(trial_imperial$branch_bio_tons), "numeric")
+  expect_equal(class(trial_imperial$total_bio_tons), "numeric")
+
+})
+
+
 test_that("Package and hand calculations match", {
 
   results_by_hand <- read.csv(system.file('extdata', 'results_check.csv', package = "Rbiomass"),

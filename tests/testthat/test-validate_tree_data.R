@@ -146,7 +146,7 @@ test_that("Status code handling works", {
                                 ht_val = "HT_M",
                                 sp_codes_val = "4letter",
                                 units = "metric"),
-               'Status must be 0 or 1!\nUnrecognized status codes: L D')
+               'Status must be 0 or 1!\nUnrecognized status codes: D L')
 
 })
 

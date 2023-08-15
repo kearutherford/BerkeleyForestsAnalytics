@@ -151,9 +151,9 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
   if(!all(is.element(data_val[[status_val]],
                      c("0","1", NA)))) {
 
-    unrecognized_status <- paste0(unique(data_val[!is.element(data_val[[status_val]],
+    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val[[status_val]],
                                                   c("0", "1", NA)), status_val]),
-                           sep = " ")
+                                sep = " "))
 
     stop('Status must be 0 or 1!\n',
          'Unrecognized status codes: ', unrecognized_status)
@@ -185,9 +185,9 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
     if(!all(is.element(data_val[[sp_val]],
                        sp_code_names$letter))) {
 
-      unrecognized_sp <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
+      unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val[[sp_val]],
                                                 sp_code_names$letter), sp_val]),
-                             sep = " ")
+                              sep = " "))
 
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
@@ -204,9 +204,9 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
     if(!all(is.element(data_val[[sp_val]],
                        sp_code_names$fia))) {
 
-      unrecognized_sp <- paste0(unique(data_val[!is.element(data_val[[sp_val]],
+      unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val[[sp_val]],
                                                 sp_code_names$fia), sp_val]),
-                             sep = " ")
+                              sep = " "))
 
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)

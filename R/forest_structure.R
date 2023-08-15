@@ -145,7 +145,7 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
   if ('TRUE' %in% is.na(data_val[[site_val]])) {
 
-    stop('There are missing site names in the provided dataframe.')
+    stop('There are missing site names in the provided dataframe.\n')
 
   }
 

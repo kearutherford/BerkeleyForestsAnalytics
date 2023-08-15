@@ -42,7 +42,7 @@ test_that("Dataframes have expected column names", {
   expect_named(ValidateSumData(data_val = good_sum_imperial,
                                site_val = "Forest",
                                plot_val = "Plot_id",
-                               ef_val = "SPH",
+                               ef_val = "SPA",
                                results_val = "by_plot",
                                status_val = "Live",
                                sp_val = "SPP")[1:7],

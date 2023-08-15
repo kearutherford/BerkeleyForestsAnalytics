@@ -128,7 +128,7 @@ good_sum_metric <- data.frame(
 good_sum_imperial <- data.frame(
   Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
-  SPH = c(50,50,50,50,50,50,50,50,50),
+  SPA = c(20,20,20,20,20,20,20,20,20),
   Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
   SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
   DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
@@ -171,7 +171,7 @@ good_comp_metric <- data.frame(
 good_comp_imperial <- data.frame(
   Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  SPH = c(50,50,50,50,50,50,50,50,50),
+  SPA = c(20,20,20,20,20,20,20,20,20),
   Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
   SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
   DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
@@ -198,6 +198,11 @@ bad_comp <- data.frame(
 
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
   DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
-  DBH_bad = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)) # wrong class
+  DBH_bad = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
+
+  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6),
+  HT_NA = c(5.1, NA, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6), # NA value
+  HT_bad = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)) # wrong class
+
 )
 
