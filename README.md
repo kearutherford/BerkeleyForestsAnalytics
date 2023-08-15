@@ -17,8 +17,8 @@ library(devtools)
 
 ``` r
 # install and load Rbiomass
-devtools::install_github('kearutherford/Rbiomass')
-library(Rbiomass)
+devtools::install_github('kearutherford/UCBForestAnalytics')
+library(UCBForestAnalytics)
 ```
 
 ## Biomass estimations
@@ -410,8 +410,7 @@ comp_demo <- ForestComp(data = demo_comp_data,
                         dbh = "DBH_CM")
 ```
 
-    ## The following species were present: PSME  ABCO  CADE   
-    ## Use this list to check for species code typos.
+    ## The following species were present: ABCO CADE PSME
 
 ``` r
 comp_demo
@@ -445,8 +444,7 @@ comp_demo2 <- ForestComp(data = demo_comp_data,
                          units = "metric")
 ```
 
-    ## The following species were present: PSME  ABCO  CADE   
-    ## Use this list to check for species code typos.
+    ## The following species were present: ABCO CADE PSME
 
 ``` r
 comp_demo2

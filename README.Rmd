@@ -19,8 +19,8 @@ library(devtools)
 
 ```r
 # install and load Rbiomass
-devtools::install_github('kearutherford/Rbiomass')
-library(Rbiomass)
+devtools::install_github('kearutherford/UCBForestAnalytics')
+library(UCBForestAnalytics)
 ```
 
 
@@ -67,7 +67,7 @@ The original dataframe will be returned, with four new columns:
 ### Demonstration
 
 ```{r, include = FALSE}
-library(Rbiomass)
+library(UCBForestAnalytics)
 ```
 
 ```{r}
