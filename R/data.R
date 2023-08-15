@@ -194,7 +194,7 @@ bad_comp <- data.frame(
   Live_bad = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
 
   SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  SPP_NA = c("PSME", NA, "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
+  SPP_NA = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
 
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
   DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value

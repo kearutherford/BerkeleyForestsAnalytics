@@ -153,9 +153,9 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
   if(!all(is.element(data_val[[status_val]],
                      c("0","1", NA)))) {
 
-    unrecognized_status <- paste0(unique(data_val[!is.element(data_val[[status_val]],
+    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val[[status_val]],
                                                               c("0", "1", NA)), status_val]),
-                                  sep = " ")
+                                       sep = " "))
 
     stop('Status must be 0 or 1!\n',
          'Unrecognized status codes: ', unrecognized_status)
@@ -216,6 +216,8 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
   colnames(data_val)[which(names(data_val) == colnames(data_val[status_val]))] <- "status"
   colnames(data_val)[which(names(data_val) == colnames(data_val[sp_val]))] <- "species"
   colnames(data_val)[which(names(data_val) == colnames(data_val[dbh_val]))] <- "dbh"
+
+  data_val <- subset(data_val, select = c(site, plot, ef, status, species, dbh))
 
   return(data_val)
 
@@ -319,10 +321,9 @@ CompCalc <- function(comp_data, comp_rel, comp_units) {
 
   }
 
-  recognized_sp <- paste0(unique(live_trees$species), sep = "  ")
+  recognized_sp <- sort(paste0(unique(live_trees$species), sep = " "))
 
-  message('The following species were present: ', recognized_sp, ' \n',
-          'Use this list to check for species code typos.')
+  message('The following species were present: ', recognized_sp)
 
   return(fill_df)
 
