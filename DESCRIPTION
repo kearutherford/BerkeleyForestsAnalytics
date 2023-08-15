@@ -1,11 +1,10 @@
 Package: UCBForestAnalytics
-Title: Estimate Above-ground Stem, Bark, and Branch Tree Biomass
+Title: Produce Standard Metrics for Forest Management and Ecology from Field Inventory Data
 Version: 0.1.0
-Authors@R: 
-    person("Kea", "Rutherford", email = "krutherford@berkeley.edu", role = c("aut", "cre"))
-Description: Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations
-    to estimate above-ground stem, bark, and branch tree biomass. The package 
-    uses the California equation set and should not be used for data from other regions.
+Authors@R: c(
+    person("Kea", "Rutherford", email = "krutherford@berkeley.edu", role = c("aut", "cre")),
+    person("John", "Battles", role = "aut"))
+Description: A suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data.
 URL: https://github.com/kearutherford/UCBForestAnalytics
 License: MIT + file LICENSE
 Encoding: UTF-8

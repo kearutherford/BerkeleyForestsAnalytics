@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(Rbiomass)
+library(UCBForestAnalytics)
 
-test_check("Rbiomass")
+test_check("UCBForestAnalytics")

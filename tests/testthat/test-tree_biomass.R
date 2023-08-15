@@ -55,7 +55,7 @@ test_that("Final column classes are as expected", {
 
 test_that("Package and hand calculations match", {
 
-  results_by_hand <- read.csv(system.file('extdata', 'results_check.csv', package = "Rbiomass"),
+  results_by_hand <- read.csv(system.file('extdata', 'results_check.csv', package = "UCBForestAnalytics"),
                               stringsAsFactors = FALSE)
 
   # 4letter and metric --------------------------

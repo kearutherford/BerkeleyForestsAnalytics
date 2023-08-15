@@ -4,5 +4,5 @@ bibentry(
   author   = c(person("Kea Rutherford"), person("John Battles")),
   organization  = "Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley",
   year = 2023,
-  url = "https://github.com/kearutherford/Rbiomass"
+  url = "https://github.com/kearutherford/UCBForestAnalytics"
 )
