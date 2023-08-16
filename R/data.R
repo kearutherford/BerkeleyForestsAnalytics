@@ -155,7 +155,7 @@ bad_sum <- data.frame(
 
 
 ######################################################################
-# dataframes used for ForestComp function tests
+# dataframes used for ForestComp and ForestStr function tests
 ######################################################################
 
 good_comp_metric <- data.frame(

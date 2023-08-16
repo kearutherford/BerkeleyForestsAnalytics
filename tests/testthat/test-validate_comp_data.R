@@ -44,7 +44,7 @@ test_that("Dataframes have expected column names", {
                                 sp_val = "SPP",
                                 dbh_val = "DBH_CM",
                                 rel_val = "BA",
-                                units_val = "metric")[1:6],
+                                units_val = "metric"),
                c("site", "plot", "ef", "status", "species", "dbh"))
 
 })

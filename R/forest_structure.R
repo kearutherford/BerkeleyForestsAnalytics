@@ -157,7 +157,9 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
-    stop('There are missing expansion factors in the provided dataframe.\n')
+    stop('There are missing expansion factors in the provided dataframe.\n',
+         'If you have a plot with no trees put zero for the expansion factor.\n',
+         ' \n')
 
   }
 
@@ -278,11 +280,27 @@ StrCalc <- function(str_data, str_units) {
 
       ba_area_plot <- round(sum(all_trees$ba_area, na.rm = TRUE),2)
       den_plot <- sum(all_trees$ef)
-      ba_tree_plot <- sum(all_trees$ba_area, na.rm = TRUE)/den_plot
-      dbh_plot <- round(sum(all_trees$dbh_ef, na.rm = TRUE)/den_plot,1)
 
-      if ("ht" %in% colnames(str_data)) {
+      if (den_plot != 0) {
+
+        ba_tree_plot <- sum(all_trees$ba_area, na.rm = TRUE)/den_plot
+        dbh_plot <- round(sum(all_trees$dbh_ef, na.rm = TRUE)/den_plot,1)
+
+      } else {
+
+        ba_tree_plot <- NA
+        dbh_plot <- NA
+
+      }
+
+      if ("ht" %in% colnames(str_data) & den_plot != 0) {
+
         ht_plot <- round(sum(all_trees$ht_ef, na.rm = TRUE)/den_plot,1)
+
+      } else if ("ht" %in% colnames(str_data) & den_plot == 0){
+
+        ht_plot <- NA
+
       }
 
         if (str_units == "metric") {

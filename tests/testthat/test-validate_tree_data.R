@@ -30,22 +30,22 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
 
 test_that("Dataframes have expected column names", {
 
-  expect_named((ValidateTreeData(data_val = good_trees_metric,
-                                 status_val = "Live",
-                                 sp_val = "SPP",
-                                 dbh_val = "DBH_CM",
-                                 ht_val = "HT_M",
-                                 sp_codes_val = "4letter",
-                                 units = "metric")[,1:7]),
+  expect_named(ValidateTreeData(data_val = good_trees_metric,
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                ht_val = "HT_M",
+                                sp_codes_val = "4letter",
+                                units = "metric"),
                c("Plot", "status", "species", "dbh_cm", "ht_m", "dbh_in", "ht_ft"))
 
-  expect_named((ValidateTreeData(data_val = good_trees_imperial,
-                                 status_val = "Live",
-                                 sp_val = "SPP",
-                                 dbh_val = "DBH_IN",
-                                 ht_val = "HT_FT",
-                                 sp_codes_val = "4letter",
-                                 units = "imperial")[,1:7]),
+  expect_named(ValidateTreeData(data_val = good_trees_imperial,
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_IN",
+                                ht_val = "HT_FT",
+                                sp_codes_val = "4letter",
+                                units = "imperial"),
                c("Plot", "status", "species",  "dbh_in", "ht_ft", "dbh_cm", "ht_m"))
 
 })
@@ -94,22 +94,22 @@ test_that("Unrecognized column names throw an error", {
 
 test_that("Invalid settings throw an error", {
 
-  expect_error((ValidateTreeData(data_val = good_trees_metric,
-                                 status_val = "Live",
-                                 sp_val = "SPP",
-                                 dbh_val = "DBH_CM",
-                                 ht_val = "HT_M",
-                                 sp_codes_val = "letter", # intentional error here
-                                 units = "metric")),
+  expect_error(ValidateTreeData(data_val = good_trees_metric,
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                ht_val = "HT_M",
+                                sp_codes_val = "letter", # intentional error here
+                                units = "metric"),
                'The "sp_codes" parameter must be set to either "4letter" or "fia."')
 
-  expect_error((ValidateTreeData(data_val = good_trees_metric,
-                                 status_val = "Live",
-                                 sp_val = "SPP",
-                                 dbh_val = "DBH_CM",
-                                 ht_val = "HT_M",
-                                 sp_codes_val = "4letter",
-                                 units = "metri")), # intentional error here
+  expect_error(ValidateTreeData(data_val = good_trees_metric,
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                ht_val = "HT_M",
+                                sp_codes_val = "4letter",
+                                units = "metri"), # intentional error here
                'The "units" parameter must be set to either "metric" or "imperial."')
 
 })
