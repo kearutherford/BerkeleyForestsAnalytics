@@ -150,7 +150,7 @@ test_that("Column class handling works", {
 test_that("NA handling works", {
 
   expect_error(ValidateStrData(data_val = bad_comp,
-                               site_val = "Forest_NA",
+                               site_val = "Forest_NA", # intentional error here
                                plot_val = "Plot_id",
                                ef_val = "SPH",
                                dbh_val = "DBH_CM",
@@ -160,7 +160,7 @@ test_that("NA handling works", {
 
   expect_error(ValidateStrData(data_val = bad_comp,
                                site_val = "Forest",
-                               plot_val = "Plot_id_NA",
+                               plot_val = "Plot_id_NA", # intentional error here
                                ef_val = "SPH",
                                dbh_val = "DBH_CM",
                                ht_val = "ignore",
@@ -170,17 +170,17 @@ test_that("NA handling works", {
   expect_error(ValidateStrData(data_val = bad_comp,
                                site_val = "Forest",
                                plot_val = "Plot_id",
-                               ef_val = "SPH_NA",
+                               ef_val = "SPH_NA", # intentional error here
                                dbh_val = "DBH_CM",
                                ht_val = "ignore",
                                units_val = "metric"),
-               'There are missing expansion factors in the provided dataframe.\nIf you have a plot with no trees put zero for the expansion factor.\n')
+               'There are missing expansion factors in the provided dataframe.\nFor plots with no trees, put zero for the expansion factor.\n')
 
   expect_warning(ValidateStrData(data_val = bad_comp,
                                  site_val = "Forest",
                                  plot_val = "Plot_id",
                                  ef_val = "SPH",
-                                 dbh_val = "DBH_NA",
+                                 dbh_val = "DBH_NA", # intentional error here
                                  ht_val = "ignore",
                                  units_val = "metric"),
                  'There are trees with missing DBH values in the provided dataframe.\nConsider addressing these missing values in your data.\n')
@@ -190,8 +190,22 @@ test_that("NA handling works", {
                                  plot_val = "Plot_id",
                                  ef_val = "SPH",
                                  dbh_val = "DBH_CM",
-                                 ht_val = "HT_NA",
+                                 ht_val = "HT_NA", # intentional error here
                                  units_val = "metric"),
                  'There are trees with missing height values in the provided dataframe.\nConsider addressing these missing values in your data.\n')
 
 })
+
+
+test_that("Plots with no trees handling works", {
+
+  expect_no_warning(ValidateStrData(data_val = bad_comp,
+                                    site_val = "Forest",
+                                    plot_val = "Plot_id_NT",
+                                    ef_val = "SPH_NT",
+                                    dbh_val = "DBH_NT",
+                                    ht_val = "HT_NT",
+                                    units_val = "metric"))
+
+})
+

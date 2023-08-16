@@ -147,7 +147,9 @@ ValidateSumData <- function(data_val, site_val, plot_val, ef_val, results_val, s
 
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
-    stop('There are missing expansion factors in the provided dataframe.\n')
+    stop('There are missing expansion factors in the provided dataframe.\n',
+         'For plots with no trees, put zero for the expansion factor.\n',
+         ' \n')
 
   }
 

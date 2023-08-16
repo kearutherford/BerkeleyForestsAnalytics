@@ -158,12 +158,15 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
     stop('There are missing expansion factors in the provided dataframe.\n',
-         'If you have a plot with no trees put zero for the expansion factor.\n',
+         'For plots with no trees, put zero for the expansion factor.\n',
          ' \n')
 
   }
 
-  if ('TRUE' %in% is.na(data_val[[dbh_val]])) {
+  # only flag NA dbh for plots with trees
+  plots_w_trees <- subset(data_val, data_val[[ef_val]] > 0) # pull out plots that have trees
+
+  if ('TRUE' %in% is.na(plots_w_trees[[dbh_val]])) {
 
     warning('There are trees with missing DBH values in the provided dataframe.\n',
             'Consider addressing these missing values in your data.\n',
@@ -175,7 +178,8 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
     # do nothing
   } else {
 
-    if ('TRUE' %in% is.na(data_val[[ht_val]])) {
+    # only flag NA height for plots with trees
+    if ('TRUE' %in% is.na(plots_w_trees[[ht_val]])) {
 
       warning('There are trees with missing height values in the provided dataframe.\n',
               'Consider addressing these missing values in your data.\n',
@@ -214,7 +218,7 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
 ################################################################################
 ################################################################################
-# CompCalc function
+# StrCalc function
 ################################################################################
 ################################################################################
 
@@ -281,7 +285,7 @@ StrCalc <- function(str_data, str_units) {
       ba_area_plot <- round(sum(all_trees$ba_area, na.rm = TRUE),2)
       den_plot <- sum(all_trees$ef)
 
-      if (den_plot != 0) {
+      if (den_plot > 0) {
 
         ba_tree_plot <- sum(all_trees$ba_area, na.rm = TRUE)/den_plot
         dbh_plot <- round(sum(all_trees$dbh_ef, na.rm = TRUE)/den_plot,1)
@@ -293,7 +297,7 @@ StrCalc <- function(str_data, str_units) {
 
       }
 
-      if ("ht" %in% colnames(str_data) & den_plot != 0) {
+      if ("ht" %in% colnames(str_data) & den_plot > 0) {
 
         ht_plot <- round(sum(all_trees$ht_ef, na.rm = TRUE)/den_plot,1)
 

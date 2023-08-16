@@ -184,25 +184,31 @@ bad_comp <- data.frame(
 
   Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
   Plot_id_NA = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
+  Plot_id_NT = as.character(c(1,1,1,1,1,2,2,2,3)), # no tree plot
 
   SPH = c(50,50,50,50,50,50,50,50,50),
   SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
   SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+  SPH_NT = c(50,50,50,50,50,50,50,50,0), # no tree plot
 
   Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
   Live_NA = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
   Live_bad = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
+  Live_NT = c("1", "0", "1", "1", "1", "1", "1", "1", NA), # no tree plot
 
   SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
   SPP_NA = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
+  SPP_NT = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA), # no tree plot
 
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
   DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
   DBH_bad = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
+  DBH_NT = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # no tree plot
 
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6),
   HT_NA = c(5.1, NA, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6), # NA value
-  HT_bad = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)) # wrong class
+  HT_bad = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)), # wrong class
+  HT_NT = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # no tree plot
 
 )
 

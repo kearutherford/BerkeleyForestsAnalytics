@@ -138,6 +138,6 @@ test_that("NA handling works", {
                                results_val = "by_plot",
                                status_val = "Live",
                                sp_val = "SPP"),
-               'There are missing expansion factors in the provided dataframe.')
+               'There are missing expansion factors in the provided dataframe.\nFor plots with no trees, put zero for the expansion factor.\n')
 
 })

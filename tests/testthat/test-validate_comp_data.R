@@ -224,17 +224,17 @@ test_that("NA handling works", {
                                 dbh_val = "DBH_CM",
                                 rel_val = "BA",
                                 units_val = "metric"),
-               'There are missing expansion factors in the provided dataframe.')
+               'There are missing expansion factors in the provided dataframe.\nFor plots with no trees, put zero for the expansion factor.\n')
 
   expect_warning(ValidateCompData(data_val = bad_comp,
-                                site_val = "Forest",
-                                plot_val = "Plot_id",
-                                ef_val = "SPH",
-                                status_val = "Live",
-                                sp_val = "SPP_NA", # intentional error here
-                                dbh_val = "DBH_CM",
-                                rel_val = "BA",
-                                units_val = "metric"),
+                                  site_val = "Forest",
+                                  plot_val = "Plot_id",
+                                  ef_val = "SPH",
+                                  status_val = "Live",
+                                  sp_val = "SPP_NA", # intentional error here
+                                  dbh_val = "DBH_CM",
+                                  rel_val = "BA",
+                                  units_val = "metric"),
                  'There are trees with missing species codes in the provided dataframe.\nTrees with NA species codes will be assigned "UNTR" for unknown tree.\n')
 
   expect_warning(ValidateCompData(data_val = bad_comp,
@@ -248,6 +248,16 @@ test_that("NA handling works", {
                                   units_val = "metric"),
                  'There are trees with missing DBH values in the provided dataframe.\nTrees with NA DBH will not be included in the composition calculations.\nConsider addressing these missing values in your data.\n')
 
+  expect_no_warning(ValidateCompData(data_val = bad_comp,
+                                     site_val = "Forest",
+                                     plot_val = "Plot_id",
+                                     ef_val = "SPH",
+                                     status_val = "Live",
+                                     sp_val = "SPP",
+                                     dbh_val = "DBH_NA", # intentional error here
+                                     rel_val = "density", # set to density
+                                     units_val = "metric"))
+
   expect_warning(ValidateCompData(data_val = bad_comp,
                                   site_val = "Forest",
                                   plot_val = "Plot_id",
@@ -260,3 +270,19 @@ test_that("NA handling works", {
                  'There are trees with missing status codes in the provided dataframe.\nTrees with NA status codes will not be included in the composition calculations.\nConsider addressing these missing values in your data.\n')
 
 })
+
+
+test_that("Plots with no trees handling works", {
+
+  expect_no_error(ValidateCompData(data_val = bad_comp,
+                                   site_val = "Forest",
+                                   plot_val = "Plot_id_NT",
+                                   ef_val = "SPH_NT",
+                                   status_val = "Live_NT",
+                                   sp_val = "SPP_NT",
+                                   dbh_val = "DBH_NT",
+                                   rel_val = "BA",
+                                   units_val = "metric"))
+
+})
+
