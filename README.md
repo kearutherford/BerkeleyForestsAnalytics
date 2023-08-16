@@ -1,5 +1,5 @@
 
-# Berkeley Forest Analytics
+# UC Berkeley Forest Analytics
 
 The `UCBForestAnalytics` package is a suite of open-source R functions
 designed to produce standard metrics for forest management and ecology
