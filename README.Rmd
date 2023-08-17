@@ -29,7 +29,7 @@ library(UCBForestAnalytics)
 The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The functions use the California equation set and should not be used for data from other regions. See references 1 & 2 below. 
 
 
-### :eight_spoked_asterisk: `TreeBiomass ( )`
+### :eight_spoked_asterisk: `TreeBiomass( )`
 
 ### Inputs
 
