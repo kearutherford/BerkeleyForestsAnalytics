@@ -29,7 +29,7 @@ above-ground stem, bark, and branch tree biomass. The functions use the
 California equation set and should not be used for data from other
 regions. See references 1 & 2 below.
 
-### :eight_spoked_asterisk: `TreeBiomass ( )`
+### :eight_spoked_asterisk: `TreeBiomass( )`
 
 ### Inputs
 
@@ -80,7 +80,7 @@ The original dataframe will be returned, with four new columns:
 3.  `branch_bio_kg` (or `branch_bio_tons`): biomass of branches in
     kilograms (or US tons)
 
-4.  `total_bio_kg` (or `total_bio_kg`): biomass of tree (stem + bark +
+4.  `total_bio_kg` (or `total_bio_tons`): biomass of tree (stem + bark +
     branches) in kilograms (or US tons)
 
 *Important note: For some hardwood species, the `stem_bio` includes bark

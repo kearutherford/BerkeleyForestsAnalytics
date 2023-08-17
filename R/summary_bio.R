@@ -55,6 +55,7 @@ SummaryBiomass <- function(data, site, plot, exp_factor, status, species, dbh, h
                        sp_codes = sp_codes,
                        units = units)
 
+  # check and prep input data
   step2 <- ValidateSumData(data_val = step1,
                            site_val = site,
                            plot_val = plot,
@@ -63,6 +64,7 @@ SummaryBiomass <- function(data, site, plot, exp_factor, status, species, dbh, h
                            status_val = status,
                            sp_val = species)
 
+  # Summarize biomass at the plot level
   if(results == "by_plot") {
 
     step3 <- SumByPlot(bio_data = step2,

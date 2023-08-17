@@ -57,7 +57,7 @@ The original dataframe will be returned, with four new columns:
 
 3. `branch_bio_kg` (or `branch_bio_tons`): biomass of branches in kilograms (or US tons)
 
-4. `total_bio_kg` (or `total_bio_kg`): biomass of tree (stem + bark + branches) in kilograms (or US tons)
+4. `total_bio_kg` (or `total_bio_tons`): biomass of tree (stem + bark + branches) in kilograms (or US tons)
 
 *Important note: For some hardwood species, the `stem_bio` includes bark and branch biomass. In these cases, bark and branch biomass are not available as separate components of total biomass. `bark_bio` and `branch_bio` will appear as `NA` and the `total_bio` will be equivalent to the `stem_bio`.*
 
