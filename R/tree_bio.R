@@ -186,7 +186,7 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, sp_c
                        sp_code_names$letter))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val[[sp_val]],
-                                                sp_code_names$letter), sp_val]),
+                                            sp_code_names$letter), sp_val]),
                               sep = " "))
 
       stop('Not all species codes were recognized!\n',
