@@ -8,20 +8,21 @@
 #' @description
 #' A fake dataset created for demonstration purposes only
 #'
-#' @format ## `demo_data`
+#' @format ## `bio_demo_data`
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
 #'   \item{Forest}{Broader location or forest where the data were collected}
 #'   \item{Plot_id}{Plot in which the individual tree was measured}
 #'   \item{SPH}{Stems per hectare}
 #'   \item{Live}{Live (1) or dead (0)}
+#'   \item{Decay}{1-5 for standing dead trees. NA or 0 for live trees.}
 #'   \item{SPP}{Species of the individual tree, using four-letter species codes}
 #'   \item{DBH_CM}{Diameter at breast height in centimeters}
 #'   \item{HT_M}{Tree height in meters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
-"demo_data"
+"bio_demo_data"
 
 
 #' @title Data for forest composition demonstration
@@ -29,7 +30,7 @@
 #' @description
 #' A fake dataset created for composition demonstration purposes only
 #'
-#' @format ## `demo_comp_data`
+#' @format ## `for_demo_data`
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
 #'   \item{Forest}{Broader location or forest where the data were collected}
@@ -42,7 +43,7 @@
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
-"demo_comp_data"
+"for_demo_data"
 
 
 ######################################################################
@@ -60,12 +61,13 @@ sp_code_names <- data.frame(
 
 
 ######################################################################
-# dataframes used for TreeBiomass function tests
+# dataframes used for TreeBiomass and AdjustBiomass function tests
 ######################################################################
 
 good_trees_metric <- data.frame(
   Plot = c(1,2,3,4,5),
   Live = c(1, 0, 1, 1, 0),
+  Decay = c(NA, 3, NA, NA, 2),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8),
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1)
@@ -74,6 +76,7 @@ good_trees_metric <- data.frame(
 good_trees_imperial <- data.frame(
   Plot = c(1,2,3,4,5),
   Live = c(1, 0, 1, 1, 0),
+  Decay = c(NA, 3, NA, NA, 2),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
   DBH_IN = c(4.1, 17.6, 7.5, 12.9, 5.4),
   HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4)
@@ -92,6 +95,11 @@ bad_trees <- data.frame(
   SPP4_bad2 = c("CADD", "PIPP", "QUKK", "ABCC", "PSMM"), # all wrong
   SPP_fia_bad1 = c("81", "1222", "818", "15", "202"), # one wrong
   SPP_fia_bad2 = c("8111", "1222", "8188", "1555", "2022"), # all wrong
+
+  Decay = c(NA, 3, NA, NA, 2),
+  Decay_bad1 = c(NA, 8, NA, NA, 2), # one wrong
+  Decay_bad2 = c(NA, 3, 4, NA, 2), # L tree w a D code
+  Decay_bad3 = c(NA, 0, NA, NA, 2), # D tree w a L code
 
   DBH_CM = c(15.3, 44.7, 19.1, 32.8, 13.8),
   DBH_IN = c(6.0, 17.6, 7.5, 12.9, 5.4),
@@ -120,6 +128,7 @@ good_sum_metric <- data.frame(
   Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
   SPH = c(50,50,50,50,50,50,50,50,50),
   Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
+  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),
   SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
@@ -130,6 +139,7 @@ good_sum_imperial <- data.frame(
   Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
   SPA = c(20,20,20,20,20,20,20,20,20),
   Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
+  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),
   SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
   DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
   HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
@@ -148,6 +158,7 @@ bad_sum <- data.frame(
   SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
 
   Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
+  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),
   SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)

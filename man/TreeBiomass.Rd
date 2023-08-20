@@ -42,8 +42,9 @@ The original dataframe, with four new columns:
 Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The package uses the California equation set and should not be used for data from other regions.
 }
 \examples{
-TreeBiomass(data = demo_data,
+TreeBiomass(data = bio_demo_data,
            status = "Live",
+           decay_class = "Decay",
            species = "SPP",
            dbh = "DBH_CM",
            ht = "HT_M",

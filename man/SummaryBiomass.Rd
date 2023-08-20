@@ -10,6 +10,7 @@ SummaryBiomass(
   plot,
   exp_factor,
   status,
+  decay_class,
   species,
   dbh,
   ht,
@@ -28,6 +29,8 @@ SummaryBiomass(
 \item{exp_factor}{Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.}
 
 \item{status}{Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.}
+
+\item{decay_class}{Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.}
 
 \item{species}{Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.}
 
@@ -55,11 +58,12 @@ A dataframe with the following columns:
 Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The package will summarize by plot or by plot as well as species. The package uses the California equation set and should not be used for data from other regions.
 }
 \examples{
-SummaryBiomass(data = demo_data,
+SummaryBiomass(data = bio_demo_data,
               site = "Forest",
               plot = "Plot_id",
               exp_factor = "SPH",
               status = "Live",
+              decay_class = "Decay",
               species = "SPP",
               dbh = "DBH_CM",
               ht = "HT_M",

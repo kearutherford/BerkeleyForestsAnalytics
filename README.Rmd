@@ -69,12 +69,12 @@ library(UCBForestAnalytics)
 
 ```{r}
 # investigate input dataframe
-demo_data
+bio_demo_data
 ```
 
 ```{r}
 # call the TreeBiomass() function in the UCBForestAnalytics package
-tree_bio_demo <- TreeBiomass(data = demo_data,
+tree_bio_demo <- TreeBiomass(data = bio_demo_data,
                              status = "Live",
                              species = "SPP",
                              dbh = "DBH_CM",
@@ -109,6 +109,8 @@ tree_bio_demo
 
 5. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
 
+6. `decay_class` Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see background information below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+
 6. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see species code tables below). The class of this variable will be coerced to character.
 
 7. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
@@ -139,7 +141,7 @@ A dataframe with the following columns:
 
 ```{r}
 # investigate input dataframe
-demo_data
+bio_demo_data
 ```
 
 <br>
@@ -148,11 +150,12 @@ demo_data
 ```{r}
 # call the SummaryBiomass() function in the UCBForestAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
-sum_bio_demo1 <- SummaryBiomass(data = demo_data,
+sum_bio_demo1 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
                                 plot = "Plot_id",
                                 exp_factor = "SPH",
                                 status = "Live",
+                                decay_class = "Decay",
                                 species = "SPP",
                                 dbh = "DBH_CM",
                                 ht = "HT_M",
@@ -167,11 +170,12 @@ sum_bio_demo1
 ```{r}
 # call the SummaryBiomass() function in the UCBForestAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
-sum_bio_demo2 <- SummaryBiomass(data = demo_data,
+sum_bio_demo2 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
                                 plot = "Plot_id",
                                 exp_factor = "SPH",
                                 status = "Live",
+                                decay_class = "Decay",
                                 species = "SPP",
                                 dbh = "DBH_CM",
                                 ht = "HT_M",
@@ -225,7 +229,7 @@ A dataframe with the following columns:
 
 ```{r}
 # investigate input dataframe
-demo_comp_data
+for_demo_data
 ```
 
 <br>
@@ -234,15 +238,15 @@ demo_comp_data
 ```{r}
 # call the ForestComp() function in the UCBForestAnalystics package
 # keep default relative (= "BA") and units (= "metric")
-comp_demo <- ForestComp(data = demo_comp_data,
-                        site = "Forest",
-                        plot = "Plot_id",
-                        exp_factor = "SPH",
-                        status = "Live",
-                        species = "SPP",
-                        dbh = "DBH_CM")
+comp_demo1 <- ForestComp(data = for_demo_data,
+                         site = "Forest",
+                         plot = "Plot_id",
+                         exp_factor = "SPH",
+                         status = "Live",
+                         species = "SPP",
+                         dbh = "DBH_CM")
 
-comp_demo
+comp_demo1
 ```
 
 <br>
@@ -250,7 +254,7 @@ comp_demo
 **Composition measured as relative density:**
 ```{r}
 # call the ForestComp() function in the UCBForestAnalystics package
-comp_demo2 <- ForestComp(data = demo_comp_data,
+comp_demo2 <- ForestComp(data = for_demo_data,
                          site = "Forest",
                          plot = "Plot_id",
                          exp_factor = "SPH",
@@ -305,7 +309,7 @@ A dataframe with the following columns:
 
 ```{r}
 # investigate input dataframe
-demo_comp_data
+for_demo_data
 ```
 
 <br>
@@ -314,13 +318,13 @@ demo_comp_data
 ```{r}
 # call the ForestStr() function in the UCBForestAnalystics package
 # keep default ht (= "ignore") and units (= "metric")
-str_demo <- ForestStr(data = demo_comp_data,
-                      site = "Forest",
-                      plot = "Plot_id",
-                      exp_factor = "SPH",
-                      dbh = "DBH_CM")
+str_demo1 <- ForestStr(data = for_demo_data,
+                       site = "Forest",
+                       plot = "Plot_id",
+                       exp_factor = "SPH",
+                       dbh = "DBH_CM")
 
-str_demo
+str_demo1
 ```
 
 <br>
@@ -328,7 +332,7 @@ str_demo
 **If tree heights were measured:**
 ```{r}
 # call the ForestStr() function in the UCBForestAnalystics package
-str_demo2 <- ForestStr(data = demo_comp_data,
+str_demo2 <- ForestStr(data = for_demo_data,
                        site = "Forest",
                        plot = "Plot_id",
                        exp_factor = "SPH",

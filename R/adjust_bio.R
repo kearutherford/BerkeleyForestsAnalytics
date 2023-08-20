@@ -64,7 +64,7 @@ ValidateAdjData <- function(data_val, status_val, decay_val) {
                                                                   c("0","1","2","3","4","5",NA)), decay_val]),
                                        sep = " "))
 
-    stop('decay_class must be 0-5!\n',
+    stop('decay_class must be ',0,' through ',5,'!\n',
          'Unrecognized decay class codes: ', unrecognized_decay)
   }
 
@@ -80,7 +80,7 @@ ValidateAdjData <- function(data_val, status_val, decay_val) {
 
   if (nrow(dead_miss) > 0) {
 
-    warning('There are dead trees with NA and/or ',0,' decay class codes.\n',
+    warning('There are dead trees with NA and/or zero decay class codes.\n',
             'The biomass of these dead trees will NOT be adjusted.\n',
             'Consider investigating these trees with mismatched status/decay class.\n')
 
@@ -89,7 +89,7 @@ ValidateAdjData <- function(data_val, status_val, decay_val) {
   if (nrow(live_miss) > 0) {
 
     warning('There are live trees with 1-5 decay class codes.\n',
-            'Live trees should have decay class codes of NA or ',0,'.\n',
+            'Live trees should have decay class codes of NA or zero.\n',
             'The biomass of these live trees will NOT be adjusted.\n',
             'But you should consider investigating these trees with mismatched status/decay class.\n')
 
@@ -113,6 +113,7 @@ Discount <- function(tree_data, tree_status, tree_decay, tree_sp, tree_sp_codes,
   # make sure decay_class and fia_code are character columns
   discount$decay_class <- as.character(discount$decay_class)
   discount$fia_code <- as.character(discount$fia_code)
+  tree_data[[tree_decay]] <- as.character(tree_data[[tree_decay]])
 
   # loop through each row
   n <- nrow(tree_data)

@@ -93,23 +93,23 @@ to the `stem_bio`.*
 
 ``` r
 # investigate input dataframe
-demo_data
+bio_demo_data
 ```
 
-    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
-    ## 1   SEKI       1  50    1 PSME   10.3  5.1
-    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
-    ## 3   SEKI       2  50    1 PSME   19.1  8.0
-    ## 4   SEKI       2  50    1 PSME   32.8 23.3
-    ## 5   YOMI       1  50    1 ABCO   13.8 11.1
-    ## 6   YOMI       1  50    1 CADE   20.2  8.5
-    ## 7   YOMI       2  50    1 QUKE   31.7 22.3
-    ## 8   YOMI       2  50    0 ABCO   13.1  9.7
-    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M
+    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1
+    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4
+    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0
+    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3
+    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1
+    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5
+    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3
+    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7
+    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6
 
 ``` r
 # call the TreeBiomass() function in the UCBForestAnalytics package
-tree_bio_demo <- TreeBiomass(data = demo_data,
+tree_bio_demo <- TreeBiomass(data = bio_demo_data,
                              status = "Live",
                              species = "SPP",
                              dbh = "DBH_CM",
@@ -120,16 +120,16 @@ tree_bio_demo <- TreeBiomass(data = demo_data,
 tree_bio_demo
 ```
 
-    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M stem_bio_kg bark_bio_kg
-    ## 1   SEKI       1  50    1 PSME   10.3  5.1       20.08        3.88
-    ## 2   SEKI       1  50    0 ABCO   44.7 26.4      535.66      260.36
-    ## 3   SEKI       2  50    1 PSME   19.1  8.0       40.52       17.42
-    ## 4   SEKI       2  50    1 PSME   32.8 23.3      347.02       64.81
-    ## 5   YOMI       1  50    1 ABCO   13.8 11.1       32.46       10.56
-    ## 6   YOMI       1  50    1 CADE   20.2  8.5       42.34        8.91
-    ## 7   YOMI       2  50    1 QUKE   31.7 22.3      572.06          NA
-    ## 8   YOMI       2  50    0 ABCO   13.1  9.7       30.05        9.16
-    ## 9   YOMI       2  50    0 PSME   15.8 10.6       48.34       10.98
+    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M stem_bio_kg bark_bio_kg
+    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1       20.08        3.88
+    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4      535.66      260.36
+    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0       40.52       17.42
+    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3      347.02       64.81
+    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1       32.46       10.56
+    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5       42.34        8.91
+    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3      572.06          NA
+    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7       30.05        9.16
+    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6       48.34       10.98
     ##   branch_bio_kg total_bio_kg
     ## 1          3.64        27.60
     ## 2         78.41       874.43
@@ -181,27 +181,33 @@ tree_bio_demo
     tibble. Specifies whether the individual tree is alive (1) or dead
     (0). The class of this variable will be coerced to factor.
 
-6.  `species` Must be a variable (column) in the provided dataframe or
+6.  `decay_class` Must be a variable (column) in the provided dataframe
+    or tibble. For standing dead trees, the decay class should be 1, 2,
+    3, 4, or 5 (see background information below). For live trees, the
+    decay class should be NA or 0. The class of this variable will be
+    coerced to character.
+
+7.  `species` Must be a variable (column) in the provided dataframe or
     tibble. Specifies the species of the individual tree. Must follow
     four-letter species code or FIA naming conventions (see species code
     tables below). The class of this variable will be coerced to
     character.
 
-7.  `dbh` Must be a **numeric** variable (column) in the provided
+8.  `dbh` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the diameter at breast height (DBH) of
     the individual tree in either centimeters or inches.
 
-8.  `ht` Must be a **numeric** variable (column) in the provided
+9.  `ht` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the height of the individual tree in
     either meters or feet.
 
-9.  `sp_codes` Not a variable (column) in the provided dataframe or
+10. `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
     four-letter code or FIA naming convention (see species code tables
     below). Must be set to either “4letter” or “fia”. The default is set
     to “4letter”.
 
-10. `units` Not a variable (column) in the provided dataframe or tibble.
+11. `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies (1) whether the dbh and ht variables were measured using
     metric (centimeters and meters) or imperial (inches and feet)
     units; (2) whether the expansion factor is in metric (stems per
@@ -210,7 +216,7 @@ tree_bio_demo
     per acre) units. Must be set to either “metric” or “imperial”. The
     default is set to “metric”.
 
-11. `results` Not a variable (column) in the provided dataframe or
+12. `results` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the results will be summarized by plot or
     by plot as well as species. Must be set to either “by_plot” or
     “by_species.” The default is set to “by_plot”.
@@ -235,19 +241,19 @@ A dataframe with the following columns:
 
 ``` r
 # investigate input dataframe
-demo_data
+bio_demo_data
 ```
 
-    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
-    ## 1   SEKI       1  50    1 PSME   10.3  5.1
-    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
-    ## 3   SEKI       2  50    1 PSME   19.1  8.0
-    ## 4   SEKI       2  50    1 PSME   32.8 23.3
-    ## 5   YOMI       1  50    1 ABCO   13.8 11.1
-    ## 6   YOMI       1  50    1 CADE   20.2  8.5
-    ## 7   YOMI       2  50    1 QUKE   31.7 22.3
-    ## 8   YOMI       2  50    0 ABCO   13.1  9.7
-    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M
+    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1
+    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4
+    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0
+    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3
+    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1
+    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5
+    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3
+    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7
+    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6
 
 <br>
 
@@ -256,11 +262,12 @@ demo_data
 ``` r
 # call the SummaryBiomass() function in the UCBForestAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
-sum_bio_demo1 <- SummaryBiomass(data = demo_data,
+sum_bio_demo1 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
                                 plot = "Plot_id",
                                 exp_factor = "SPH",
                                 status = "Live",
+                                decay_class = "Decay",
                                 species = "SPP",
                                 dbh = "DBH_CM",
                                 ht = "HT_M",
@@ -270,10 +277,10 @@ sum_bio_demo1
 ```
 
     ##   site plot live_Mg_ha dead_Mg_ha
-    ## 1 SEKI    1       1.38      43.72
+    ## 1 SEKI    1       1.38      38.17
     ## 2 SEKI    2      26.34       0.00
     ## 3 YOMI    1       6.16       0.00
-    ## 4 YOMI    2      28.60       6.13
+    ## 4 YOMI    2      28.60       3.72
 
 <br>
 
@@ -282,11 +289,12 @@ sum_bio_demo1
 ``` r
 # call the SummaryBiomass() function in the UCBForestAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
-sum_bio_demo2 <- SummaryBiomass(data = demo_data,
+sum_bio_demo2 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
                                 plot = "Plot_id",
                                 exp_factor = "SPH",
                                 status = "Live",
+                                decay_class = "Decay",
                                 species = "SPP",
                                 dbh = "DBH_CM",
                                 ht = "HT_M",
@@ -297,7 +305,7 @@ sum_bio_demo2
 
     ##    site plot species live_Mg_ha dead_Mg_ha
     ## 1  SEKI    1    PSME       1.38       0.00
-    ## 2  SEKI    1    ABCO       0.00      43.72
+    ## 2  SEKI    1    ABCO       0.00      38.17
     ## 3  SEKI    1    CADE       0.00       0.00
     ## 4  SEKI    1    QUKE       0.00       0.00
     ## 5  SEKI    2    PSME      26.34       0.00
@@ -308,8 +316,8 @@ sum_bio_demo2
     ## 10 YOMI    1    ABCO       2.93       0.00
     ## 11 YOMI    1    CADE       3.23       0.00
     ## 12 YOMI    1    QUKE       0.00       0.00
-    ## 13 YOMI    2    PSME       0.00       3.42
-    ## 14 YOMI    2    ABCO       0.00       2.71
+    ## 13 YOMI    2    PSME       0.00       2.02
+    ## 14 YOMI    2    ABCO       0.00       1.70
     ## 15 YOMI    2    CADE       0.00       0.00
     ## 16 YOMI    2    QUKE      28.60       0.00
 
@@ -380,7 +388,7 @@ A dataframe with the following columns:
 
 ``` r
 # investigate input dataframe
-demo_comp_data
+for_demo_data
 ```
 
     ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
@@ -401,19 +409,19 @@ demo_comp_data
 ``` r
 # call the ForestComp() function in the UCBForestAnalystics package
 # keep default relative (= "BA") and units (= "metric")
-comp_demo <- ForestComp(data = demo_comp_data,
-                        site = "Forest",
-                        plot = "Plot_id",
-                        exp_factor = "SPH",
-                        status = "Live",
-                        species = "SPP",
-                        dbh = "DBH_CM")
+comp_demo1 <- ForestComp(data = for_demo_data,
+                         site = "Forest",
+                         plot = "Plot_id",
+                         exp_factor = "SPH",
+                         status = "Live",
+                         species = "SPP",
+                         dbh = "DBH_CM")
 ```
 
     ## The following species were present: ABCO CADE PSME
 
 ``` r
-comp_demo
+comp_demo1
 ```
 
     ##   site plot species dominance
@@ -433,7 +441,7 @@ comp_demo
 
 ``` r
 # call the ForestComp() function in the UCBForestAnalystics package
-comp_demo2 <- ForestComp(data = demo_comp_data,
+comp_demo2 <- ForestComp(data = for_demo_data,
                          site = "Forest",
                          plot = "Plot_id",
                          exp_factor = "SPH",
@@ -525,7 +533,7 @@ A dataframe with the following columns:
 
 ``` r
 # investigate input dataframe
-demo_comp_data
+for_demo_data
 ```
 
     ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
@@ -546,13 +554,13 @@ demo_comp_data
 ``` r
 # call the ForestStr() function in the UCBForestAnalystics package
 # keep default ht (= "ignore") and units (= "metric")
-str_demo <- ForestStr(data = demo_comp_data,
-                      site = "Forest",
-                      plot = "Plot_id",
-                      exp_factor = "SPH",
-                      dbh = "DBH_CM")
+str_demo1 <- ForestStr(data = for_demo_data,
+                       site = "Forest",
+                       plot = "Plot_id",
+                       exp_factor = "SPH",
+                       dbh = "DBH_CM")
 
-str_demo
+str_demo1
 ```
 
     ##   site plot sph ba_m2_ha qmd_cm dbh_cm
@@ -566,7 +574,7 @@ str_demo
 
 ``` r
 # call the ForestStr() function in the UCBForestAnalystics package
-str_demo2 <- ForestStr(data = demo_comp_data,
+str_demo2 <- ForestStr(data = for_demo_data,
                        site = "Forest",
                        plot = "Plot_id",
                        exp_factor = "SPH",

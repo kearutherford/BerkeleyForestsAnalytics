@@ -37,7 +37,7 @@ test_that("Dataframes have expected column names", {
                                results_val = "by_plot",
                                status_val = "Live",
                                sp_val = "SPP"),
-                c("site", "plot", "ef", "status", "species", "DBH_CM", "HT_M"))
+                c("site", "plot", "ef", "status", "Decay", "species", "DBH_CM", "HT_M"))
 
   expect_named(ValidateSumData(data_val = good_sum_imperial,
                                site_val = "Forest",
@@ -46,7 +46,7 @@ test_that("Dataframes have expected column names", {
                                results_val = "by_plot",
                                status_val = "Live",
                                sp_val = "SPP"),
-               c("site", "plot", "ef", "status", "species", "DBH_IN", "HT_FT"))
+               c("site", "plot", "ef", "status", "Decay", "species", "DBH_IN", "HT_FT"))
 
 })
 

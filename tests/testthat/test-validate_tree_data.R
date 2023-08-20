@@ -37,7 +37,7 @@ test_that("Dataframes have expected column names", {
                                 ht_val = "HT_M",
                                 sp_codes_val = "4letter",
                                 units = "metric"),
-               c("Plot", "status", "species", "dbh_cm", "ht_m", "dbh_in", "ht_ft"))
+               c("Plot", "status", "Decay", "species", "dbh_cm", "ht_m", "dbh_in", "ht_ft"))
 
   expect_named(ValidateTreeData(data_val = good_trees_imperial,
                                 status_val = "Live",
@@ -46,7 +46,7 @@ test_that("Dataframes have expected column names", {
                                 ht_val = "HT_FT",
                                 sp_codes_val = "4letter",
                                 units = "imperial"),
-               c("Plot", "status", "species",  "dbh_in", "ht_ft", "dbh_cm", "ht_m"))
+               c("Plot", "status", "Decay", "species",  "dbh_in", "ht_ft", "dbh_cm", "ht_m"))
 
 })
 

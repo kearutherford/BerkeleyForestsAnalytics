@@ -48,7 +48,7 @@ A dataframe with the following columns:
 Compiles forest composition at the plot level. Measured as relative basal area or relative density for live trees.
 }
 \examples{
-ForestComp(data = demo_data,
+ForestComp(data = for_demo_data,
           site = "Forest",
           plot = "Plot_id",
           exp_factor = "SPH",

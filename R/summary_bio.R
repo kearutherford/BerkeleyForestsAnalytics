@@ -15,6 +15,7 @@
 #' @param plot Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
 #' @param exp_factor Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 #' @param status Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
+#' @param decay_class Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
 #' @param species Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.
 #' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 #' @param ht Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
@@ -32,11 +33,12 @@
 #' }
 #'
 #'@examples
-#'SummaryBiomass(data = demo_data,
+#'SummaryBiomass(data = bio_demo_data,
 #'               site = "Forest",
 #'               plot = "Plot_id",
 #'               exp_factor = "SPH",
 #'               status = "Live",
+#'               decay_class = "Decay",
 #'               species = "SPP",
 #'               dbh = "DBH_CM",
 #'               ht = "HT_M",
@@ -44,16 +46,17 @@
 #'
 #' @export
 
-SummaryBiomass <- function(data, site, plot, exp_factor, status, species, dbh, ht, sp_codes = "4letter", units = "metric", results = "by_plot") {
+SummaryBiomass <- function(data, site, plot, exp_factor, status, decay_class, species, dbh, ht, sp_codes = "4letter", units = "metric", results = "by_plot") {
 
-  # Calculate tree-level biomass
-  step1 <- TreeBiomass(data = data,
-                       status = status,
-                       species = species,
-                       dbh = dbh,
-                       ht = ht,
-                       sp_codes = sp_codes,
-                       units = units)
+  # Calculate tree-level biomass, adjusted for standing dead trees
+  step1 <- AdjustBiomass(data = data,
+                         status = status,
+                         decay_class = decay_class,
+                         species = species,
+                         dbh = dbh,
+                         ht = ht,
+                         sp_codes = sp_codes,
+                         units = units)
 
   # Check and prep input data
   step2 <- ValidateSumData(data_val = step1,

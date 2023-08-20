@@ -37,7 +37,7 @@ A dataframe with the following columns:
 Compiles forest structure at the plot level.
 }
 \examples{
-ForestStr(data = demo_data,
+ForestStr(data = for_demo_data,
          site = "Forest",
          plot = "Plot_id",
          exp_factor = "SPH",

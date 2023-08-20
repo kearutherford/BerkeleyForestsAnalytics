@@ -129,8 +129,8 @@ SumBySpecies <- function(bio_data, bio_units) {
           temp_df <- data.frame(site = f,
                                 plot = p,
                                 species = sp_list,
-                                live_Mg_ha = NA,
-                                dead_Mg_ha = NA)
+                                live_ton_ac = NA,
+                                dead_ton_ac = NA)
 
           # there are trees in the plot, and not all had NA biomass estimates
         } else if (sum_stems > 0 & alert_NA == "FALSE") {
@@ -138,8 +138,8 @@ SumBySpecies <- function(bio_data, bio_units) {
           temp_df <- data.frame(site = f,
                                 plot = p,
                                 species = sp_list,
-                                live_Mg_ha = 0,
-                                dead_Mg_ha = 0)
+                                live_ton_ac = 0,
+                                dead_ton_ac = 0)
 
           all_trees <- subset(all_trees, !is.na(species))
           species_ids <- unique(all_trees$species)

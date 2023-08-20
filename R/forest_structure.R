@@ -30,7 +30,7 @@
 #' }
 #'
 #'@examples
-#'ForestStr(data = demo_data,
+#'ForestStr(data = for_demo_data,
 #'          site = "Forest",
 #'          plot = "Plot_id",
 #'          exp_factor = "SPH",
