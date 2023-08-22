@@ -5,6 +5,40 @@
 ################################################################################
 ################################################################################
 
+#' @title AdjustBiomass
+#'
+#' @description
+#' First, uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass (uses the California equation set and should not be used for data from other regions). Then, accounts for the loss of biomass in standing dead trees through structural decay.
+#'
+#' @param data A dataframe or tibble. Each row must be an observation of an individual tree.
+#' @param status Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
+#' @param decay_class Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+#' @param species Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.
+#' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+#' @param ht Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
+#' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
+#' @param units Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#'
+#' @return The original dataframe, with four new columns. Biomass estimates for standing dead trees will be adjusted for structural decay.
+#' \itemize{
+#' \item stem_bio_kg (or stem_bio_tons): biomass of stem in kilograms (or tons)
+#' \item bark_bio_kg (or bark_bio_tons): biomass of bark in kilograms (or tons)
+#' \item branch_bio_kg (or branch_bio_tons): biomass of branches in kilograms (or tons)
+#' \item total_bio_kg (or total_bio_kg): biomass of tree (stem + bark + branches) in kilograms (or tons)
+#' }
+#'
+#'@examples
+#'AdjustBiomass(data = bio_demo_data,
+#'              status = "Live",
+#'              decay_class = "Decay",
+#'              species = "SPP",
+#'              dbh = "DBH_CM",
+#'              ht = "HT_M",
+#'              sp_codes = "4letter",
+#'              units = "metric")
+#'
+#' @export
+
 AdjustBiomass <- function(data, status, decay_class, species, dbh, ht, sp_codes = "4letter", units = "metric") {
 
   # Calculate tree-level biomass
@@ -82,7 +116,8 @@ ValidateAdjData <- function(data_val, status_val, decay_val) {
 
     warning('There are dead trees with NA and/or zero decay class codes.\n',
             'The biomass of these dead trees will NOT be adjusted.\n',
-            'Consider investigating these trees with mismatched status/decay class.\n')
+            'Consider investigating these trees with mismatched status/decay class.\n',
+            ' \n')
 
   }
 
@@ -91,7 +126,8 @@ ValidateAdjData <- function(data_val, status_val, decay_val) {
     warning('There are live trees with 1-5 decay class codes.\n',
             'Live trees should have decay class codes of NA or zero.\n',
             'The biomass of these live trees will NOT be adjusted.\n',
-            'But you should consider investigating these trees with mismatched status/decay class.\n')
+            'But you should consider investigating these trees with mismatched status/decay class.\n',
+            ' \n')
 
   }
 

@@ -174,7 +174,7 @@ test_that("NA handling works", {
                                dbh_val = "DBH_CM",
                                ht_val = "ignore",
                                units_val = "metric"),
-               'There are missing expansion factors in the provided dataframe.\nFor plots with no trees, put zero for the expansion factor.\n')
+               'There are missing expansion factors in the provided dataframe.\nFor plots with no trees, put zero for the expansion factor.')
 
   expect_warning(ValidateStrData(data_val = bad_comp,
                                  site_val = "Forest",

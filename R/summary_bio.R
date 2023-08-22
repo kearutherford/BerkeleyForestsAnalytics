@@ -146,15 +146,51 @@ ValidateSumData <- function(data_val, site_val, plot_val, ef_val, results_val, s
 
   if ('TRUE' %in% is.na(data_val[[plot_val]])) {
 
-    stop('There are missing plot names in the provided dataframe.\n')
+    stop('There are missing plot names in the provided dataframe.')
 
   }
 
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
     stop('There are missing expansion factors in the provided dataframe.\n',
-         'For plots with no trees, put zero for the expansion factor.\n',
-         ' \n')
+         'For plots with no trees, put zero for the expansion factor.')
+
+  }
+
+
+  ###########################################################
+  # Check for 0 expansion factors
+  ###########################################################
+
+  forests <- unique(data_val[[site_val]])
+
+  for(f in forests) {
+
+    all_plots <- subset(data_val, data_val[[site_val]] == f)
+    plot_ids <- unique(all_plots[[plot_val]])
+
+    for(p in plot_ids) {
+
+      all_trees <- subset(all_plots, all_plots[[plot_val]] == p)
+
+      if('TRUE' %in% is.element(all_trees[[ef_val]], 0)) {
+
+        n <- nrow(all_trees)
+
+        if(n > 1) {
+
+          check_plot <- paste0(c(f,p), sep = " ")
+
+          stop('There is a plot with a recorded expansion factor of 0, but with more than one row.\n',
+               'Plots with no trees should be represented by a single row, with site and plot filled in as appropriate and an exp_factor of 0.\n',
+               'Columns status, decay_class, species, dbh, and ht should be NA.\n',
+               'Investigate the following plot: ', check_plot)
+
+        }
+
+      }
+
+    }
 
   }
 

@@ -25,6 +25,28 @@
 "bio_demo_data"
 
 
+#' @title Data for demonstration
+#'
+#' @description
+#' A fake dataset created for demonstration purposes only
+#'
+#' @format ## `bio_NT_demo`
+#' A dataframe with 9 rows and 7 columns:
+#' \describe{
+#'   \item{Forest}{Broader location or forest where the data were collected}
+#'   \item{Plot_id}{Plot in which the individual tree was measured}
+#'   \item{SPH}{Stems per hectare}
+#'   \item{Live}{Live (1) or dead (0)}
+#'   \item{Decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
+#'   \item{DBH_CM}{Diameter at breast height in centimeters}
+#'   \item{HT_M}{Tree height in meters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"bio_NT_demo"
+
+
 #' @title Data for forest composition demonstration
 #'
 #' @description
@@ -44,6 +66,27 @@
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
 "for_demo_data"
+
+
+#' @title Data for forest composition demonstration
+#'
+#' @description
+#' A fake dataset created for composition demonstration purposes only
+#'
+#' @format ## `for_NT_demo`
+#' A dataframe with 9 rows and 7 columns:
+#' \describe{
+#'   \item{Forest}{Broader location or forest where the data were collected}
+#'   \item{Plot_id}{Plot in which the individual tree was measured}
+#'   \item{SPH}{Stems per hectare}
+#'   \item{Live}{Live (1) or dead (0)}
+#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
+#'   \item{DBH_CM}{Diameter at breast height in centimeters}
+#'   \item{HT_M}{Tree height in meters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"for_NT_demo"
 
 
 ######################################################################
@@ -155,7 +198,8 @@ bad_sum <- data.frame(
 
   SPH = c(50,50,50,50,50,50,50,50,50),
   SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
-  SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+  SPH_bad1 = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+  SPH_bad2 = c(50,50,50,50,50,50,50,50,0), # misuse of 0 ef
 
   Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
   Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),

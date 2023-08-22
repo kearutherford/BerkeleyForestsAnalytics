@@ -29,7 +29,6 @@
 #'@examples
 #'TreeBiomass(data = bio_demo_data,
 #'            status = "Live",
-#'            decay_class = "Decay",
 #'            species = "SPP",
 #'            dbh = "DBH_CM",
 #'            ht = "HT_M",
