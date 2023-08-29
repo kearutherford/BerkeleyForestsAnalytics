@@ -304,7 +304,7 @@ test_that("0 expansion factor handling works", {
                                 dbh_val = "DBH_CM",
                                 rel_val = "BA",
                                 units_val = "metric"),
-               'There are plots with a recorded expansion factor of 0, but with non-NA status, decay_class, species, dbh and/or ht.\nPlots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\nand NA status, decay_class, species, dbh, and ht.')
+               'There are plots with a recorded expansion factor of 0, but with non-NA status, species, and/or dbh.\nPlots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\nand NA status, species, and dbh.')
 
 })
 

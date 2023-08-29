@@ -137,7 +137,7 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
 
   ###########################################################
-  # Check for NAs
+  # Check that site and plot are as expected
   ###########################################################
 
   data_val[[site_val]] <- as.character(data_val[[site_val]]) # coerce into character
@@ -155,6 +155,12 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
   }
 
+
+  ##########################################################
+  # check that expansion factor is as expected
+  ##########################################################
+
+  # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
     stop('There are missing expansion factors in the provided dataframe.\n',
@@ -162,7 +168,61 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
   }
 
-  # only flag NA dbh for plots with trees
+  # First check for proper use of 0 ef -----------------------------------------
+  forests <- unique(data_val[[site_val]])
+
+  for(f in forests) {
+
+    all_plots <- subset(data_val, data_val[[site_val]] == f)
+    plot_ids <- unique(all_plots[[plot_val]])
+
+    for(p in plot_ids) {
+
+      all_trees <- subset(all_plots, all_plots[[plot_val]] == p)
+
+      if('TRUE' %in% is.element(all_trees[[ef_val]], 0)) {
+
+        n <- nrow(all_trees)
+
+        if(n > 1) {
+
+          stop('There are plots with a recorded expansion factor of 0, but with more than one row.\n',
+               'Plots with no trees should be represented by a single row with site and plot filled in as appropriate and an exp_factor of 0.')
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  if(ht_val == "ignore") {
+
+    plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
+                             select = c(dbh_val))
+
+  } else {
+
+    plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
+                             select = c(dbh_val, ht_val))
+
+  }
+
+  if('FALSE' %in% is.na(plots_wo_trees)) {
+
+    stop('There are plots with a recorded expansion factor of 0, but with non-NA dbh or ht.\n',
+         'Plots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\n',
+         'NA dbh and, if applicatable, NA ht.')
+
+  }
+
+
+  ###########################################################
+  # Check for other NAs
+  ###########################################################
+
   plots_w_trees <- subset(data_val, data_val[[ef_val]] > 0) # pull out plots that have trees
 
   if ('TRUE' %in% is.na(plots_w_trees[[dbh_val]])) {
@@ -177,7 +237,6 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
     # do nothing
   } else {
 
-    # only flag NA height for plots with trees
     if ('TRUE' %in% is.na(plots_w_trees[[ht_val]])) {
 
       warning('There are trees with missing height values in the provided dataframe.\n',
@@ -187,12 +246,6 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
     }
 
   }
-
-
-  ###########################################################
-  # Check for 0 expansion factors
-  ###########################################################
-
 
 
   ###########################################################

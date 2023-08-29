@@ -207,5 +207,23 @@ test_that("Plots with no trees handling works", {
                                     ht_val = "HT_NT",
                                     units_val = "metric"))
 
+  expect_error(ValidateStrData(data_val = bad_comp,
+                               site_val = "Forest",
+                               plot_val = "Plot_id",
+                               ef_val = "SPH_NT",
+                               dbh_val = "DBH_CM",
+                               ht_val = "ignore",
+                               units_val = "metric"),
+               'There are plots with a recorded expansion factor of 0, but with more than one row.\nPlots with no trees should be represented by a single row with site and plot filled in as appropriate and an exp_factor of 0.')
+
+  expect_error(ValidateStrData(data_val = bad_comp,
+                               site_val = "Forest",
+                               plot_val = "Plot_id_NT",
+                               ef_val = "SPH_NT",
+                               dbh_val = "DBH_CM",
+                               ht_val = "ignore",
+                               units_val = "metric"),
+               'There are plots with a recorded expansion factor of 0, but with non-NA dbh or ht.\nPlots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\nNA dbh and, if applicatable, NA ht.')
+
 })
 

@@ -205,13 +205,13 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
   }
 
   plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
-                           select = c(status_val, sp_val, dbh_val, ht_val, decay_val))
+                           select = c(status_val, sp_val, dbh_val))
 
   if('FALSE' %in% is.na(plots_wo_trees)) {
 
-    stop('There are plots with a recorded expansion factor of 0, but with non-NA status, decay_class, species, dbh and/or ht.\n',
+    stop('There are plots with a recorded expansion factor of 0, but with non-NA status, species, and/or dbh.\n',
          'Plots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\n',
-         'and NA status, decay_class, species, dbh, and ht.')
+         'and NA status, species, and dbh.')
 
   }
 
