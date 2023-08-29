@@ -272,7 +272,7 @@ test_that("NA handling works", {
 })
 
 
-test_that("Plots with no trees handling works", {
+test_that("0 expansion factor handling works", {
 
   expect_no_error(ValidateCompData(data_val = bad_comp,
                                    site_val = "Forest",
@@ -283,6 +283,28 @@ test_that("Plots with no trees handling works", {
                                    dbh_val = "DBH_NT",
                                    rel_val = "BA",
                                    units_val = "metric"))
+
+  expect_error(ValidateCompData(data_val = bad_comp,
+                                site_val = "Forest",
+                                plot_val = "Plot_id",
+                                ef_val = "SPH_NT",
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                rel_val = "BA",
+                                units_val = "metric"),
+               'There are plots with a recorded expansion factor of 0, but with more than one row.\nPlots with no trees should be represented by a single row with site and plot filled in as appropriate and an exp_factor of 0.')
+
+  expect_error(ValidateCompData(data_val = bad_comp,
+                                site_val = "Forest",
+                                plot_val = "Plot_id_NT",
+                                ef_val = "SPH_NT",
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                rel_val = "BA",
+                                units_val = "metric"),
+               'There are plots with a recorded expansion factor of 0, but with non-NA status, decay_class, species, dbh and/or ht.\nPlots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\nand NA status, decay_class, species, dbh, and ht.')
 
 })
 

@@ -144,30 +144,11 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
 
 
   ###########################################################
-  # Check that status is as expected
-  ###########################################################
-
-  data_val[[status_val]] <- as.factor(data_val[[status_val]]) # coerce status_val into factor
-
-  if(!all(is.element(data_val[[status_val]],
-                     c("0","1", NA)))) {
-
-    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val[[status_val]],
-                                       c("0", "1", NA)), status_val]),
-                                       sep = " "))
-
-    stop('Status must be 0 or 1!\n',
-         'Unrecognized status codes: ', unrecognized_status)
-  }
-
-
-  ###########################################################
-  # Check for NAs
+  # Check that site and plot are as expected
   ###########################################################
 
   data_val[[site_val]] <- as.character(data_val[[site_val]]) # coerce into character
   data_val[[plot_val]] <- as.character(data_val[[plot_val]]) # coerce into character
-  data_val[[sp_val]] <- as.character(data_val[[sp_val]]) # coerce sp_val into character
 
   if ('TRUE' %in% is.na(data_val[[site_val]])) {
 
@@ -181,16 +162,80 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
 
   }
 
+
+  ##########################################################
+  # check that expansion factor is as expected
+  ##########################################################
+
+  # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(data_val[[ef_val]])) {
 
     stop('There are missing expansion factors in the provided dataframe.\n',
-         'For plots with no trees, put zero for the expansion factor.',
-         ' \n')
+         'For plots with no trees, put zero for the expansion factor.')
 
   }
 
-  # only flag NA status codes for plots with trees
-  plots_w_trees <- subset(data_val, data_val[[ef_val]] > 0) # pull out plots that have trees
+  # First check for proper use of 0 ef -----------------------------------------
+  forests <- unique(data_val[[site_val]])
+
+  for(f in forests) {
+
+    all_plots <- subset(data_val, data_val[[site_val]] == f)
+    plot_ids <- unique(all_plots[[plot_val]])
+
+    for(p in plot_ids) {
+
+      all_trees <- subset(all_plots, all_plots[[plot_val]] == p)
+
+      if('TRUE' %in% is.element(all_trees[[ef_val]], 0)) {
+
+        n <- nrow(all_trees)
+
+        if(n > 1) {
+
+          stop('There are plots with a recorded expansion factor of 0, but with more than one row.\n',
+               'Plots with no trees should be represented by a single row with site and plot filled in as appropriate and an exp_factor of 0.')
+
+        }
+
+      }
+
+    }
+
+  }
+
+  plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
+                           select = c(status_val, sp_val, dbh_val, ht_val, decay_val))
+
+  if('FALSE' %in% is.na(plots_wo_trees)) {
+
+    stop('There are plots with a recorded expansion factor of 0, but with non-NA status, decay_class, species, dbh and/or ht.\n',
+         'Plots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\n',
+         'and NA status, decay_class, species, dbh, and ht.')
+
+  }
+
+
+  ###########################################################
+  # Check that status is as expected
+  ###########################################################
+
+  data_val[[status_val]] <- as.factor(data_val[[status_val]]) # coerce status_val into factor
+
+  # Check for unrecognized status codes ----------------------------------------
+  if(!all(is.element(data_val[[status_val]],
+                     c("0","1", NA)))) {
+
+    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val[[status_val]],
+                                       c("0", "1", NA)), status_val]),
+                                       sep = " "))
+
+    stop('Status must be 0 or 1!\n',
+         'Unrecognized status codes: ', unrecognized_status)
+  }
+
+  # Check for NA ---------------------------------------------------------------
+  plots_w_trees <- subset(data_val, data_val[[ef_val]] > 0)
 
   if ('TRUE' %in% is.na(plots_w_trees[[status_val]])) {
 
@@ -200,7 +245,13 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
             ' \n')
   }
 
-  # Only flag NA species codes for plots with trees
+
+  ###########################################################
+  # Check for other NAs
+  ###########################################################
+
+  data_val[[sp_val]] <- as.character(data_val[[sp_val]]) # coerce sp_val into character
+
   if ('TRUE' %in% is.na(plots_w_trees[[sp_val]])) {
 
     warning('There are trees with missing species codes in the provided dataframe.\n',
@@ -208,7 +259,6 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
             ' \n')
   }
 
-  # only flag NA dbh for plots with trees
   # NA DBH is only an issue for relative BA (not relative density)
   if ('TRUE' %in% is.na(plots_w_trees[[dbh_val]]) & rel_val == "BA") {
 

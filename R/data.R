@@ -104,11 +104,11 @@ sp_code_names <- data.frame(
 
 
 ######################################################################
-# dataframes used for TreeBiomass and AdjustBiomass function tests
+# dataframes used for TreeBiomass function tests
 ######################################################################
 
 good_trees_metric <- data.frame(
-  Plot = c(1,2,3,4,5),
+  Plot = c(1,1,1,2,2),
   Live = c(1, 0, 1, 1, 0),
   Decay = c(NA, 3, NA, NA, 2),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
@@ -117,7 +117,7 @@ good_trees_metric <- data.frame(
 )
 
 good_trees_imperial <- data.frame(
-  Plot = c(1,2,3,4,5),
+  Plot = c(1,1,1,2,2),
   Live = c(1, 0, 1, 1, 0),
   Decay = c(NA, 3, NA, NA, 2),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
@@ -168,13 +168,13 @@ bad_trees <- data.frame(
 
 good_sum_metric <- data.frame(
   Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
-  SPH = c(50,50,50,50,50,50,50,50,50),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
-  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),
-  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+  Plot_id = as.character(c(1,1,2,2,1,1,2,2,3)),
+  SPH = c(50,50,50,50,50,50,50,50,0),
+  Live = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA)
 )
 
 good_sum_imperial <- data.frame(
@@ -195,11 +195,12 @@ bad_sum <- data.frame(
 
   Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
   Plot_id_NA = as.character(c(1,NA,2,2,1,1,2,2,2)), # NA value
+  Plot_id_bad2 = as.character(c(1,1,2,2,1,1,2,2,3)), # misuse of 0 ef
 
   SPH = c(50,50,50,50,50,50,50,50,50),
   SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
   SPH_bad1 = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
-  SPH_bad2 = c(50,50,50,50,50,50,50,50,0), # misuse of 0 ef
+  SPH_bad2 = c(50,50,50,50,50,50,50,50,0), # misuse of 0 ef (use with Plot_id & Plot_id_bad2)
 
   Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
   Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),

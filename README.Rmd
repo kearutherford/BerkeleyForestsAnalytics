@@ -26,12 +26,12 @@ library(UCBForestAnalytics)
 
 ## Biomass estimations 
 
-The biomass functions (`TreeBiomass`, `AdjustBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The functions use the California equation set and should not be used for data from other regions. 
+The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The functions use the California equation set and should not be used for data from other regions. 
 
 
 ### :eight_spoked_asterisk: `TreeBiomass( )`
 
-The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. It does not adjust biomass estimates for standing dead trees, which lose mass through degradation and decay. And it does not summarize the outputs in any way. See references 1 & 2 below. 
+The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. It provides the option to adjust biomass estimates for standing dead trees, which lose mass through degredation and decay. See references 1, 2 & 3 below. 
 
 ### Inputs
 
@@ -45,13 +45,15 @@ The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional
 
 5. `ht` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
 
-6. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see species code tables below). Must be set to either "4letter" or "fia". The default is set to "4letter".
+6. `decay_class` Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see decay class descriptions in background information). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
 
-7. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+7. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see species code tables below). Must be set to either "4letter" or "fia". The default is set to "4letter".
+
+8. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
 ### Outputs
 
-The original dataframe will be returned, with four new columns:
+The original dataframe will be returned, with four new columns. If decay_class is provided, the biomass estimates for standing dead trees will be adjusted for structural decay.
 
 1. `stem_bio_kg` (or `stem_bio_tons`): biomass of stem in kilograms (or US tons)
 
@@ -63,7 +65,7 @@ The original dataframe will be returned, with four new columns:
 
 *Important note: For some hardwood species, the `stem_bio` includes bark and branch biomass. In these cases, bark and branch biomass are not available as separate components of total biomass. `bark_bio` and `branch_bio` will appear as `NA` and the `total_bio` will be equivalent to the `stem_bio`.*
 
-### Demonstration
+### Demonstrations
 
 ```{r, include = FALSE}
 library(UCBForestAnalytics)
@@ -76,15 +78,14 @@ bio_demo_data
 
 ```{r}
 # call the TreeBiomass() function in the UCBForestAnalytics package
-tree_bio_demo <- TreeBiomass(data = bio_demo_data,
-                             status = "Live",
-                             species = "SPP",
-                             dbh = "DBH_CM",
-                             ht = "HT_M",
-                             sp_codes = "4letter",
-                             units = "metric")
+# keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
+tree_bio_demo1 <- TreeBiomass(data = bio_demo_data,
+                              status = "Live",
+                              species = "SPP",
+                              dbh = "DBH_CM",
+                              ht = "HT_M")
 
-tree_bio_demo
+tree_bio_demo1
 ```
 
 **Notice in the output dataframe:**
@@ -97,68 +98,24 @@ tree_bio_demo
 
 <br>
 
-### :eight_spoked_asterisk: `AdjustBiomass( )`
-
-The `AdjustBiomass` function calls on the `TreeBiomass` function described above. Additionally, the biomass estimates for standing dead trees are adjusted for structural decay. See reference 3 below. 
-
-### Inputs
-
-1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
-
-2. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
-
-3. `decay_class` Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see decay class descriptions in background information). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
-
-4. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see species code tables in background information). The class of this variable will be coerced to character.
-
-5. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
-
-6. `ht` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
-
-7. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see species code tables below). Must be set to either "4letter" or "fia". The default is set to "4letter".
-
-8. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
-
-### Outputs
-
-The original dataframe will be returned, with four new columns. Biomass estimates for standing dead trees will be adjusted for structural decay. 
-
-1. `stem_bio_kg` (or `stem_bio_tons`): biomass of stem in kilograms (or US tons)
-
-2. `bark_bio_kg` (or `bark_bio_tons`): biomass of bark in kilograms (or US tons)
-
-3. `branch_bio_kg` (or `branch_bio_tons`): biomass of branches in kilograms (or US tons)
-
-4. `total_bio_kg` (or `total_bio_tons`): biomass of tree (stem + bark + branches) in kilograms (or US tons)
-
-*Important note: For some hardwood species, the `stem_bio` includes bark and branch biomass. In these cases, bark and branch biomass are not available as separate components of total biomass. `bark_bio` and `branch_bio` will appear as `NA` and the `total_bio` will be equivalent to the `stem_bio`.*
-
-### Demonstration
-
 ```{r}
-# investigate input dataframe
-bio_demo_data
-```
-
-```{r}
-# call the AdjustBiomass() function in the UCBForestAnalytics package
-adj_bio_demo <- AdjustBiomass(data = bio_demo_data,
+# call the TreeBiomass() function in the UCBForestAnalytics package
+# keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
+tree_bio_demo2 <- TreeBiomass(data = bio_demo_data,
                               status = "Live",
-                              decay_class = "Decay",
                               species = "SPP",
                               dbh = "DBH_CM",
                               ht = "HT_M",
+                              decay_class = "Decay",
                               sp_codes = "4letter",
                               units = "metric")
 
-adj_bio_demo
+tree_bio_demo2
 ```
 
 **Notice in the output dataframe:**
 
-* See comments for `TreeBiomass` above. 
-
-* Comparing between the outputs from the `TreeBiomass` function and the `AdjustBiomass` function:
+* Comparing between the outputs from demo1 and demo2:
     * For the three standing dead trees, the biomass estimates are adjusted for structural decay. 
     * For the live trees, the biomass estimates remain the same. 
 
@@ -166,7 +123,7 @@ adj_bio_demo
 
 ### :eight_spoked_asterisk: `SummaryBiomass( )`
 
-The `SummaryBiomass` function calls on the `AdjustBiomass` function described above. Additionally, the outputs are summarized by plot or by plot as well as species. 
+The `SummaryBiomass` function calls on the `TreeBiomass` function described above. Additionally, the outputs are summarized by plot or by plot as well as species. 
 
 ### Inputs
 

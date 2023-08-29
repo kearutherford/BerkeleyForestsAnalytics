@@ -10,6 +10,7 @@ TreeBiomass(
   species,
   dbh,
   ht,
+  decay_class = "ignore",
   sp_codes = "4letter",
   units = "metric"
 )
@@ -25,12 +26,14 @@ TreeBiomass(
 
 \item{ht}{Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.}
 
+\item{decay_class}{Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.}
+
 \item{sp_codes}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".}
 
 \item{units}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".}
 }
 \value{
-The original dataframe, with four new columns:
+The original dataframe, with four new columns. If decay_class is provided, the biomass estimates for standing dead trees will be adjusted for structural decay.
 \itemize{
 \item stem_bio_kg (or stem_bio_tons): biomass of stem in kilograms (or tons)
 \item bark_bio_kg (or bark_bio_tons): biomass of bark in kilograms (or tons)
@@ -47,6 +50,15 @@ TreeBiomass(data = bio_demo_data,
            species = "SPP",
            dbh = "DBH_CM",
            ht = "HT_M",
+           sp_codes = "4letter",
+           units = "metric")
+
+TreeBiomass(data = bio_demo_data,
+           status = "Live",
+           species = "SPP",
+           dbh = "DBH_CM",
+           ht = "HT_M",
+           decay_class = "Decay",
            sp_codes = "4letter",
            units = "metric")
 
