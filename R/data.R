@@ -102,6 +102,11 @@ sp_code_names <- data.frame(
           "264", "998", "999", "920", NA)
 )
 
+VanWag_species <- data.frame (
+  letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR", NA),
+  fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "298", "998", "999", NA)
+)
+
 
 ######################################################################
 # dataframes used for TreeBiomass function tests
@@ -270,7 +275,7 @@ bad_comp <- data.frame(
 
 
 ######################################################################
-# dataframes used for surface and gorund fuel load calculations
+# dataframes used for surface and ground fuel load calculations
 ######################################################################
 
 DL_table <- data.frame (
