@@ -1,4 +1,5 @@
 
+
 Rfuels <- read.csv(system.file('extdata', 'fuels_check.csv', package = "UCBForestAnalytics"),
                    stringsAsFactors = FALSE)
 
@@ -18,10 +19,10 @@ fuels2 <- Rfuels %>%
 
 
 ex_trees <- read.csv(system.file('extdata', 'example_treelist.csv', package = "UCBForestAnalytics"),
-                  stringsAsFactors = FALSE)
+                     stringsAsFactors = FALSE)
 
 ex_fuels <- read.csv(system.file('extdata', 'example_fuels.csv', package = "UCBForestAnalytics"),
-                  stringsAsFactors = FALSE)
+                     stringsAsFactors = FALSE)
 
 ex_trees$site <- as.character(ex_trees$site)
 ex_trees$plot <- as.character(ex_trees$plot)
@@ -47,10 +48,9 @@ all <- full_join(trial2, fuels2, by = c("time", "site", "plot")) %>%
 
 test_that('Rfuels and UCB agree', {
 
-expect_equal(all$R_1h, all$K_1h)
-expect_equal(all$R_10h, all$K_10h)
-expect_equal(all$R_100h, all$K_100h)
+  expect_equal(all$R_1h, all$K_1h)
+  expect_equal(all$R_10h, all$K_10h)
+  expect_equal(all$R_100h, all$K_100h)
 
 })
-
 

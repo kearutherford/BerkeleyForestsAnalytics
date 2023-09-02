@@ -5,7 +5,7 @@
 ################################################################################
 ################################################################################
 
-FineFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metric") {
+GroundFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metric") {
 
   # check and prep input fuel data
   step1 <- ValidateFWD(fuel_data_val = fuel_data,
@@ -36,7 +36,7 @@ FineFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metri
 ################################################################################
 ################################################################################
 
-ValidateFWD <- function(fuel_data_val, units_val) {
+ValidateGround <- function(fuel_data_val, units_val) {
 
   # coerce tibble inputs into data.frame
   fuel_data_val <- as.data.frame(fuel_data_val)
@@ -264,24 +264,16 @@ ValidateFWD <- function(fuel_data_val, units_val) {
 ################################################################################
 ################################################################################
 
-FWDCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
+GroundCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
   # calculate proportion of time:site:plot basal area occupied by each species
   tree_dom <- TreeDom(data = coef_tree_data,
                       tree_units = coef_units)
 
   # create columns to fill
-  tree_dom$qmd_1h <- NA
-  tree_dom$qmd_10h <- NA
-  tree_dom$qmd_100h <- NA
-
-  tree_dom$sec_1h <- NA
-  tree_dom$sec_10h <- NA
-  tree_dom$sec_100h <- NA
-
-  tree_dom$sg_1h <- NA
-  tree_dom$sg_10h <- NA
-  tree_dom$sg_100h <- NA
+  tree_dom$litter <- NA
+  tree_dom$duff <- NA
+  tree_dom$litter_duff <- NA
 
   n <- nrow(tree_dom)
 
@@ -292,64 +284,32 @@ FWDCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
     if(coef_sp_codes == "4letter") {
 
-      tree_dom$qmd_1h[i] <- QMD_table[QMD_table$letter == sp, "qmd_1h"]
-      tree_dom$qmd_10h[i] <- QMD_table[QMD_table$letter == sp, "qmd_10h"]
-      tree_dom$qmd_100h[i] <- QMD_table[QMD_table$letter == sp, "qmd_100h"]
-
-      tree_dom$sec_1h[i] <- SEC_table[SEC_table$letter == sp, "sec_1h"]
-      tree_dom$sec_10h[i] <- SEC_table[SEC_table$letter == sp, "sec_10h"]
-      tree_dom$sec_100h[i] <- SEC_table[SEC_table$letter == sp, "sec_100h"]
-
-      tree_dom$sg_1h[i] <- SG_table[SG_table$letter == sp, "sg_1h"]
-      tree_dom$sg_10h[i] <- SG_table[SG_table$letter == sp, "sg_10h"]
-      tree_dom$sg_100h[i] <- SG_table[SG_table$letter == sp, "sg_100h"]
+      tree_dom$litter[i] <- DL_table[DL_table$letter == sp, "litter_coef"]
+      tree_dom$duff[i] <- DL_table[DL_table$letter == sp, "duff_coef"]
+      tree_dom$litter_duff[i] <- DL_table[DL_table$letter == sp, "litterduff_coef"]
 
     } else {
 
-      tree_dom$qmd_1h[i] <- QMD_table[QMD_table$fia == sp, "qmd_1h"]
-      tree_dom$qmd_10h[i] <- QMD_table[QMD_table$fia == sp, "qmd_10h"]
-      tree_dom$qmd_100h[i] <- QMD_table[QMD_table$fia == sp, "qmd_100h"]
-
-      tree_dom$sec_1h[i] <- SEC_table[SEC_table$fia == sp, "sec_1h"]
-      tree_dom$sec_10h[i] <- SEC_table[SEC_table$fia == sp, "sec_10h"]
-      tree_dom$sec_100h[i] <- SEC_table[SEC_table$fia == sp, "sec_100h"]
-
-      tree_dom$sg_1h[i] <- SG_table[SG_table$fia == sp, "sg_1h"]
-      tree_dom$sg_10h[i] <- SG_table[SG_table$fia == sp, "sg_10h"]
-      tree_dom$sg_100h[i] <- SG_table[SG_table$fia == sp, "sg_100h"]
+      tree_dom$litter[i] <- DL_table[DL_table$fia == sp, "litter_coef"]
+      tree_dom$duff[i] <- DL_table[DL_table$fia == sp, "duff_coef"]
+      tree_dom$litter_duff[i] <- DL_table[DL_table$fia == sp, "litterduff_coef"]
 
     }
 
   }
 
-  tree_dom$qmd_1h_wt <- tree_dom$qmd_1h*tree_dom$perc_BA
-  tree_dom$qmd_10h_wt <- tree_dom$qmd_10h*tree_dom$perc_BA
-  tree_dom$qmd_100h_wt <- tree_dom$qmd_100h*tree_dom$perc_BA
-
-  tree_dom$sec_1h_wt <- tree_dom$sec_1h*tree_dom$perc_BA
-  tree_dom$sec_10h_wt <- tree_dom$sec_10h*tree_dom$perc_BA
-  tree_dom$sec_100h_wt <- tree_dom$sec_100h*tree_dom$perc_BA
-
-  tree_dom$sg_1h_wt <- tree_dom$sg_1h*tree_dom$perc_BA
-  tree_dom$sg_10h_wt <- tree_dom$sg_10h*tree_dom$perc_BA
-  tree_dom$sg_100h_wt <- tree_dom$sg_100h*tree_dom$perc_BA
+  tree_dom$coef_litter <- tree_dom$litter*tree_dom$perc_BA
+  tree_dom$coef_duff <- tree_dom$duff*tree_dom$perc_BA
+  tree_dom$coef_litterduff <- tree_dom$litter_duff*tree_dom$perc_BA
 
   tree_subset <- subset(tree_dom, select = c(time, site, plot,
-                                             qmd_1h_wt, qmd_10h_wt, qmd_100h_wt,
-                                             sec_1h_wt, sec_10h_wt, sec_100h_wt,
-                                             sg_1h_wt, sg_10h_wt, sg_100h_wt))
+                                             coef_litter, coef_duff, coef_litterduff))
 
   tree_ag <- aggregate(data = tree_subset,
                        . ~ time + site + plot,
                        FUN = sum)
 
-  tree_ag$coef_1h <- tree_ag$qmd_1h_wt*tree_ag$sec_1h_wt*tree_ag$sg_1h_wt
-  tree_ag$coef_10h <- tree_ag$qmd_10h_wt*tree_ag$sec_10h_wt*tree_ag$sg_10h_wt
-  tree_ag$coef_100h <- tree_ag$qmd_100h_wt*tree_ag$sec_100h_wt*tree_ag$sg_100h_wt
-
-  tree_return <- subset(tree_ag, select = c(time, site, plot, coef_1h, coef_10h, coef_100h))
-
-  return(tree_return)
+  return(tree_ag)
 
 }
 
@@ -360,64 +320,65 @@ FWDCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 ################################################################################
 ################################################################################
 
-FWDLoad <- function(fwd_fuel_data, fwd_tree_data, fwd_units, fwd_sp_codes) {
+GroundLoad <- function(gr_fuel_data, gr_tree_data, gr_units, gr_sp_codes, gr_measurements) {
 
-  # get BA-weighted QMD, SEC, and SG
-  coef_calcs <- FWDCoef(coef_tree_data = fwd_tree_data, coef_units = fwd_units, coef_sp_codes = fwd_sp_codes)
+  # get BA-weighted duff and litter coefficients
+  coef_calcs <- GroundCoef(coef_tree_data = gr_tree_data, coef_units = gr_units, coef_sp_codes = gr_sp_codes)
 
   # loop through each row (a transect in a time:site:plot)
-  # and assign the BA-weighted QMD*SEC*SG value
+  # and assign the BA-weighted coefficient value
 
-  n <- nrow(fwd_fuel_data)
+  n <- nrow(gr_fuel_data)
 
-  fwd_fuel_data$coef_1h <- NA
-  fwd_fuel_data$coef_10h <- NA
-  fwd_fuel_data$coef_100h <- NA
+  gr_fuel_data$coef_litter <- NA
+  gr_fuel_data$coef_duff <- NA
+  gr_fuel_data$coef_litterduff <- NA
 
   for(i in 1:n) {
 
-    fwd_fuel_data$coef_1h[i] <- coef_calcs[coef_calcs$time == fwd_fuel_data$time[i] & coef_calcs$site == fwd_fuel_data$site[i] & coef_calcs$plot == fwd_fuel_data$plot[i], "coef_1h"]
-    fwd_fuel_data$coef_10h[i] <- coef_calcs[coef_calcs$time == fwd_fuel_data$time[i] & coef_calcs$site == fwd_fuel_data$site[i] & coef_calcs$plot == fwd_fuel_data$plot[i], "coef_10h"]
-    fwd_fuel_data$coef_100h[i] <- coef_calcs[coef_calcs$time == fwd_fuel_data$time[i] & coef_calcs$site == fwd_fuel_data$site[i] & coef_calcs$plot == fwd_fuel_data$plot[i], "coef_100h"]
+    gr_fuel_data$coef_litter[i] <- coef_calcs[coef_calcs$time == gr_fuel_data$time[i] & coef_calcs$site == gr_fuel_data$site[i] & coef_calcs$plot == gr_fuel_data$plot[i], "coef_litter"]
+    gr_fuel_data$coef_duff[i] <- coef_calcs[coef_calcs$time == gr_fuel_data$time[i] & coef_calcs$site == gr_fuel_data$site[i] & coef_calcs$plot == gr_fuel_data$plot[i], "coef_duff"]
+    gr_fuel_data$coef_litterduff[i] <- coef_calcs[coef_calcs$time == gr_fuel_data$time[i] & coef_calcs$site == gr_fuel_data$site[i] & coef_calcs$plot == gr_fuel_data$plot[i], "coef_litterduff"]
 
   }
 
-  # slope correction factor
-  fwd_fuel_data$slp_c <- sqrt(1 + ((fwd_fuel_data$slope/100)^2))
-
-  # constant k
-  k <- 1.234
-
   # fuel load calculations
-  fwd_fuel_data$load_1h_Mg_ha <- (fwd_fuel_data$coef_1h*fwd_fuel_data$slp_c*fwd_fuel_data$count_1h*k)/fwd_fuel_data$length_1h
-  fwd_fuel_data$load_10h_Mg_ha <- (fwd_fuel_data$coef_10h*fwd_fuel_data$slp_c*fwd_fuel_data$count_10h*k)/fwd_fuel_data$length_10h
-  fwd_fuel_data$load_100h_Mg_ha <- (fwd_fuel_data$coef_100h*fwd_fuel_data$slp_c*fwd_fuel_data$count_100h*k)/fwd_fuel_data$length_100h
+  if(gr_measurements == "separate") {
 
-  fwd_subset <- subset(fwd_fuel_data, select = c(time, site, plot, load_1h_Mg_ha, load_10h_Mg_ha, load_100h_Mg_ha))
-
-  fwd_ag <- aggregate(data = fwd_subset,
-                       . ~ time + site + plot,
-                       FUN = mean, na.rm = TRUE, na.action = na.pass)
-
-  fwd_ag$load_fwd_Mg_ha <- fwd_ag$load_1h_Mg_ha + fwd_ag$load_10h_Mg_ha + fwd_ag$load_100h_Mg_ha
-  fwd_ag[fwd_ag == "NaN"] <- NA
-
-  if(fwd_units == "metric") {
-
-    return(fwd_ag)
+    gr_fuel_data$litter_Mg_ha <- gr_fuel_data$coef_litter*gr_fuel_data$litter_depth*10
+    gr_fuel_data$duff_Mg_ha <- gr_fuel_data$coef_duff*gr_fuel_data$duff_depth*10
+    gr_subset <- subset(gr_fuel_data, select = c(time, site, plot, litter_Mg_ha, duff_Mg_ha))
 
   } else {
 
-    fwd_ag$load_1h_ton_ac <- fwd_ag$load_1h_Mg_ha*0.44609
-    fwd_ag$load_10h_ton_ac <- fwd_ag$load_10h_Mg_ha*0.44609
-    fwd_ag$load_100h_ton_ac <- fwd_ag$load_100h_Mg_ha*0.44609
-    fwd_ag$load_fwd_ton_ac <- fwd_ag$load_fwd_Mg_ha*0.44609
+    gr_fuel_data$lit_duff_Mg_ha <- gr_fuel_data$coef_litterduff*gr_fuel_data$lit_duff_depth*10
+    gr_subset <- subset(gr_fuel_data, select = c(time, site, plot, lit_duff_Mg_ha))
 
-    fwd_imperial <- subset(fwd_ag, select = c(time, site, plot, load_1h_ton_ac, load_10h_ton_ac, load_100h_ton_ac, load_fwd_ton_ac))
+  }
 
-    return(fwd_imperial)
+  gr_ag <- aggregate(data = gr_subset,
+                     . ~ time + site + plot,
+                     FUN = mean, na.rm = TRUE, na.action = na.pass)
+
+  gr_ag[gr_ag == "NaN"] <- NA
+
+  if(gr_units == "metric") {
+
+    return(gr_ag)
+
+  } else if (gr_units == "imperial" & gr_measurements == "separate") {
+
+    gr_ag$litter_ton_ac <- gr_ag$litter_Mg_ha*0.44609
+    gr_ag$duff_ton_ac <- gr_ag$duff_Mg_ha*0.44609
+    gr_imperial <- subset(gr_ag, select = c(time, site, plot, litter_ton_ac, duff_ton_ac))
+    return(gr_imperial)
+
+  } else if (gr_units == "imperial" & gr_measurements == "combined") {
+
+    gr_ag$lit_duff_ton_ac <- gr_ag$lit_duff_Mg_ha*0.44609
+    gr_imperial <- subset(gr_ag, select = c(time, site, plot, lit_duff_ton_ac))
+    return(gr_imperial)
 
   }
 
 }
-
