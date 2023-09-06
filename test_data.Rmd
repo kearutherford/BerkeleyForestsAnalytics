@@ -44,11 +44,10 @@ tree_test <- data.frame(
 )
 ```
 
-
 ```{r}
-ValidateGround(fuel_data_val = duff_test2,
-            units_val = "metric",
-            meas_val = "separate")
+
+CoarseFuels(tree_test, cwd_test, "4letter", "metric", "no")
+
 ```
 
 
