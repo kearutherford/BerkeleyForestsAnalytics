@@ -132,18 +132,15 @@ ValidateFWD <- function(fuel_data_val, units_val) {
 
   # Check for positive values --------------------------------------------------
   if(any(fuel_data_val$length_1h <= 0, na.rm = TRUE)) {
-    stop('For fuel_data, length_1h must be greater than 0.\n',
-         'You have input a variable of class: ', class(fuel_data_val$length_1h))
+    stop('For fuel_data, length_1h must be greater than 0.')
   }
 
   if(any(fuel_data_val$length_10h <= 0, na.rm = TRUE)) {
-    stop('For fuel_data, length_10h must be must be greater than 0.\n',
-         'You have input a variable of class: ', class(fuel_data_val$length_10h))
+    stop('For fuel_data, length_10h must be must be greater than 0.')
   }
 
   if(any(fuel_data_val$length_100h <= 0, na.rm = TRUE)) {
-    stop('For fuel_data, length_100h must be greater than 0.\n',
-         'You have input a variable of class: ', class(fuel_data_val$length_100h))
+    stop('For fuel_data, length_100h must be greater than 0.')
   }
 
 

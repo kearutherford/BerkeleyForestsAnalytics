@@ -18,7 +18,17 @@ duff_test <- data.frame(
   time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
   site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
   plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
-  transect = c("90", "120", "90", "120", "90", "120", "20", "120"),
+  transect = c("90", "120", "90", "120", "90", "120", "90", "120"),
+  litter_depth = c(2,3,6,7,5,5,3,6),
+  duff_depth = c(5,1,3,2,4,4,2,1),
+  lit_duff_depth = c(7,4,9,9,9,9,5,7)
+)
+
+duff_test2 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "90", "90", "90", "90", "90", "90", "120"),
   litter_depth = c(2,3,6,7,5,5,3,6),
   duff_depth = c(5,1,3,2,4,4,2,1),
   lit_duff_depth = c(7,4,9,9,9,9,5,7)
@@ -36,12 +46,30 @@ tree_test <- data.frame(
 
 
 ```{r}
-GroundLoad(gr_fuel_data = duff_test,
-           gr_tree_data = tree_test,
-           gr_units = "metric",
-           gr_sp_codes = "4letter",
-           gr_measurements = "separate")
-
+ValidateGround(fuel_data_val = duff_test2,
+            units_val = "metric",
+            meas_val = "separate")
 ```
+
+
+```{r}
+cwd_test <- data.frame(
+  time = c("2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "90", "90", "90", "90", "90", "90"),
+  diameter = c(0,15,9,10,20,31,16),
+  status = c("R","S","R","R","S","S","S"),
+  length_1000h = c(2,3,3,2,2,5,5),
+  slope = c(0,2,2,0,0,0,0)
+)
+
+cwd_test
+```
+
+```{r}
+ValidateCWD(cwd_test, "metric", "no")
+```
+
 
 

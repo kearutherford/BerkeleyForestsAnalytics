@@ -1,0 +1,579 @@
+
+################################################################################
+################################################################################
+#
+################################################################################
+################################################################################
+
+CoarseFuels <- function(tree_data, transect_data, fuel_data = "ignore", sp_codes = "4letter", units = "metric") {
+
+  # check and prep input fuel data
+  step1 <- ValidateFWD(fuel_data_val = fuel_data,
+                       units_val = units)
+
+  # check and prep input tree data
+  step2 <- ValidateOverstory(tree_data_val = tree_data,
+                             sp_codes_val = sp_codes)
+
+  # check for time:site:plot matches for tree and fuel data
+  step3 <- ValidateMatches(fuel_match = step1,
+                           tree_match = step2)
+
+  # calculate fine fuel loads at the plot level
+  step4 <- FWDLoad(fwd_fuel_data = step1,
+                   fwd_tree_data = step2,
+                   fwd_units = units,
+                   fwd_sp_codes = sp_codes)
+
+  return(step4)
+
+}
+
+
+
+################################################################################
+################################################################################
+#
+################################################################################
+################################################################################
+
+ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
+
+  # coerce tibble inputs into data.frame
+  fuel_data_val <- as.data.frame(fuel_data_val)
+
+  ###########################################################
+  # Check that options are set appropriately
+  ###########################################################
+
+  if(units_val == "metric" || units_val == "imperial") {
+    # do nothing
+  } else {
+    stop('The "units" parameter must be set to either "metric" or "imperial".')
+  }
+
+  if(sum_val == "no" || sum_val == "yes") {
+    # do nothing
+  } else {
+    stop('The "summed" parameter must be set to either "no" or "yes".')
+  }
+
+
+  ###########################################################
+  # Check that all columns are in the provided dataframe
+  ###########################################################
+
+  if(sum_val == "no") {
+
+    necessary_columns = c("time", "site", "plot", "transect", "length_1000h",
+                          "diameter", "status")
+
+    if(!all(is.element(necessary_columns, names(fuel_data_val)))) {
+
+      stop('fuel_data is missing necessary columns!\n',
+           'When the "summed" parameter is set to "no" fuel_data must include:\n',
+           'time, site, plot, transect, length_1000h, diameter, and status.')
+
+    }
+
+  } else {
+
+    necessary_columns = c("time", "site", "plot", "transect", "length_1000h",
+                          "ssd_S", "ssd_R")
+
+    if(!all(is.element(necessary_columns, names(fuel_data_val)))) {
+
+      stop('fuel_data is missing necessary columns!\n',
+           'When the "summed" parameter is set to "yes" fuel_data must include:\n',
+           'time, site, plot, transect, length_1000h, ssd_S, and ssd_R.')
+
+    }
+
+  }
+
+  # Check for slope ------------------------------------------------------------
+  if(!is.element("slope", names(fuel_data_val))) {
+
+    warning('slope was not provided. The slope correction factor will be set to 1 (no slope).\n',
+            ' \n')
+
+    fuel_data_val$slope <- 0
+
+  }
+
+
+  ###########################################################
+  # Check for missing time:site:plot:transect information
+  ###########################################################
+
+  if ('TRUE' %in% is.na(fuel_data_val$time)) {
+    stop('For fuel_data, there are missing values in the time column.')
+  }
+
+  if ('TRUE' %in% is.na(fuel_data_val$site)) {
+    stop('For fuel_data, there are missing values in the site column.')
+  }
+
+  if ('TRUE' %in% is.na(fuel_data_val$plot)) {
+    stop('For fuel_data, there are missing values in the plot column.')
+  }
+
+  if ('TRUE' %in% is.na(fuel_data_val$transect)) {
+    stop('For fuel_data, there are missing values in the transect column.')
+  }
+
+
+  ###########################################################
+  # Check that transect length is as expected
+  ###########################################################
+
+  # Check for numeric ----------------------------------------------------------
+  if(!is.numeric(fuel_data_val$length_1000h)) {
+    stop('For fuel_data, the parameter length_1000h requires a numerical variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$length_1000h))
+  }
+
+  # check for NAs --------------------------------------------------------------
+  if ('TRUE' %in% is.na(fuel_data_val$length_1000h)) {
+    stop('For fuel_data, there are missing values in the length_1000h column.')
+  }
+
+  # Check for positive values --------------------------------------------------
+  if(any(fuel_data_val$length_1000h <= 0, na.rm = TRUE)) {
+    stop('For fuel_data, length_1000h must be greater than 0.')
+  }
+
+  # Unit conversion (ft to meters) ---------------------------------------------
+  if(units_val == "imperial") {
+    fuel_data_val$length_1000h <- fuel_data_val$length_1000h*0.3048
+  }
+
+
+  ###########################################################
+  # Check that slope is as expected
+  ###########################################################
+
+  # Check for numeric ----------------------------------------------------------
+  if(!is.numeric(fuel_data_val$slope)) {
+    stop('For fuel_data, the parameter slope requires a numerical variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$slope))
+  }
+
+  # Check for positive values --------------------------------------------------
+  if(any(fuel_data_val$slope < 0, na.rm = TRUE)) {
+    stop('For fuel_data, slope must be positive.')
+  }
+
+  # check for NAs --------------------------------------------------------------
+  if ('TRUE' %in% is.na(fuel_data_val$slope)) {
+    warning('For fuel_data, there are missing values in the slope column.\n',
+            'For tansects with NA slopes, slope will be taken to be 0.\n',
+            ' \n')
+  }
+
+  # map missing slopes to 0
+  fuel_data_val[is.na(fuel_data_val$slope), "slope"] = 0
+
+
+  ###########################################################
+  # If summed = "no"
+  ###########################################################
+
+  if(sum_val == "no") {
+
+    # --------------------------------------------------------------------------
+    # check that diameter is as expected
+    # --------------------------------------------------------------------------
+
+    # check for numeric
+    if(!is.numeric(fuel_data_val$diameter)) {
+      stop('For fuel_data, the parameter diameter requires a numerical variable.\n',
+           'You have input a variable of class: ', class(fuel_data_val$diameter))
+    }
+
+    # unit conversion (in to cm)
+    if(units_val == "imperial") {
+      fuel_data_val$diameter <- fuel_data_val$diameter*2.54
+    }
+
+    # pull out transects with cwd
+    obs_w_cwd <- subset(fuel_data_val, fuel_data_val$diameter > 0)
+
+    # check for diameter range
+    if(any(obs_w_cwd$diameter <= 7.62, na.rm = TRUE)) {
+      stop('1000-hr fuels are defined as having a diameter > 7.62 cm (3 in).\n',
+           'There are diameters below this threshold in the provided fuel_data.\n',
+           'Note: diameters of exactly 0 are allowed, indicating a transect without coarse woody debris.\n',
+           'This warning is for diameters > 0 and <= 7.62.')
+    }
+
+    # check for NAs
+    if ('TRUE' %in% is.na(fuel_data_val$diameter)) {
+      warning('For fuel_data, there are missing values in the diameter column.\n',
+              'Consider investigating these missing diameters.\n',
+              ' \n')
+    }
+
+
+    # --------------------------------------------------------------------------
+    # check that status is as expected
+    # --------------------------------------------------------------------------
+    fuel_data_val$status <- as.character(fuel_data_val$status)
+
+    # Check for unrecognized status codes
+    if(!all(is.element(fuel_data_val$status,
+                       c("R","S", NA)))) {
+
+      unrecognized_status <- sort(paste0(unique(fuel_data_val[!is.element(fuel_data_val$status,
+                                                                     c("R", "S", NA)), status]),
+                                         sep = " "))
+
+      stop('Status must be R (rotten) or S (sound)!\n',
+           'Unrecognized status codes: ', unrecognized_status)
+    }
+
+    # check for NA
+    if ('TRUE' %in% is.na(obs_w_cwd$status)) {
+
+      warning('There are coarse woody debris pieces with missing status codes in the provided fuel_data.\n',
+              'Pieces with NA status codes will be assumed to be rotten.\n',
+              'Consider investigating these missing values in your data.\n',
+              ' \n')
+    }
+
+    # map missing status to R
+    fuel_data_val[is.na(fuel_data_val$status), "status"] = "R"
+
+
+    # --------------------------------------------------------------------------
+    # calculate sum-of-squared-diameters
+    # --------------------------------------------------------------------------
+
+    # Square diameters (cm^2)
+    fuel_data_val$sq_diam <- fuel_data_val$diameter^2
+
+    # create id column to reduce looping
+    fuel_data_val$obs_id <- NA
+    n <- nrow(fuel_data_val)
+
+    for(i in 1:n) {
+
+      tm <- fuel_data_val$time[i]
+      s <- fuel_data_val$site[i]
+      p <- fuel_data_val$plot[i]
+      tr <- fuel_data_val$transect[i]
+
+      fuel_data_val$obs_id[i] <- paste0(tm,'-',s,'-',p,'-',tr)
+
+    }
+
+    # create empty dataframe to fill
+    return_df <- data.frame(matrix(nrow = 0, ncol = 8))
+    colnames(return_df) <- c("time", "site", "plot", "transect", "length_1000h", "slope", "ssd_S", "ssd_R")
+
+    # loop through each unique id
+    unq_id <- unique(fuel_data_val$obs_id)
+
+    for(id in unq_id) {
+
+      all_cwd <- subset(fuel_data_val, obs_id == id)
+
+      # check that all transect lengths are the same within a
+      # unique time:site:plot:transect combination
+      lng <- unique(all_cwd$length_1000h)
+
+      if(length(lng) > 1) {
+        stop('Each time:site:plot:transect combination should have the same "length_1000h" value.\n',
+             'The following time:site:plot:transect combination has multiple "length_1000h" values recorded: ', id)
+      }
+
+      # check that all slopes are the same within a
+      # unique time:site:plot:transect combination
+      slp <- unique(all_cwd$slope)
+
+      if(length(slp) > 1) {
+        stop('Each time:site:plot:transect combination should have the same "slope" value.\n',
+             'The following time:site:plot:transect combination has multiple "slope" values recorded: ', id)
+      }
+
+      # Check for proper use of 0 diameter
+      if('TRUE' %in% is.element(all_cwd$diameter, 0)) {
+
+        n <- nrow(all_cwd)
+
+        if(n > 1) {
+
+          stop('For fuel_data, there are transects with a recorded diameter of 0, but with more than one row.\n',
+               'Transects with no coarse woody debris should be represented by a single row with time, site, plot, transect,\n',
+               'length_1000h, and slope filled in as appropriate and a diameter of 0. Status can be "R", "S", or NA.')
+
+        }
+
+      }
+
+      # get sum-of-squared-diameters for rotten and sound fuels
+      sound <- subset(all_cwd, status == "S")
+      rotten <- subset(all_cwd, status == "R")
+
+      if(nrow(sound) > 0 & all(is.na(sound$diameter))) {
+        ssd_sound <- NA
+      } else if (nrow(sound) == 0) {
+        ssd_sound <- 0
+      } else {
+        ssd_sound <- sum(sound$sq_diam, na.rm = TRUE)
+      }
+
+      if(nrow(rotten) > 0 & all(is.na(rotten$diameter))) {
+        ssd_rotten <- NA
+      } else if (nrow(rotten) == 0) {
+        ssd_rotten <- 0
+      } else {
+        ssd_rotten <- sum(rotten$sq_diam, na.rm = TRUE)
+      }
+
+
+      # fill in dataframe
+      return_df[nrow(return_df) + 1, ] <- NA
+      k <- nrow(return_df)
+
+      return_df$time[k] <- all_cwd$time[1]
+      return_df$site[k] <- all_cwd$site[1]
+      return_df$plot[k] <- all_cwd$plot[1]
+      return_df$transect[k] <- all_cwd$transect[1]
+      return_df$length_1000h[k] <- all_cwd$length_1000h[1]
+      return_df$slope[k] <- all_cwd$slope[1]
+      return_df$ssd_S[k] <- ssd_sound
+      return_df$ssd_R[k] <- ssd_rotten
+
+    }
+
+  }
+
+
+  ###########################################################
+  # If summed = "yes"
+  ###########################################################
+
+  if(sum_val == "yes") {
+
+    # --------------------------------------------------------------------------
+    # check that ssd_S is as expected
+    # --------------------------------------------------------------------------
+    # Check for numeric
+    if(!is.numeric(fuel_data_val$ssd_S)) {
+      stop('For fuel_data, the parameter ssd_S requires a numerical variable.\n',
+           'You have input a variable of class: ', class(fuel_data_val$ssd_S))
+    }
+
+    # Check for positive values
+    if(any(fuel_data_val$ssd_S < 0, na.rm = TRUE)) {
+      stop('For fuel_data, ssd_S must be greater than or equal to 0.')
+    }
+
+    # check for NAs
+    if ('TRUE' %in% is.na(fuel_data_val$ssd_S)) {
+      warning('For fuel_data, there are missing values in the ssd_S column.\n',
+              'Consider investigating these missing values in your data.\n',
+              ' \n')
+    }
+
+    # Unit conversion (in^2 to cm^2)
+    if(units_val == "imperial") {
+      fuel_data_val$ssd_S <- fuel_data_val$ssd_S*6.4516
+    }
+
+    # --------------------------------------------------------------------------
+    # check that ssd_S is as expected
+    # --------------------------------------------------------------------------
+    # Check for numeric
+    if(!is.numeric(fuel_data_val$ssd_R)) {
+      stop('For fuel_data, the parameter ssd_R requires a numerical variable.\n',
+           'You have input a variable of class: ', class(fuel_data_val$ssd_R))
+    }
+
+    # Check for positive values
+    if(any(fuel_data_val$ssd_R < 0, na.rm = TRUE)) {
+      stop('For fuel_data, ssd_R must be greater than or equal to 0.')
+    }
+
+    # check for NAs
+    if ('TRUE' %in% is.na(fuel_data_val$ssd_R)) {
+      warning('For fuel_data, there are missing values in the ssd_R column.\n',
+              'Consider investigating these missing values in your data.\n',
+              ' \n')
+    }
+
+    # Unit conversion (in^2 to cm^2)
+    if(units_val == "imperial") {
+      fuel_data_val$ssd_R <- fuel_data_val$ssd_R*6.4516
+    }
+
+    # --------------------------------------------------------------------------
+    # subset dataframe
+    # --------------------------------------------------------------------------
+    return_df <- subset(fuel_data_val, select = c(time, site, plot, transect,
+                                                  length_1000h, slope, ssd_S, ssd_R,
+                                                  slope))
+
+  }
+
+  ###########################################################
+  # Final dataframe prep
+  ###########################################################
+
+  return_df$time <- as.character(return_df$time)
+  return_df$site <- as.character(return_df$site)
+  return_df$plot <- as.character(return_df$plot)
+  return_df$transect <- as.character(return_df$transect)
+
+  return(return_df)
+
+}
+
+
+################################################################################
+################################################################################
+#
+################################################################################
+################################################################################
+
+FWDCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
+
+  # calculate proportion of time:site:plot basal area occupied by each species
+  tree_dom <- TreeDom(data = coef_tree_data,
+                      tree_units = coef_units)
+
+  # create columns to fill
+  tree_dom$sec_1h <- NA
+  tree_dom$sec_10h <- NA
+  tree_dom$sec_100h <- NA
+
+  tree_dom$sg_1h <- NA
+  tree_dom$sg_10h <- NA
+  tree_dom$sg_100h <- NA
+
+  n <- nrow(tree_dom)
+
+  # loop through each row
+  for(i in 1:n) {
+
+    sp <- tree_dom$species[i]
+
+    if(coef_sp_codes == "4letter") {
+
+      tree_dom$sec_1h[i] <- SEC_table[SEC_table$letter == sp, "sec_1h"]
+      tree_dom$sec_10h[i] <- SEC_table[SEC_table$letter == sp, "sec_10h"]
+      tree_dom$sec_100h[i] <- SEC_table[SEC_table$letter == sp, "sec_100h"]
+
+      tree_dom$sg_1h[i] <- SG_table[SG_table$letter == sp, "sg_1h"]
+      tree_dom$sg_10h[i] <- SG_table[SG_table$letter == sp, "sg_10h"]
+      tree_dom$sg_100h[i] <- SG_table[SG_table$letter == sp, "sg_100h"]
+
+    } else {
+
+      tree_dom$sec_1h[i] <- SEC_table[SEC_table$fia == sp, "sec_1h"]
+      tree_dom$sec_10h[i] <- SEC_table[SEC_table$fia == sp, "sec_10h"]
+      tree_dom$sec_100h[i] <- SEC_table[SEC_table$fia == sp, "sec_100h"]
+
+      tree_dom$sg_1h[i] <- SG_table[SG_table$fia == sp, "sg_1h"]
+      tree_dom$sg_10h[i] <- SG_table[SG_table$fia == sp, "sg_10h"]
+      tree_dom$sg_100h[i] <- SG_table[SG_table$fia == sp, "sg_100h"]
+
+    }
+
+  }
+
+  tree_dom$sec_1h_wt <- tree_dom$sec_1h*tree_dom$perc_BA
+  tree_dom$sec_10h_wt <- tree_dom$sec_10h*tree_dom$perc_BA
+  tree_dom$sec_100h_wt <- tree_dom$sec_100h*tree_dom$perc_BA
+
+  tree_dom$sg_1h_wt <- tree_dom$sg_1h*tree_dom$perc_BA
+  tree_dom$sg_10h_wt <- tree_dom$sg_10h*tree_dom$perc_BA
+  tree_dom$sg_100h_wt <- tree_dom$sg_100h*tree_dom$perc_BA
+
+  tree_subset <- subset(tree_dom, select = c(time, site, plot,
+                                             qmd_1h_wt, qmd_10h_wt, qmd_100h_wt,
+                                             sec_1h_wt, sec_10h_wt, sec_100h_wt,
+                                             sg_1h_wt, sg_10h_wt, sg_100h_wt))
+
+  tree_ag <- aggregate(data = tree_subset,
+                       . ~ time + site + plot,
+                       FUN = sum)
+
+  tree_ag$coef_1h <- tree_ag$qmd_1h_wt*tree_ag$sec_1h_wt*tree_ag$sg_1h_wt
+  tree_ag$coef_10h <- tree_ag$qmd_10h_wt*tree_ag$sec_10h_wt*tree_ag$sg_10h_wt
+  tree_ag$coef_100h <- tree_ag$qmd_100h_wt*tree_ag$sec_100h_wt*tree_ag$sg_100h_wt
+
+  tree_return <- subset(tree_ag, select = c(time, site, plot, coef_1h, coef_10h, coef_100h))
+
+  return(tree_return)
+
+}
+
+
+################################################################################
+################################################################################
+#
+################################################################################
+################################################################################
+
+FWDLoad <- function(fwd_fuel_data, fwd_tree_data, fwd_units, fwd_sp_codes) {
+
+  # get BA-weighted QMD, SEC, and SG
+  coef_calcs <- FWDCoef(coef_tree_data = fwd_tree_data, coef_units = fwd_units, coef_sp_codes = fwd_sp_codes)
+
+  # loop through each row (a transect in a time:site:plot)
+  # and assign the BA-weighted QMD*SEC*SG value
+
+  n <- nrow(fwd_fuel_data)
+
+  fwd_fuel_data$coef_1h <- NA
+  fwd_fuel_data$coef_10h <- NA
+  fwd_fuel_data$coef_100h <- NA
+
+  for(i in 1:n) {
+
+    fwd_fuel_data$coef_1h[i] <- coef_calcs[coef_calcs$time == fwd_fuel_data$time[i] & coef_calcs$site == fwd_fuel_data$site[i] & coef_calcs$plot == fwd_fuel_data$plot[i], "coef_1h"]
+    fwd_fuel_data$coef_10h[i] <- coef_calcs[coef_calcs$time == fwd_fuel_data$time[i] & coef_calcs$site == fwd_fuel_data$site[i] & coef_calcs$plot == fwd_fuel_data$plot[i], "coef_10h"]
+    fwd_fuel_data$coef_100h[i] <- coef_calcs[coef_calcs$time == fwd_fuel_data$time[i] & coef_calcs$site == fwd_fuel_data$site[i] & coef_calcs$plot == fwd_fuel_data$plot[i], "coef_100h"]
+
+  }
+
+  # slope correction factor
+  fwd_fuel_data$slp_c <- sqrt(1 + ((fwd_fuel_data$slope/100)^2))
+
+  # constant k
+  k <- 1.234
+
+  # fuel load calculations
+  fwd_fuel_data$load_1h_Mg_ha <- (fwd_fuel_data$coef_1h*fwd_fuel_data$slp_c*fwd_fuel_data$count_1h*k)/fwd_fuel_data$length_1h
+  fwd_fuel_data$load_10h_Mg_ha <- (fwd_fuel_data$coef_10h*fwd_fuel_data$slp_c*fwd_fuel_data$count_10h*k)/fwd_fuel_data$length_10h
+  fwd_fuel_data$load_100h_Mg_ha <- (fwd_fuel_data$coef_100h*fwd_fuel_data$slp_c*fwd_fuel_data$count_100h*k)/fwd_fuel_data$length_100h
+
+  fwd_subset <- subset(fwd_fuel_data, select = c(time, site, plot, load_1h_Mg_ha, load_10h_Mg_ha, load_100h_Mg_ha))
+
+  fwd_ag <- aggregate(data = fwd_subset,
+                      . ~ time + site + plot,
+                      FUN = mean, na.rm = TRUE, na.action = na.pass)
+
+  fwd_ag$load_fwd_Mg_ha <- fwd_ag$load_1h_Mg_ha + fwd_ag$load_10h_Mg_ha + fwd_ag$load_100h_Mg_ha
+  fwd_ag[fwd_ag == "NaN"] <- NA
+
+  if(fwd_units == "metric") {
+
+    return(fwd_ag)
+
+  } else {
+
+    fwd_ag$load_1h_ton_ac <- fwd_ag$load_1h_Mg_ha*0.44609
+    fwd_ag$load_10h_ton_ac <- fwd_ag$load_10h_Mg_ha*0.44609
+    fwd_ag$load_100h_ton_ac <- fwd_ag$load_100h_Mg_ha*0.44609
+    fwd_ag$load_fwd_ton_ac <- fwd_ag$load_fwd_Mg_ha*0.44609
+
+    fwd_imperial <- subset(fwd_ag, select = c(time, site, plot, load_1h_ton_ac, load_10h_ton_ac, load_100h_ton_ac, load_fwd_ton_ac))
+
+    return(fwd_imperial)
+
+  }
+
+}
