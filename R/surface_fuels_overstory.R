@@ -356,3 +356,5 @@ TreeDom <- function(data, tree_units) {
   return(fill_df)
 
 }
+
+utils::globalVariables(c("exp_factor"))

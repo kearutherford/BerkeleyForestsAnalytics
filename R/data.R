@@ -3,12 +3,12 @@
 # datasets that need to be documented
 #####################################################################
 
-#' @title Data for demonstration
+#' @title Data for biomass demonstrations
 #'
 #' @description
-#' A fake dataset created for demonstration purposes only
+#' A fake dataset created for biomass demonstration purposes only
 #'
-#' @format ## `bio_demo_data`
+#' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
 #'   \item{Forest}{Broader location or forest where the data were collected}
@@ -25,12 +25,12 @@
 "bio_demo_data"
 
 
-#' @title Data for demonstration
+#' @title Data for biomass demonstrations
 #'
 #' @description
-#' A fake dataset created for demonstration purposes only
+#' A fake dataset created for biomass demonstration purposes only
 #'
-#' @format ## `bio_NT_demo`
+#' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
 #'   \item{Forest}{Broader location or forest where the data were collected}
@@ -47,12 +47,12 @@
 "bio_NT_demo"
 
 
-#' @title Data for forest composition demonstration
+#' @title Data for forest composition and structure demonstrations
 #'
 #' @description
-#' A fake dataset created for composition demonstration purposes only
+#' A fake dataset created for composition and structure demonstration purposes only
 #'
-#' @format ## `for_demo_data`
+#' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
 #'   \item{Forest}{Broader location or forest where the data were collected}
@@ -68,12 +68,12 @@
 "for_demo_data"
 
 
-#' @title Data for forest composition demonstration
+#' @title Data for forest composition and structure demonstrations
 #'
 #' @description
-#' A fake dataset created for composition demonstration purposes only
+#' A fake dataset created for composition and structure demonstration purposes only
 #'
-#' @format ## `for_NT_demo`
+#' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
 #'   \item{Forest}{Broader location or forest where the data were collected}
@@ -87,6 +87,135 @@
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
 "for_NT_demo"
+
+
+#' @title Overstory data for surface and ground fuel demonstrations
+#'
+#' @description
+#' A fake dataset created for surface and ground fuel demonstration purposes only
+#'
+#' @format
+#' A dataframe with 14 rows and 6 columns:
+#' \describe{
+#'   \item{time}{Year in which the data were collected}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{Diameter at breast height in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"overstory_demo"
+
+
+#' @title Data for fine woody debris demonstrations
+#'
+#' @description
+#' A fake dataset created for fine surface fuel demonstration purposes only
+#'
+#' @format
+#' A dataframe with 12 rows and 11 columns:
+#' \describe{
+#'   \item{time}{Year in which the data were collected}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual transect was measured}
+#'   \item{transect}{Transect on which the fuel tallies were collected}
+#'   \item{count_1h}{Count of 1-hour fuels}
+#'   \item{count_10h}{Count of 10-hour fuels}
+#'   \item{count_100h}{Count of 100-hour fuels}
+#'   \item{length_1h}{Length of the sampling transect for 1-hour fuels in meters}
+#'   \item{length_10h}{Length of the sampling transect for 10-hour fuels in meters}
+#'   \item{length_100h}{Length of the sampling transect for 100-hour fuels in meters}
+#'   \item{slope}{Slope along the transect in percent}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"fwd_demo"
+
+
+#' @title Data for coarse woody debris demonstrations
+#'
+#' @description
+#' A fake dataset created for coarse surface fuel demonstration purposes only
+#'
+#' @format
+#' A dataframe with 16 rows and 8 columns:
+#' \describe{
+#'   \item{time}{Year in which the data were collected}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual transect was measured}
+#'   \item{transect}{Transect on which the 1000-hour fuel measurements were taken}
+#'   \item{length_1000h}{Length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{slope}{Slope along the transect in percent}
+#'   \item{diameter}{Diameter of 1000-hour fuel in centimeters}
+#'   \item{status}{Rotten (R) or sound (S)}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"cwd_NS_demo"
+
+
+#' @title Data for coarse woody debris demonstrations
+#'
+#' @description
+#' A fake dataset created for coarse surface fuel demonstration purposes only
+#'
+#' @format
+#' A dataframe with 12 rows and 8 columns:
+#' \describe{
+#'   \item{time}{Year in which the data were collected}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual transect was measured}
+#'   \item{transect}{Transect on which the 1000-hour fuel measurements were taken}
+#'   \item{length_1000h}{Length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{slope}{Slope along the transect in percent}
+#'   \item{ssd_S}{Sum-of-squared-diameters for sound 1000-hour fuels}
+#'   \item{ssd_R}{Sum-of-squared-diameters for rotten 1000-hour fuels}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"cwd_YS_demo"
+
+
+#' @title Data for duff and litter demonstrations
+#'
+#' @description
+#' A fake dataset created for duff and litter fuel demonstration purposes only
+#'
+#' @format
+#' A dataframe with 24 rows and 6 columns:
+#' \describe{
+#'   \item{time}{Year in which the data were collected}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual transect was measured}
+#'   \item{transect}{Transect on which the duff/litter depths were measured}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"lit_duff_demo"
+
+
+#' @title Data for duff and litter demonstrations
+#'
+#' @description
+#' A fake dataset created for duff and litter fuel demonstration purposes only
+#'
+#' @format
+#' A dataframe with 24 rows and 6 columns:
+#' \describe{
+#'   \item{time}{Year in which the data were collected}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual transect was measured}
+#'   \item{transect}{Transect on which the duff/litter depths were measured}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"lit_duff_avg_demo"
 
 
 ######################################################################
@@ -105,6 +234,46 @@ sp_code_names <- data.frame(
 VanWag_species <- data.frame (
   letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR", NA),
   fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "298", "998", "999", NA)
+)
+
+
+######################################################################
+# dataframes used for surface and ground fuel load calculations
+######################################################################
+
+DL_table <- data.frame (
+  letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR"),
+  fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "298", "998", "999"),
+  litter_coef = c(0.864,0.111,0.886,0.990,1.276,0.358,0.339,0.889,0.951,1.102,0.276,0.530,0.906,0.304,0.600,0.832,0.542,1.050,0.540,0.363,0.363,0.363),
+  duff_coef = c(1.319,1.448,2.504,1.648,1.675,1.707,1.646,2.337,1.671,1.876,1.402,1.727,2.592,1.396,1.870,1.798,1.422,1.518,1.895,1.750,1.750,1.750),
+  litterduff_coef = c(1.295,1.220,2.360,1.632,1.664,1.496,1.274,2.255,1.612,1.848,1.233,1.722,2.478,1.189,1.719,1.763,1.485,1.572,1.802,1.624,1.624,1.624)
+)
+
+QMD_table <- data.frame (
+  letter = c("ABCO", "ABMA", "CADE", "JUOC", "PIAL", "PIAT", "PIBA", "PICO", "PIFL", "PIJE", "PILA", "PIMO1", "PIMO2", "PIPO", "PISA", "PIWA", "PSME", "SEGI", "TSME", "UNCO", "UNHA", "UNTR"),
+  fia = c("15", "20", "81", "64", "101", "103", "104", "108", "113", "116", "117", "133", "199", "122", "127", "137", "202", "212", "264", "298", "998", "999"),
+  qmd_1h = c(0.08,0.10,0.09,0.08,0.13,0.10,0.12,0.10,0.21,0.15,0.12,0.09,0.08,0.23,0.14,0.22,0.06,0.14,0.05,0.12,0.12,0.12),
+  qmd_10h = c(1.32,1.32,1.23,1.61,1.21,1.25,0.92,1.44,1.28,1.25,1.46,1.41,0.79,1.56,0.94,1.37,1.37,1.28,1.46,1.28, 1.28,1.28),
+  qmd_100h = c(11.56,16.24,20.79,13.92,14.75,9.68,12.82,13.39,17.72,17.31,13.61,11.56,9.92,19.36,12.91,13.47,12.04,17.06,13.61,14.52, 14.52,14.52),
+  qmd_1000h = c(162.56,219.93,74.30,61.62,92.74,70.39,127.24,138.06,115.78,135.49,169.52,129.96,127.24,101.81,127.24,122.77,75.69,167.70,115.99,127.24,127.24,127.24)
+)
+
+SEC_table <- data.frame (
+  letter = c("ABCO", "ABMA", "CADE", "JUOC", "PIAL", "PIAT", "PIBA", "PICO", "PIFL", "PIJE", "PILA", "PIMO1", "PIMO2", "PIPO", "PISA", "PIWA", "PSME", "SEGI", "TSME", "UNCO", "UNHA", "UNTR"),
+  fia = c("15", "20", "81", "64", "101", "103", "104", "108", "113", "116", "117", "133", "199", "122", "127", "137", "202", "212", "264", "298", "998", "999"),
+  sec_1h = c(1.03,1.03,1.02,1.03,1.02,1.03,1.02,1.02,1.02,1.03,1.04,1.02,1.03,1.02,1.05,1.02,1.03,1.02,1.04,1.03,1.03,1.03),
+  sec_10h = c(1.02,1.02,1.02,1.04,1.02,1.02,1.02,1.02,1.02,1.03,1.04,1.01,1.02,1.03,1.03,1.02,1.02,1.02,1.02,1.02,1.02,1.02),
+  sec_100h = c(1.02,1.01,1.03,1.04,1.02,1.00,1.01,1.01,1.01,1.04,1.03,1.01,1.06,1.02,1.02,1.01,1.03,1.02,1.02,1.02,1.02,1.02),
+  sec_1000h = c(1.01,1.00,1.06,1.04,1.02,1.02,1.02,1.05,1.01,1.05,1.03,1.05,1.02,1.01,1.02,1.05,1.04,1.01,1.00,1.02,1.02,1.02)
+)
+
+SG_table <- data.frame(
+  letter = c("ABCO", "ABMA", "CADE", "JUOC", "PIAL", "PIAT", "PIBA", "PICO", "PIFL", "PIJE", "PILA", "PIMO1", "PIMO2", "PIPO", "PISA", "PIWA", "PSME", "SEGI", "TSME", "UNCO", "UNHA", "UNTR"),
+  fia = c("15", "20", "81", "64", "101", "103", "104", "108", "113", "116", "117", "133", "199", "122", "127", "137", "202", "212", "264", "298", "998", "999"),
+  sg_1h = c(0.53,0.57,0.59,0.67,0.55,0.59,0.59,0.53,0.57,0.53,0.59,0.65,0.56,0.55,0.64,0.53,0.60,0.57,0.67,0.58,0.58,0.58),
+  sg_10h = c(0.54,0.56,0.54,0.65,0.49,0.55,0.61,0.48,0.57,0.55,0.59,0.64,0.56,0.56,0.61,0.52,0.61,0.57,0.65,0.57,0.57,0.57),
+  sg_100h = c(0.57,0.47,0.55,0.62,0.48,0.39,0.53,0.54,0.54,0.55,0.52,0.53,0.49,0.48,0.43,0.44,0.59,0.56,0.62,0.53,0.53,0.53),
+  sg_1000s = c(0.32,0.38,0.41,0.47,0.42,0.47,0.47,0.58,0.63,0.47,0.43,0.47,0.47,0.40,0.47,0.35,0.35,0.54,0.66,0.47,0.47,0.47)
 )
 
 
@@ -271,46 +440,6 @@ bad_comp <- data.frame(
   HT_bad = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)), # wrong class
   HT_NT = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # no tree plot
 
-)
-
-
-######################################################################
-# dataframes used for surface and ground fuel load calculations
-######################################################################
-
-DL_table <- data.frame (
-  letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR"),
-  fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "298", "998", "999"),
-  litter_coef = c(0.864,0.111,0.886,0.990,1.276,0.358,0.339,0.889,0.951,1.102,0.276,0.530,0.906,0.304,0.600,0.832,0.542,1.050,0.540,0.363,0.363,0.363),
-  duff_coef = c(1.319,1.448,2.504,1.648,1.675,1.707,1.646,2.337,1.671,1.876,1.402,1.727,2.592,1.396,1.870,1.798,1.422,1.518,1.895,1.750,1.750,1.750),
-  litterduff_coef = c(1.295,1.220,2.360,1.632,1.664,1.496,1.274,2.255,1.612,1.848,1.233,1.722,2.478,1.189,1.719,1.763,1.485,1.572,1.802,1.624,1.624,1.624)
-)
-
-QMD_table <- data.frame (
-  letter = c("ABCO", "ABMA", "CADE", "JUOC", "PIAL", "PIAT", "PIBA", "PICO", "PIFL", "PIJE", "PILA", "PIMO1", "PIMO2", "PIPO", "PISA", "PIWA", "PSME", "SEGI", "TSME", "UNCO", "UNHA", "UNTR"),
-  fia = c("15", "20", "81", "64", "101", "103", "104", "108", "113", "116", "117", "133", "199", "122", "127", "137", "202", "212", "264", "298", "998", "999"),
-  qmd_1h = c(0.08,0.10,0.09,0.08,0.13,0.10,0.12,0.10,0.21,0.15,0.12,0.09,0.08,0.23,0.14,0.22,0.06,0.14,0.05,0.12,0.12,0.12),
-  qmd_10h = c(1.32,1.32,1.23,1.61,1.21,1.25,0.92,1.44,1.28,1.25,1.46,1.41,0.79,1.56,0.94,1.37,1.37,1.28,1.46,1.28, 1.28,1.28),
-  qmd_100h = c(11.56,16.24,20.79,13.92,14.75,9.68,12.82,13.39,17.72,17.31,13.61,11.56,9.92,19.36,12.91,13.47,12.04,17.06,13.61,14.52, 14.52,14.52),
-  qmd_1000h = c(162.56,219.93,74.30,61.62,92.74,70.39,127.24,138.06,115.78,135.49,169.52,129.96,127.24,101.81,127.24,122.77,75.69,167.70,115.99,127.24,127.24,127.24)
-)
-
-SEC_table <- data.frame (
-  letter = c("ABCO", "ABMA", "CADE", "JUOC", "PIAL", "PIAT", "PIBA", "PICO", "PIFL", "PIJE", "PILA", "PIMO1", "PIMO2", "PIPO", "PISA", "PIWA", "PSME", "SEGI", "TSME", "UNCO", "UNHA", "UNTR"),
-  fia = c("15", "20", "81", "64", "101", "103", "104", "108", "113", "116", "117", "133", "199", "122", "127", "137", "202", "212", "264", "298", "998", "999"),
-  sec_1h = c(1.03,1.03,1.02,1.03,1.02,1.03,1.02,1.02,1.02,1.03,1.04,1.02,1.03,1.02,1.05,1.02,1.03,1.02,1.04,1.03,1.03,1.03),
-  sec_10h = c(1.02,1.02,1.02,1.04,1.02,1.02,1.02,1.02,1.02,1.03,1.04,1.01,1.02,1.03,1.03,1.02,1.02,1.02,1.02,1.02,1.02,1.02),
-  sec_100h = c(1.02,1.01,1.03,1.04,1.02,1.00,1.01,1.01,1.01,1.04,1.03,1.01,1.06,1.02,1.02,1.01,1.03,1.02,1.02,1.02,1.02,1.02),
-  sec_1000h = c(1.01,1.00,1.06,1.04,1.02,1.02,1.02,1.05,1.01,1.05,1.03,1.05,1.02,1.01,1.02,1.05,1.04,1.01,1.00,1.02,1.02,1.02)
-)
-
-SG_table <- data.frame(
-  letter = c("ABCO", "ABMA", "CADE", "JUOC", "PIAL", "PIAT", "PIBA", "PICO", "PIFL", "PIJE", "PILA", "PIMO1", "PIMO2", "PIPO", "PISA", "PIWA", "PSME", "SEGI", "TSME", "UNCO", "UNHA", "UNTR"),
-  fia = c("15", "20", "81", "64", "101", "103", "104", "108", "113", "116", "117", "133", "199", "122", "127", "137", "202", "212", "264", "298", "998", "999"),
-  sg_1h = c(0.53,0.57,0.59,0.67,0.55,0.59,0.59,0.53,0.57,0.53,0.59,0.65,0.56,0.55,0.64,0.53,0.60,0.57,0.67,0.58,0.58,0.58),
-  sg_10h = c(0.54,0.56,0.54,0.65,0.49,0.55,0.61,0.48,0.57,0.55,0.59,0.64,0.56,0.56,0.61,0.52,0.61,0.57,0.65,0.57,0.57,0.57),
-  sg_100h = c(0.57,0.47,0.55,0.62,0.48,0.39,0.53,0.54,0.54,0.55,0.52,0.53,0.49,0.48,0.43,0.44,0.59,0.56,0.62,0.53,0.53,0.53),
-  sg_1000s = c(0.32,0.38,0.41,0.47,0.42,0.47,0.47,0.58,0.63,0.47,0.43,0.47,0.47,0.40,0.47,0.35,0.35,0.54,0.66,0.47,0.47,0.47)
 )
 
 

@@ -379,3 +379,7 @@ GroundLoad <- function(gr_fuel_data, gr_tree_data, gr_units, gr_sp_codes, gr_mea
   }
 
 }
+
+utils::globalVariables(c("duff_depth", "litter_depth", "lit_duff_depth", "coef_litter", "coef_duff",
+                         "coef_litterduff", "duff_Mg_ha", "lit_duff_Mg_ha", "litter_ton_ac", "duff_ton_ac",
+                         "lit_duff_ton_ac", "litter_Mg_ha"))

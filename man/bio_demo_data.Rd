@@ -3,10 +3,8 @@
 \docType{data}
 \name{bio_demo_data}
 \alias{bio_demo_data}
-\title{Data for demonstration}
+\title{Data for biomass demonstrations}
 \format{
-\subsection{\code{bio_demo_data}}{
-
 A dataframe with 9 rows and 7 columns:
 \describe{
 \item{Forest}{Broader location or forest where the data were collected}
@@ -19,7 +17,6 @@ A dataframe with 9 rows and 7 columns:
 \item{HT_M}{Tree height in meters}
 }
 }
-}
 \source{
 Created by Kea Rutherford for demonstration purposes.
 }
@@ -27,6 +24,6 @@ Created by Kea Rutherford for demonstration purposes.
 bio_demo_data
 }
 \description{
-A fake dataset created for demonstration purposes only
+A fake dataset created for biomass demonstration purposes only
 }
 \keyword{datasets}

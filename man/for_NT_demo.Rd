@@ -3,10 +3,8 @@
 \docType{data}
 \name{for_NT_demo}
 \alias{for_NT_demo}
-\title{Data for forest composition demonstration}
+\title{Data for forest composition and structure demonstrations}
 \format{
-\subsection{\code{for_NT_demo}}{
-
 A dataframe with 9 rows and 7 columns:
 \describe{
 \item{Forest}{Broader location or forest where the data were collected}
@@ -18,7 +16,6 @@ A dataframe with 9 rows and 7 columns:
 \item{HT_M}{Tree height in meters}
 }
 }
-}
 \source{
 Created by Kea Rutherford for demonstration purposes.
 }
@@ -26,6 +23,6 @@ Created by Kea Rutherford for demonstration purposes.
 for_NT_demo
 }
 \description{
-A fake dataset created for composition demonstration purposes only
+A fake dataset created for composition and structure demonstration purposes only
 }
 \keyword{datasets}

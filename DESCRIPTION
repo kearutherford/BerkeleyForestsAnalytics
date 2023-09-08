@@ -3,7 +3,8 @@ Title: Produce Standard Metrics for Forest Management and Ecology from Field Inv
 Version: 0.1.0
 Authors@R: c(
     person("Kea", "Rutherford", email = "krutherford@berkeley.edu", role = c("aut", "cre")),
-    person("John", "Battles", role = "aut"))
+    person("John", "Battles", role = "aut"),
+    person("Danny", "Foster", role = "aut"))
 Description: A suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data.
 URL: https://github.com/kearutherford/UCBForestAnalytics
 License: MIT + file LICENSE

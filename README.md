@@ -34,8 +34,14 @@ regions.
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA)
 Regional Biomass Equations to estimate above-ground stem, bark, and
 branch tree biomass. It provides the option to adjust biomass estimates
-for standing dead trees, which lose mass through degredation and decay.
-See references 1, 2 & 3 below.
+for the structural decay of standing dead trees. Note that standing dead
+trees also lose mass through degradation, which is indirectly accounted
+for in this method through a decrease in height. However, degradation of
+bark and branches is not directly accounted for. See references 1, 2 & 3
+below.
+
+the biomass estimates for standing dead trees will be adjusted for
+structural decay.
 
 ### Inputs
 
@@ -799,6 +805,706 @@ QMD, NA DBH, and NA height.*
 
 <br>
 
+## Surface and ground fuel load estimations
+
+The three functions (`FineFuels`, `CoarseFuels` and `GroundFuels`)
+estimate surface and ground fuel loads from line-intercept transects.
+Field data should have been collected following Brown (1974) or a
+similar method.
+
+This set of functions evolved from Rfuels, a package developed by Danny
+Foster [Rfuels GitHub](https://github.com/danfosterfire/Rfuels).
+Although these functions are formatted differently than Rfuels, they
+follow the same general equations. The goal of this set of functions is
+to take the workflow outlined in Rfuels and make it more flexible and
+user-friendly. Rfuels will remain operational as the legacy program.
+
+### :eight_spoked_asterisk: `FineFuels( )`
+
+The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is
+defined as 1-hour (0-0.64cm or 0-0.25in), 10-hour (0.64-2.54cm or
+0.25-1.0in), and 100-hour (2.54-7.62cm or 1-3in) fuels. Assumptions for
+FWD data collection:
+
+- Each plot has one or more fuel transects (the number of transects per
+  plot is variable)
+- For pre-defined distances along each transect, the number of 1-hour,
+  10-hour, and 100-hour fuel particles that intersect the transect are
+  recorded as counts
+- The distances (or lengths) sampled along the transect may be different
+  for each size class (1-hour, 10-hour, and 1000-hour)
+
+### Inputs
+
+1.  `tree_data` A dataframe or tibble. Each row must be an observation
+    of an individual tree. Must have at least these columns (column
+    names are exact):
+
+    - **time:** Describes the time period of measurement (could be the
+      year, the month, etc. depending on the project). The class of this
+      variable will be coerced to character.
+    - **site:** Describes the broader location or forest where the data
+      were collected. The class of this variable will be coerced to
+      character.
+    - **plot:** Identifies the plot in which the individual tree was
+      measured. The class of this variable will be coerced to character.
+    - **exp_factor:** The expansion factor specifies the number of trees
+      per hectare (or per acre) that a given plot tree represents. The
+      class of this variable must be numeric.
+    - **species:** Specifies the species of the individual tree. Must
+      follow four-letter species code or FIA naming conventions (see
+      species code tables in background information). The class of this
+      variable will be coerced to character.
+    - **dbh:** Provides diameter at breast height of the individual tree
+      in either centimeters or inches. The class of this variable must
+      be numeric.
+
+2.  `fuel_data` A dataframe or tibble. Each row must be an observation
+    of an individual transect at a specific time/site/plot. Must have at
+    least these columns (column names exact):
+
+    - **time:** Described the time period of measurement (could be the
+      year, the month, etc. depending on the project). The class of this
+      variable will be coerced to character.
+    - **site:** Describes the broader location or forest where the data
+      were collected. The class of this variable will be coerced to
+      character.
+    - **plot:** Identifies the plot in which the individual fuel
+      transect was measured. The class of this variable will be coerced
+      to character.
+    - **transect:** Identifies the transect on which the specific fuel
+      tallies were collected. The transect ID Will often be an azimuth
+      from plot center. The class of this variable will be coerced to
+      character.
+    - **count_1h:** Transect counts of the number of intersections for
+      1-hour fuels. Must be an integer greater than or equal to 0.
+    - **count_10h:** Transect counts of the number of intersections for
+      10-hour fuels. Must be an integer greater than or equal to 0.
+    - **count_100h:** Transect counts of the number of intersections for
+      100-hour fuels. Must be an integer greater than or equal to 0.
+    - **length_1h:** The length of the sampling transect for 1-hour
+      fuels in either meters or feet. The class of this variables must
+      be numeric.
+    - **length_10h:** The length of the sampling transect for 10-hour
+      fuels in either meters or feet. The class of this variables must
+      be numeric.
+    - **length_100h:** The length of the sampling transect for 100-hour
+      fuels in either meters or feet. The class of this variables must
+      be numeric.
+    - **slope:** The slope of the transect in percent (not the slope of
+      the plot). This column is OPTIONAL. However, it is important to
+      correct for the slope effect on the horizontal length of
+      transects. If slope is not supplied, the slope will be taken to be
+      0 (no slope).
+
+3.  `sp_codes` Specifies whether the species column in tree_data follows
+    the four-letter code or FIA naming convention (see species code
+    tables below). Must be set to either “4letter” or “fia”. The default
+    is set to “4letter”.
+
+4.  `units` Specifies whether the input data are in metric (centimeters,
+    meters, and trees per hectare) or imperial (inches, feet, and trees
+    per acre) units. Inputs must be all metric or all imperial (do not
+    mix-and-match units). The output units will match the input units
+    (i.e., if inputs are in metric then outputs will be in metric). Must
+    be set to either “metric” or “imperial”. The default is set to
+    “metric”.
+
+*Note: there must be a one-to-one match between time:site:plot
+identities of tree and fuel data.*
+
+### Outputs
+
+A dataframe with the following columns:
+
+1.  `time`: as described above
+
+2.  `site`: as described above
+
+3.  `plot`: as described above
+
+4.  `load_1h_Mg_ha` (or `load_1h_ton_ac`): fuel load of 1-hour fuels in
+    megagrams per hectare (or US tons per acre)
+
+5.  `load_10h_Mg_ha` (or `load_10h_ton_ac`): fuel load of 10-hour fuels
+    in megagrams per hectare (or US tons per acre)
+
+6.  `load_100h_Mg_ha` (or `load_100h_ton_ac`): fuel load of 100-hour
+    fuels in megagrams per hectare (or US tons per acre)
+
+7.  `load_fwd_Mg_ha` (or `load_fwd_ton_ac`): total fine woody debris
+    fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or
+    US tons per acre)
+
+### Demonstration
+
+``` r
+# investigate input tree_data
+overstory_demo
+```
+
+    ##    time site plot exp_factor species  dbh
+    ## 1  2019 SEKI    1         50    ABCO 13.5
+    ## 2  2019 SEKI    1         50    ABCO 10.3
+    ## 3  2019 SEKI    1         50    ABCO 19.1
+    ## 4  2019 SEKI    2         50    PSME 32.8
+    ## 5  2019 SEKI    2         50    ABCO 13.8
+    ## 6  2019 SEKI    2         50    ABCO 20.2
+    ## 7  2019 SEKI    2         50    CADE 31.7
+    ## 8  2020 SEKI    1         50    ABCO 13.6
+    ## 9  2020 SEKI    1         50    ABCO 10.3
+    ## 10 2020 SEKI    1         50    ABCO 19.3
+    ## 11 2020 SEKI    2         50    PSME 32.8
+    ## 12 2020 SEKI    2         50    ABCO 13.9
+    ## 13 2020 SEKI    2         50    ABCO 20.2
+    ## 14 2020 SEKI    2         50    CADE 31.9
+
+``` r
+# invesigate input fuel_data 
+fwd_demo
+```
+
+    ##    time site plot transect count_1h count_10h count_100h length_1h length_10h
+    ## 1  2019 SEKI    1      120       12         4          0         2          2
+    ## 2  2019 SEKI    1      240       30         8          1         2          2
+    ## 3  2019 SEKI    1      360       32         3          2         2          2
+    ## 4  2019 SEKI    2      120       10         4          0         2          2
+    ## 5  2019 SEKI    2      240       41         2          0         2          2
+    ## 6  2019 SEKI    2      360        5         0          1         2          2
+    ## 7  2020 SEKI    1      120       14         9          3         2          2
+    ## 8  2020 SEKI    1      240        7         1          4         2          2
+    ## 9  2020 SEKI    1      360       39         4          0         2          2
+    ## 10 2020 SEKI    2      120        4         3          2         2          2
+    ## 11 2020 SEKI    2      240       18         3          1         2          2
+    ## 12 2020 SEKI    2      360       10         0          1         2          2
+    ##    length_100h slope
+    ## 1            3     6
+    ## 2            3     5
+    ## 3            3    11
+    ## 4            3     6
+    ## 5            3     5
+    ## 6            3    11
+    ## 7            3     6
+    ## 8            3     5
+    ## 9            3    11
+    ## 10           3     6
+    ## 11           3     5
+    ## 12           3    11
+
+<br>
+
+``` r
+# call the FineFuels() function in the UCBForestAnalystics package
+# keep default sp_codes (= "4letter") and units (= "metric")
+fine_demo <- FineFuels(tree_data = overstory_demo,
+                       fuel_data = fwd_demo)
+
+fine_demo
+```
+
+    ##   time site plot load_1h_Mg_ha load_10h_Mg_ha load_100h_Mg_ha load_fwd_Mg_ha
+    ## 1 2019 SEKI    1     0.6669228      2.2482436        2.776833       5.691999
+    ## 2 2020 SEKI    1     0.5413301      2.0996514        6.460228       9.101209
+    ## 3 2019 SEKI    2     0.5205590      0.9356160        1.230604       2.686780
+    ## 4 2020 SEKI    2     0.2980415      0.9350166        4.912659       6.145717
+
+<br>
+
+### :eight_spoked_asterisk: `CoarseFuels( )`
+
+The `CoarseFuels` function estimates coarse woody debris (CWD) loads.
+CWD is defined 1000-hour (7.62+ cm or 3+ in) fuels. Assumptions for CWD
+data collection:
+
+- Each plot has one or more fuel transects (the number of transects per
+  plot is variable)
+- For a pre-defined distance along each transect, every 1000-hour fuel
+  particle that intersects the transect is individually recorded
+  (diameter and decay status)
+
+### Inputs
+
+1.  `tree_data` A dataframe or tibble. Each row must be an observation
+    of an individual tree. Must have at least these columns (column
+    names are exact):
+
+    - **time:** Describes the time period of measurement (could be the
+      year, the month, etc. depending on the project). The class of this
+      variable will be coerced to character.
+    - **site:** Describes the broader location or forest where the data
+      were collected. The class of this variable will be coerced to
+      character.
+    - **plot:** Identifies the plot in which the individual tree was
+      measured. The class of this variable will be coerced to character.
+    - **exp_factor:** The expansion factor specifies the number of trees
+      per hectare (or per acre) that a given plot tree represents. The
+      class of this variable must be numeric.
+    - **species:** Specifies the species of the individual tree. Must
+      follow four-letter species code or FIA naming conventions (see
+      species code tables in background information). The class of this
+      variable will be coerced to character.
+    - **dbh:** Provides diameter at breast height of the individual tree
+      in either centimeters or inches. The class of this variable must
+      be numeric.
+
+2.  `fuel_data` A dataframe or tibble with at least these columns
+    (column names exact):
+
+    - **time:** Described the time period of measurement (could be the
+      year, the month, etc. depending on the project). The class of this
+      variable will be coerced to character.
+
+    - **site:** Describes the broader location or forest where the data
+      were collected. The class of this variable will be coerced to
+      character.
+
+    - **plot:** Identifies the plot in which the individual fuel
+      transect was measured. The class of this variable will be coerced
+      to character.
+
+    - **transect:** Identifies the transect on which the specific fuel
+      tallies were collected. The transect ID Will often be an azimuth
+      from plot center. The class of this variable will be coerced to
+      character.
+
+    - **length_100h:** The length of the sampling transect for 1000-hour
+      fuels in either meters or feet. The class of this variable must be
+      numeric.
+
+    - **slope:** The slope of the transect in percent (not the slope of
+      the plot). This column is OPTIONAL. However, it is important to
+      correct for the slope effect on the horizontal length of
+      transects. If slope is not supplied, the slope will be taken to be
+      0 (no slope).
+
+    - If sum-of-squared-diameters for sound and rotten 1000-hour fuels
+      has already been calculated by the user, the dataframe must also
+      have the following two columns. In this case, each row is an
+      observation of an individual transect at a specific
+      time/site/plot.
+
+      - **ssd_S:** Sum-of-squared-diameters for sound 1000-hour fuels.
+        The class of this variable must be numeric.
+      - **ssd_R:** Sum-of-squared-diameters for rotten 1000-hour fuels.
+        The class of this variable must be numeric.
+
+    - If sum-of-squared-diameters for sound and rotten 1000-hour fuels
+      has NOT already been calculated by the user, the dataframe must
+      also have the following two columns. In this case, each row is an
+      observation of an individual 1000-hour fuel particle recorded at a
+      specific time/site/plot/transect.
+
+      - **diameter:** Diameter of the individual 1000-hour fuel particle
+        in either centimeters or inches.The class of this variable must
+        be numeric.
+      - **status:** Decay status of the individual 1000-hour fuel
+        particle. Must be either “R” (rotten) or “S” (sound). The class
+        of this variable will be coerced to character.
+
+3.  `sp_codes` Specifies whether the species column in tree_data follows
+    the four-letter code or FIA naming convention (see species code
+    tables below). Must be set to either “4letter” or “fia”. The default
+    is set to “4letter”.
+
+4.  `units` Specifies whether the input data are in metric (centimeters,
+    meters, and trees per hectare) or imperial (inches, feet, and trees
+    per acre) units. Inputs must be all metric or all imperial (do not
+    mix-and-match units). The output units will match the input units
+    (i.e., if inputs are in metric then outputs will be in metric). Must
+    be set to either “metric” or “imperial”. The default is set to
+    “metric”.
+
+5.  `summed` Specifies whether the sum-of-squared-diameters for sound
+    and rotten 1000-hour fuels has already been calculated by the user.
+    Must be set to either “yes” or “no”. The default is set to “no”.
+
+*Note: there must be a one-to-one match between time:site:plot
+identities of tree and fuel data.*
+
+### Outputs
+
+A dataframe with the following columns:
+
+1.  `time`: as described above
+
+2.  `site`: as described above
+
+3.  `plot`: as described above
+
+4.  `load_1000s_Mg_ha` (or `load_1000s_ton_ac`): fuel load of sound
+    1000-hour fuels in megagrams per hectare (or US tons per acre)
+
+5.  `load_1000r_Mg_ha` (or `load_1000r_ton_ac`): fuel load of rotten
+    1000-hour fuels in megagrams per hectare (or US tons per acre)
+
+6.  `load_cwd_Mg_ha` (or `load_cwd_ton_ac`): total coarse woody debris
+    fuel load (1000-hour sound + 1000-hour rotten) in megagrams per
+    hectare (or US tons per acre)
+
+### Demonstrations
+
+``` r
+# investigate input tree_data
+overstory_demo
+```
+
+    ##    time site plot exp_factor species  dbh
+    ## 1  2019 SEKI    1         50    ABCO 13.5
+    ## 2  2019 SEKI    1         50    ABCO 10.3
+    ## 3  2019 SEKI    1         50    ABCO 19.1
+    ## 4  2019 SEKI    2         50    PSME 32.8
+    ## 5  2019 SEKI    2         50    ABCO 13.8
+    ## 6  2019 SEKI    2         50    ABCO 20.2
+    ## 7  2019 SEKI    2         50    CADE 31.7
+    ## 8  2020 SEKI    1         50    ABCO 13.6
+    ## 9  2020 SEKI    1         50    ABCO 10.3
+    ## 10 2020 SEKI    1         50    ABCO 19.3
+    ## 11 2020 SEKI    2         50    PSME 32.8
+    ## 12 2020 SEKI    2         50    ABCO 13.9
+    ## 13 2020 SEKI    2         50    ABCO 20.2
+    ## 14 2020 SEKI    2         50    CADE 31.9
+
+<br>
+
+**If sum-of-squared-diameters for sound and rotten 1000-hour fuels has
+already been calculated:**
+
+``` r
+# invesigate input fuel_data 
+cwd_YS_demo
+```
+
+    ##    time site plot transect length_1000h slope ssd_S ssd_R
+    ## 1  2019 SEKI    1      120        12.62    10     0     0
+    ## 2  2019 SEKI    1      240        12.62     2    81   144
+    ## 3  2019 SEKI    1      360        12.62     0     0     0
+    ## 4  2019 SEKI    2      120        12.62     5   128   100
+    ## 5  2019 SEKI    2      240        12.62     6     0     0
+    ## 6  2019 SEKI    2      360        12.62     0     0   144
+    ## 7  2020 SEKI    1      120        12.62    14     0     0
+    ## 8  2020 SEKI    1      240        12.62     3     0     0
+    ## 9  2020 SEKI    1      360        12.62     6     0   221
+    ## 10 2020 SEKI    2      120        12.62    11     0     0
+    ## 11 2020 SEKI    2      240        12.62     7     0     0
+    ## 12 2020 SEKI    2      360        12.62     3     0     0
+
+<br>
+
+``` r
+# call the CoarseFuels() function in the UCBForestAnalystics package
+coarse_demo1 <- CoarseFuels(tree_data = overstory_demo,
+                            fuel_data = cwd_YS_demo,
+                            sp_codes = "4letter",
+                            units = "metric",
+                            summed = "yes")
+
+coarse_demo1
+```
+
+    ##   time site plot load_1000s_Mg_ha load_1000r_Mg_ha load_cwd_Mg_ha
+    ## 1 2019 SEKI    1        0.8534494         1.706899       2.560348
+    ## 2 2020 SEKI    1        0.0000000         2.623802       2.623802
+    ## 3 2019 SEKI    2        1.5903804         2.981374       4.571754
+    ## 4 2020 SEKI    2        0.0000000         0.000000       0.000000
+
+<br>
+
+**If sum-of-squared-diameters for sound and rotten 1000-hour fuels has
+NOT already been calculated:**
+
+``` r
+# invesigate input fuel_data 
+cwd_NS_demo
+```
+
+    ##    time site plot transect length_1000h slope diameter status
+    ## 1  2019 SEKI    1      120        12.62    10        0   <NA>
+    ## 2  2019 SEKI    1      240        12.62     2        9      S
+    ## 3  2019 SEKI    1      240        12.62     2       12      R
+    ## 4  2019 SEKI    1      360        12.62     0        0   <NA>
+    ## 5  2019 SEKI    2      120        12.62     5        8      S
+    ## 6  2019 SEKI    2      120        12.62     5       10      R
+    ## 7  2019 SEKI    2      120        12.62     5        8      S
+    ## 8  2019 SEKI    2      240        12.62     6        0   <NA>
+    ## 9  2019 SEKI    2      360        12.62     0       12      R
+    ## 10 2020 SEKI    1      120        12.62    14        0   <NA>
+    ## 11 2020 SEKI    1      240        12.62     3        0   <NA>
+    ## 12 2020 SEKI    1      360        12.62     6       10      R
+    ## 13 2020 SEKI    1      360        12.62     6       11      R
+    ## 14 2020 SEKI    2      120        12.62    11        0   <NA>
+    ## 15 2020 SEKI    2      240        12.62     7        0   <NA>
+    ## 16 2020 SEKI    2      360        12.62     3        0   <NA>
+
+*Notice that time:site:plot:transects without fuels are represented with
+a diameter of 0 and an NA status. Status could also be set to either “S”
+or “R”. It is important that transects without CWD are still included,
+as those transects indicate a loading of 0.*
+
+<br>
+
+``` r
+# call the CoarseFuels() function in the UCBForestAnalystics package
+# keep default sp_codes (= "4letter"), units (= "metric"), and summed (= "no")
+coarse_demo2 <- CoarseFuels(tree_data = overstory_demo,
+                            fuel_data = cwd_NS_demo)
+
+coarse_demo2
+```
+
+    ##   time site plot load_1000s_Mg_ha load_1000r_Mg_ha load_cwd_Mg_ha
+    ## 1 2019 SEKI    1        0.8534494         1.706899       2.560348
+    ## 2 2020 SEKI    1        0.0000000         2.623802       2.623802
+    ## 3 2019 SEKI    2        1.5903804         2.981374       4.571754
+    ## 4 2020 SEKI    2        0.0000000         0.000000       0.000000
+
+<br>
+
+### :eight_spoked_asterisk: `GroundFuels( )`
+
+The `GroundFuels` function estimates duff and litter loads. Assumptions
+for duff/litter data collection:
+
+- Each plot has one or more fuel transects (the number of transects per
+  plot is variable)
+- Duff and litter depths (or combined duff/litter depth) are sampled at
+  fixed locations along each transect (the number of samples per
+  transect are variable)
+
+### Inputs
+
+1.  `tree_data` A dataframe or tibble. Each row must be an observation
+    of an individual tree. Must have at least these columns (column
+    names are exact):
+
+    - **time:** Describes the time period of measurement (could be the
+      year, the month, etc. depending on the project). The class of this
+      variable will be coerced to character.
+    - **site:** Describes the broader location or forest where the data
+      were collected. The class of this variable will be coerced to
+      character.
+    - **plot:** Identifies the plot in which the individual tree was
+      measured. The class of this variable will be coerced to character.
+    - **exp_factor:** The expansion factor specifies the number of trees
+      per hectare (or per acre) that a given plot tree represents. The
+      class of this variable must be numeric.
+    - **species:** Specifies the species of the individual tree. Must
+      follow four-letter species code or FIA naming conventions (see
+      species code tables in background information). The class of this
+      variable will be coerced to character.
+    - **dbh:** Provides diameter at breast height of the individual tree
+      in either centimeters or inches. The class of this variable must
+      be numeric.
+
+2.  `fuel_data` A dataframe or tibble with at least these columns
+    (column names exact):
+
+    - **time:** Described the time period of measurement (could be the
+      year, the month, etc. depending on the project). The class of this
+      variable will be coerced to character.
+
+    - **site:** Describes the broader location or forest where the data
+      were collected. The class of this variable will be coerced to
+      character.
+
+    - **plot:** Identifies the plot in which the individual fuel
+      transect was measured. The class of this variable will be coerced
+      to character.
+
+    - **transect:** Identifies the transect on which the specific fuel
+      tallies were collected. The transect ID Will often be an azimuth
+      from plot center. The class of this variable will be coerced to
+      character.
+
+    - If duff and litter depth are measured separately, the dataframe
+      must also have the following two columns:
+
+      - **litter_depth:** Litter depth in centimeters or inches. May be
+        an individual depth measurement or the average depth on the
+        transect (see note below). The class of this variable must be
+        numeric.
+      - **duff_depth:** Duff depth in centimeters or inches. May be an
+        individual depth measurement or the average depth on the
+        transect (see note below). The class of this variable must be
+        numeric.
+
+    - If duff and litter depth are measured together, the dataframe must
+      also have the following column:
+
+      - **lit_duff_depth:** Combined litter and duff depth in
+        centimeters or inches. May be an individual depth measurement or
+        the average depth on the transect (see note below). The class of
+        this variable must be numeric.
+
+    *Note: If multiple depth measurements were taken for each transect,
+    the user may average the depths together before import (in which
+    case each row is an observation of an individual transect at a
+    specific time/site/plot) or not average the depths before import (in
+    which case each row is an observation of an individual depth
+    recorded at a specific time/site/plot/transect).*
+
+3.  `sp_codes` Specifies whether the species column in tree_data follows
+    the four-letter code or FIA naming convention (see species code
+    tables below). Must be set to either “4letter” or “fia”. The default
+    is set to “4letter”.
+
+4.  `units` Specifies whether the input data are in metric (centimeters,
+    meters, and trees per hectare) or imperial (inches, feet, and trees
+    per acre) units. Inputs must be all metric or all imperial (do not
+    mix-and-match units). The output units will match the input units
+    (i.e., if inputs are in metric then outputs will be in metric). Must
+    be set to either “metric” or “imperial”. The default is set to
+    “metric”.
+
+5.  `measurement` Specifies whether duff and litter were measured
+    together or separately. Must be set to “combined” or “separate”. The
+    default is set to “separate”.
+
+*Note: there must be a one-to-one match between time:site:plot
+identities of tree and fuel data.*
+
+### Outputs
+
+A dataframe with the following columns:
+
+1.  `time`: as described above
+
+2.  `site`: as described above
+
+3.  `plot`: as described above
+
+    *If duff and litter were measured separately:*
+
+    4.  `litter_Mg_ha` (or `litter_ton_ac`): litter load in megagrams
+        per hectare (or US tons per acre)
+
+    5.  `duff_Mg_ha` (or `duff_ton_ac`): duff load in megagrams per
+        hectare (or US tons per acre)
+
+    *If duff and litter were measured together:*
+
+    4.  `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and
+        duff load in megagrams per hectare (or US tons per acre)
+
+### Demonstrations
+
+``` r
+# investigate input tree_data
+overstory_demo
+```
+
+    ##    time site plot exp_factor species  dbh
+    ## 1  2019 SEKI    1         50    ABCO 13.5
+    ## 2  2019 SEKI    1         50    ABCO 10.3
+    ## 3  2019 SEKI    1         50    ABCO 19.1
+    ## 4  2019 SEKI    2         50    PSME 32.8
+    ## 5  2019 SEKI    2         50    ABCO 13.8
+    ## 6  2019 SEKI    2         50    ABCO 20.2
+    ## 7  2019 SEKI    2         50    CADE 31.7
+    ## 8  2020 SEKI    1         50    ABCO 13.6
+    ## 9  2020 SEKI    1         50    ABCO 10.3
+    ## 10 2020 SEKI    1         50    ABCO 19.3
+    ## 11 2020 SEKI    2         50    PSME 32.8
+    ## 12 2020 SEKI    2         50    ABCO 13.9
+    ## 13 2020 SEKI    2         50    ABCO 20.2
+    ## 14 2020 SEKI    2         50    CADE 31.9
+
+<br>
+
+**If depths were NOT averaged together for each transect before
+import:**
+
+``` r
+# invesigate input fuel_data 
+lit_duff_demo
+```
+
+    ##    time site plot transect litter_depth duff_depth
+    ## 1  2019 SEKI    1      120            2          5
+    ## 2  2019 SEKI    1      120            3          1
+    ## 3  2019 SEKI    1      240            4          3
+    ## 4  2019 SEKI    1      240            3          2
+    ## 5  2019 SEKI    1      360            5          4
+    ## 6  2019 SEKI    1      360            1          4
+    ## 7  2019 SEKI    2      120            2          2
+    ## 8  2019 SEKI    2      120            1          1
+    ## 9  2019 SEKI    2      240            3          4
+    ## 10 2019 SEKI    2      240            2          6
+    ## 11 2019 SEKI    2      360            2          3
+    ## 12 2019 SEKI    2      360            1          2
+    ## 13 2020 SEKI    1      120            3          2
+    ## 14 2020 SEKI    1      120            5          1
+    ## 15 2020 SEKI    1      240            4          2
+    ## 16 2020 SEKI    1      240            1          4
+    ## 17 2020 SEKI    1      360            4          5
+    ## 18 2020 SEKI    1      360            3          4
+    ## 19 2020 SEKI    2      120            2          1
+    ## 20 2020 SEKI    2      120            5          2
+    ## 21 2020 SEKI    2      240            4          2
+    ## 22 2020 SEKI    2      240            1          3
+    ## 23 2020 SEKI    2      360            3          3
+    ## 24 2020 SEKI    2      360            3          5
+
+<br>
+
+``` r
+# call the GroundFuels() function in the UCBForestAnalystics package
+# keep default sp_codes (= "4letter"), units (= "metric"), and measurement (= "separate")
+duff_demo1 <- GroundFuels(tree_data = overstory_demo,
+                          fuel_data = lit_duff_demo)
+
+duff_demo1
+```
+
+    ##   time site plot litter_Mg_ha duff_Mg_ha
+    ## 1 2019 SEKI    1     31.50000   48.07000
+    ## 2 2020 SEKI    1     35.00000   45.54000
+    ## 3 2019 SEKI    2     19.43475   44.90932
+    ## 4 2020 SEKI    2     31.83258   39.94238
+
+<br>
+
+**If depths were averaged together for each transect before import:**
+
+``` r
+# invesigate input fuel_data 
+lit_duff_avg_demo
+```
+
+    ##    time site plot transect litter_depth duff_depth
+    ## 1  2019 SEKI    1      120          2.5        3.0
+    ## 2  2019 SEKI    1      240          3.5        2.5
+    ## 3  2019 SEKI    1      360          3.0        4.0
+    ## 4  2019 SEKI    2      120          1.5        1.5
+    ## 5  2019 SEKI    2      240          2.5        5.0
+    ## 6  2019 SEKI    2      360          1.5        2.5
+    ## 7  2020 SEKI    1      120          4.0        1.5
+    ## 8  2020 SEKI    1      240          2.5        3.0
+    ## 9  2020 SEKI    1      360          3.5        4.5
+    ## 10 2020 SEKI    2      120          3.5        1.5
+    ## 11 2020 SEKI    2      240          2.5        2.5
+    ## 12 2020 SEKI    2      360          3.0        4.0
+
+<br>
+
+``` r
+# call the GroundFuels() function in the UCBForestAnalystics package
+duff_demo2 <- GroundFuels(tree_data = overstory_demo,
+                          fuel_data = lit_duff_avg_demo,
+                          sp_codes = "4letter",
+                          units = "metric",
+                          measurement = "separate")
+
+duff_demo2
+```
+
+    ##   time site plot litter_Mg_ha duff_Mg_ha
+    ## 1 2019 SEKI    1     31.50000   48.07000
+    ## 2 2020 SEKI    1     35.00000   45.54000
+    ## 3 2019 SEKI    2     19.43475   44.90932
+    ## 4 2020 SEKI    2     31.83258   39.94238
+
+<br>
+
 ## Background information
 
 ### Species code tables
@@ -863,6 +1569,11 @@ followed by the first two letters of the species.*
 | 5           | None                        | Broken        | Less than 20     | Gone                                                          | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
 
 *Reference 4*
+
+### Surface and ground fuel calculations
+
+For now, view the “Background Information” section of Rfuels: [Rfuels
+GitHub](https://github.com/danfosterfire/Rfuels)
 
 ## References
 

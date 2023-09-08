@@ -21,6 +21,7 @@ Useful links:
 Authors:
 \itemize{
   \item John Battles
+  \item Danny Foster
 }
 
 }
