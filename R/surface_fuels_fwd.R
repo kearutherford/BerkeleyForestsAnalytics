@@ -1,9 +1,32 @@
 
 ################################################################################
 ################################################################################
-#
+# Top-level function
 ################################################################################
 ################################################################################
+
+#' @title FineFuels
+#'
+#' @description
+#' Estimates fine woody (1-hour, 10-hour, and 100-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+#'
+#' @param tree_data A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.
+#' @param fuel_data A dataframe or tibble with the following columns: time, site, plot, transect, count_1h, count_10h, count_100h, length_1h, length_10h, and length_100h. A slope column is optional. Each row must be an observation of an individual transect at a specific time/site/plot.
+#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.
+#' @param units Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".
+#'
+#' @return A dataframe with the following columns:
+#' \itemize{
+#' \item time
+#' \item site
+#' \item plot
+#' \item load_1h_Mg_ha (or load_1h_ton_ac): fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
+#' \item load_10h_Mg_ha (or load_10h_ton_ac): fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
+#' \item load_100h_Mg_ha (or load_100h_ton_ac): fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
+#' \item load_fwd_Mg_ha (or load_fwd_ton_ac): total fine woody debris fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or US tons per acre)
+#' }
+#'
+#' @export
 
 FineFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metric") {
 
@@ -32,7 +55,7 @@ FineFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metri
 
 ################################################################################
 ################################################################################
-#
+# ValidateFWD function
 ################################################################################
 ################################################################################
 
@@ -61,7 +84,7 @@ ValidateFWD <- function(fuel_data_val, units_val) {
   # Check for slope ------------------------------------------------------------
   if(!is.element("slope", names(fuel_data_val))) {
 
-    warning('slope was not provided. The slope correction factor will be set to 1 (no slope).\n',
+    warning('slope was not provided. The slope correction factor will be set to 1, indicating no slope.\n',
             ' \n')
 
     fuel_data_val$slope <- 0
@@ -257,7 +280,7 @@ ValidateFWD <- function(fuel_data_val, units_val) {
 
 ################################################################################
 ################################################################################
-#
+# FWDCoef function
 ################################################################################
 ################################################################################
 
@@ -353,7 +376,7 @@ FWDCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
 ################################################################################
 ################################################################################
-#
+# FWDLoad function
 ################################################################################
 ################################################################################
 

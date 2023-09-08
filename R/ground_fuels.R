@@ -1,9 +1,41 @@
 
 ################################################################################
 ################################################################################
-#
+# Top-level function
 ################################################################################
 ################################################################################
+
+#' @title GroundFuels
+#'
+#' @description
+#' Estimates duff and litter fuel loads. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+#'
+#' @param tree_data A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.
+#' @param fuel_data A dataframe or tibble. If the measurement parameter is set to "separate" the following columns are required: time, site, plot, transect, litter_depth, and duff_depth. If the measurement parameter is set to "combined" the following columns are required: time, site, plot, transect, and lit_duff_depth.
+#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.
+#' @param units Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param measurement Specifies whether duff and litter were measured together or separately. Must be set to "combined" or "separate". The default is set to "separate".
+#'
+#' @return A dataframe with the following columns:
+#' \itemize{
+#'  \item If measurement is set to "separate"
+#'    \itemize{
+#'      \item time
+#'      \item site
+#'      \item plot
+#'      \item litter_Mg_ha (or litter_ton_ac): litter load in megagrams per hectare (or US tons per acre)
+#'      \item duff_Mg_ha (or duff_ton_ac): duff load in megagrams per hectare (or US tons per acre)
+#'    }
+#'  \item If measurement is set to "combined"
+#'    \itemize{
+#'      \item time
+#'      \item site
+#'      \item plot
+#'      \item lit_duff_Mg_ha (or lit_duff_ton_ac): combined litter and duff load in megagrams per hectare (or US tons per acre)
+#'    }
+#' }
+#'
+#' @export
 
 GroundFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metric", measurement = "separate") {
 
@@ -34,7 +66,7 @@ GroundFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "met
 
 ################################################################################
 ################################################################################
-#
+# ValidateGround function
 ################################################################################
 ################################################################################
 
@@ -225,7 +257,7 @@ ValidateGround <- function(fuel_data_val, units_val, meas_val) {
 
 ################################################################################
 ################################################################################
-#
+# GroundCoef function
 ################################################################################
 ################################################################################
 
@@ -281,7 +313,7 @@ GroundCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
 ################################################################################
 ################################################################################
-#
+# GroundLoad function
 ################################################################################
 ################################################################################
 

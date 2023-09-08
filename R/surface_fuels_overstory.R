@@ -20,7 +20,7 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
   if(!all(is.element(necessary_columns, names(tree_data_val)))) {
 
     stop('tree_data is missing necessary columns!\n',
-         'tree_data must include: time, site, plot, exp_factor, species, and dbh')
+         'tree_data must include time, site, plot, exp_factor, species, and dbh')
 
   }
 
@@ -123,6 +123,7 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
 
   }
 
+  # Second check for proper use of 0 ef -----------------------------------------
   plots_wo_trees <- subset(tree_data_val, tree_data_val$exp_factor == 0,
                            select = c(species, dbh))
 
@@ -181,7 +182,8 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
                                      sep = " "))
 
       warning('Not all species codes were recognized! Unrecognized codes were converted to "UNTR" for unknown tree\n',
-              'and will receive generic coefficients. Unrecognized codes: ', unrecognized_sp, ' \n')
+              'and will receive generic coefficients. Unrecognized codes: ', unrecognized_sp, ' \n',
+              ' \n')
     }
 
     # map the missing and unrecognized species to 'UNTR'
@@ -274,9 +276,9 @@ ValidateMatches <- function(tree_match, fuel_match) {
     trees_wo_fuels <- paste0(unique(tree_match[!is.element(tree_match$obs_id,fuel_match$obs_id), "obs_id"]), sep = " ")
     fuels_wo_trees <- paste0(unique(fuel_match[!is.element(fuel_match$obs_id,tree_match$obs_id), "obs_id"]), sep = " ")
 
-    stop('Tree and fuel data did not completedly match!\n',
-         'These time:site:plot combinations have tree data, but no fuel data: ', trees_wo_fuels, ' \n',
-         'These time:site:plot combinations have fuel data, but no tree data: ', fuels_wo_trees)
+    stop('Tree and fuel data did not completely match!\n',
+         'These time:site:plot combinations have tree data but no fuel data: ', trees_wo_fuels, '\n',
+         'These time:site:plot combinations have fuel data but no tree data: ', fuels_wo_trees)
 
   }
 

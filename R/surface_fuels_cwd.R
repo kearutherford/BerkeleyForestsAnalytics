@@ -1,9 +1,31 @@
 
 ################################################################################
 ################################################################################
-#
+# Top-level function
 ################################################################################
 ################################################################################
+
+#' @title CoarseFuels
+#'
+#' @description
+#' Estimates coarse woody (1000-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+#'
+#' @param tree_data A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.
+#' @param fuel_data A dataframe or tibble. If the summed parameter is set to "no" the following columns are required: time, site, plot, transect, length_1000h, diameter, and status. If the summed parameter is set to "yes" the following columns are required: time, site, plot, transect, length_1000h, ssd_R, and ssd_S.
+#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.
+#' @param units Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param summed Specifies whether the sum-of-squared-diameters for sound and rotten 1000-hour fuels has already been calculated by the user. Must be set to either "yes" or "no". The default is set to "no".
+#'
+#' @return A dataframe with the following columns:
+#' \itemize{
+#' \item time
+#' \item site
+#' \item plot
+#' \item load_1000s_Mg_ha (or load_1000s_ton_ac): fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
+#' \item load_1000r_Mg_ha (or load_1000r_ton_ac): fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
+#' }
+#'
+#' @export
 
 CoarseFuels <- function(tree_data, fuel_data, sp_codes = "4letter", units = "metric", summed = "no") {
 
@@ -31,10 +53,9 @@ CoarseFuels <- function(tree_data, fuel_data, sp_codes = "4letter", units = "met
 }
 
 
-
 ################################################################################
 ################################################################################
-#
+# ValidateCWD function
 ################################################################################
 ################################################################################
 
@@ -95,7 +116,7 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
   # Check for slope ------------------------------------------------------------
   if(!is.element("slope", names(fuel_data_val))) {
 
-    warning('slope was not provided. The slope correction factor will be set to 1 (no slope).\n',
+    warning('slope was not provided. The slope correction factor will be set to 1, indicating no slope.\n',
             ' \n')
 
     fuel_data_val$slope <- 0
@@ -202,7 +223,7 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
 
     # check for diameter range
     if(any(obs_w_cwd$diameter <= 7.62, na.rm = TRUE)) {
-      stop('1000-hr fuels are defined as having a diameter > 7.62 cm (3 in).\n',
+      stop('1000-hr fuels are defined as having a diameter > 7.62 cm, or > 3 in.\n',
            'There are diameters below this threshold in the provided fuel_data.\n',
            'Note: diameters of exactly 0 are allowed, indicating a transect without coarse woody debris.\n',
            'This warning is for diameters > 0 and <= 7.62.')
@@ -226,10 +247,10 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
                        c("R","S", NA)))) {
 
       unrecognized_status <- sort(paste0(unique(fuel_data_val[!is.element(fuel_data_val$status,
-                                                                     c("R", "S", NA)), status]),
+                                                                     c("R", "S", NA)), "status"]),
                                          sep = " "))
 
-      stop('Status must be R (rotten) or S (sound)!\n',
+      stop('Status must be R or S!\n',
            'Unrecognized status codes: ', unrecognized_status)
     }
 
@@ -413,8 +434,7 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
     # subset dataframe
     # --------------------------------------------------------------------------
     return_df <- subset(fuel_data_val, select = c(time, site, plot, transect,
-                                                  length_1000h, slope, ssd_S, ssd_R,
-                                                  slope))
+                                                  length_1000h, slope, ssd_S, ssd_R))
 
   }
 
@@ -434,7 +454,7 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
 
 ################################################################################
 ################################################################################
-#
+# CWDCoef function
 ################################################################################
 ################################################################################
 
@@ -490,7 +510,7 @@ CWDCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
 ################################################################################
 ################################################################################
-#
+# CWDLoad function
 ################################################################################
 ################################################################################
 
