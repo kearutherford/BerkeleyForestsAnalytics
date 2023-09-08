@@ -405,4 +405,4 @@ StrCalc <- function(str_data, str_units) {
 
 }
 
-utils::globalVariables(c("dbh", "ef", "ht"))
+globalVariables(c("dbh", "ef", "ht"))

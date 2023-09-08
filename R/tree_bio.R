@@ -522,5 +522,6 @@ FinalTreeDF <- function(data_1, data_2, status_orig, sp_orig, dbh_orig, ht_orig,
 
 }
 
-utils::globalVariables(c("bark_eq", "branch_eq", "density", "dbh_in", "ht_ft", "dbh_cm", "ht_m", "vol_eq", "eq_group", "CVTS",
-                         "stem_bio_tons", "bark_bio_tons", "branch_bio_tons", "total_bio_tons", "stem_bio_kg", "bark_bio_kg", "branch_bio_kg", "total_bio_kg"))
+globalVariables(c("bark_eq", "branch_eq", "density", "dbh_in", "ht_ft", "dbh_cm", "ht_m", "vol_eq", "eq_group", "CVTS",
+                  "stem_bio_tons", "bark_bio_tons", "branch_bio_tons", "total_bio_tons", "stem_bio_kg", "bark_bio_kg",
+                  "branch_bio_kg", "total_bio_kg"))

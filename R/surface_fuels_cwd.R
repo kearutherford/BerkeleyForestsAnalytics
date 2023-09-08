@@ -572,7 +572,7 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
 
 }
 
-utils::globalVariables(c("time", "sec_1000h_wt", "sg_1000s_wt", "aggregate", "coef_1000s", "coef_1000r", "load_1000s_Mg_ha",
-                         "load_1000r_Mg_ha", "na.pass", "load_1000s_ton_ac", "load_1000r_ton_ac", "load_cwd_ton_ac", "obs_id",
-                         "transect", "length_1000h", "slope", "ssd_S", "ssd_R"))
+globalVariables(c("time", "sec_1000h_wt", "sg_1000s_wt", "aggregate", "coef_1000s", "coef_1000r", "load_1000s_Mg_ha",
+                  "load_1000r_Mg_ha", "na.pass", "load_1000s_ton_ac", "load_1000r_ton_ac", "load_cwd_ton_ac", "obs_id",
+                  "transect", "length_1000h", "slope", "ssd_S", "ssd_R"))
 

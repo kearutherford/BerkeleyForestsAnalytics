@@ -441,8 +441,8 @@ FWDLoad <- function(fwd_fuel_data, fwd_tree_data, fwd_units, fwd_sp_codes) {
 
 }
 
-utils::globalVariables(c("time", "qmd_1h_wt", "qmd_10h_wt", "qmd_100h_wt", "sec_1h_wt", "sec_10h_wt", "sec_100h_wt",
-                         "sg_1h_wt", "sg_10h_wt", "sg_100h_wt", "coef_1h", "coef_10h", "coef_100h", "load_1h_Mg_ha",
-                         "load_10h_Mg_ha", "load_100h_Mg_ha", "load_1h_ton_ac", "load_10h_ton_ac", "load_100h_ton_ac", "load_fwd_ton_ac",
-                         "count_1h", "count_10h", "count_100h", "length_1h", "length_10h", "length_100h"))
+globalVariables(c("time", "qmd_1h_wt", "qmd_10h_wt", "qmd_100h_wt", "sec_1h_wt", "sec_10h_wt", "sec_100h_wt",
+                  "sg_1h_wt", "sg_10h_wt", "sg_100h_wt", "coef_1h", "coef_10h", "coef_100h", "load_1h_Mg_ha",
+                  "load_10h_Mg_ha", "load_100h_Mg_ha", "load_1h_ton_ac", "load_10h_ton_ac", "load_100h_ton_ac", "load_fwd_ton_ac",
+                  "count_1h", "count_10h", "count_100h", "length_1h", "length_10h", "length_100h"))
 

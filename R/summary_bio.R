@@ -499,4 +499,4 @@ ValidateSumData <- function(data_val, site_val, plot_val, ef_val, status_val, de
 
 }
 
-utils::globalVariables(c("stem_bio", "site", "status", "species"))
+globalVariables(c("stem_bio", "site", "status", "species"))
