@@ -371,7 +371,7 @@ StrCalc <- function(str_data, str_units) {
 
           fill_df$site[k] <- f
           fill_df$plot[k] <- p
-          fill_df$sph[k] <- den_plot
+          fill_df$sph[k] <- round(den_plot,0)
           fill_df$ba_m2_ha[k] <- ba_area_plot
           fill_df$qmd_cm[k] <- qmd_plot
           fill_df$dbh_cm[k] <- dbh_plot
@@ -386,7 +386,7 @@ StrCalc <- function(str_data, str_units) {
 
           fill_df$site[k] <- f
           fill_df$plot[k] <- p
-          fill_df$spa[k] <- den_plot
+          fill_df$spa[k] <- round(den_plot,0)
           fill_df$ba_ft2_ac[k] <- ba_area_plot
           fill_df$qmd_in[k] <- qmd_plot
           fill_df$dbh_in[k] <- dbh_plot

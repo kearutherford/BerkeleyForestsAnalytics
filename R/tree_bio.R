@@ -471,12 +471,22 @@ Discount <- function(tree_data, tree_sp_codes) {
       tree_data$stem_bio_kg[i] <- round(ratio_val*(tree_data$stem_bio_kg[i]),2)
       tree_data$bark_bio_kg[i] <- round(ratio_val*(tree_data$bark_bio_kg[i]),2)
       tree_data$branch_bio_kg[i] <- round(ratio_val*(tree_data$branch_bio_kg[i]),2)
-      tree_data$total_bio_kg[i] <- tree_data$stem_bio_kg[i] + tree_data$bark_bio_kg[i] + tree_data$branch_bio_kg[i]
 
       tree_data$stem_bio_tons[i] <- round(ratio_val*(tree_data$stem_bio_tons[i]),2)
       tree_data$bark_bio_tons[i] <- round(ratio_val*(tree_data$bark_bio_tons[i]),2)
       tree_data$branch_bio_tons[i] <- round(ratio_val*(tree_data$branch_bio_tons[i]),2)
-      tree_data$total_bio_tons[i] <- tree_data$stem_bio_tons[i] + tree_data$bark_bio_tons[i] + tree_data$branch_bio_tons[i]
+
+      if (is.na(tree_data$stem_bio_kg[i]) & is.na(tree_data$bark_bio_kg[i]) & is.na(tree_data$branch_bio_kg[i])) {
+
+        tree_data$total_bio_kg[i] <- NA
+        tree_data$total_bio_tons[i] <- NA
+
+      } else {
+
+        tree_data$total_bio_kg[i] <- sum(tree_data$stem_bio_kg[i], tree_data$bark_bio_kg[i], tree_data$branch_bio_kg[i], na.rm = TRUE)
+        tree_data$total_bio_tons[i] <- sum(tree_data$stem_bio_tons[i], tree_data$bark_bio_tons[i], tree_data$branch_bio_tons[i], na.rm = TRUE)
+
+      }
 
     }
 
