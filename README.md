@@ -40,9 +40,6 @@ for in this method through a decrease in height. However, degradation of
 bark and branches is not directly accounted for. See references 1, 2 & 3
 below.
 
-the biomass estimates for standing dead trees will be adjusted for
-structural decay.
-
 ### Inputs
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
@@ -461,7 +458,7 @@ observed.
     tibble. Identifies the plot in which the individual tree was
     measured. The class of this variable will be coerced to character.
 
-4.  `exp_factor` Must be a numeric variable (column) in the provided
+4.  `exp_factor` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. The expansion factor specifies the number of
     trees per hectare (or per acre) that a given plot tree represents.
 
@@ -473,7 +470,7 @@ observed.
     tibble. Specifies the species of the individual tree. The class of
     this variable will be coerced to character.
 
-7.  `dbh` Must be a numeric variable (column) in the provided dataframe
+7.  `dbh` Must be a **numeric** variable (column) in the provided dataframe
     or tibble. Provides the diameter at breast height (DBH) of the
     individual tree in either centimeters or inches.
 
@@ -656,16 +653,16 @@ comp_demo3
     tibble. Identifies the plot in which the individual tree was
     measured. The class of this variable will be coerced to character.
 
-4.  `exp_factor` Must be a numeric variable (column) in the provided
+4.  `exp_factor` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. The expansion factor specifies the number of
     trees per hectare (or per acre) that a given plot tree represents.
 
-5.  `dbh` Must be a numeric variable (column) in the provided dataframe
+5.  `dbh` Must be a **numeric** variable (column) in the provided dataframe
     or tibble. Provides the diameter at breast height (DBH) of the
     individual tree in either centimeters or inches.
 
 6.  `ht` Default is set to “ignore”, which indicates that tree heights
-    were not taken. If heights were taken, it can be set to a numeric
+    were not taken. If heights were taken, it can be set to a **numeric**
     variable (column) in the provided dataframe or tibble, providing the
     height of the individual tree in either meters or feet.
 
@@ -813,11 +810,11 @@ Field data should have been collected following Brown (1974) or a
 similar method.
 
 This set of functions evolved from Rfuels, a package developed by Danny
-Foster [Rfuels GitHub](https://github.com/danfosterfire/Rfuels).
+Foster ([See Rfuels GitHub](https://github.com/danfosterfire/Rfuels)).
 Although these functions are formatted differently than Rfuels, they
 follow the same general equations. The goal of this set of functions is
 to take the workflow outlined in Rfuels and make it more flexible and
-user-friendly. Rfuels will remain operational as the legacy program.
+more user-friendly. Rfuels will remain operational as the legacy program.
 
 ### :eight_spoked_asterisk: `FineFuels( )`
 
@@ -832,7 +829,7 @@ FWD data collection:
   10-hour, and 100-hour fuel particles that intersect the transect are
   recorded as counts
 - The distances (or lengths) sampled along the transect may be different
-  for each size class (1-hour, 10-hour, and 1000-hour)
+  for each size class (1-hour, 10-hour, and 100-hour)
 
 ### Inputs
 
@@ -1067,7 +1064,7 @@ data collection:
       from plot center. The class of this variable will be coerced to
       character.
 
-    - **length_100h:** The length of the sampling transect for 1000-hour
+    - **length_1000h:** The length of the sampling transect for 1000-hour
       fuels in either meters or feet. The class of this variable must be
       numeric.
 
@@ -1374,15 +1371,15 @@ A dataframe with the following columns:
 
     *If duff and litter were measured separately:*
 
-    4.  `litter_Mg_ha` (or `litter_ton_ac`): litter load in megagrams
+    *  `litter_Mg_ha` (or `litter_ton_ac`): litter load in megagrams
         per hectare (or US tons per acre)
 
-    5.  `duff_Mg_ha` (or `duff_ton_ac`): duff load in megagrams per
+    *  `duff_Mg_ha` (or `duff_ton_ac`): duff load in megagrams per
         hectare (or US tons per acre)
 
     *If duff and litter were measured together:*
 
-    4.  `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and
+    *  `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and
         duff load in megagrams per hectare (or US tons per acre)
 
 ### Demonstrations
@@ -1572,8 +1569,8 @@ followed by the first two letters of the species.*
 
 ### Surface and ground fuel calculations
 
-For now, view the “Background Information” section of Rfuels: [Rfuels
-GitHub](https://github.com/danfosterfire/Rfuels)
+For now, view the “Background Information” section of Rfuels: [
+GitHub link](https://github.com/danfosterfire/Rfuels)
 
 ## References
 
