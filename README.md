@@ -1634,6 +1634,8 @@ species:
 The fuel load represented by a depth measurement under a mixed-species
 overstory can be estimated using the following equation:
 
-$$F_{d, plot} = d*Coeff_{plot}$$ Where
+$$F_{d, plot} = d*Coeff_{plot}$$
+
+Where
 
 - $F_{d, plot}$ is the fuel load in $kg/m^2$

@@ -860,10 +860,11 @@ Duff and litter (or combined duff/litter) are measured as depths at specific poi
 
 The fuel load represented by a depth measurement under a mixed-species overstory can be estimated using the following equation: 
 
-$$F_{d, plot} = d*Coeff_{plot}$$
+\[F_{d, plot} = d*Coeff_{plot}\]
+
 Where
 
-  * $F_{d, plot}$ is the fuel load in $kg/m^2$
+  * \(F_{d, plot}\) is the fuel load in \(kg/m^2\)
 
 
 
