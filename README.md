@@ -1613,9 +1613,17 @@ Brown (1974) used coefficient values generalized for entire regions.
 Stephens (2001) refined the method described by Brown (1974) by using
 local overstory data to get species-weighted-average coefficient values.
 
-**General notes on the methods used in BerkeleyForestAnalytics:**
+Details on how `BerkeleyForestAnalytics` calculates duff/litter, fine,
+and coarse fuel loads are below. However, note that in all cases we
+assume the user collected field data following Brown (1974) or a similar
+method in the **Sierra Nevada**. These functions should not be used for
+data collected in a different manner or region. Additionally, note that
+to stay consistent with previous studies, we use both live and dead
+trees to calculate percent basal area by species.
 
-- Assumes the user is working in the Sierra Nevada
+### Duff and litter loads
 
-- Staying consistent with previous studies, both live and dead trees are
-  used to calculate percent basal area by species
+Duff and litter are measured as depths at specific points along a
+sampling transect. Van Wagtendonk (1998) developed
+
+$\sum_{i = 1}^{n}{(\bar{x} - x_i)^2}$
