@@ -1626,4 +1626,4 @@ trees to calculate percent basal area by species.
 Duff and litter are measured as depths at specific points along a
 sampling transect. Van Wagtendonk (1998) developed
 
-$\sum_{i = 1}^{n}{(\bar{x} - x_i)^2}$
+$$\sum_{i = 1}^{n}{(\bar{x} - x_i)^2}$$
