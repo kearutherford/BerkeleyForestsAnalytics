@@ -1623,7 +1623,17 @@ trees to calculate percent basal area by species.
 
 ### Duff and litter loads
 
-Duff and litter are measured as depths at specific points along a
-sampling transect. Van Wagtendonk (1998) developed
+Duff and litter (or combined duff/litter) are measured as depths at
+specific points along a sampling transect. Van Wagtendonk (1998)
+developed regressions for duff, litter, and combined duff/litter
+loadings as a function of depth for 19 different Sierra Nevada conifer
+species:
 
-$$\sum_{i = 1}^{n}{(\bar{x} - x_i)^2}$$
+**Insert table here**
+
+The fuel load represented by a depth measurement under a mixed-species
+overstory can be estimated using the following equation:
+
+$$F_{d, plot} = d*Coeff_{plot}$$ Where
+
+- $F_{d, plot}$ is the fuel load in $kg/m^2$
