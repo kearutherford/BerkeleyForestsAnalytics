@@ -858,18 +858,92 @@ Duff and litter (or combined duff/litter) are measured as depths at specific poi
 
 **Insert table here** 
 
-The fuel load represented by a depth measurement under a mixed-species overstory can be estimated using the following equation: 
+The plot-level fuel load can be calculated using the following equation: 
 
-\[F_{d, plot} = d*Coeff_{plot}\]
+\(F_{p} = \frac{\sum(F_{t})}{n}\)
 
-Where
+*where* 
 
-  * \(F_{d, plot}\) is the fuel load in \(kg/m^2\)
+  * \(F_{p}\) is the fuel load in \(kg/m^2\) for plot p
+  * \(F_{t}\) is the fuel load in \(kg/m^2\) for transect t measured in plot p 
+  * \(n\) is the number of total number of transects measured at plot p 
+  
+<br> 
+
+We can calculate \(F_{t}\) using the following equation: 
+
+\(F_{t} = d_{t}*coef_{p}\)
+
+*where*
+
+  * \(F_{t}\) is the fuel load in \(kg/m^2\) for transect t measured in plot p
+  * \(d_{t}\) is the depth of duff, litter, or combined duff/litter in cm measured on transect t. If depth was taken at multiple points along the transect, average them together to calculate \(d_{t}\).
+  * \(coef_{p}\) is the species-weighted-average coefficient for plot p
+  
+<br>
+
+We can calculate \(coef_{p}\) by averaging together the different species-specific coefficients for each tree species contributing fuel to the plot, weighted by their local prevalence. Specifically, we weight each species' coefficient by the proportion of total basal area contributed by that species:
+
+\(coef_{p} = \sum((\frac{BA_{sp,p}}{BA_{total,p}})*coef_{sp})\)
+
+*where* 
+  
+  * \(coef_{p}\) is the species-weighted-average coefficient for plot p
+  * \(coef_{sp}\) is the species-specific coefficient for species sp 
+  * \(BA_{sp,p}\) is the basal area occupied by species sp in plot p
+  * \(BA_{total,p}\) is the total basal area for plot p
+  
+
+*A note on units: the Van Wagtendonk (1998) equations require depths in cm and output fuel loads in \(kg/m^2\). Any unit conversions (for input or outputs) must be done by the user. `BerkeleyForestAnalytics` does the necessary unit conversions for you!*
 
 
+### Fine fuel loads 
 
+Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 100-hour fuels is more complicated, but follows the same general idea as described for duff and litter above. The plot-level fuel load can be calculated using the following equation: 
 
+\(W_{c,p} = \frac{\sum(W_{c,t})}{n}\)
 
+*where* 
 
+  * \(W_{c,p}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for plot p
+  * \(F_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
+  * \(n\) is the number of total number of transects measured at plot p 
 
+We can calculate \(W_{c,t}\) using the equation provided by Van Wagtendonk *et al.* (1996): 
+
+\(W_{c,t} = \frac{QMD_{c,p}*SEC_{c,p}*SG_{c,p}*SLP_{t}*k*n_{c,t}}{length_{c,t}}\)
+
+*where* 
+
+  * \(F_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
+  * \(QMD_{c,p}\) is the species-weighted-average quadratic mean diameter for fuels in timelag class c for plot p  
+  * \(SEC_{c,p}\) is the species-weighted-average secant of acute angle for fuels in timelag class c for plot p 
+  * \(SG_{c,p}\) is the species-weighted-average specific gravity for fuels in timelag class c for plot p
+  * \(SLP_{t}\) is the slope correction factor for transect t
+  * \(k\) is a constant composed of various unit conversion factors (see table below)
+  * \(n_{c,t}\) is the number of timelag class c fuel particles intersecting transect t 
+  * \(length_{c,t}\) is the length of transect t sampled for fuels in timelag class c 
+
+<br>
+
+**QMD, SEC, and SG**
+
+QMD, SEC, and SG vary by species and timelag class (see tables below with values from van Wagtendonk (1996)). We can calculate \(QMD_{c,p}\) using the following equation:
+
+\(QMD_{c,p} = \sum((\frac{BA_{sp,p}}{BA_{total,p}})*QMD_{c,sp})\)
+
+*where* 
+  
+  * \(QMD_{c,p}\) is the species-weighted-average quadratic mean diameter for fuels in timelag class c for plot p
+  * \(BA_{sp,p}\) is the basal area occupied by species sp in plot p
+  * \(BA_{total,p}\) is the total basal area for plot p
+  * \(QMD_{c,sp}\) is the quadratic mean diameter for fuels in timelang class c for species sp 
+
+<br> 
+
+**k values**
+
+Equation constant K for input and output units. These values are from van Wagner (1982) and are used by the US Forest Service per Woodall & Williams (2008). 
+
+Insert table here
 
