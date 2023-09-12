@@ -24,7 +24,7 @@ library(UCBForestAnalytics)
 ```
 
 
-## Biomass estimations 
+## Tree biomass estimations 
 
 The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The functions use the California equation set and should not be used for data from other regions. 
 
@@ -32,8 +32,6 @@ The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory 
 ### :eight_spoked_asterisk: `TreeBiomass( )`
 
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. It provides the option to adjust biomass estimates for the structural decay of standing dead trees. Note that standing dead trees also lose mass through degradation, which is indirectly accounted for in this method through a decrease in height. However, degradation of bark and branches is not directly accounted for. See references 1, 2 & 3 below. 
-
-the biomass estimates for standing dead trees will be adjusted for structural decay.
 
 ### Inputs
 
@@ -259,13 +257,13 @@ The forest composition and structure functions (`ForestComp` and `ForestStr`) as
 
 3. `plot` Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
 
-4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+4. `exp_factor` Must be a **numeric** variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
 5. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
 
 6. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. The class of this variable will be coerced to character.
 
-7. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+7. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 
 8. `relative` Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".
 
@@ -360,11 +358,11 @@ comp_demo3
 
 3. `plot` Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
 
-4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+4. `exp_factor` Must be a **numeric** variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
-5. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+5. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 
-6. `ht` Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a numeric variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
+6. `ht` Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a **numeric** variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
 
 7. `units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric or imperial units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
@@ -453,7 +451,7 @@ str_demo3
 
 The three functions (`FineFuels`, `CoarseFuels` and `GroundFuels`) estimate surface and ground fuel loads from line-intercept transects. Field data should have been collected following Brown (1974) or a similar method. 
 
-This set of functions evolved from Rfuels, a package developed by Danny Foster [Rfuels GitHub](https://github.com/danfosterfire/Rfuels). 
+This set of functions evolved from Rfuels, a package developed by Danny Foster ([See Rfuels GitHub](https://github.com/danfosterfire/Rfuels)). 
 Although these functions are formatted differently than Rfuels, they follow the same general equations. The goal of this set of functions is to take the workflow outlined in Rfuels and make it more flexible and user-friendly. Rfuels will remain operational as the legacy program. 
 
 
@@ -463,7 +461,7 @@ The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is defined
 
 * Each plot has one or more fuel transects (the number of transects per plot is variable)
 * For pre-defined distances along each transect, the number of 1-hour, 10-hour, and 100-hour fuel particles that intersect the transect are recorded as counts
-* The distances (or lengths) sampled along the transect may be different for each size class (1-hour, 10-hour, and 1000-hour)
+* The distances (or lengths) sampled along the transect may be different for each size class (1-hour, 10-hour, and 100-hour)
 
 ### Inputs
 
@@ -565,7 +563,7 @@ The `CoarseFuels` function estimates coarse woody debris (CWD) loads. CWD is def
     * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
     * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable will be coerced to character.
     * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable will be coerced to character.
-    * **length_100h:** The length of the sampling transect for 1000-hour fuels in either meters or feet. The class of this variable must be numeric. 
+    * **length_1000h:** The length of the sampling transect for 1000-hour fuels in either meters or feet. The class of this variable must be numeric. 
     * **slope:** The slope of the transect in percent (not the slope of the plot). This column is OPTIONAL. However, it is important to correct for the slope effect on the horizontal length of transects. If slope is not supplied, the slope will be taken to be 0 (no slope). 
     
     * If sum-of-squared-diameters for sound and rotten 1000-hour fuels has already been calculated by the user, the dataframe must also have the following two columns. In this case, each row is an observation of an individual transect at a specific time/site/plot.
@@ -707,13 +705,13 @@ A dataframe with the following columns:
 
     *If duff and litter were measured separately:*
 
-    4. `litter_Mg_ha` (or `litter_ton_ac`): litter load in megagrams per hectare (or US tons per acre)
+    * `litter_Mg_ha` (or `litter_ton_ac`): litter load in megagrams per hectare (or US tons per acre)
 
-    5. `duff_Mg_ha` (or `duff_ton_ac`): duff load in megagrams per hectare (or US tons per acre)
+    * `duff_Mg_ha` (or `duff_ton_ac`): duff load in megagrams per hectare (or US tons per acre)
 
     *If duff and litter were measured together:*
 
-    4. `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and duff load in megagrams per hectare (or US tons per acre)
+    * `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and duff load in megagrams per hectare (or US tons per acre)
 
 
 ### Demonstrations
@@ -765,9 +763,9 @@ duff_demo2
 
 <br>
 
-## Background information 
+## Background information for tree biomass estimations 
 
-### Species code tables
+### Species code tables 
 
 **Softwoods**
 
@@ -827,22 +825,35 @@ duff_demo2
 |4|Few or no studs|Broken|Variable|Sloughing; cubical, soft, reddish to dark crown|Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown|
 |5|None|Broken|Less than 20|Gone|Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell|
 
-*Reference 4*
+### References 
 
-### Surface and ground fuel calculations 
+**For Regional Biomass Equations**
 
-For now, view the "Background Information" section of Rfuels: [Rfuels GitHub](https://github.com/danfosterfire/Rfuels)
+* *Volume Estimation for the PNW-FIA Integrated Database.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf)
+
+* *Regional Biomass Equations Used by FIA to Estimate Bole, Bark, and Branches.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf) 
+
+**For Decay**
+
+* Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (2011) *Differences between standing and downed dead tree wood density reduction factors: A comparison across decay classes and tree species*. Research Paper NRS-15. USDA Forest Service, Northern Research Station, Newtown Square, PA. (See Appendix D) [Link to Paper](https://doi.org/10.2737/NRS-RP-15)
+
+**For standing dead tree decay class**
+
+* USDA Forest Service. (2019). Forest Inventory and Analysis national core field guide volume I: Field data collection procedures for phase 2 plots version 9.0. [Link to Website](https://www.fia.fs.usda.gov/library/field-guides-methods-proc/)
 
 
-## References 
+## Background information for surface and ground fuel load calculations 
 
-1. *Volume Estimation for the PNW-FIA Integrated Database.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf)
+This suite of functions estimates surface and ground fuel loads (i.e., mass per unit area) from line-intercept transect data. The functions follow the general methodology first described in Stephens (2001):
+
+> "Surface and ground fuel loads were calculated by using appropriate equations developed for Sierra Nevada forests (van Wagtendonk et al. 1996, 1998). Coefficients required to calculate all surface and ground fuel loads were arithmetically weighted by the basal area fraction (percentage of total basal area by species) to produce accurate estimates of fuel loads (Jan van Wagtendonk, personal communication, 1999)."
+
+Brown (1974) used coefficient values generalized for entire regions. Stephens (2001) refined the method described by Brown (1974) by using local overstory data to get species-weighted-average coefficient values. 
+
+**General notes on the methods used in BerkeleyForestAnalytics:**
+
+  * Assumes the user is working in the Sierra Nevada
+  
+  * Staying consistent with previous studies, both live and dead trees are used to calculate percent basal area by species 
 
 
-2. *Regional Biomass Equations Used by FIA to Estimate Bole, Bark, and Branches.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf) 
-
-
-3. Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (2011) *Differences between standing and downed dead tree wood density reduction factors: A comparison across decay classes and tree species*. Research Paper NRS-15. USDA Forest Service, Northern Research Station, Newtown Square, PA. (See Appendix D) [Link to Paper](https://doi.org/10.2737/NRS-RP-15)
-
-
-4. USDA Forest Service. (2019). Forest Inventory and Analysis national core field guide volume I: Field data collection procedures for phase 2 plots version 9.0. [Link to Website](https://www.fia.fs.usda.gov/library/field-guides-methods-proc/)
