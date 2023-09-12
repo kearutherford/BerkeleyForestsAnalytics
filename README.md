@@ -1672,10 +1672,10 @@ $coef_{p} = \sum((\frac{BA_{sp,p}}{BA_{total,p}})*coef_{sp})$
 - $BA_{sp,p}$ is the basal area occupied by species sp in plot p
 - $BA_{total,p}$ is the total basal area for plot p
 
-**A note on units: the Van Wagtendonk (1998) equations require depths in
+*A note on units: the Van Wagtendonk (1998) equations require depths in
 cm and output fuel loads in $kg/m^2$. Any unit conversions (for input or
 outputs) must be done by the user. `BerkeleyForestAnalytics` does the
-necessary unit conversions for you!**
+necessary unit conversions for you!*
 
 ### Fine fuel loads
 
@@ -1717,12 +1717,13 @@ $W_{c,t} = \frac{QMD_{c,p}*SEC_{c,p}*SG_{c,p}*SLP_{t}*k*n_{c,t}}{length_{c,t}}$
 - $length_{c,t}$ is the length of transect t sampled for fuels in
   timelag class c
 
+<br>
+
 **QMD, SEC, and SG**
 
 QMD, SEC, and SG vary by species and timelag class (see tables below
-with values from van Wagtendonk (1996)).
-
-We can calculate $QMD_{c,p}$ using the following equation:
+with values from van Wagtendonk (1996)). We can calculate $QMD_{c,p}$
+using the following equation:
 
 $QMD_{c,p} = \sum((\frac{BA_{sp,p}}{BA_{total,p}})*QMD_{c,sp})$
 
@@ -1734,6 +1735,8 @@ $QMD_{c,p} = \sum((\frac{BA_{sp,p}}{BA_{total,p}})*QMD_{c,sp})$
 - $BA_{total,p}$ is the total basal area for plot p
 - $QMD_{c,sp}$ is the quadratic mean diameter for fuels in timelang
   class c for species sp
+
+<br>
 
 **k values**
 
