@@ -1736,6 +1736,8 @@ $QMD_{c,p} = \sum(\frac{BA_{sp,p}}{BA_{total,p}}*QMD_{c,sp})$
 - $QMD_{c,sp}$ is the quadratic mean diameter for fuels in timelang
   class c for species sp
 
+The process is the same for $SEC_{c,p}$ and $SG_{c,p})$.
+
 <br>
 
 **k values**
