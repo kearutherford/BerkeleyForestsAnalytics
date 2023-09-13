@@ -1725,7 +1725,7 @@ QMD, SEC, and SG vary by species and timelag class (see tables below
 with values from van Wagtendonk (1996)). We can calculate $QMD_{c,p}$
 using the following equation:
 
-$QMD_{c,p} = \sum((\frac{BA_{sp,p}}{BA_{total,p}})*QMD_{c,sp})$
+$QMD_{c,p} = \sum(\frac{BA_{sp,p}}{BA_{total,p}}*QMD_{c,sp})$
 
 *where*
 
