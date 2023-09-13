@@ -911,7 +911,9 @@ Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 10
 
 We can calculate \(W_{c,t}\) using the equation provided by Van Wagtendonk *et al.* (1996): 
 
-\(W_{c,t} = \frac{QMD_{c,p}*SEC_{c,p}*SG_{c,p}*SLP_{t}*k*n_{c,t}}{length_{c,t}}\)  
+\(W_{c,t} = \frac{x}{y}\)
+
+\(W_{c,t} = \frac{QMD_{c,p} * SEC_{c,p} * SG_{c,p} * SLP_{t} * k * n_{c,t}}{length_{c,t}}\)  
 
 *where* 
 
@@ -930,7 +932,7 @@ We can calculate \(W_{c,t}\) using the equation provided by Van Wagtendonk *et a
 
 QMD, SEC, and SG vary by species and timelag class (see tables below with values from van Wagtendonk (1996)). We can calculate \(QMD_{c,p}\) using the following equation:
 
-\(QMD_{c,p} = \sum(\frac{BA_{sp,p}}{BA_{total,p}}*QMD_{c,sp}) \)
+\(QMD_{c,p} = \sum(\frac{BA_{sp,p}}{BA_{total,p}}*QMD_{c,sp})\)
 
 *where* 
   
