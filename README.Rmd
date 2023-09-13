@@ -909,9 +909,7 @@ Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 10
   * \(F_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
   * \(n\) is the number of total number of transects measured at plot p 
 
-We can calculate \(W_{c,t}\) using the equation provided by Van Wagtendonk *et al.* (1996): 
-
-\(W_{c,t} = \frac{x}{y}\)
+We can calculate \(W_{c,t}\) using the equation provided by Van Wagtendonk *et al.* (1996):  
 
 \(W_{c,t} = \frac{QMD_{c,p} * SEC_{c,p} * SG_{c,p} * SLP_{t} * k * n_{c,t}}{length_{c,t}}\)  
 

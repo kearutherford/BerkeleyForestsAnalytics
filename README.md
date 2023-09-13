@@ -1697,8 +1697,6 @@ $W_{c,p} = \frac{\sum(W_{c,t})}{n}$
 We can calculate $W_{c,t}$ using the equation provided by Van Wagtendonk
 *et al.* (1996):
 
-$W_{c,t} = \frac{x}{y}$
-
 $W_{c,t} = \frac{QMD_{c,p} * SEC_{c,p} * SG_{c,p} * SLP_{t} * k * n_{c,t}}{length_{c,t}}$
 
 *where*
