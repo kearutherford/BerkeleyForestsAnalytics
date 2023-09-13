@@ -765,6 +765,17 @@ duff_demo2
 
 ## Background information for tree biomass estimations 
 
+### Allometric equations 
+
+
+
+References: 
+
+* *Volume Estimation for the PNW-FIA Integrated Database.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf)
+
+* *Regional Biomass Equations Used by FIA to Estimate Bole, Bark, and Branches.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf) 
+
+
 ### Species code tables 
 
 **Softwoods**
@@ -815,9 +826,12 @@ duff_demo2
 
 *Note: Four-letter species codes are the first two letters of the genus followed by the first two letters of the species.*
 
-### FIA standing dead tree decay class descriptions 
 
-|Decay class|Limbs and branches|Top|% bark remaining|Sapwood presence and condition|Heartwood condition|
+### Structural decay of standing dead trees
+
+**FIA standing dead tree decay class descriptions**
+
+|decay class|limbs and branches|top|% bark remaining|sapwood presence and condition|heartwood condition|
 |:---|:---|:---|:---|:---|:---|
 |1|All present|Pointed|100|Intact; sound, incipient decay, hard, original color|Sound, hard, original color|
 |2|Few limbs, no fine branches|May be broken|Variable|Sloughing; advanced decay, fibrous, firm to soft, light brown|Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown|
@@ -825,21 +839,13 @@ duff_demo2
 |4|Few or no studs|Broken|Variable|Sloughing; cubical, soft, reddish to dark crown|Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown|
 |5|None|Broken|Less than 20|Gone|Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell|
 
-### References 
+Reference: USDA Forest Service. (2019). Forest Inventory and Analysis national core field guide, volume I: Field data collection procedures for phase 2 plots. Version 9.0. https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php
 
-**For Regional Biomass Equations**
+<br>
 
-* *Volume Estimation for the PNW-FIA Integrated Database.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf)
+**Adjusting biomass estimates of standing dead trees for structural decay**
 
-* *Regional Biomass Equations Used by FIA to Estimate Bole, Bark, and Branches.* USDA Forest Service, Pacific Northwest Research Station. [Link to PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf) 
-
-**For Decay**
-
-* Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (2011) *Differences between standing and downed dead tree wood density reduction factors: A comparison across decay classes and tree species*. Research Paper NRS-15. USDA Forest Service, Northern Research Station, Newtown Square, PA. (See Appendix D) [Link to Paper](https://doi.org/10.2737/NRS-RP-15)
-
-**For standing dead tree decay class**
-
-* USDA Forest Service. (2019). Forest Inventory and Analysis national core field guide volume I: Field data collection procedures for phase 2 plots version 9.0. [Link to Website](https://www.fia.fs.usda.gov/library/field-guides-methods-proc/)
+Reference: Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (2011). *Differences between standing and downed dead tree wood density reduction factors: A comparison across decay classes and tree species*. Research Paper NRS-15. USDA Forest Service, Northern Research Station, Newtown Square, PA. https://doi.org/10.2737/NRS-RP-15
 
 
 ## Background information for surface and ground fuel load calculations 
@@ -848,15 +854,15 @@ This suite of functions estimates surface and ground fuel loads (i.e., mass per 
 
 > "Surface and ground fuel loads were calculated by using appropriate equations developed for Sierra Nevada forests (van Wagtendonk et al. 1996, 1998). Coefficients required to calculate all surface and ground fuel loads were arithmetically weighted by the basal area fraction (percentage of total basal area by species) to produce accurate estimates of fuel loads (Jan van Wagtendonk, personal communication, 1999)."
 
-Brown (1974) used coefficient values generalized for entire regions. Stephens (2001) refined the method described by Brown (1974) by using local overstory data to get species-weighted-average coefficient values. 
-
 Details on how `BerkeleyForestAnalytics` calculates duff/litter, fine, and coarse fuel loads are below. However, note that in all cases we assume the user collected field data following Brown (1974) or a similar method in the **Sierra Nevada**. These functions should not be used for data collected in a different manner or region. Additionally, note that to stay consistent with previous studies, we use both live and dead trees to calculate percent basal area by species. 
 
 ### Duff and litter loads 
 
-Duff and litter (or combined duff/litter) are measured as depths at specific points along a sampling transect. Van Wagtendonk (1998) developed regressions for duff, litter, and combined duff/litter loadings as a function of depth for 19 different Sierra Nevada conifer species: 
+Duff and litter (or combined duff/litter) are measured as depths at specific points along a sampling transect. Van Wagtendonk *et al.* (1998) developed regressions for duff, litter, and combined duff/litter loadings as a function of depth for 19 different Sierra Nevada conifer species: 
 
-**Insert table here** 
+|common name|4-letter code|FIA code|duff coefficient|litter coefficient|duff/litter coefficient|
+|:---|:---|:---|:---|:---|:---|
+
 
 The plot-level fuel load can be calculated using the following equation: 
 
@@ -894,7 +900,7 @@ We can calculate \(coef_{p}\) by averaging together the different species-specif
   * \(BA_{total,p}\) is the total basal area for plot p
   
 
-*A note on units: the Van Wagtendonk (1998) equations require depths in cm and output fuel loads in \(kg/m^2\). Any unit conversions (for input or outputs) must be done by the user. `BerkeleyForestAnalytics` does the necessary unit conversions for you!*
+A note on units: the van Wagtendonk *et al.* (1998) equations require depths in cm and output fuel loads in \(kg/m^2\). Any unit conversions (for input or outputs) must be done by the user. `BerkeleyForestAnalytics` does the necessary unit conversions for you!
 
 
 ### Fine fuel loads 
@@ -909,26 +915,26 @@ Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 10
   * \(F_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
   * \(n\) is the number of total number of transects measured at plot p 
 
-We can calculate \(W_{c,t}\) using the equation provided by Van Wagtendonk *et al.* (1996):  
+We can calculate \(W_{c,t}\) using the equation provided by van Wagtendonk *et al.* (1996) (modified from Brown (1974)):  
 
 \(W_{c,t} = \frac{QMD_{c,p} * SEC_{c,p} * SG_{c,p} * SLP_{t} * k * n_{c,t}}{length_{c,t}}\)  
 
 *where* 
 
-  * \(F_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
-  * \(QMD_{c,p}\) is the species-weighted-average quadratic mean diameter for fuels in timelag class c for plot p  
+  * \(W_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
+  * \(QMD_{c,p}\) is the species-weighted-average squared quadratic mean diameter for fuels in timelag class c for plot p  
   * \(SEC_{c,p}\) is the species-weighted-average secant of acute angle for fuels in timelag class c for plot p 
   * \(SG_{c,p}\) is the species-weighted-average specific gravity for fuels in timelag class c for plot p
   * \(SLP_{t}\) is the slope correction factor for transect t
-  * \(k\) is a constant composed of various unit conversion factors (see table below)
+  * \(k\) is a constant composed of various unit conversion factors
   * \(n_{c,t}\) is the number of timelag class c fuel particles intersecting transect t 
   * \(length_{c,t}\) is the length of transect t sampled for fuels in timelag class c 
 
 <br>
 
-**QMD, SEC, and SG**
+**Quadratic mean diameter (QMD), secant of acute angle (SEC), and specific gravity (SG)**
 
-QMD, SEC, and SG vary by species and timelag class (see tables below with values from van Wagtendonk (1996)). We can calculate \(QMD_{c,p}\) using the following equation:
+QMD, SEC, and SG vary by species and timelag class (see tables below with values from van Wagtendonk et al. (1996)). We can calculate \(QMD_{c,p}\) using the following equation:
 
 \(QMD_{c,p} = \sum(\frac{BA_{sp,p}}{BA_{total,p}}*QMD_{c,sp})\)
 
@@ -941,11 +947,69 @@ QMD, SEC, and SG vary by species and timelag class (see tables below with values
   
 The process is the same for \(SEC_{c,p}\) and \(SG_{c,p})\). 
 
+<br>
+
+**Slope correction factor (SLP)**
+
+We can calculate \(SLP_{t}\) using the equation provided by Brown (1974): 
+
+\(SLP_{t} = \sqrt{1 + (\frac{slope}{100})^2}\)
+
 <br> 
 
-**k values**
+**Equation constant k**
 
-Equation constant K for input and output units. These values are from van Wagner (1982) and are used by the US Forest Service per Woodall & Williams (2008). 
+Equation constant K for input and output units. These values are from van Wagner (1982) and are used in van Wagtendonk *et al.* (1996).
 
-Insert table here
+|fuel diameter|transect length|mass per unit area|k|
+|:---|:---|:---|:---|
+|cm|m|\(kg/m^2\)|0.1234|
+|cm|m|metric tons/ha|1.234|
+|in|ft|\(lb/ft^2\)|0.5348|
+in|ft|US tons/ac|11.65|
+
+<br> 
+
+### Coarse fuel loads 
+
+Calculating loads for 1000-hour fuels is just a special case of the equations given above for 1-100 hour fuels. The difference is that instead of counted intercepts and an average squared quadratic mean diameter, we have the actual sum of squared diameters from the field data. The plot-level fuel load can be calculated using the following equation: 
+
+\(W_{1000h,p} = \frac{\sum(W_{1000h,t})}{n}\)
+
+*where* 
+
+  * \(W_{1000h,p}\) is the 1000-hour fuel load for plot p
+  * \(F_{1000h,t}\) is the 1000-hour fuel load for transect t measured in plot p 
+  * \(n\) is the number of total number of transects measured at plot p 
+
+We can calculate \(W_{1000h,t}\) using the equation provided by Brown (1974):  
+
+\(W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,p} * SLP_{t} * k}{length_{1000h,t}}\)  
+
+*where* 
+
+  * \(W_{1000h,t}\) is the 1000-hour fuel load for transect t measured in plot p 
+  * \(\sum(d^2_{t})\) is the sum-of-squared-diameters (square the diameter of each intersected piece and sum the squared values) in \(cm^2\) for transect t 
+  * \(SEC_{1000h,p}\) is the species-weighted-average secant of acute angle for 1000-hour fuels for plot p 
+  * \(SG_{1000h,s,p}\) is the species-weighted-average specific gravity for 1000-hour fuels in status class s (sound or rotten) for plot p
+  * \(SLP_{t}\) is the slope correction factor for transect t
+  * \(k\) is a constant composed of various unit conversion factors
+  * \(length_{1000h,t}\) is the length of transect t sampled for 1000-hour fuels
+  
+For \(SEC_{1000h,p}\), \(SG_{1000h,s,p}\), \(SLP_{t}\), and \(k\) see fine fuel loads documentation above - the same concepts are applied here. 
+
+
+### References
+
+  - Brown, J.K. (1974). *Handbook for inventorying downed woody material.* General Technical Report INT-16. USDA Forest Service, Intermountain Forest and Range Experiment Station, Ogden, UT. https://www.fs.usda.gov/treesearch/pubs/28647
+
+  - Stephens, S.L. (2001). Fire history differences in adjacent Jeffrey pine and upper montane forests in the eastern Sierra Nevada. *International Journal of Wildland Fire*, 10(2), 161–167. https://doi.org/10.1071/WF01008
+  
+  - Van Wagner, C.E. (1982). *Practical aspects of the line intersect method.* Information Report PI-X-12. Petawawa National Forestry Institute, Canadian Forestry Service, Chalk River, Ontario. https://cfs.nrcan.gc.ca/publications?id=6862
+  
+  - van Wagtendonk, J.W., Benedict, J.M., & Sydoriak, W.M. (1996). Physical properties of woody fuel particles of Sierra Nevada conifers. *International Journal of Wildland Fire*, 6(3), 117–123. https://doi.org/10.1071/WF9960117
+  
+  - van Wagtendonk, J.W., Benedict, J.M. & Sydoriak, W.M. (1998). Fuel bed characteristics of Sierra Nevada conifers. *Western Journal of Applied Forestry*, 13(3), 73–84. https://doi.org/10.1093/wjaf/13.3.73
+
+
 
