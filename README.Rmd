@@ -767,6 +767,13 @@ duff_demo2
 
 ### Allometric equations 
 
+**Stem biomass**
+
+
+
+
+**Bark and branch biomass**
+
 
 
 References: 
@@ -845,8 +852,58 @@ Reference: USDA Forest Service. (2019). Forest Inventory and Analysis national c
 
 **Adjusting biomass estimates of standing dead trees for structural decay**
 
+|common name|scientific name|4-letter code|FIA code|DRF 1|DRF 2|DRF 3|DRF 4|DRF 5|
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+|White fir|Abies concolor|ABCO|15|0.996|0.873|0.625|0.625|0.541|
+|Grand fir|Abies grandis|ABGR|17|1.013|0.966|0.855|0.855|0.574|
+|California red fir|Abies magnifica|ABMA|20|1.04|1.08|0.626|0.626|0.467|
+|Noble fir|Abies procera|ABPR|22|1.035|0.836|0.845|0.845|0.575|
+|Western juniper|Juniperus occidentalis|JUOC|64|0.994|0.951|0.902|0.902|0.605|
+|Incense cedar|Calocedrus decurrens|CADE|81|0.936|0.94|0.668|0.668|0.525|
+|Lodgepole pine|Pinus contorta|PICO|108|0.98|1.04|1.02|1.02|0.727|
+|Jeffrey pine|Pinus jeffreyi|PIJE|116|0.904|0.96|0.883|0.883|0.645|
+|Sugar pine|Pinus lambertinana|PILA|117|1.04|0.906|0.735|0.735|0.517|
+|Western white pine|Pinus monticola|PIMO|119|0.953|0.95|0.927|0.927|0.598|
+|Ponderosa pine|Pinus ponderosa|PIPO|122|0.925|1.007|1.154|1.154|0.481|
+|Foothill pine|Pinus sabiniana|PISA|127|0.953|0.95|0.927|0.927|0.598|
+|Douglas-fir|Pseudotsuga menziesii|PSME|202|0.892|0.831|0.591|0.591|0.433|
+|Redwood|Sequoioideae sempervirens|SESE|211|0.994|0.951|0.902|0.902|0.605|
+|Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.994|0.951|0.902|0.902|0.605|
+|Pacific yew|Taxus brevifolia|TABR|231|0.994|0.951|0.902|0.902|0.605|
+|California nutmeg|Torreya californica|TOCA|251|0.994|0.951|0.902|0.902|0.605|
+|Western hemlock|Tsuga heterophylla|TSHE|263|0.9|0.83|0.661|0.661|0.38|
+|Mountain hemlock|Tsuga mertensiana|TSME|264|0.953|0.882|0.906|0.906|0.604|
+|Unknown conifer|NA|UNCO|298|0.97|1.0|0.92|0.92|0.55|
+|Bigleaf maple|Acer macrophyllum|ACMA|312|0.979|0.766|0.565|0.565|0.45|
+|White alder|Alnus rhombifolia|ALRH|352|1.03|0.903|0.535|0.535|0.393|
+|Pacific madrone|Arbutus menziesii|ARME|361|0.982|0.793|0.618|0.618|0.525|
+|Golden chinkapin|Chrysolepis chrysophylla|CHCH|431|0.99|0.8|0.54|0.54|0.43|
+|Pacific dogwood|Cornus nuttallii|CONU|492|0.982|0.793|0.618|0.618|0.525|
+|Tanoak|Notholithocarpus densiflorus|NODE|631|0.982|0.793|0.618|0.618|0.525|
+|Quaking aspen|Populus tremuloides|POTR|746|0.97|0.75|0.54|0.54|0.613|
+|California live oak|Quercus agrifolia|QUAG|801|1.02|0.841|0.705|0.705|0.591|
+|Canyon live oak|Quercus chrysolepis|QUCH|805|1.02|0.841|0.705|0.705|0.591|
+|California black oak|Quercus kelloggii|QUKE|818|1.02|0.841|0.705|0.705|0.591|
+|Willow species|Salix spp.|SASP|920|0.982|0.793|0.618|0.618|0.525|
+|California-laurel|Umbellularia californica|UMCA|981|0.982|0.793|0.618|0.618|0.525|
+|Unknown hardwood|NA|UNHA|998|0.99|0.8|0.54|0.54|0.43|
+|Unknown tree|NA|UNTR|999|0.97|0.97|0.86|0.86|0.53|
+
+*Note: DRF 1 = density reduction factor for decay class 1, etc.*
+
 Reference: Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (2011). *Differences between standing and downed dead tree wood density reduction factors: A comparison across decay classes and tree species*. Research Paper NRS-15. USDA Forest Service, Northern Research Station, Newtown Square, PA. https://doi.org/10.2737/NRS-RP-15
 
+<br>
+
+\(BioAdj_{i} = Bio_{i}*DRF_{c,sp}\)
+
+*where* 
+  
+  * \(BioAdj_{i}\) is the biomass (either stem, bark, or branch) of standing dead tree i adjusted for structural decay 
+  * \(Bio_{i}\) is the biomass (either stem, bark, or branch) of standing dead tree i not adjusted for structural decay 
+  * \(DRF_{c,sp}\) is the density reduction factor for decay class c and species sp of standing dead tree i 
+
+<br>
 
 ## Background information for surface and ground fuel load calculations 
 
@@ -856,13 +913,38 @@ This suite of functions estimates surface and ground fuel loads (i.e., mass per 
 
 Details on how `BerkeleyForestAnalytics` calculates duff/litter, fine, and coarse fuel loads are below. However, note that in all cases we assume the user collected field data following Brown (1974) or a similar method in the **Sierra Nevada**. These functions should not be used for data collected in a different manner or region. Additionally, note that to stay consistent with previous studies, we use both live and dead trees to calculate percent basal area by species. 
 
-### Duff and litter loads 
+### Duff and litter loads ------------------------------------------------------
 
 Duff and litter (or combined duff/litter) are measured as depths at specific points along a sampling transect. Van Wagtendonk *et al.* (1998) developed regressions for duff, litter, and combined duff/litter loadings as a function of depth for 19 different Sierra Nevada conifer species: 
 
-|common name|4-letter code|FIA code|duff coefficient|litter coefficient|duff/litter coefficient|
-|:---|:---|:---|:---|:---|:---|
+|common name|scientific name|4-letter code|FIA code|litter coefficient|duff coefficient|litter/duff coefficient|
+|:---|:---|:---|:---|:---|:---|:---|
+|White fir|Abies concolor|ABCO|15|1.050|1.518|1.572|
+|California red fir|Abies grandis|ABMA|20|0.530|1.727|1.722|
+|Incense cedar|Calocedrus decurrens|CADE|81|1.276|1.675|1.664|
+|Western juniper|Juniperus occidentalis|JUOC|64|0.832|1.798|1.763|
+|Whitebark pine|Pinus albicaulis|PIAL|101|0.540|1.895|1.802|
+|Knobcone pine|Pinus attenuata|PIAT|103|0.336|1.646|1.274|
+|Foxtail pine|Pinus balfourianae|PIBA|104|0.886|1.220|2.360|
+|Lodgepole pine|Pinus contorta|PICO|108|0.951|1.671|1.612|
+|Limber pine|Pinus flexilis|PIFL|113|0.889|2.337|2.255|
+|Jeffrey pine|Pinus jeffreyi|PIJE|116|0.358|1.707|1.496|
+|Sugar pine|Pinus lambertinana|PILA|117|0.304|1.396|1.189|
+|Singleleaf pinyon|Pinus monophylla|PIMO1|133|0.906|2.592|2.478|
+|Western white pine|Pinus monticola|PIMO2|119|0.542|1.422|1.485|
+|Ponderosa pine|Pinus ponderosa|PIPO|122|0.276|1.402|1.233|
+|Foothill pine|Pinus sabiniana|PISA|127|0.111|1.448|2.504|
+|Washoe pine|Pinus ponderosa var. washoensis|PIWA|137|0.600|1.870|1.719|
+|Douglas-fir|Pseudotsuga menziesii|PSME|202|0.864|1.319|1.295|
+|Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.990|1.648|1.632|
+|Mountain hemlock|Tsuga mertensiana|TSME|264|1.102|1.876|1.848|
+|Unknown conifer|NA|UNCO|298|0.363|1.75|1.624|
+|Unknown hardwood|NA|UNHA|998|0.363|1.75|1.624|
+|Unknown tree|NA|UNTR|999|0.363|1.75|1.624|
 
+*Note: UNCO, UNHA, UNTR, and any other species not listed in the table are assigned the "All Species" values provided by van Wagtendonk et al. (1998).*
+
+<br> 
 
 The plot-level fuel load can be calculated using the following equation: 
 
@@ -898,12 +980,13 @@ We can calculate \(coef_{p}\) by averaging together the different species-specif
   * \(coef_{sp}\) is the species-specific coefficient for species sp 
   * \(BA_{sp,p}\) is the basal area occupied by species sp in plot p
   * \(BA_{total,p}\) is the total basal area for plot p
-  
+
+<br>
 
 A note on units: the van Wagtendonk *et al.* (1998) equations require depths in cm and output fuel loads in \(kg/m^2\). Any unit conversions (for input or outputs) must be done by the user. `BerkeleyForestAnalytics` does the necessary unit conversions for you!
 
 
-### Fine fuel loads 
+### Fine fuel loads ------------------------------------------------------------
 
 Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 100-hour fuels is more complicated, but follows the same general idea as described for duff and litter above. The plot-level fuel load can be calculated using the following equation: 
 
@@ -914,6 +997,8 @@ Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 10
   * \(W_{c,p}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for plot p
   * \(F_{c,t}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for transect t measured in plot p 
   * \(n\) is the number of total number of transects measured at plot p 
+
+<br>
 
 We can calculate \(W_{c,t}\) using the equation provided by van Wagtendonk *et al.* (1996) (modified from Brown (1974)):  
 
@@ -945,7 +1030,100 @@ QMD, SEC, and SG vary by species and timelag class (see tables below with values
   * \(BA_{total,p}\) is the total basal area for plot p
   * \(QMD_{c,sp}\) is the quadratic mean diameter for fuels in timelang class c for species sp 
   
-The process is the same for \(SEC_{c,p}\) and \(SG_{c,p})\). 
+The process is the same for \(SEC_{c,p}\) and \(SG_{c,p}\). 
+
+**Averaged squared quadratic mean diameter by fuel size class**
+
+|common name|scientific name|4-letter code|FIA code|1-hour|10-hour|100-hour|
+|:---|:---|:---|:---|:---|:---|:---|
+|White fir|Abies concolor|ABCO|15|0.08|1.32|11.56|
+|California red fir|Abies grandis|ABMA|20|0.10|1.32|16.24|
+|Incense cedar|Calocedrus decurrens|CADE|81|0.09|1.23|20.79|
+|Western juniper|Juniperus occidentalis|JUOC|64|0.08|1.61|13.92|
+|Whitebark pine|Pinus albicaulis|PIAL|101|0.13|1.21|14.75|
+|Knobcone pine|Pinus attenuata|PIAT|103|0.10|1.25|9.68|
+|Foxtail pine|Pinus balfourianae|PIBA|104|0.12|0.92|12.82|
+|Lodgepole pine|Pinus contorta|PICO|108|0.10|1.44|13.39|
+|Limber pine|Pinus flexilis|PIFL|113|0.21|1.28|17.72|
+|Jeffrey pine|Pinus jeffreyi|PIJE|116|0.15|1.25|17.31|
+|Sugar pine|Pinus lambertinana|PILA|117|0.12|1.46|13.61|
+|Singleleaf pinyon|Pinus monophylla|PIMO1|133|0.09|1.41|11.56|
+|Western white pine|Pinus monticola|PIMO2|119|0.08|0.79|9.92|
+|Ponderosa pine|Pinus ponderosa|PIPO|122|0.23|1.56|19.36|
+|Foothill pine|Pinus sabiniana|PISA|127|0.14|0.94|12.91|
+|Washoe pine|Pinus ponderosa var. washoensis|PIWA|137|0.22|1.37|13.47|
+|Douglas-fir|Pseudotsuga menziesii|PSME|202|0.06|1.37|12.04|
+|Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.14|1.28|17.06|
+|Mountain hemlock|Tsuga mertensiana|TSME|264|0.05|1.46|13.61|
+|Unknown conifer|NA|UNCO|298|0.12|1.28|14.52|
+|Unknown hardwood|NA|UNHA|998|0.12|1.28|14.52|
+|Unknown tree|NA|UNTR|999|0.12|1.28|14.52|
+
+<br>
+
+**Average secant of acute angles of inclinations of nonhorizontal particles by fuel size class**
+
+|common name|scientific name|4-letter code|FIA code|1-hour|10-hour|100-hour|1000-hour|
+|:---|:---|:---|:---|:---|:---|:---|:---|
+|White fir|Abies concolor|ABCO|15|1.03|1.02|1.02|1.01|
+|California red fir|Abies grandis|ABMA|20|1.03|1.02|1.01|1.00|
+|Incense cedar|Calocedrus decurrens|CADE|81|1.02|1.02|1.03|1.06|
+|Western juniper|Juniperus occidentalis|JUOC|64|1.03|1.04|1.04|1.04|
+|Whitebark pine|Pinus albicaulis|PIAL|101|1.02|1.02|1.02|1.02|
+|Knobcone pine|Pinus attenuata|PIAT|103|1.03|1.02|1.00|1.02|
+|Foxtail pine|Pinus balfourianae|PIBA|104|1.02|1.02|1.01|1.02|
+|Lodgepole pine|Pinus contorta|PICO|108|1.02|1.02|1.01|1.05|
+|Limber pine|Pinus flexilis|PIFL|113|1.02|1.02|1.01|1.01|
+|Jeffrey pine|Pinus jeffreyi|PIJE|116|1.03|1.03|1.04|1.05|
+|Sugar pine|Pinus lambertinana|PILA|117|1.04|1.04|1.03|1.03|
+|Singleleaf pinyon|Pinus monophylla|PIMO1|133|1.02|1.01|1.01|1.05|
+|Western white pine|Pinus monticola|PIMO2|119|1.03|1.02|1.06|1.02|
+|Ponderosa pine|Pinus ponderosa|PIPO|122|1.02|1.03|1.02|1.01|
+|Foothill pine|Pinus sabiniana|PISA|127|1.05|1.03|1.02|1.02|
+|Washoe pine|Pinus ponderosa var. washoensis|PIWA|137|1.02|1.02|1.01|1.05|
+|Douglas-fir|Pseudotsuga menziesii|PSME|202|1.03|1.02|1.03|1.04|
+|Giant sequoia|Sequoiadendron giganteum|SEGI|212|1.02|1.02|1.02|1.01|
+|Mountain hemlock|Tsuga mertensiana|TSME|264|1.04|1.02|1.02|1.00|
+|Unknown conifer|NA|UNCO|298|1.03|1.02|1.02|1.02|
+|Unknown hardwood|NA|UNHA|998|1.03|1.02|1.02|1.02|
+|Unknown tree|NA|UNTR|999|1.03|1.02|1.02|1.02|
+
+<br>
+
+**Average specific gravity by fuel size class**
+
+|common name|scientific name|4-letter code|FIA code|1-hour|10-hour|100-hour|1000-hour sound|1000-hour rotten|
+|:---|:---|:---|:---|:---|:---|:---|:---|
+|White fir|Abies concolor|ABCO|15|0.53|0.54|0.57|0.32|0.36|
+|California red fir|Abies grandis|ABMA|20|0.57|0.56|0.47|0.38|0.36|
+|Incense cedar|Calocedrus decurrens|CADE|81|0.59|0.54|0.55|0.41|0.36|
+|Western juniper|Juniperus occidentalis|JUOC|64|0.67|0.65|0.62|0.47|0.36|
+|Whitebark pine|Pinus albicaulis|PIAL|101|0.55|0.49|0.48|0.42|0.36|
+|Knobcone pine|Pinus attenuata|PIAT|103|0.59|0.55|0.39|0.47|0.36|
+|Foxtail pine|Pinus balfourianae|PIBA|104|0.59|0.61|0.53|0.47|0.36|
+|Lodgepole pine|Pinus contorta|PICO|108|0.53|0.48|0.54|0.58|0.36|
+|Limber pine|Pinus flexilis|PIFL|113|0.57|0.57|0.54|0.63|0.36|
+|Jeffrey pine|Pinus jeffreyi|PIJE|116|0.53|0.55|0.55|0.47|0.36|
+|Sugar pine|Pinus lambertinana|PILA|117|0.59|0.59|0.52|0.43|0.36|
+|Singleleaf pinyon|Pinus monophylla|PIMO1|133|0.65|0.64|0.53|0.47|
+|Western white pine|Pinus monticola|PIMO2|119|0.56|0.56|0.49|0.47|
+|Ponderosa pine|Pinus ponderosa|PIPO|122|0.55|0.56|0.48|0.40|
+|Foothill pine|Pinus sabiniana|PISA|127|0.64|0.61|0.43|0.47|
+|Washoe pine|Pinus ponderosa var. washoensis|PIWA|137|0.53|0.52|0.44|0.35|
+|Douglas-fir|Pseudotsuga menziesii|PSME|202| 0.60|0.61|0.59|0.35|
+|Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.57|0.57|0.56|0.54|
+|Mountain hemlock|Tsuga mertensiana|TSME|264|0.67|0.65|0.62|0.66|
+|Unknown conifer|NA|UNCO|298|0.58|0.57|0.53|0.47|
+|Unknown hardwood|NA|UNHA|998|0.58|0.57|0.53|0.47|
+|Unknown tree|NA|UNTR|999|0.58|0.57|0.53|0.47|
+
+<br>
+
+*Notes for the above tables:*
+
+  * *UNCO, UNHA, UNTR, and any other species not listed in the tables are assigned the "All Species" values provided by van Wagtendonk et al. (1998).*
+  * *van Wagtendonk et al. (1998) found that species was not significant for the rotten 1000-hour fuels. Average specific gravity for rotten 1000-hour fuels was 0.36, as indicated in the table above.* 
+
 
 <br>
 
@@ -953,7 +1131,13 @@ The process is the same for \(SEC_{c,p}\) and \(SG_{c,p})\).
 
 We can calculate \(SLP_{t}\) using the equation provided by Brown (1974): 
 
-\(SLP_{t} = \sqrt{1 + (\frac{slope}{100})^2}\)
+\(SLP_{t} = \sqrt{1 + (\frac{slope_{t}}{100})^2}\)
+
+*where*
+  
+  * \(SLP_{t}\) is the slope correction factor for transect t. 
+  
+  * \(slope_{t}\) is the slope of transect t in percent (%). Note that this is not the slope of the plot! 
 
 <br> 
 
@@ -970,7 +1154,7 @@ in|ft|US tons/ac|11.65|
 
 <br> 
 
-### Coarse fuel loads 
+### Coarse fuel loads ----------------------------------------------------------
 
 Calculating loads for 1000-hour fuels is just a special case of the equations given above for 1-100 hour fuels. The difference is that instead of counted intercepts and an average squared quadratic mean diameter, we have the actual sum of squared diameters from the field data. The plot-level fuel load can be calculated using the following equation: 
 
@@ -981,6 +1165,8 @@ Calculating loads for 1000-hour fuels is just a special case of the equations gi
   * \(W_{1000h,p}\) is the 1000-hour fuel load for plot p
   * \(F_{1000h,t}\) is the 1000-hour fuel load for transect t measured in plot p 
   * \(n\) is the number of total number of transects measured at plot p 
+
+<br>
 
 We can calculate \(W_{1000h,t}\) using the equation provided by Brown (1974):  
 
@@ -999,7 +1185,7 @@ We can calculate \(W_{1000h,t}\) using the equation provided by Brown (1974):
 For \(SEC_{1000h,p}\), \(SG_{1000h,s,p}\), \(SLP_{t}\), and \(k\) see fine fuel loads documentation above - the same concepts are applied here. 
 
 
-### References
+### References -----------------------------------------------------------------
 
   - Brown, J.K. (1974). *Handbook for inventorying downed woody material.* General Technical Report INT-16. USDA Forest Service, Intermountain Forest and Range Experiment Station, Ogden, UT. https://www.fs.usda.gov/treesearch/pubs/28647
 
