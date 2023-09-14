@@ -5,7 +5,7 @@
 ################################################################################
 ################################################################################
 
-#' @title GroundFuels
+#' @title LitterDuff
 #'
 #' @description
 #' Estimates duff and litter fuel loads. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
@@ -37,12 +37,12 @@
 #'
 #' @export
 
-GroundFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metric", measurement = "separate") {
+LitterDuff <- function(fuel_data, tree_data, sp_codes = "4letter", units = "metric", measurement = "separate") {
 
   # check and prep input fuel data
-  step1 <- ValidateGround(fuel_data_val = fuel_data,
-                          units_val = units,
-                          meas_val = measurement)
+  step1 <- ValidateLitDuff(fuel_data_val = fuel_data,
+                           units_val = units,
+                           meas_val = measurement)
 
   # check and prep input tree data
   step2 <- ValidateOverstory(tree_data_val = tree_data,
@@ -53,11 +53,11 @@ GroundFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "met
                            tree_match = step2)
 
   # calculate duff/litter loads at the plot level
-  step4 <- GroundLoad(gr_fuel_data = step1,
-                      gr_tree_data = step2,
-                      gr_units = units,
-                      gr_sp_codes = sp_codes,
-                      gr_measurement = measurement)
+  step4 <- LitDuffLoad(ld_fuel_data = step1,
+                       ld_tree_data = step2,
+                       ld_units = units,
+                       ld_sp_codes = sp_codes,
+                       ld_measurement = measurement)
 
   return(step4)
 
@@ -66,11 +66,11 @@ GroundFuels <- function(fuel_data, tree_data, sp_codes = "4letter", units = "met
 
 ################################################################################
 ################################################################################
-# ValidateGround function
+# ValidateLitDuff function
 ################################################################################
 ################################################################################
 
-ValidateGround <- function(fuel_data_val, units_val, meas_val) {
+ValidateLitDuff <- function(fuel_data_val, units_val, meas_val) {
 
   # coerce tibble inputs into data.frame
   fuel_data_val <- as.data.frame(fuel_data_val)
@@ -257,11 +257,11 @@ ValidateGround <- function(fuel_data_val, units_val, meas_val) {
 
 ################################################################################
 ################################################################################
-# GroundCoef function
+# LitDuffCoef function
 ################################################################################
 ################################################################################
 
-GroundCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
+LitDuffCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
   # calculate proportion of time:site:plot basal area occupied by each species
   tree_dom <- TreeDom(data = coef_tree_data,
@@ -313,68 +313,68 @@ GroundCoef <- function(coef_tree_data, coef_units, coef_sp_codes) {
 
 ################################################################################
 ################################################################################
-# GroundLoad function
+# LitDuffLoad function
 ################################################################################
 ################################################################################
 
-GroundLoad <- function(gr_fuel_data, gr_tree_data, gr_units, gr_sp_codes, gr_measurement) {
+LitDuffLoad <- function(ld_fuel_data, ld_tree_data, ld_units, ld_sp_codes, ld_measurement) {
 
   # get BA-weighted duff and litter coefficients
-  coef_calcs <- GroundCoef(coef_tree_data = gr_tree_data, coef_units = gr_units, coef_sp_codes = gr_sp_codes)
+  coef_calcs <- LitDuffCoef(coef_tree_data = ld_tree_data, coef_units = ld_units, coef_sp_codes = ld_sp_codes)
 
   # loop through each row (a transect in a time:site:plot)
   # and assign the BA-weighted coefficient value
 
-  n <- nrow(gr_fuel_data)
+  n <- nrow(ld_fuel_data)
 
-  gr_fuel_data$coef_litter <- NA
-  gr_fuel_data$coef_duff <- NA
-  gr_fuel_data$coef_litterduff <- NA
+  ld_fuel_data$coef_litter <- NA
+  ld_fuel_data$coef_duff <- NA
+  ld_fuel_data$coef_litterduff <- NA
 
   for(i in 1:n) {
 
-    gr_fuel_data$coef_litter[i] <- coef_calcs[coef_calcs$time == gr_fuel_data$time[i] & coef_calcs$site == gr_fuel_data$site[i] & coef_calcs$plot == gr_fuel_data$plot[i], "coef_litter"]
-    gr_fuel_data$coef_duff[i] <- coef_calcs[coef_calcs$time == gr_fuel_data$time[i] & coef_calcs$site == gr_fuel_data$site[i] & coef_calcs$plot == gr_fuel_data$plot[i], "coef_duff"]
-    gr_fuel_data$coef_litterduff[i] <- coef_calcs[coef_calcs$time == gr_fuel_data$time[i] & coef_calcs$site == gr_fuel_data$site[i] & coef_calcs$plot == gr_fuel_data$plot[i], "coef_litterduff"]
+    ld_fuel_data$coef_litter[i] <- coef_calcs[coef_calcs$time == ld_fuel_data$time[i] & coef_calcs$site == ld_fuel_data$site[i] & coef_calcs$plot == ld_fuel_data$plot[i], "coef_litter"]
+    ld_fuel_data$coef_duff[i] <- coef_calcs[coef_calcs$time == ld_fuel_data$time[i] & coef_calcs$site == ld_fuel_data$site[i] & coef_calcs$plot == ld_fuel_data$plot[i], "coef_duff"]
+    ld_fuel_data$coef_litterduff[i] <- coef_calcs[coef_calcs$time == ld_fuel_data$time[i] & coef_calcs$site == ld_fuel_data$site[i] & coef_calcs$plot == ld_fuel_data$plot[i], "coef_litterduff"]
 
   }
 
   # fuel load calculations
-  if(gr_measurement == "separate") {
+  if(ld_measurement == "separate") {
 
-    gr_fuel_data$litter_Mg_ha <- gr_fuel_data$coef_litter*gr_fuel_data$litter_depth*10
-    gr_fuel_data$duff_Mg_ha <- gr_fuel_data$coef_duff*gr_fuel_data$duff_depth*10
-    gr_subset <- subset(gr_fuel_data, select = c(time, site, plot, litter_Mg_ha, duff_Mg_ha))
+    ld_fuel_data$litter_Mg_ha <- ld_fuel_data$coef_litter*ld_fuel_data$litter_depth*10
+    ld_fuel_data$duff_Mg_ha <- ld_fuel_data$coef_duff*ld_fuel_data$duff_depth*10
+    ld_subset <- subset(ld_fuel_data, select = c(time, site, plot, litter_Mg_ha, duff_Mg_ha))
 
   } else {
 
-    gr_fuel_data$lit_duff_Mg_ha <- gr_fuel_data$coef_litterduff*gr_fuel_data$lit_duff_depth*10
-    gr_subset <- subset(gr_fuel_data, select = c(time, site, plot, lit_duff_Mg_ha))
+    ld_fuel_data$lit_duff_Mg_ha <- ld_fuel_data$coef_litterduff*ld_fuel_data$lit_duff_depth*10
+    ld_subset <- subset(ld_fuel_data, select = c(time, site, plot, lit_duff_Mg_ha))
 
   }
 
-  gr_ag <- aggregate(data = gr_subset,
+  ld_ag <- aggregate(data = ld_subset,
                      . ~ time + site + plot,
                      FUN = mean, na.rm = TRUE, na.action = na.pass)
 
-  gr_ag[gr_ag == "NaN"] <- NA
+  ld_ag[ld_ag == "NaN"] <- NA
 
-  if(gr_units == "metric") {
+  if(ld_units == "metric") {
 
-    return(gr_ag)
+    return(ld_ag)
 
-  } else if (gr_units == "imperial" & gr_measurement == "separate") {
+  } else if (ld_units == "imperial" & ld_measurement == "separate") {
 
-    gr_ag$litter_ton_ac <- gr_ag$litter_Mg_ha*0.44609
-    gr_ag$duff_ton_ac <- gr_ag$duff_Mg_ha*0.44609
-    gr_imperial <- subset(gr_ag, select = c(time, site, plot, litter_ton_ac, duff_ton_ac))
-    return(gr_imperial)
+    ld_ag$litter_ton_ac <- ld_ag$litter_Mg_ha*0.44609
+    ld_ag$duff_ton_ac <- ld_ag$duff_Mg_ha*0.44609
+    ld_imperial <- subset(ld_ag, select = c(time, site, plot, litter_ton_ac, duff_ton_ac))
+    return(ld_imperial)
 
-  } else if (gr_units == "imperial" & gr_measurement == "combined") {
+  } else if (ld_units == "imperial" & ld_measurement == "combined") {
 
-    gr_ag$lit_duff_ton_ac <- gr_ag$lit_duff_Mg_ha*0.44609
-    gr_imperial <- subset(gr_ag, select = c(time, site, plot, lit_duff_ton_ac))
-    return(gr_imperial)
+    ld_ag$lit_duff_ton_ac <- ld_ag$lit_duff_Mg_ha*0.44609
+    ld_imperial <- subset(ld_ag, select = c(time, site, plot, lit_duff_ton_ac))
+    return(ld_imperial)
 
   }
 

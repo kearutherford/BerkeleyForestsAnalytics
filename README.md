@@ -21,6 +21,29 @@ devtools::install_github('kearutherford/UCBForestAnalytics')
 library(UCBForestAnalytics)
 ```
 
+## Citation instructions
+
+``` r
+citation("UCBForestAnalytics")
+```
+
+    ## To cite package 'UCBForestAnalytics' in publications use:
+    ## 
+    ##   Kea Rutherford, John Battles, Danny Foster (2023).
+    ##   _UCBForestAnalytics_. Battles Lab: Forest Ecology and Ecosystem
+    ##   Dynamics, University of California, Berkeley.
+    ##   <https://github.com/kearutherford/UCBForestAnalytics>.
+    ## 
+    ## A BibTeX entry for LaTeX users is
+    ## 
+    ##   @Manual{,
+    ##     title = {UCBForestAnalytics},
+    ##     author = {{Kea Rutherford} and {John Battles} and {Danny Foster}},
+    ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
+    ##     year = {2023},
+    ##     url = {https://github.com/kearutherford/UCBForestAnalytics},
+    ##   }
+
 ## Tree biomass estimations
 
 The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest
@@ -805,7 +828,7 @@ QMD, NA DBH, and NA height.*
 
 ## Surface and ground fuel load estimations
 
-The three functions (`FineFuels`, `CoarseFuels` and `GroundFuels`)
+The three functions (`FineFuels`, `CoarseFuels` and `LitterDuff`)
 estimate surface and ground fuel loads from line-intercept transects.
 Field data should have been collected following Brown (1974) or a
 similar method.
@@ -838,9 +861,16 @@ FWD data collection:
     of an individual tree. Must have at least these columns (column
     names are exact):
 
-    - **time:** Describes the time period of measurement (could be the
-      year, the month, etc. depending on the project). The class of this
-      variable will be coerced to character.
+    - **time:** Depending on the project, the time identifier could be
+      the year of measurement, the month of measurement, etc. For
+      example, if plots are remeasured every summer for five years, the
+      time identifier might be the year of measurement. If plots were
+      measured pre- and post-burn, the time identifier might be “pre” or
+      “post”. If time is not important (e.g., all plots were measured
+      once in the same summer), the time identifier might be set to all
+      the same year. Time identifier is very flexible, and should be
+      used as appropriate depending on the design of the study. The
+      class of this variable will be coerced to character.
     - **site:** Describes the broader location or forest where the data
       were collected. The class of this variable will be coerced to
       character.
@@ -861,9 +891,16 @@ FWD data collection:
     of an individual transect at a specific time/site/plot. Must have at
     least these columns (column names exact):
 
-    - **time:** Described the time period of measurement (could be the
-      year, the month, etc. depending on the project). The class of this
-      variable will be coerced to character.
+    - **time:** Depending on the project, the time identifier could be
+      the year of measurement, the month of measurement, etc. For
+      example, if plots are remeasured every summer for five years, the
+      time identifier might be the year of measurement. If plots were
+      measured pre- and post-burn, the time identifier might be “pre” or
+      “post”. If time is not important (e.g., all plots were measured
+      once in the same summer), the time identifier might be set to all
+      the same year. Time identifier is very flexible, and should be
+      used as appropriate depending on the design of the study. The
+      class of this variable will be coerced to character.
     - **site:** Describes the broader location or forest where the data
       were collected. The class of this variable will be coerced to
       character.
@@ -1026,9 +1063,16 @@ data collection:
     of an individual tree. Must have at least these columns (column
     names are exact):
 
-    - **time:** Describes the time period of measurement (could be the
-      year, the month, etc. depending on the project). The class of this
-      variable will be coerced to character.
+    - **time:** Depending on the project, the time identifier could be
+      the year of measurement, the month of measurement, etc. For
+      example, if plots are remeasured every summer for five years, the
+      time identifier might be the year of measurement. If plots were
+      measured pre- and post-burn, the time identifier might be “pre” or
+      “post”. If time is not important (e.g., all plots were measured
+      once in the same summer), the time identifier might be set to all
+      the same year. Time identifier is very flexible, and should be
+      used as appropriate depending on the design of the study. The
+      class of this variable will be coerced to character.
     - **site:** Describes the broader location or forest where the data
       were collected. The class of this variable will be coerced to
       character.
@@ -1048,9 +1092,16 @@ data collection:
 2.  `fuel_data` A dataframe or tibble with at least these columns
     (column names exact):
 
-    - **time:** Described the time period of measurement (could be the
-      year, the month, etc. depending on the project). The class of this
-      variable will be coerced to character.
+    - **time:** Depending on the project, the time identifier could be
+      the year of measurement, the month of measurement, etc. For
+      example, if plots are remeasured every summer for five years, the
+      time identifier might be the year of measurement. If plots were
+      measured pre- and post-burn, the time identifier might be “pre” or
+      “post”. If time is not important (e.g., all plots were measured
+      once in the same summer), the time identifier might be set to all
+      the same year. Time identifier is very flexible, and should be
+      used as appropriate depending on the design of the study. The
+      class of this variable will be coerced to character.
 
     - **site:** Describes the broader location or forest where the data
       were collected. The class of this variable will be coerced to
@@ -1257,9 +1308,9 @@ coarse_demo2
 
 <br>
 
-### :eight_spoked_asterisk: `GroundFuels( )`
+### :eight_spoked_asterisk: `LitterDuff( )`
 
-The `GroundFuels` function estimates duff and litter loads. Assumptions
+The `LitterDuff` function estimates duff and litter loads. Assumptions
 for duff/litter data collection:
 
 - Each plot has one or more fuel transects (the number of transects per
@@ -1274,9 +1325,16 @@ for duff/litter data collection:
     of an individual tree. Must have at least these columns (column
     names are exact):
 
-    - **time:** Describes the time period of measurement (could be the
-      year, the month, etc. depending on the project). The class of this
-      variable will be coerced to character.
+    - **time:** Depending on the project, the time identifier could be
+      the year of measurement, the month of measurement, etc. For
+      example, if plots are remeasured every summer for five years, the
+      time identifier might be the year of measurement. If plots were
+      measured pre- and post-burn, the time identifier might be “pre” or
+      “post”. If time is not important (e.g., all plots were measured
+      once in the same summer), the time identifier might be set to all
+      the same year. Time identifier is very flexible, and should be
+      used as appropriate depending on the design of the study. The
+      class of this variable will be coerced to character.
     - **site:** Describes the broader location or forest where the data
       were collected. The class of this variable will be coerced to
       character.
@@ -1296,9 +1354,16 @@ for duff/litter data collection:
 2.  `fuel_data` A dataframe or tibble with at least these columns
     (column names exact):
 
-    - **time:** Described the time period of measurement (could be the
-      year, the month, etc. depending on the project). The class of this
-      variable will be coerced to character.
+    - **time:** Depending on the project, the time identifier could be
+      the year of measurement, the month of measurement, etc. For
+      example, if plots are remeasured every summer for five years, the
+      time identifier might be the year of measurement. If plots were
+      measured pre- and post-burn, the time identifier might be “pre” or
+      “post”. If time is not important (e.g., all plots were measured
+      once in the same summer), the time identifier might be set to all
+      the same year. Time identifier is very flexible, and should be
+      used as appropriate depending on the design of the study. The
+      class of this variable will be coerced to character.
 
     - **site:** Describes the broader location or forest where the data
       were collected. The class of this variable will be coerced to
@@ -1445,10 +1510,10 @@ lit_duff_demo
 <br>
 
 ``` r
-# call the GroundFuels() function in the UCBForestAnalystics package
+# call the LitterDuff() function in the UCBForestAnalystics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and measurement (= "separate")
-duff_demo1 <- GroundFuels(tree_data = overstory_demo,
-                          fuel_data = lit_duff_demo)
+duff_demo1 <- LitterDuff(tree_data = overstory_demo,
+                         fuel_data = lit_duff_demo)
 
 duff_demo1
 ```
@@ -1485,12 +1550,12 @@ lit_duff_avg_demo
 <br>
 
 ``` r
-# call the GroundFuels() function in the UCBForestAnalystics package
-duff_demo2 <- GroundFuels(tree_data = overstory_demo,
-                          fuel_data = lit_duff_avg_demo,
-                          sp_codes = "4letter",
-                          units = "metric",
-                          measurement = "separate")
+# call the LitterDuff() function in the UCBForestAnalystics package
+duff_demo2 <- LitterDuff(tree_data = overstory_demo,
+                         fuel_data = lit_duff_avg_demo,
+                         sp_codes = "4letter",
+                         units = "metric",
+                         measurement = "separate")
 
 duff_demo2
 ```
@@ -1505,24 +1570,75 @@ duff_demo2
 
 ## Background information for tree biomass estimations
 
-### Allometric equations
+### Allometric equations ——————————————————-
+
+`BerkeleyForestAnalytics` calculates biomass using the Forest Inventory
+and Analysis (FIA) Regional Biomass Equations. Specifically, we use the
+equation set for the California (CA) region. Our suite of biomass
+functions should not be used for data collected in a different region.
 
 **Stem biomass**
 
+Calculating stem biomass is a 3 step process:
+
+1.  For each tree species present in the data, find the appropriate **CA
+    region** volume equation number using the tables provided in USDA
+    Forest Service (2014a)
+
+2.  Using the assigned volume equations, calculate the volume of the
+    total stem (ground to tip). This calculation is named “CVTS” in the
+    FIA volume equation documentation (USDA Forest Service 2014a).
+
+3.  Calculate biomass using the following equation from USDA Forest
+    Service (2014b):
+
+    $BioStem_{i} = \frac{volume_{i}*density_{sp}}{2000}$
+
+    *where*
+
+    - $BioStem_{i}$ is the stem biomass of tree i in US tons
+    - $volume_{i}$ is the volume of tree i in $ft^3$ calculated in step
+      2
+    - $density_{sp}$ is the wood density in $lbs/ft^3$ for the species
+      (sp) of tree i (see tables provided in USDA Forest Service
+      (2014b))
+
 **Bark and branch biomass**
 
-References:
+Calculating bark or branch biomass is a 2 step process:
 
-- *Volume Estimation for the PNW-FIA Integrated Database.* USDA Forest
-  Service, Pacific Northwest Research Station. [Link to
-  PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf)
+1.  For each tree species present in the data, find the appropriate **CA
+    region** biomass equation number using the tables provided in USDA
+    Forest Service (2014b)
+2.  Using the assigned biomass equations, calculate the biomass of
+    bark/branches. The equations will always give biomass in kg (USDA
+    Forest Service 2014b)
 
-- *Regional Biomass Equations Used by FIA to Estimate Bole, Bark, and
-  Branches.* USDA Forest Service, Pacific Northwest Research Station.
-  [Link to
-  PDF](https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf)
+A note on units: the equations provided by USDA Forest Service (2014a,b)
+require inputs in specific units and provide outputs in specific units.
+`BerkeleyForestAnalytics` does the necessary unit conversions (for
+inputs and outputs) based on how the user sets the “units” parameter in
+the functions.
 
-### Species code tables
+**References:**
+
+- USDA Forest Service. (2014a). *Volume estimation for Pacific Northwest
+  (PNW) databases.*
+  <https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf>
+
+- USDA Forest Service. (2014b). *Regional Biomass Equations used by FIA
+  to estimate bole, bark, and branches.*
+  <https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf>
+
+<br>
+
+### Species code tables ——————————————————–
+
+All hardwood and softwood species currently included/recognized in the
+`TreeBiomass()` function are listed in the tables below. If you need an
+additional species included, please contact the maintainer of
+`BerkeleyForestAnalytics`, Kea Rutherford. We are open to building out
+the species list over time.
 
 **Softwoods**
 
@@ -1573,7 +1689,9 @@ References:
 *Note: Four-letter species codes are the first two letters of the genus
 followed by the first two letters of the species.*
 
-### Structural decay of standing dead trees
+<br>
+
+### Structural decay of standing dead trees ————————————
 
 **FIA standing dead tree decay class descriptions**
 
@@ -1585,15 +1703,47 @@ followed by the first two letters of the species.*
 | 4           | Few or no studs             | Broken        | Variable         | Sloughing; cubical, soft, reddish to dark crown               | Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown            |
 | 5           | None                        | Broken        | Less than 20     | Gone                                                          | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
 
-Reference: USDA Forest Service. (2019). Forest Inventory and Analysis
+Reference: USDA Forest Service. (2019). *Forest Inventory and Analysis
 national core field guide, volume I: Field data collection procedures
-for phase 2 plots. Version 9.0.
+for phase 2 plots.* Version 9.0.
 <https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php>
 
 <br>
 
 **Adjusting biomass estimates of standing dead trees for structural
 decay**
+
+Standing dead trees (often called snags) lose mass in two ways:
+
+1.  They degrade with pieces falling and “transferring” to other biomass
+    pools. For example, stem stops break and become coarse woody debris.
+
+2.  The remaining structures decay as measured by their density
+    (mass/volume).
+
+`BerkeleyForestAnalytics` is compliant with the Forest Inventory and
+Analysis (FIA) approach to accounting for degradation and decay:
+
+1.  Degradation: calculate biomass using the regional biomass equations,
+    inputting the diameter and height of the standing dead tree. The
+    assumption is that degradation will be captured with lower tree
+    height. Note that this assumes that the taper/allometry stays the
+    same, which is often not true.
+
+2.  Decay: once the biomass is calculated, account for decay by
+    assigning a species and decay class specific density reduction
+    factor (dead:live ratio). Density reduction factors are further
+    discussed below.
+
+Harmon *et al.* (2011) developed density reduction factors for standing
+dead trees by species and decay class. Most values in the table below
+are pulled from Appendix D of Harmon *et al.* (2011). The exceptions are
+unknown tree (UNTR), unknown conifer (UNCO), and unknown hardwood
+(UNHA). UNTR is assigned the average density reduction factor for
+standing dead trees for all species combined by decay class (see Table 7
+of Harmon *et al* 2011). UNCO and UNHA are assigned the average density
+reduction factor for standing dead trees by hardwood/sortwood and decay
+class (see Table 6 of Harmon *et al.* 2011).
 
 | common name          | scientific name              | 4-letter code | FIA code | DRF 1 | DRF 2 | DRF 3 | DRF 4 | DRF 5 |
 |:---------------------|:-----------------------------|:--------------|:---------|:------|:------|:------|:------|:------|
@@ -1634,13 +1784,10 @@ decay**
 
 *Note: DRF 1 = density reduction factor for decay class 1, etc.*
 
-Reference: Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov,
-M. (2011). *Differences between standing and downed dead tree wood
-density reduction factors: A comparison across decay classes and tree
-species*. Research Paper NRS-15. USDA Forest Service, Northern Research
-Station, Newtown Square, PA. <https://doi.org/10.2737/NRS-RP-15>
-
 <br>
+
+The adjusted biomass of standing dead trees can be calculated using the
+following equation:
 
 $BioAdj_{i} = Bio_{i}*DRF_{c,sp}$
 
@@ -1652,6 +1799,14 @@ $BioAdj_{i} = Bio_{i}*DRF_{c,sp}$
   dead tree i not adjusted for structural decay
 - $DRF_{c,sp}$ is the density reduction factor for decay class c and
   species sp of standing dead tree i
+
+<br>
+
+Reference: Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov,
+M. (2011). *Differences between standing and downed dead tree wood
+density reduction factors: A comparison across decay classes and tree
+species*. Research Paper NRS-15. USDA Forest Service, Northern Research
+Station, Newtown Square, PA. <https://doi.org/10.2737/NRS-RP-15>
 
 <br>
 
@@ -1676,6 +1831,8 @@ method in the **Sierra Nevada**. These functions should not be used for
 data collected in a different manner or region. Additionally, note that
 to stay consistent with previous studies, we use both live and dead
 trees to calculate percent basal area by species.
+
+<br>
 
 ### Duff and litter loads ——————————————————
 
@@ -1763,6 +1920,8 @@ A note on units: the van Wagtendonk *et al.* (1998) equations require
 depths in cm and output fuel loads in $kg/m^2$. Any unit conversions
 (for input or outputs) must be done by the user.
 `BerkeleyForestAnalytics` does the necessary unit conversions for you!
+
+<br>
 
 ### Fine fuel loads ————————————————————
 
@@ -1888,30 +2047,30 @@ particles by fuel size class**
 
 **Average specific gravity by fuel size class**
 
-| common name        | scientific name                 | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour | 1000-hour sound |
-|:-------------------|:--------------------------------|:--------------|:---------|:-------|:--------|:---------|:----------------|
-| White fir          | Abies concolor                  | ABCO          | 15       | 0.53   | 0.54    | 0.57     | 0.32            |
-| California red fir | Abies grandis                   | ABMA          | 20       | 0.57   | 0.56    | 0.47     | 0.38            |
-| Incense cedar      | Calocedrus decurrens            | CADE          | 81       | 0.59   | 0.54    | 0.55     | 0.41            |
-| Western juniper    | Juniperus occidentalis          | JUOC          | 64       | 0.67   | 0.65    | 0.62     | 0.47            |
-| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      | 0.55   | 0.49    | 0.48     | 0.42            |
-| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      | 0.59   | 0.55    | 0.39     | 0.47            |
-| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      | 0.59   | 0.61    | 0.53     | 0.47            |
-| Lodgepole pine     | Pinus contorta                  | PICO          | 108      | 0.53   | 0.48    | 0.54     | 0.58            |
-| Limber pine        | Pinus flexilis                  | PIFL          | 113      | 0.57   | 0.57    | 0.54     | 0.63            |
-| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      | 0.53   | 0.55    | 0.55     | 0.47            |
-| Sugar pine         | Pinus lambertinana              | PILA          | 117      | 0.59   | 0.59    | 0.52     | 0.43            |
-| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      | 0.65   | 0.64    | 0.53     | 0.47            |
-| Western white pine | Pinus monticola                 | PIMO2         | 119      | 0.56   | 0.56    | 0.49     | 0.47            |
-| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      | 0.55   | 0.56    | 0.48     | 0.40            |
-| Foothill pine      | Pinus sabiniana                 | PISA          | 127      | 0.64   | 0.61    | 0.43     | 0.47            |
-| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      | 0.53   | 0.52    | 0.44     | 0.35            |
-| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      | 0.60   | 0.61    | 0.59     | 0.35            |
-| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      | 0.57   | 0.57    | 0.56     | 0.54            |
-| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      | 0.67   | 0.65    | 0.62     | 0.66            |
-| Unknown conifer    | NA                              | UNCO          | 298      | 0.58   | 0.57    | 0.53     | 0.47            |
-| Unknown hardwood   | NA                              | UNHA          | 998      | 0.58   | 0.57    | 0.53     | 0.47            |
-| Unknown tree       | NA                              | UNTR          | 999      | 0.58   | 0.57    | 0.53     | 0.47            |
+| common name        | scientific name                 | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour | 1000-hour sound | 1000-hour rotten |
+|:-------------------|:--------------------------------|:--------------|:---------|:-------|:--------|:---------|:----------------|:-----------------|
+| White fir          | Abies concolor                  | ABCO          | 15       | 0.53   | 0.54    | 0.57     | 0.32            | 0.36             |
+| California red fir | Abies grandis                   | ABMA          | 20       | 0.57   | 0.56    | 0.47     | 0.38            | 0.36             |
+| Incense cedar      | Calocedrus decurrens            | CADE          | 81       | 0.59   | 0.54    | 0.55     | 0.41            | 0.36             |
+| Western juniper    | Juniperus occidentalis          | JUOC          | 64       | 0.67   | 0.65    | 0.62     | 0.47            | 0.36             |
+| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      | 0.55   | 0.49    | 0.48     | 0.42            | 0.36             |
+| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      | 0.59   | 0.55    | 0.39     | 0.47            | 0.36             |
+| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      | 0.59   | 0.61    | 0.53     | 0.47            | 0.36             |
+| Lodgepole pine     | Pinus contorta                  | PICO          | 108      | 0.53   | 0.48    | 0.54     | 0.58            | 0.36             |
+| Limber pine        | Pinus flexilis                  | PIFL          | 113      | 0.57   | 0.57    | 0.54     | 0.63            | 0.36             |
+| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      | 0.53   | 0.55    | 0.55     | 0.47            | 0.36             |
+| Sugar pine         | Pinus lambertinana              | PILA          | 117      | 0.59   | 0.59    | 0.52     | 0.43            | 0.36             |
+| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      | 0.65   | 0.64    | 0.53     | 0.47            | 0.36             |
+| Western white pine | Pinus monticola                 | PIMO2         | 119      | 0.56   | 0.56    | 0.49     | 0.47            | 0.36             |
+| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      | 0.55   | 0.56    | 0.48     | 0.40            | 0.36             |
+| Foothill pine      | Pinus sabiniana                 | PISA          | 127      | 0.64   | 0.61    | 0.43     | 0.47            | 0.36             |
+| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      | 0.53   | 0.52    | 0.44     | 0.35            | 0.36             |
+| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      | 0.60   | 0.61    | 0.59     | 0.35            | 0.36             |
+| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      | 0.57   | 0.57    | 0.56     | 0.54            | 0.36             |
+| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      | 0.67   | 0.65    | 0.62     | 0.66            | 0.36             |
+| Unknown conifer    | NA                              | UNCO          | 298      | 0.58   | 0.57    | 0.53     | 0.47            | 0.36             |
+| Unknown hardwood   | NA                              | UNHA          | 998      | 0.58   | 0.57    | 0.53     | 0.47            | 0.36             |
+| Unknown tree       | NA                              | UNTR          | 999      | 0.58   | 0.57    | 0.53     | 0.47            | 0.36             |
 
 <br>
 
@@ -1935,7 +2094,6 @@ $SLP_{t} = \sqrt{1 + (\frac{slope_{t}}{100})^2}$
 *where*
 
 - $SLP_{t}$ is the slope correction factor for transect t.
-
 - $slope_{t}$ is the slope of transect t in percent (%). Note that this
   is not the slope of the plot!
 
@@ -1999,6 +2157,8 @@ $W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,p} * SLP_{t} * k}
 For $SEC_{1000h,p}$, $SG_{1000h,s,p}$, $SLP_{t}$, and $k$ see fine fuel
 loads documentation above - the same concepts are applied here.
 
+<br>
+
 ### References —————————————————————–
 
 - Brown, J.K. (1974). *Handbook for inventorying downed woody material.*
@@ -2024,3 +2184,18 @@ loads documentation above - the same concepts are applied here.
 - van Wagtendonk, J.W., Benedict, J.M. & Sydoriak, W.M. (1998). Fuel bed
   characteristics of Sierra Nevada conifers. *Western Journal of Applied
   Forestry*, 13(3), 73–84. <https://doi.org/10.1093/wjaf/13.3.73>
+
+<br>
+
+## Contact information
+
+Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to
+reach out (1) if you find a bug or (2) need a tree species added to the
+`TreeBiomass()` function. Please note that tree species cannot be added
+for the surface and ground fuel load functions; we currently only have
+values for the 19 Sierra Nevada conifer species included in van
+Wagtendonk *et al.* (1996, 1998).
+
+**Contact email:** <krutherford@berkeley.edu>
+
+**Pronouns:** she/her/they/them
