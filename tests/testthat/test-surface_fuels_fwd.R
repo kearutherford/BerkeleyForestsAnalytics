@@ -117,12 +117,14 @@ test_that("Output dataframe has expected column names", {
 
   expect_named(FineFuels(fuel_data = good_fwd_m,
                          tree_data = good_sf_trees_m),
-               c("time", "site", "plot", "load_1h_Mg_ha", "load_10h_Mg_ha", "load_100h_Mg_ha", "load_fwd_Mg_ha"))
+               c("time", "site", "plot", "load_1h_Mg_ha", "load_10h_Mg_ha", "load_100h_Mg_ha", "load_fwd_Mg_ha",
+                 "sc_length_1h", "sc_length_10h", "sc_length_100h"))
 
   expect_named(FineFuels(fuel_data = good_fwd_i,
                          tree_data = good_sf_trees_i,
                          units = "imperial"),
-               c("time", "site", "plot", "load_1h_ton_ac", "load_10h_ton_ac", "load_100h_ton_ac", "load_fwd_ton_ac"))
+               c("time", "site", "plot", "load_1h_ton_ac", "load_10h_ton_ac", "load_100h_ton_ac", "load_fwd_ton_ac",
+                 "sc_length_1h", "sc_length_10h", "sc_length_100h"))
 
 })
 
@@ -139,6 +141,9 @@ test_that("Final column classes are as expected", {
   expect_equal(class(fwd_trial$load_10h_Mg_ha), "numeric")
   expect_equal(class(fwd_trial$load_100h_Mg_ha), "numeric")
   expect_equal(class(fwd_trial$load_fwd_Mg_ha), "numeric")
+  expect_equal(class(fwd_trial$sc_length_1h), "numeric")
+  expect_equal(class(fwd_trial$sc_length_10h), "numeric")
+  expect_equal(class(fwd_trial$sc_length_100h), "numeric")
 
 })
 

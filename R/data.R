@@ -834,6 +834,34 @@ bad_fwd_14 <- data.frame(
   slope = c(10,20,15,5,10,20,15,5)
 )
 
+bad_fwd_15 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", NA, "90", "180", "90", "180", "90", "180"), # missing transect
+  count_1h = c(12,30,10,2,5,14,9,6),
+  count_10h = c(4,8,3,2,9,4,3,3),
+  count_100h = c(5,7,10,11,6,3,13,9),
+  length_1h = c(2,2,2,2,2,2,2,2),
+  length_10h = c(4,4,4,4,4,4,4,4),
+  length_100h = c(6,6,6,6,6,6,6,6),
+  slope = c(10,20,15,5,10,20,15,5)
+)
+
+bad_fwd_16 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "90", "90", "180", "90", "180", "90", "90"), # repeat time:site:plot:transect
+  count_1h = c(12,30,10,2,5,14,9,6),
+  count_10h = c(4,8,3,2,9,4,3,3),
+  count_100h = c(5,7,10,11,6,3,13,9),
+  length_1h = c(2,2,2,2,2,2,2,2),
+  length_10h = c(4,4,4,4,4,4,4,4),
+  length_100h = c(6,6,6,6,6,6,6,6),
+  slope = c(10,20,15,5,10,20,15,5)
+)
+
 
 #---------------------------------------------------------------------
 # CWD dataframes
@@ -1167,6 +1195,17 @@ bad_cwd_sum7 <- data.frame(
   ssd_R = c(144, NA, 100, 0), # missing value
   length_1000h = c(15,15,15,15),
   slope = c(10,2,0,5)
+)
+
+bad_cwd_sum8 <- data.frame(    # repeat time:site:plot:transect
+  time = c("2019", "2019", "2019", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI"),
+  plot = c("1", "1", "2", "1", "2"),
+  transect = c("90", "90", "90", "90", "90"),
+  ssd_S = c(0, 0, 225, 400, 1217),
+  ssd_R = c(144, 144, 81, 100, 0),
+  length_1000h = c(15,15,15,15,15),
+  slope = c(10,10,2,0,5)
 )
 
 

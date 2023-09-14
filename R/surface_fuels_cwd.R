@@ -145,6 +145,12 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
     stop('For fuel_data, there are missing values in the transect column.')
   }
 
+  # coerce to character
+  fuel_data_val$time <- as.character(fuel_data_val$time)
+  fuel_data_val$site <- as.character(fuel_data_val$site)
+  fuel_data_val$plot <- as.character(fuel_data_val$plot)
+  fuel_data_val$transect <- as.character(fuel_data_val$transect)
+
 
   ###########################################################
   # Check that transect length is as expected
@@ -380,6 +386,43 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
   if(sum_val == "yes") {
 
     # --------------------------------------------------------------------------
+    # check for only one time:site:plot:transect obs.
+    # --------------------------------------------------------------------------
+
+    fuel_data_val$count <- 1
+    fuel_sub <- subset(fuel_data_val, select = c(time, site, plot, transect, count))
+
+    fuel_ag <- aggregate(data = fuel_sub,
+                         . ~ time + site + plot + transect,
+                         FUN = sum)
+
+    if(any(fuel_ag$count > 1)) {
+
+      count_sub <- subset(fuel_ag, fuel_ag$count > 1)
+      count_sub$obs_id <- NA
+
+      n <- nrow(count_sub)
+
+      for(i in 1:n) {
+
+        tm <- count_sub$time[i]
+        s <- count_sub$site[i]
+        p <- count_sub$plot[i]
+        tr <- count_sub$transect[i]
+
+        count_sub$obs_id[i] <- paste0(tm,'-',s,'-',p,'-',tr)
+
+      }
+
+      all_id <- paste0(unique(count_sub$obs_id), sep = "   ")
+
+      stop('For fuel_data, there are repeat time:site:plot:transect observations.\n',
+           'There should only be one observation (row) for an individual transect at a specific time:site:plot.\n',
+           'Investigate the following time:site:plot:transect combination(s): ', all_id)
+
+    }
+
+    # --------------------------------------------------------------------------
     # check that ssd_S is as expected
     # --------------------------------------------------------------------------
     # Check for numeric
@@ -438,15 +481,6 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
                                                   length_1000h, slope, ssd_S, ssd_R))
 
   }
-
-  ###########################################################
-  # Final dataframe prep
-  ###########################################################
-
-  return_df$time <- as.character(return_df$time)
-  return_df$site <- as.character(return_df$site)
-  return_df$plot <- as.character(return_df$plot)
-  return_df$transect <- as.character(return_df$transect)
 
   return(return_df)
 
@@ -538,6 +572,13 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
   # slope correction factor
   cwd_fuel_data$slp_c <- sqrt(1 + ((cwd_fuel_data$slope/100)^2))
 
+      # calculate horizontal length of transects
+      # cos(degrees) = adjacent/hypotenuse --> adjacent = cos(deg)*hypotenuse
+      # here hypotenuse = transect length and adjacent = slope corrected transect length
+      cwd_fuel_data$slope_deg <- atan(cwd_fuel_data$slope/100) # convert % to degrees
+      cwd_fuel_data$slope_cos <- cos(cwd_fuel_data$slope_deg) # take the cosine
+      cwd_fuel_data$sc_length_1000h <- cwd_fuel_data$slope_cos*cwd_fuel_data$length_1000h # 1000h transect length corrected
+
   # constant k
   k <- 1.234
 
@@ -554,6 +595,27 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
   cwd_ag$load_cwd_Mg_ha <- cwd_ag$load_1000s_Mg_ha + cwd_ag$load_1000r_Mg_ha
   cwd_ag[cwd_ag == "NaN"] <- NA
 
+  # horizontal transect length calculations
+  trn_subset <- subset(cwd_fuel_data, select = c(time, site, plot, sc_length_1000h))
+
+  trn_ag <- aggregate(data = trn_subset,
+                      . ~ time + site + plot,
+                      FUN = sum) # NA tran lengths are not allowed, NA handling here is not super important
+
+  # loop through each row (a plot in a time:site)
+  # and assign the horizontal transect length
+
+  k <- nrow(cwd_ag)
+
+  cwd_ag$sc_length_1000h <- NA
+
+  for(i in 1:k) {
+
+    cwd_ag$sc_length_1000h[i] <- trn_ag[trn_ag$time == cwd_ag$time[i] & trn_ag$site == cwd_ag$site[i] & trn_ag$plot == cwd_ag$plot[i], "sc_length_1000h"]
+
+  }
+
+
   if(cwd_units == "metric") {
 
     return(cwd_ag)
@@ -563,8 +625,9 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
     cwd_ag$load_1000s_ton_ac <- cwd_ag$load_1000s_Mg_ha*0.44609
     cwd_ag$load_1000r_ton_ac <- cwd_ag$load_1000r_Mg_ha*0.44609
     cwd_ag$load_cwd_ton_ac <- cwd_ag$load_cwd_Mg_ha*0.44609
+    cwd_ag$sc_length_1000h <- cwd_ag$sc_length_1000h*3.28084
 
-    cwd_imperial <- subset(cwd_ag, select = c(time, site, plot, load_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac))
+    cwd_imperial <- subset(cwd_ag, select = c(time, site, plot, load_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac, sc_length_1000h))
 
     return(cwd_imperial)
 
