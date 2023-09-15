@@ -1,4 +1,18 @@
 
+- [Berkeley Forests Analytics](#berkeley-forests-analytics)
+  - [Installation instructions](#installation-instructions)
+  - [Citation instructions](#citation-instructions)
+  - [Tree biomass estimations](#tree-biomass-estimations)
+  - [Forest composition and structure
+    compilations](#forest-composition-and-structure-compilations)
+  - [Surface and ground fuel load
+    estimations](#surface-and-ground-fuel-load-estimations)
+  - [Background information for tree biomass
+    estimations](#background-information-for-tree-biomass-estimations)
+  - [Background information for surface and ground fuel load
+    calculations](#background-information-for-surface-and-ground-fuel-load-calculations)
+  - [Contact information](#contact-information)
+
 # Berkeley Forests Analytics
 
 The `BerkeleyForestsAnalytics` package is a suite of open-source R
@@ -57,11 +71,8 @@ regions.
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA)
 Regional Biomass Equations to estimate above-ground stem, bark, and
 branch tree biomass. It provides the option to adjust biomass estimates
-for the structural decay of standing dead trees. Note that standing dead
-trees also lose mass through degradation, which is indirectly accounted
-for in this method through a decrease in height. However, degradation of
-bark and branches is not directly accounted for. See references 1, 2 & 3
-below.
+for the structural decay of standing dead trees. See “Background
+information for tree biomass estimations” below for further details.
 
 ### Inputs
 
@@ -74,9 +85,10 @@ below.
 
 3.  `species` Must be a variable (column) in the provided dataframe or
     tibble. Specifies the species of the individual tree. Must follow
-    four-letter species code or FIA naming conventions (see species code
-    tables in background information). The class of this variable will
-    be coerced to character.
+    four-letter species code or FIA naming conventions (see “Species
+    code tables” section in “Background information for tree biomass
+    estimations” below). The class of this variable will be coerced to
+    character.
 
 4.  `dbh` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the diameter at breast height (DBH) of
@@ -90,13 +102,15 @@ below.
     estimates for standing dead trees will not be adjusted for
     structural decay. It can be set to a variable (column) in the
     provided dataframe or tibble. For standing dead trees, the decay
-    class should be 1, 2, 3, 4, or 5 (see decay class descriptions in
-    background information). For live trees, the decay class should be
-    NA or 0. The class of this variable will be coerced to character.
+    class should be 1, 2, 3, 4, or 5 (see “Structural decay of standing
+    dead trees” section in “Background information for tree biomass
+    estimations” below). For live trees, the decay class should be NA
+    or 0. The class of this variable will be coerced to character.
 
 7.  `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see species code tables
+    four-letter code or FIA naming convention (see “Species code tables”
+    section in “Background information for tree biomass estimations”
     below). Must be set to either “4letter” or “fia”. The default is set
     to “4letter”.
 
@@ -273,15 +287,17 @@ plot as well as species.
 
 6.  `decay_class` Must be a variable (column) in the provided dataframe
     or tibble. For standing dead trees, the decay class should be 1, 2,
-    3, 4, or 5 (see decay class descriptions in background information).
-    For live trees, the decay class should be NA or 0. The class of this
+    3, 4, or 5 (see “Structural decay of standing dead trees” section in
+    “Background information for tree biomass estimations” below). For
+    live trees, the decay class should be NA or 0. The class of this
     variable will be coerced to character.
 
 7.  `species` Must be a variable (column) in the provided dataframe or
     tibble. Specifies the species of the individual tree. Must follow
-    four-letter species code or FIA naming conventions (see species code
-    tables in background information). The class of this variable will
-    be coerced to character.
+    four-letter species code or FIA naming conventions (see “Species
+    code tables” in “Background information for tree biomass
+    estimations” below). The class of this variable will be coerced to
+    character.
 
 8.  `dbh` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the diameter at breast height (DBH) of
@@ -293,7 +309,8 @@ plot as well as species.
 
 10. `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see species code tables
+    four-letter code or FIA naming convention (see “Species code tables”
+    section in “Background information for tree biomass estimations”
     below). Must be set to either “4letter” or “fia”. The default is set
     to “4letter”.
 
@@ -831,7 +848,8 @@ QMD, NA DBH, and NA height.*
 The three functions (`FineFuels`, `CoarseFuels` and `LitterDuff`)
 estimate surface and ground fuel loads from line-intercept transects.
 Field data should have been collected following Brown (1974) or a
-similar method.
+similar method. See “Background information for surface and ground fuel
+load calculations” below for further details.
 
 This set of functions evolved from Rfuels, a package developed by Danny
 Foster ([See Rfuels GitHub](https://github.com/danfosterfire/Rfuels)).
@@ -881,8 +899,9 @@ FWD data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      species code tables in background information). The class of this
-      variable will be coerced to character.
+      “Species code tables” section in “Background information for tree
+      biomass estimations” below). The class of this variable will be
+      coerced to character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -933,9 +952,10 @@ FWD data collection:
       0 (no slope).
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
-    the four-letter code or FIA naming convention (see species code
-    tables below). Must be set to either “4letter” or “fia”. The default
-    is set to “4letter”.
+    the four-letter code or FIA naming convention (see “Species code
+    tables” section in “Background information for tree biomass
+    estimations” below). Must be set to either “4letter” or “fia”. The
+    default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -971,23 +991,27 @@ A dataframe with the following columns:
     fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or
     US tons per acre)
 
-8.  `sc_length_1h`: slope-corrected transect length for 1-hour fuels in
-    either meters or feet. This is the total horizontal length of
-    transect sampled for 1-hour fuels at the specific time:site:plot.
-    See background information for equations used to calculate this
-    value.
+8.  `sc_length_1h`: slope-corrected transect length (i.e., horizontal
+    transect length) for 1-hour fuels in either meters or feet. This is
+    the total horizontal length of transect sampled for 1-hour fuels at
+    the specific time:site:plot. See “Slope-corrected transect length”
+    section in “Background information for surface and ground fuel load
+    calculations” for details on why and how this is calculated.
 
-9.  `sc_length_10h`: slope-corrected transect length for 10-hour fuels
-    in either meters or feet. This is the total horizontal length of
-    transect sampled for 10-hour fuels at the specific time:site:plot.
-    See background information for equations used to calculate this
-    value.
+9.  `sc_length_10h`: slope-corrected transect length (i.e., horizontal
+    transect length) for 10-hour fuels in either meters or feet. This is
+    the total horizontal length of transect sampled for 10-hour fuels at
+    the specific time:site:plot. See “Slope-corrected transect length”
+    section in “Background information for surface and ground fuel load
+    calculations” for details on why and how this is calculated.
 
-10. `sc_length_100h`: slope-corrected transect length for 100-hour fuels
-    in either meters or feet. This is the total horizontal length of
-    transect sampled for 100-hour fuels at the specific time:site:plot.
-    See background information for equations used to calculate this
-    value.
+10. `sc_length_100h`: slope-corrected transect length (i.e., horizontal
+    transect length) for 100-hour fuels in either meters or feet. This
+    is the total horizontal length of transect sampled for 100-hour
+    fuels at the specific time:site:plot. See “Slope-corrected transect
+    length” section in “Background information for surface and ground
+    fuel load calculations” for details on why and how this is
+    calculated.
 
 ### Demonstration
 
@@ -1106,8 +1130,9 @@ data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      species code tables in background information). The class of this
-      variable will be coerced to character.
+      “Species code tables” section in “Background information for
+      surface and ground fuel load calculations” below). The class of
+      this variable will be coerced to character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1174,9 +1199,10 @@ data collection:
         of this variable will be coerced to character.
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
-    the four-letter code or FIA naming convention (see species code
-    tables below). Must be set to either “4letter” or “fia”. The default
-    is set to “4letter”.
+    the four-letter code or FIA naming convention (see “Species code
+    tables” section in “Background information for tree biomass
+    estimations” below). Must be set to either “4letter” or “fia”. The
+    default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -1213,11 +1239,13 @@ A dataframe with the following columns:
     fuel load (1000-hour sound + 1000-hour rotten) in megagrams per
     hectare (or US tons per acre)
 
-7.  `sc_length_1000h`: slope-corrected transect length for 1000-hour
-    fuels in either meters or feet. This is the total horizontal length
-    of transect sampled for 1000-hour fuels at the specific
-    time:site:plot. See background information for equations used to
-    calculate this value.
+7.  `sc_length_1000h`: slope-corrected transect length (i.e., horizontal
+    transect length) for 1000-hour fuels in either meters or feet. This
+    is the total horizontal length of transect sampled for 1000-hour
+    fuels at the specific time:site:plot. See “Slope-corrected transect
+    length” section in “Background information for surface and ground
+    fuel load calculations” for details on why and how this is
+    calculated.
 
 ### Demonstrations
 
@@ -1384,8 +1412,9 @@ for duff/litter data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      species code tables in background information). The class of this
-      variable will be coerced to character.
+      “Species code tables” section in “Background information for tree
+      biomass estimations” below). The class of this variable will be
+      coerced to character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1422,20 +1451,20 @@ for duff/litter data collection:
 
       - **litter_depth:** Litter depth in centimeters or inches. May be
         an individual depth measurement or the average depth on the
-        transect (see note below). The class of this variable must be
-        numeric.
+        transect (see note directly below). The class of this variable
+        must be numeric.
       - **duff_depth:** Duff depth in centimeters or inches. May be an
         individual depth measurement or the average depth on the
-        transect (see note below). The class of this variable must be
-        numeric.
+        transect (see note directly below). The class of this variable
+        must be numeric.
 
     - If duff and litter depth are measured together, the dataframe must
       also have the following column:
 
       - **lit_duff_depth:** Combined litter and duff depth in
         centimeters or inches. May be an individual depth measurement or
-        the average depth on the transect (see note below). The class of
-        this variable must be numeric.
+        the average depth on the transect (see note directly below). The
+        class of this variable must be numeric.
 
     *Note: If multiple depth measurements were taken for each transect,
     the user may average the depths together before import (in which
@@ -1445,9 +1474,10 @@ for duff/litter data collection:
     recorded at a specific time/site/plot/transect).*
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
-    the four-letter code or FIA naming convention (see species code
-    tables below). Must be set to either “4letter” or “fia”. The default
-    is set to “4letter”.
+    the four-letter code or FIA naming convention (see “Species code
+    tables” section in “Background information for tree biomass
+    estimations” below). Must be set to either “4letter” or “fia”. The
+    default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -1975,8 +2005,8 @@ $W_{c,p} = \frac{\sum(W_{c,t})}{n}$
 
 - $W_{c,p}$ is the fuel load for timelag class c (1-hour, 10-hour, or
   100-hour) for plot p
-- $F_{c,t}$ is the fuel load for timelag class c (1-hour, 10-hour, or
-  100-hour) for transect t measured in plot p
+- $F_{c,t}$ is the fuel load for timelag class c for transect t measured
+  in plot p
 - $n$ is the number of total number of transects measured at plot p
 
 <br>
@@ -2017,7 +2047,7 @@ $QMD_{c,p} = \sum(\frac{BA_{sp,p}}{BA_{total,p}}*QMD_{c,sp})$
 *where*
 
 - $QMD_{c,p}$ is the species-weighted-average quadratic mean diameter
-  for fuels in timelag class c for plot p
+  for fuels in timelag class c (1-hour, 10-hour, or 100-hour) for plot p
 - $BA_{sp,p}$ is the basal area occupied by species sp in plot p
 - $BA_{total,p}$ is the total basal area for plot p
 - $QMD_{c,sp}$ is the quadratic mean diameter for fuels in timelang
@@ -2198,12 +2228,87 @@ loads documentation above - the same concepts are applied here.
 
 <br>
 
+### Slope-corrected (i.e., horizontal) transect length
+
+In the above calculations, we used the slope correction factor from
+Brown (1974) for converting mass per unit area on a slope basis to a
+horizontal basis. However, for further compilation (e.g., to the stratum
+or site level), we need to “weight estimates by the length of the line
+transect actually sampled” (Marshall *et al.* 2000).
+
+Marshall *et al.* (2000) describes the importance of obtaining
+horizontal transect length:
+
+> “To obtain an unbiased estimate, the horizontal transect length must
+> be known. Preferably, all transects should be corrected for slope in
+> the field so that all transects are of equal horizontal length. This
+> simplifies the compilation and subsequent analyses.”
+
+> “If unequal line transect lengths exisit within a sample an unbiased
+> estimate of the variance of any CWD estimate is no longer guaranteed.
+> It is usually best to weight the estimate, giving values from longer
+> line transects proportionally more weight than those from shorter
+> transects.”
+
+We can calculate the total horizontal length of transect sampled at a
+specific plot using the following equation:
+
+$SCLength_{c,p} = \sum(SCLength_{c,t})$
+
+*where*
+
+- $SCLength_{c,p}$ is the slope-corrected transect length for fuels in
+  timelag class c (1-, 10-, 100-, or 1000-hour) for plot p
+- $SCLength_{c,t}$ is the slope-corrected transect length for fuels in
+  timelag class c for transect t measured in plot p
+
+Why are we calculating horizontal length at the plot-level? Transects
+can be different shapes, most often single lines, stars, or triangles.
+For example, you might have three 10-meter sub-transects that radiate
+out from plot center (i.e., a star shape). The three sub-transects form
+a 30-meter transect for the overall plot. See the diagram provided by
+Marshall *et al* (2000) on page 4 for further explanation.
+
+<br>
+
+We can calculate $SCLength_{c,t}$ using the following equation:
+
+$SCLength_{c,t} = cos(SlopeDeg_t)*Length_{c,t}$
+
+*where*
+
+- $SCLength_{c,t}$ is the slope-corrected transect length for fuels in
+  timelag class c (1-, 10-, 100-, 1000-hour) for transect t measured in
+  plot p  
+- $cos(SlopeDeg_t)$ is the cosine of the slope of transect t in degrees
+- $Length_t$ is the NOT slope-corrected transect length for fuels in
+  timelag class c for transect t measured in plot p
+
+<br>
+
+We can calculate $SlopeDeg_t$ using the following equation:
+
+$SlopeDeg_t = tan^{-1}(SlopePerc_t)$
+
+*where*
+
+- $cos(SlopeDeg_t)$ is the slope of transect t in degrees
+- $tan^{-1}(SlopePerc_t)$ is the inverse of the tangent of the slope of
+  transect t in percent
+
+<br>
+
 ### References —————————————————————–
 
 - Brown, J.K. (1974). *Handbook for inventorying downed woody material.*
   General Technical Report INT-16. USDA Forest Service, Intermountain
   Forest and Range Experiment Station, Ogden, UT.
   <https://www.fs.usda.gov/treesearch/pubs/28647>
+
+- Marshall, P.L., Davis, G., & LeMay, V.M. (2000). *Using line intersect
+  sampling for coarse woody debris.* Forest Research Technical Report
+  TR-003. British Columbia Ministry of Forests, Vancouver Forest Region,
+  Nanaimo, BC.
 
 - Stephens, S.L. (2001). Fire history differences in adjacent Jeffrey
   pine and upper montane forests in the eastern Sierra Nevada.
