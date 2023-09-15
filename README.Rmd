@@ -1249,6 +1249,7 @@ For \(SEC_{1000h,p}\), \(SG_{1000h,s,p}\), \(SLP_{t}\), and \(k\) see fine fuel 
 
 <br>
 
+
 ## Contact information 
 
 Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to reach out (1) if you find a bug or (2) need a tree species added to the `TreeBiomass()` function. Please note that tree species cannot be added for the surface and ground fuel load functions; we currently only have values for the 19 Sierra Nevada conifer species included in van Wagtendonk *et al.* (1996, 1998). 
