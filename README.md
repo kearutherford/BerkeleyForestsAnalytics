@@ -1213,7 +1213,11 @@ A dataframe with the following columns:
     fuel load (1000-hour sound + 1000-hour rotten) in megagrams per
     hectare (or US tons per acre)
 
-7.  `sc_length_1000h`:
+7.  `sc_length_1000h`: slope-corrected transect length for 1000-hour
+    fuels in either meters or feet. This is the total horizontal length
+    of transect sampled for 1000-hour fuels at the specific
+    time:site:plot. See background information for equations used to
+    calculate this value.
 
 ### Demonstrations
 
