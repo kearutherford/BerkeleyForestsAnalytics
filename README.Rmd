@@ -521,9 +521,9 @@ A dataframe with the following columns:
 
 8. `sc_length_1h`: slope-corrected transect length for 1-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1-hour fuels at the specific time:site:plot. See background information for equations used to calculate this value. 
 
-9. `sc_length_10h`:
+9. `sc_length_10h`: slope-corrected transect length for 10-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 10-hour fuels at the specific time:site:plot. See background information for equations used to calculate this value. 
 
-10. `sc_length_100h`: 
+10. `sc_length_100h`: slope-corrected transect length for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot. See background information for equations used to calculate this value. 
 
 
 ### Demonstration
