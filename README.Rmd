@@ -1,14 +1,13 @@
 ---
 output: 
-  github_document:
-    toc: true
-    toc_depth: 2
+  github_document
 ---
 
-# Berkeley Forests Analytics
+# Berkeley Forests Analystics 
 
 The `BerkeleyForestsAnalytics` package is a suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data. 
 
+*Tip: you can navigate this README file using the table of contents found in the upper left-hand corner (just to the left of the README.md).*
 
 ## Installation instructions
 
@@ -34,12 +33,12 @@ citation("BerkeleyForestsAnalytics")
 ```
 
 
-## Tree biomass estimations 
+# Tree biomass estimations 
 
 The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The functions use the California equation set and should not be used for data from other regions. 
 
 
-### :eight_spoked_asterisk: `TreeBiomass( )`
+## :eight_spoked_asterisk: `TreeBiomass( )`
 
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. It provides the option to adjust biomass estimates for the structural decay of standing dead trees. See "Background information for tree biomass estimations" below for further details.  
 
@@ -131,7 +130,7 @@ tree_bio_demo2
 
 <br>
 
-### :eight_spoked_asterisk: `SummaryBiomass( )`
+## :eight_spoked_asterisk: `SummaryBiomass( )`
 
 The `SummaryBiomass` function calls on the `TreeBiomass` function described above. Additionally, the outputs are summarized by plot or by plot as well as species. 
 
@@ -252,12 +251,12 @@ sum_bio_demo3
 
 <br>
 
-## Forest composition and structure compilations  
+# Forest composition and structure compilations  
 
 The forest composition and structure functions (`ForestComp` and `ForestStr`) assist with common plot-level data compilations. These functions help ensure that best practices in data compilation are observed.
 
 
-### :eight_spoked_asterisk: `ForestComp( )`
+## :eight_spoked_asterisk: `ForestComp( )`
 
 ### Inputs
 
@@ -358,7 +357,7 @@ comp_demo3
 
 <br>
 
-### :eight_spoked_asterisk: `ForestStr( )`
+## :eight_spoked_asterisk: `ForestStr( )`
 
 ### Inputs
 
@@ -457,7 +456,7 @@ str_demo3
 
 <br>
 
-## Surface and ground fuel load estimations 
+# Surface and ground fuel load estimations 
 
 The three functions (`FineFuels`, `CoarseFuels` and `LitterDuff`) estimate surface and ground fuel loads from line-intercept transects. Field data should have been collected following Brown (1974) or a similar method. See "Background information for surface and ground fuel load calculations" below for further details. 
 
@@ -465,7 +464,7 @@ This set of functions evolved from Rfuels, a package developed by Danny Foster (
 Although these functions are formatted differently than Rfuels, they follow the same general equations. The goal of this set of functions is to take the workflow outlined in Rfuels and make it more flexible and user-friendly. Rfuels will remain operational as the legacy program. 
 
 
-### :eight_spoked_asterisk: `FineFuels( )`
+## :eight_spoked_asterisk: `FineFuels( )`
 
 The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is defined as 1-hour (0-0.64cm or 0-0.25in), 10-hour (0.64-2.54cm or 0.25-1.0in), and 100-hour (2.54-7.62cm or 1-3in) fuels. Assumptions for FWD data collection: 
 
@@ -554,7 +553,7 @@ fine_demo
 
 <br>
 
-### :eight_spoked_asterisk: `CoarseFuels( )`
+## :eight_spoked_asterisk: `CoarseFuels( )`
 
 The `CoarseFuels` function estimates coarse woody debris (CWD) loads. CWD is defined 1000-hour (7.62+ cm or 3+ in) fuels. Assumptions for CWD data collection: 
 
@@ -668,7 +667,7 @@ coarse_demo2
 
 <br>
 
-### :eight_spoked_asterisk: `LitterDuff( )`
+## :eight_spoked_asterisk: `LitterDuff( )`
 
 The `LitterDuff` function estimates duff and litter loads. Assumptions for duff/litter data collection: 
 
@@ -781,9 +780,9 @@ duff_demo2
 
 <br>
 
-## Background information for tree biomass estimations 
+# Background information for tree biomass estimations 
 
-### Allometric equations -------------------------------------------------------
+## Allometric equations
 
 `BerkeleyForestAnalytics` calculates biomass using the Forest Inventory and Analysis (FIA) Regional Biomass Equations. Specifically, we use the equation set for the California (CA) region. Our suite of biomass functions should not be used for data collected in a different region.
 
@@ -820,7 +819,7 @@ A note on units: the equations provided by USDA Forest Service (2014a,b) require
 
 <br>
 
-### Species code tables --------------------------------------------------------
+## Species code tables
 
 All hardwood and softwood species currently included/recognized in the `TreeBiomass()` function are listed in the tables below. If you need an additional species included, please contact the maintainer of `BerkeleyForestAnalytics`, Kea Rutherford. We are open to building out the species list over time. 
 
@@ -874,7 +873,7 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 
 <br>
 
-### Structural decay of standing dead trees ------------------------------------
+## Structural decay of standing dead trees
 
 **FIA standing dead tree decay class descriptions**
 
@@ -963,7 +962,7 @@ Reference: Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (201
 
 <br> 
 
-## Background information for surface and ground fuel load calculations 
+# Background information for surface and ground fuel load calculations 
 
 This suite of functions estimates surface and ground fuel loads (i.e., mass per unit area) from line-intercept transect data. The functions follow the general methodology first described in Stephens (2001):
 
@@ -973,7 +972,7 @@ Details on how `BerkeleyForestAnalytics` calculates duff/litter, fine, and coars
 
 <br>
 
-### Duff and litter loads ------------------------------------------------------
+## Duff and litter loads
 
 Duff and litter (or combined duff/litter) are measured as depths at specific points along a sampling transect. Van Wagtendonk *et al.* (1998) developed regressions for duff, litter, and combined duff/litter loadings as a function of depth for 19 different Sierra Nevada conifer species: 
 
@@ -1047,7 +1046,7 @@ A note on units: the van Wagtendonk *et al.* (1998) equations require depths in 
 
 <br>
 
-### Fine fuel loads ------------------------------------------------------------
+## Fine fuel loads
 
 Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 100-hour fuels is more complicated, but follows the same general idea as described for duff and litter above. The plot-level fuel load can be calculated using the following equation: 
 
@@ -1214,7 +1213,7 @@ in|ft|US tons/ac|11.65|
 
 <br> 
 
-### Coarse fuel loads ----------------------------------------------------------
+## Coarse fuel loads
 
 Calculating loads for 1000-hour fuels is just a special case of the equations given above for 1-100 hour fuels. The difference is that instead of counted intercepts and an average squared quadratic mean diameter, we have the actual sum of squared diameters from the field data. The plot-level fuel load can be calculated using the following equation: 
 
@@ -1246,7 +1245,7 @@ For \(SEC_{1000h,p}\), \(SG_{1000h,s,p}\), \(SLP_{t}\), and \(k\) see fine fuel 
 
 <br>
 
-### Slope-corrected (i.e., horizontal) transect length 
+## Slope-corrected transect length 
 
 In the above calculations, we used the slope correction factor from Brown (1974) for converting mass per unit area on a slope basis to a horizontal basis. However, for further compilation (e.g., to the stratum or site level), we need to "weight estimates by the length of the line transect actually sampled" (Marshall *et al.* 2000). 
 
@@ -1292,7 +1291,7 @@ We can calculate \(SlopeDeg_t\) using the following equation:
 
 <br>
 
-### References -----------------------------------------------------------------
+**References:**
 
   * Brown, J.K. (1974). *Handbook for inventorying downed woody material.* General Technical Report INT-16. USDA Forest Service, Intermountain Forest and Range Experiment Station, Ogden, UT. https://www.fs.usda.gov/treesearch/pubs/28647
   
@@ -1309,7 +1308,7 @@ We can calculate \(SlopeDeg_t\) using the following equation:
 <br>
 
 
-## Contact information 
+# Contact information 
 
 Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to reach out (1) if you find a bug or (2) need a tree species added to the `TreeBiomass()` function. Please note that tree species cannot be added for the surface and ground fuel load functions; we currently only have values for the 19 Sierra Nevada conifer species included in van Wagtendonk *et al.* (1996, 1998). 
 
