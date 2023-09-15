@@ -1,13 +1,13 @@
 
-# UC Berkeley Forest Analytics
+# Berkeley Forests Analytics
 
-The `UCBForestAnalytics` package is a suite of open-source R functions
-designed to produce standard metrics for forest management and ecology
-from field inventory data.
+The `BerkeleyForestsAnalytics` package is a suite of open-source R
+functions designed to produce standard metrics for forest management and
+ecology from field inventory data.
 
 ## Installation instructions
 
-To install the `UCBForestAnalytics` package from GitHub:
+To install the `BerkeleyForestAnalytics` package from GitHub:
 
 ``` r
 # install and load devtools
@@ -17,31 +17,31 @@ library(devtools)
 
 ``` r
 # install and load Rbiomass
-devtools::install_github('kearutherford/UCBForestAnalytics')
-library(UCBForestAnalytics)
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics')
+library(BerkeleyForestsAnalytics)
 ```
 
 ## Citation instructions
 
 ``` r
-citation("UCBForestAnalytics")
+citation("BerkeleyForestsAnalytics")
 ```
 
-    ## To cite package 'UCBForestAnalytics' in publications use:
+    ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
     ##   Kea Rutherford, John Battles, Danny Foster (2023).
-    ##   _UCBForestAnalytics_. Battles Lab: Forest Ecology and Ecosystem
+    ##   _BerkeleyForestsAnalytics_. Battles Lab: Forest Ecology and Ecosystem
     ##   Dynamics, University of California, Berkeley.
-    ##   <https://github.com/kearutherford/UCBForestAnalytics>.
+    ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
-    ##     title = {UCBForestAnalytics},
+    ##     title = {BerkeleyForestsAnalytics},
     ##     author = {{Kea Rutherford} and {John Battles} and {Danny Foster}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
     ##     year = {2023},
-    ##     url = {https://github.com/kearutherford/UCBForestAnalytics},
+    ##     url = {https://github.com/kearutherford/BerkeleyForestsAnalytics},
     ##   }
 
 ## Tree biomass estimations
@@ -150,7 +150,7 @@ bio_demo_data
     ## 9   YOMI       2  50    0     3 PSME   15.8 10.6
 
 ``` r
-# call the TreeBiomass() function in the UCBForestAnalytics package
+# call the TreeBiomass() function in the BerkeleyForestsAnalytics package
 # keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
 tree_bio_demo1 <- TreeBiomass(data = bio_demo_data,
                               status = "Live",
@@ -200,7 +200,7 @@ tree_bio_demo1
 <br>
 
 ``` r
-# call the TreeBiomass() function in the UCBForestAnalytics package
+# call the TreeBiomass() function in the BerkeleyForestsAnalytics package
 # keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
 tree_bio_demo2 <- TreeBiomass(data = bio_demo_data,
                               status = "Live",
@@ -350,7 +350,7 @@ bio_demo_data
 **Results summarized by plot:**
 
 ``` r
-# call the SummaryBiomass() function in the UCBForestAnalytics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 sum_bio_demo1 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
@@ -377,7 +377,7 @@ sum_bio_demo1
 **Results summarized by plot as well as by species:**
 
 ``` r
-# call the SummaryBiomass() function in the UCBForestAnalytics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 sum_bio_demo2 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
@@ -433,7 +433,7 @@ bio_NT_demo
     ## 10   YOMI       3   0 <NA>  <NA> <NA>     NA   NA
 
 ``` r
-# call the SummaryBiomass() function in the UCBForestAnalystics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalystics package
 sum_bio_demo3 <- SummaryBiomass(data = bio_NT_demo,
                                 site = "Forest",
                                 plot = "Plot_id",
@@ -543,7 +543,7 @@ for_demo_data
 **Composition measured as relative basal area:**
 
 ``` r
-# call the ForestComp() function in the UCBForestAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalystics package
 # keep default relative (= "BA") and units (= "metric")
 comp_demo1 <- ForestComp(data = for_demo_data,
                          site = "Forest",
@@ -576,7 +576,7 @@ comp_demo1
 **Composition measured as relative density:**
 
 ``` r
-# call the ForestComp() function in the UCBForestAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalystics package
 comp_demo2 <- ForestComp(data = for_demo_data,
                          site = "Forest",
                          plot = "Plot_id",
@@ -627,7 +627,7 @@ for_NT_demo
     ## 10   YOMI       3   0 <NA> <NA>     NA   NA
 
 ``` r
-# call the ForestComp() function in the UCBForestAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalystics package
 comp_demo3 <- ForestComp(data = for_NT_demo,
                          site = "Forest",
                          plot = "Plot_id",
@@ -743,7 +743,7 @@ for_demo_data
 **If tree heights were not measured:**
 
 ``` r
-# call the ForestStr() function in the UCBForestAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalystics package
 # keep default ht (= "ignore") and units (= "metric")
 str_demo1 <- ForestStr(data = for_demo_data,
                        site = "Forest",
@@ -764,7 +764,7 @@ str_demo1
 **If tree heights were measured:**
 
 ``` r
-# call the ForestStr() function in the UCBForestAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalystics package
 str_demo2 <- ForestStr(data = for_demo_data,
                        site = "Forest",
                        plot = "Plot_id",
@@ -803,7 +803,7 @@ for_NT_demo
     ## 10   YOMI       3   0 <NA> <NA>     NA   NA
 
 ``` r
-# call the ForestStr() function in the UCBForestAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalystics package
 str_demo3 <- ForestStr(data = for_NT_demo,
                        site = "Forest",
                        plot = "Plot_id",
@@ -1029,7 +1029,7 @@ fwd_demo
 <br>
 
 ``` r
-# call the FineFuels() function in the UCBForestAnalystics package
+# call the FineFuels() function in the BerkeleyForestsAnalystics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 fine_demo <- FineFuels(tree_data = overstory_demo,
                        fuel_data = fwd_demo)
@@ -1042,6 +1042,11 @@ fine_demo
     ## 2 2020 SEKI    1     0.5413301      2.0996514        6.460228       9.101209
     ## 3 2019 SEKI    2     0.5205590      0.9356160        1.230604       2.686780
     ## 4 2020 SEKI    2     0.2980415      0.9350166        4.912659       6.145717
+    ##   sc_length_1h sc_length_10h sc_length_100h
+    ## 1     5.981923      5.981923       8.972885
+    ## 2     5.981923      5.981923       8.972885
+    ## 3     5.981923      5.981923       8.972885
+    ## 4     5.981923      5.981923       8.972885
 
 <br>
 
@@ -1240,7 +1245,7 @@ cwd_YS_demo
 <br>
 
 ``` r
-# call the CoarseFuels() function in the UCBForestAnalystics package
+# call the CoarseFuels() function in the BerkeleyForestsAnalystics package
 coarse_demo1 <- CoarseFuels(tree_data = overstory_demo,
                             fuel_data = cwd_YS_demo,
                             sp_codes = "4letter",
@@ -1255,6 +1260,11 @@ coarse_demo1
     ## 2 2020 SEKI    1        0.0000000         2.623802       2.623802
     ## 3 2019 SEKI    2        1.5903804         2.981374       4.571754
     ## 4 2020 SEKI    2        0.0000000         0.000000       0.000000
+    ##   sc_length_1000h
+    ## 1        37.79485
+    ## 2        37.70978
+    ## 3        37.82160
+    ## 4        37.74785
 
 <br>
 
@@ -1292,7 +1302,7 @@ as those transects indicate a loading of 0.*
 <br>
 
 ``` r
-# call the CoarseFuels() function in the UCBForestAnalystics package
+# call the CoarseFuels() function in the BerkeleyForestsAnalystics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and summed (= "no")
 coarse_demo2 <- CoarseFuels(tree_data = overstory_demo,
                             fuel_data = cwd_NS_demo)
@@ -1305,6 +1315,11 @@ coarse_demo2
     ## 2 2020 SEKI    1        0.0000000         2.623802       2.623802
     ## 3 2019 SEKI    2        1.5903804         2.981374       4.571754
     ## 4 2020 SEKI    2        0.0000000         0.000000       0.000000
+    ##   sc_length_1000h
+    ## 1        37.79485
+    ## 2        37.70978
+    ## 3        37.82160
+    ## 4        37.74785
 
 <br>
 
@@ -1510,7 +1525,7 @@ lit_duff_demo
 <br>
 
 ``` r
-# call the LitterDuff() function in the UCBForestAnalystics package
+# call the LitterDuff() function in the BerkeleyForestsAnalystics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and measurement (= "separate")
 duff_demo1 <- LitterDuff(tree_data = overstory_demo,
                          fuel_data = lit_duff_demo)
@@ -1550,7 +1565,7 @@ lit_duff_avg_demo
 <br>
 
 ``` r
-# call the LitterDuff() function in the UCBForestAnalystics package
+# call the LitterDuff() function in the BerkeleyForestsAnalystics package
 duff_demo2 <- LitterDuff(tree_data = overstory_demo,
                          fuel_data = lit_duff_avg_demo,
                          sp_codes = "4letter",

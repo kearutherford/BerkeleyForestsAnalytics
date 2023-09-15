@@ -1,4 +1,4 @@
-Package: UCBForestAnalytics
+Package: BerkeleyForestsAnalytics
 Title: Produce Standard Metrics for Forest Management and Ecology from Field Inventory Data
 Version: 0.1.0
 Authors@R: c(
@@ -6,7 +6,7 @@ Authors@R: c(
     person("John", "Battles", role = "aut"),
     person("Danny", "Foster", role = "aut"))
 Description: A suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data.
-URL: https://github.com/kearutherford/UCBForestAnalytics
+URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

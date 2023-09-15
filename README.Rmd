@@ -4,7 +4,7 @@ output: github_document
 
 # Berkeley Forests Analytics
 
-The `UCBForestAnalytics` package is a suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data. 
+The `BerkeleyForestsAnalytics` package is a suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data. 
 
 
 ## Installation instructions
@@ -19,15 +19,15 @@ library(devtools)
 
 ```r
 # install and load Rbiomass
-devtools::install_github('kearutherford/UCBForestAnalytics')
-library(UCBForestAnalytics)
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics')
+library(BerkeleyForestsAnalytics)
 ```
 
 
 ## Citation instructions 
 
 ```{r}
-citation("UCBForestAnalytics")
+citation("BerkeleyForestsAnalytics")
 ```
 
 
@@ -75,7 +75,7 @@ The original dataframe will be returned, with four new columns. If decay_class i
 ### Demonstrations
 
 ```{r, include = FALSE}
-library(UCBForestAnalytics)
+library(BerkeleyForestsAnalytics)
 ```
 
 ```{r}
@@ -84,7 +84,7 @@ bio_demo_data
 ```
 
 ```{r}
-# call the TreeBiomass() function in the UCBForestAnalytics package
+# call the TreeBiomass() function in the BerkeleyForestsAnalytics package
 # keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
 tree_bio_demo1 <- TreeBiomass(data = bio_demo_data,
                               status = "Live",
@@ -106,7 +106,7 @@ tree_bio_demo1
 <br>
 
 ```{r}
-# call the TreeBiomass() function in the UCBForestAnalytics package
+# call the TreeBiomass() function in the BerkeleyForestsAnalytics package
 # keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
 tree_bio_demo2 <- TreeBiomass(data = bio_demo_data,
                               status = "Live",
@@ -183,7 +183,7 @@ bio_demo_data
 
 **Results summarized by plot:**
 ```{r}
-# call the SummaryBiomass() function in the UCBForestAnalytics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 sum_bio_demo1 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
@@ -203,7 +203,7 @@ sum_bio_demo1
 
 **Results summarized by plot as well as by species:**
 ```{r}
-# call the SummaryBiomass() function in the UCBForestAnalytics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 sum_bio_demo2 <- SummaryBiomass(data = bio_demo_data,
                                 site = "Forest",
@@ -229,7 +229,7 @@ bio_NT_demo
 ```
 
 ```{r}
-# call the SummaryBiomass() function in the UCBForestAnalystics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalystics package
 sum_bio_demo3 <- SummaryBiomass(data = bio_NT_demo,
                                 site = "Forest",
                                 plot = "Plot_id",
@@ -299,7 +299,7 @@ for_demo_data
 
 **Composition measured as relative basal area:**
 ```{r}
-# call the ForestComp() function in the UCBForestAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalystics package
 # keep default relative (= "BA") and units (= "metric")
 comp_demo1 <- ForestComp(data = for_demo_data,
                          site = "Forest",
@@ -316,7 +316,7 @@ comp_demo1
 
 **Composition measured as relative density:**
 ```{r}
-# call the ForestComp() function in the UCBForestAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalystics package
 comp_demo2 <- ForestComp(data = for_demo_data,
                          site = "Forest",
                          plot = "Plot_id",
@@ -339,7 +339,7 @@ for_NT_demo
 ```
 
 ```{r}
-# call the ForestComp() function in the UCBForestAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalystics package
 comp_demo3 <- ForestComp(data = for_NT_demo,
                          site = "Forest",
                          plot = "Plot_id",
@@ -402,7 +402,7 @@ for_demo_data
 
 **If tree heights were not measured:**
 ```{r}
-# call the ForestStr() function in the UCBForestAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalystics package
 # keep default ht (= "ignore") and units (= "metric")
 str_demo1 <- ForestStr(data = for_demo_data,
                        site = "Forest",
@@ -417,7 +417,7 @@ str_demo1
 
 **If tree heights were measured:**
 ```{r}
-# call the ForestStr() function in the UCBForestAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalystics package
 str_demo2 <- ForestStr(data = for_demo_data,
                        site = "Forest",
                        plot = "Plot_id",
@@ -438,7 +438,7 @@ for_NT_demo
 ```
 
 ```{r}
-# call the ForestStr() function in the UCBForestAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalystics package
 str_demo3 <- ForestStr(data = for_NT_demo,
                        site = "Forest",
                        plot = "Plot_id",
@@ -535,7 +535,7 @@ fwd_demo
 <br>
 
 ```{r}
-# call the FineFuels() function in the UCBForestAnalystics package
+# call the FineFuels() function in the BerkeleyForestsAnalystics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 fine_demo <- FineFuels(tree_data = overstory_demo,
                        fuel_data = fwd_demo)
@@ -624,7 +624,7 @@ cwd_YS_demo
 <br>
 
 ```{r}
-# call the CoarseFuels() function in the UCBForestAnalystics package
+# call the CoarseFuels() function in the BerkeleyForestsAnalystics package
 coarse_demo1 <- CoarseFuels(tree_data = overstory_demo,
                             fuel_data = cwd_YS_demo,
                             sp_codes = "4letter",
@@ -647,7 +647,7 @@ cwd_NS_demo
 <br>
 
 ```{r}
-# call the CoarseFuels() function in the UCBForestAnalystics package
+# call the CoarseFuels() function in the BerkeleyForestsAnalystics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and summed (= "no")
 coarse_demo2 <- CoarseFuels(tree_data = overstory_demo,
                             fuel_data = cwd_NS_demo)
@@ -739,7 +739,7 @@ lit_duff_demo
 <br>
 
 ```{r}
-# call the LitterDuff() function in the UCBForestAnalystics package
+# call the LitterDuff() function in the BerkeleyForestsAnalystics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and measurement (= "separate")
 duff_demo1 <- LitterDuff(tree_data = overstory_demo,
                          fuel_data = lit_duff_demo)
@@ -758,7 +758,7 @@ lit_duff_avg_demo
 <br>
 
 ```{r}
-# call the LitterDuff() function in the UCBForestAnalystics package
+# call the LitterDuff() function in the BerkeleyForestsAnalystics package
 duff_demo2 <- LitterDuff(tree_data = overstory_demo,
                          fuel_data = lit_duff_avg_demo,
                          sp_codes = "4letter",

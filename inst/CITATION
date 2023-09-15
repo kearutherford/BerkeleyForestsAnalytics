@@ -1,8 +1,8 @@
 bibentry(
   bibtype  = "Manual",
-  title    = "UCBForestAnalytics",
+  title    = "BerkeleyForestsAnalytics",
   author   = c(person("Kea Rutherford"), person("John Battles"), person("Danny Foster")),
   organization  = "Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley",
   year = 2023,
-  url = "https://github.com/kearutherford/UCBForestAnalytics"
+  url = "https://github.com/kearutherford/BerkeleyForestsAnalytics"
 )
