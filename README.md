@@ -1689,8 +1689,6 @@ the functions.
   to estimate bole, bark, and branches.*
   <https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf>
 
-<br>
-
 ## Species code tables
 
 All hardwood and softwood species currently included/recognized in the
@@ -1748,8 +1746,6 @@ the species list over time.
 *Note: Four-letter species codes are the first two letters of the genus
 followed by the first two letters of the species.*
 
-<br>
-
 ## Structural decay of standing dead trees
 
 **FIA standing dead tree decay class descriptions**
@@ -1762,9 +1758,9 @@ followed by the first two letters of the species.*
 | 4           | Few or no studs             | Broken        | Variable         | Sloughing; cubical, soft, reddish to dark crown               | Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown            |
 | 5           | None                        | Broken        | Less than 20     | Gone                                                          | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
 
-Reference: USDA Forest Service. (2019). *Forest Inventory and Analysis
-national core field guide, volume I: Field data collection procedures
-for phase 2 plots.* Version 9.0.
+**Reference:** USDA Forest Service. (2019). *Forest Inventory and
+Analysis national core field guide, volume I: Field data collection
+procedures for phase 2 plots.* Version 9.0.
 <https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php>
 
 <br>
@@ -1861,11 +1857,12 @@ $BioAdj_{i} = Bio_{i}*DRF_{c,sp}$
 
 <br>
 
-Reference: Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov,
-M. (2011). *Differences between standing and downed dead tree wood
-density reduction factors: A comparison across decay classes and tree
-species*. Research Paper NRS-15. USDA Forest Service, Northern Research
-Station, Newtown Square, PA. <https://doi.org/10.2737/NRS-RP-15>
+**Reference:** Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., &
+Yatkov, M. (2011). *Differences between standing and downed dead tree
+wood density reduction factors: A comparison across decay classes and
+tree species*. Research Paper NRS-15. USDA Forest Service, Northern
+Research Station, Newtown Square, PA.
+<https://doi.org/10.2737/NRS-RP-15>
 
 <br>
 
@@ -1890,8 +1887,6 @@ method in the **Sierra Nevada**. These functions should not be used for
 data collected in a different manner or region. Additionally, note that
 to stay consistent with previous studies, we use both live and dead
 trees to calculate percent basal area by species.
-
-<br>
 
 ## Duff and litter loads
 
@@ -1979,8 +1974,6 @@ A note on units: the van Wagtendonk *et al.* (1998) equations require
 depths in cm and output fuel loads in $kg/m^2$. Any unit conversions
 (for input or outputs) must be done by the user.
 `BerkeleyForestAnalytics` does the necessary unit conversions for you!
-
-<br>
 
 ## Fine fuel loads
 
@@ -2170,8 +2163,6 @@ van Wagner (1982) and are used in van Wagtendonk *et al.* (1996).
 | in            | ft              | $lb/ft^2$          | 0.5348 |
 | in            | ft              | US tons/ac         | 11.65  |
 
-<br>
-
 ## Coarse fuel loads
 
 Calculating loads for 1000-hour fuels is just a special case of the
@@ -2215,8 +2206,6 @@ $W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,p} * SLP_{t} * k}
 
 For $SEC_{1000h,p}$, $SG_{1000h,s,p}$, $SLP_{t}$, and $k$ see fine fuel
 loads documentation above - the same concepts are applied here.
-
-<br>
 
 ## Slope-corrected transect length
 
