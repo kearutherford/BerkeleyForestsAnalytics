@@ -91,6 +91,17 @@ test_that("Missing id information throws an error", {
 })
 
 
+test_that("Repeat time:site:plot:transect observations throw an error", {
+
+
+  expect_error(ValidateCWD(fuel_data_val = bad_cwd_sum8,
+                           units_val = "metric",
+                           sum_val = "yes"),
+               'For fuel_data, there are repeat time:site:plot:transect observations.\nThere should only be one observation/row for an individual transect at a specific time:site:plot.\nInvestigate the following time:site:plot:transect combinations: 2019-SEKI-1-90')
+
+})
+
+
 test_that("Transect handling works", {
 
   expect_error(ValidateCWD(fuel_data_val = bad_cwd_7,

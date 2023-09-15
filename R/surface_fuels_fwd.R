@@ -120,7 +120,7 @@ ValidateFWD <- function(fuel_data_val, units_val) {
   }
 
   if ('TRUE' %in% is.na(fuel_data_val$transect)) {
-    stop('For fuel_data, there are missing values in the plot column.')
+    stop('For fuel_data, there are missing values in the transect column.')
   }
 
 
@@ -161,8 +161,8 @@ ValidateFWD <- function(fuel_data_val, units_val) {
     all_id <- paste0(unique(count_sub$obs_id), sep = "   ")
 
     stop('For fuel_data, there are repeat time:site:plot:transect observations.\n',
-         'There should only be one observation (row) for an individual transect at a specific time:site:plot.\n',
-         'Investigate the following time:site:plot:transect combination(s): ', all_id)
+         'There should only be one observation/row for an individual transect at a specific time:site:plot.\n',
+         'Investigate the following time:site:plot:transect combinations: ', all_id)
 
   }
 

@@ -59,6 +59,20 @@ test_that("Missing id information throws an error", {
                            units_val = "metric"),
                'For fuel_data, there are missing values in the plot column.')
 
+  expect_error(ValidateFWD(fuel_data_val = bad_fwd_15,
+                           units_val = "metric"),
+               'For fuel_data, there are missing values in the transect column.')
+
+})
+
+
+test_that("Repeat time:site:plot:transect observations throw an error", {
+
+
+  expect_error(ValidateFWD(fuel_data_val = bad_fwd_16,
+                           units_val = "metric"),
+               'For fuel_data, there are repeat time:site:plot:transect observations.\nThere should only be one observation/row for an individual transect at a specific time:site:plot.\nInvestigate the following time:site:plot:transect combinations: 2019-SEKI-1-90   2020-SEKI-2-90')
+
 })
 
 

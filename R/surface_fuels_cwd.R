@@ -417,8 +417,8 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
       all_id <- paste0(unique(count_sub$obs_id), sep = "   ")
 
       stop('For fuel_data, there are repeat time:site:plot:transect observations.\n',
-           'There should only be one observation (row) for an individual transect at a specific time:site:plot.\n',
-           'Investigate the following time:site:plot:transect combination(s): ', all_id)
+           'There should only be one observation/row for an individual transect at a specific time:site:plot.\n',
+           'Investigate the following time:site:plot:transect combinations: ', all_id)
 
     }
 
