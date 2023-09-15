@@ -519,6 +519,12 @@ A dataframe with the following columns:
 
 7. `load_fwd_Mg_ha` (or `load_fwd_ton_ac`): total fine woody debris fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or US tons per acre)
 
+8. `sc_length_1h`: slope-corrected transect length for 1-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1-hour fuels at the specific time:site:plot. See background information for equations used to calculate this value. 
+
+9. `sc_length_10h`:
+
+10. `sc_length_100h`: 
+
 
 ### Demonstration
 
@@ -604,6 +610,8 @@ A dataframe with the following columns:
 5. `load_1000r_Mg_ha` (or `load_1000r_ton_ac`): fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
 
 6. `load_cwd_Mg_ha` (or `load_cwd_ton_ac`): total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
+
+7. `sc_length_1000h`: 
 
 
 ### Demonstrations
