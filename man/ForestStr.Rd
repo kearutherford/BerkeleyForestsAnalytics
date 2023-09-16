@@ -38,11 +38,11 @@ Compiles forest structure at the plot level.
 }
 \examples{
 ForestStr(data = for_demo_data,
-         site = "Forest",
-         plot = "Plot_id",
-         exp_factor = "SPH",
-         dbh = "DBH_CM",
-         ht = "HT_M",
-         units = "metric")
+          site = "Forest",
+          plot = "Plot_id",
+          exp_factor = "SPH",
+          dbh = "DBH_CM",
+          ht = "HT_M",
+          units = "metric")
 
 }

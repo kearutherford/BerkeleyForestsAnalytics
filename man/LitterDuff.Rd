@@ -17,9 +17,9 @@ LitterDuff(
 
 \item{tree_data}{A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.}
 
-\item{sp_codes}{Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.}
+\item{sp_codes}{Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention. Must be set to either “4letter” or “fia”. The default is set to “4letter”.}
 
-\item{units}{Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".}
+\item{units}{Specifies whether the input data are in metric (centimeters, meters, and trees per hectare) or imperial (inches, feet, and trees per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.}
 
 \item{measurement}{Specifies whether duff and litter were measured together or separately. Must be set to "combined" or "separate". The default is set to "separate".}
 }
@@ -28,21 +28,26 @@ A dataframe with the following columns:
 \itemize{
 \item If measurement is set to "separate"
 \itemize{
-\item time
-\item site
-\item plot
+\item time: as described above
+\item site: as described above
+\item plot: as described above
 \item litter_Mg_ha (or litter_ton_ac): litter load in megagrams per hectare (or US tons per acre)
 \item duff_Mg_ha (or duff_ton_ac): duff load in megagrams per hectare (or US tons per acre)
 }
 \item If measurement is set to "combined"
 \itemize{
-\item time
-\item site
-\item plot
+\item time: as described above
+\item site: as described above
+\item plot: as described above
 \item lit_duff_Mg_ha (or lit_duff_ton_ac): combined litter and duff load in megagrams per hectare (or US tons per acre)
 }
 }
 }
 \description{
-Estimates duff and litter fuel loads. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+Estimates duff and litter fuel loads. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
+}
+\examples{
+LitterDuff(tree_data = overstory_demo,
+           fuel_data = lit_duff_demo)
+
 }

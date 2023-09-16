@@ -59,14 +59,14 @@ Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate 
 }
 \examples{
 SummaryBiomass(data = bio_demo_data,
-              site = "Forest",
-              plot = "Plot_id",
-              exp_factor = "SPH",
-              status = "Live",
-              decay_class = "Decay",
-              species = "SPP",
-              dbh = "DBH_CM",
-              ht = "HT_M",
-              results = "by_species")
+               site = "Forest",
+               plot = "Plot_id",
+               exp_factor = "SPH",
+               status = "Live",
+               decay_class = "Decay",
+               species = "SPP",
+               dbh = "DBH_CM",
+               ht = "HT_M",
+               results = "by_species")
 
 }

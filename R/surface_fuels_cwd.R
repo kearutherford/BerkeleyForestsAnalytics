@@ -8,23 +8,34 @@
 #' @title CoarseFuels
 #'
 #' @description
-#' Estimates coarse woody (1000-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+#' Estimates coarse woody (1000-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
 #'
 #' @param tree_data A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.
 #' @param fuel_data A dataframe or tibble. If the summed parameter is set to "no" the following columns are required: time, site, plot, transect, length_1000h, diameter, and status. If the summed parameter is set to "yes" the following columns are required: time, site, plot, transect, length_1000h, ssd_R, and ssd_S.
-#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.
-#' @param units Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention. Must be set to either "4letter" or "fia." The default is set to "4letter".
+#' @param units Specifies whether the input data are in metric (centimeters, meters, and trees per hectare) or imperial (inches, feet, and trees per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.
 #' @param summed Specifies whether the sum-of-squared-diameters for sound and rotten 1000-hour fuels has already been calculated by the user. Must be set to either "yes" or "no". The default is set to "no".
 #'
 #' @return A dataframe with the following columns:
 #' \itemize{
-#' \item time
-#' \item site
-#' \item plot
+#' \item time: as described above
+#' \item site: as described above
+#' \item plot: as described above
 #' \item load_1000s_Mg_ha (or load_1000s_ton_ac): fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_1000r_Mg_ha (or load_1000r_ton_ac): fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_cwd_Mg_ha (or load_cwd_ton_ac): total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
+#' \item sc_length_1000h: slope-corrected transect length (i.e., horizontal transect length) for 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1000-hour fuels at the specific time:site:plot.
 #' }
+#'
+#' @examples
+#' CoarseFuels(tree_data = overstory_demo,
+#'             fuel_data = cwd_YS_demo,
+#'             sp_codes = "4letter",
+#'             units = "metric",
+#'             summed = "yes")
+#'
+#' CoarseFuels(tree_data = overstory_demo,
+#'             fuel_data = cwd_NS_demo)
 #'
 #' @export
 
@@ -637,5 +648,5 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
 
 globalVariables(c("time", "sec_1000h_wt", "sg_1000s_wt", "aggregate", "coef_1000s", "coef_1000r", "load_1000s_Mg_ha",
                   "load_1000r_Mg_ha", "na.pass", "load_1000s_ton_ac", "load_1000r_ton_ac", "load_cwd_ton_ac", "obs_id",
-                  "transect", "length_1000h", "slope", "ssd_S", "ssd_R"))
+                  "transect", "length_1000h", "slope", "ssd_S", "ssd_R", "sc_length_1000h", "count"))
 

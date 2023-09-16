@@ -28,16 +28,16 @@
 #' \item dominance: relative basal area (or relative density) in percent (%)
 #' }
 #'
-#'@examples
-#'ForestComp(data = for_demo_data,
-#'           site = "Forest",
-#'           plot = "Plot_id",
-#'           exp_factor = "SPH",
-#'           status = "Live",
-#'           species = "SPP",
-#'           dbh = "DBH_CM",
-#'           relative = "BA",
-#'           units = "metric")
+#' @examples
+#' ForestComp(data = for_demo_data,
+#'            site = "Forest",
+#'            plot = "Plot_id",
+#'            exp_factor = "SPH",
+#'            status = "Live",
+#'            species = "SPP",
+#'            dbh = "DBH_CM",
+#'            relative = "BA",
+#'            units = "metric")
 #'
 #' @export
 

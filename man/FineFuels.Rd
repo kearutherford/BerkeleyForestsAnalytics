@@ -11,22 +11,30 @@ FineFuels(fuel_data, tree_data, sp_codes = "4letter", units = "metric")
 
 \item{tree_data}{A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.}
 
-\item{sp_codes}{Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.}
+\item{sp_codes}{Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention. Must be set to either "4letter" or "fia." The default is set to "4letter".}
 
-\item{units}{Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".}
+\item{units}{Specifies whether the input data are in metric (centimeters, meters, and trees per hectare) or imperial (inches, feet, and trees per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.}
 }
 \value{
 A dataframe with the following columns:
 \itemize{
-\item time
-\item site
-\item plot
+\item time: as described above
+\item site: as described above
+\item plot: as described above
 \item load_1h_Mg_ha (or load_1h_ton_ac): fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
 \item load_10h_Mg_ha (or load_10h_ton_ac): fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
 \item load_100h_Mg_ha (or load_100h_ton_ac): fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
 \item load_fwd_Mg_ha (or load_fwd_ton_ac): total fine woody debris fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or US tons per acre)
+\item sc_length_1h: slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1-hour fuels at the specific time:site:plot.
+\item sc_length_10h: slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 10-hour fuels at the specific time:site:plot.
+\item sc_length_100h: slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot.
 }
 }
 \description{
-Estimates fine woody (1-hour, 10-hour, and 100-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+Estimates fine woody (1-hour, 10-hour, and 100-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
+}
+\examples{
+FineFuels(tree_data = overstory_demo,
+          fuel_data = fwd_demo)
+
 }

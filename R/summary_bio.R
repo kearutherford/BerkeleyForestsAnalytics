@@ -32,17 +32,17 @@
 #' \item dead_Mg_ha (or dead_ton_ac): above-ground dead tree biomass in megagrams per hectare (or US tons per acre)
 #' }
 #'
-#'@examples
-#'SummaryBiomass(data = bio_demo_data,
-#'               site = "Forest",
-#'               plot = "Plot_id",
-#'               exp_factor = "SPH",
-#'               status = "Live",
-#'               decay_class = "Decay",
-#'               species = "SPP",
-#'               dbh = "DBH_CM",
-#'               ht = "HT_M",
-#'               results = "by_species")
+#' @examples
+#' SummaryBiomass(data = bio_demo_data,
+#'                site = "Forest",
+#'                plot = "Plot_id",
+#'                exp_factor = "SPH",
+#'                status = "Live",
+#'                decay_class = "Decay",
+#'                species = "SPP",
+#'                dbh = "DBH_CM",
+#'                ht = "HT_M",
+#'                results = "by_species")
 #'
 #' @export
 

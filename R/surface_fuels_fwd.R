@@ -8,23 +8,30 @@
 #' @title FineFuels
 #'
 #' @description
-#' Estimates fine woody (1-hour, 10-hour, and 100-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+#' Estimates fine woody (1-hour, 10-hour, and 100-hour) fuel loads from line-intercept transects. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
 #'
 #' @param tree_data A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.
 #' @param fuel_data A dataframe or tibble with the following columns: time, site, plot, transect, count_1h, count_10h, count_100h, length_1h, length_10h, and length_100h. A slope column is optional. Each row must be an observation of an individual transect at a specific time/site/plot.
-#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.
-#' @param units Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention. Must be set to either "4letter" or "fia." The default is set to "4letter".
+#' @param units Specifies whether the input data are in metric (centimeters, meters, and trees per hectare) or imperial (inches, feet, and trees per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.
 #'
 #' @return A dataframe with the following columns:
 #' \itemize{
-#' \item time
-#' \item site
-#' \item plot
+#' \item time: as described above
+#' \item site: as described above
+#' \item plot: as described above
 #' \item load_1h_Mg_ha (or load_1h_ton_ac): fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_10h_Mg_ha (or load_10h_ton_ac): fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_100h_Mg_ha (or load_100h_ton_ac): fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_fwd_Mg_ha (or load_fwd_ton_ac): total fine woody debris fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or US tons per acre)
+#' \item sc_length_1h: slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1-hour fuels at the specific time:site:plot.
+#' \item sc_length_10h: slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 10-hour fuels at the specific time:site:plot.
+#' \item sc_length_100h: slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot.
 #' }
+#'
+#' @examples
+#' FineFuels(tree_data = overstory_demo,
+#'           fuel_data = fwd_demo)
 #'
 #' @export
 
@@ -522,5 +529,6 @@ FWDLoad <- function(fwd_fuel_data, fwd_tree_data, fwd_units, fwd_sp_codes) {
 globalVariables(c("time", "qmd_1h_wt", "qmd_10h_wt", "qmd_100h_wt", "sec_1h_wt", "sec_10h_wt", "sec_100h_wt",
                   "sg_1h_wt", "sg_10h_wt", "sg_100h_wt", "coef_1h", "coef_10h", "coef_100h", "load_1h_Mg_ha",
                   "load_10h_Mg_ha", "load_100h_Mg_ha", "load_1h_ton_ac", "load_10h_ton_ac", "load_100h_ton_ac", "load_fwd_ton_ac",
-                  "count_1h", "count_10h", "count_100h", "length_1h", "length_10h", "length_100h"))
+                  "count_1h", "count_10h", "count_100h", "length_1h", "length_10h", "length_100h",
+                  "sc_length_1h", "sc_length_10h", "sc_length_100h", "count"))
 

@@ -27,23 +27,23 @@
 #' \item total_bio_kg (or total_bio_kg): biomass of tree (stem + bark + branches) in kilograms (or tons)
 #' }
 #'
-#'@examples
-#'TreeBiomass(data = bio_demo_data,
-#'            status = "Live",
-#'            species = "SPP",
-#'            dbh = "DBH_CM",
-#'            ht = "HT_M",
-#'            sp_codes = "4letter",
-#'            units = "metric")
+#' @examples
+#' TreeBiomass(data = bio_demo_data,
+#'             status = "Live",
+#'             species = "SPP",
+#'             dbh = "DBH_CM",
+#'             ht = "HT_M",
+#'             sp_codes = "4letter",
+#'             units = "metric")
 #'
-#'TreeBiomass(data = bio_demo_data,
-#'            status = "Live",
-#'            species = "SPP",
-#'            dbh = "DBH_CM",
-#'            ht = "HT_M",
-#'            decay_class = "Decay",
-#'            sp_codes = "4letter",
-#'            units = "metric")
+#' TreeBiomass(data = bio_demo_data,
+#'             status = "Live",
+#'             species = "SPP",
+#'             dbh = "DBH_CM",
+#'             ht = "HT_M",
+#'             decay_class = "Decay",
+#'             sp_codes = "4letter",
+#'             units = "metric")
 #'
 #' @export
 
@@ -438,7 +438,7 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, deca
 Discount <- function(tree_data, tree_sp_codes) {
 
   # bring in live:dead ratio table
-  discount <- read.csv(system.file('extdata', 'sd_ratios.csv', package = "UCBForestAnalytics"),
+  discount <- read.csv(system.file('extdata', 'sd_ratios.csv', package = "BerkeleyForestsAnalytics"),
                        stringsAsFactors = FALSE)
 
   # make sure decay_class and fia_code are character columns

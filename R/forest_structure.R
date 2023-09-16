@@ -29,14 +29,14 @@
 #' \item ht_m (or ht_ft): average height in meters (or feet) if ht argument was set. Weighted by the expansion factor.
 #' }
 #'
-#'@examples
-#'ForestStr(data = for_demo_data,
-#'          site = "Forest",
-#'          plot = "Plot_id",
-#'          exp_factor = "SPH",
-#'          dbh = "DBH_CM",
-#'          ht = "HT_M",
-#'          units = "metric")
+#' @examples
+#' ForestStr(data = for_demo_data,
+#'           site = "Forest",
+#'           plot = "Plot_id",
+#'           exp_factor = "SPH",
+#'           dbh = "DBH_CM",
+#'           ht = "HT_M",
+#'           units = "metric")
 #'
 #' @export
 

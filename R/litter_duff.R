@@ -8,32 +8,36 @@
 #' @title LitterDuff
 #'
 #' @description
-#' Estimates duff and litter fuel loads. See \href{https://github.com/kearutherford/UCBForestAnalytics/blob/main/README.md}{README} for details.
+#' Estimates duff and litter fuel loads. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
 #'
 #' @param tree_data A dataframe or tibble with the following columns: time, site, plot, exp_factor, species, and dbh. Each row must be an observation of an individual tree.
 #' @param fuel_data A dataframe or tibble. If the measurement parameter is set to "separate" the following columns are required: time, site, plot, transect, litter_depth, and duff_depth. If the measurement parameter is set to "combined" the following columns are required: time, site, plot, transect, and lit_duff_depth.
-#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention.
-#' @param units Specifies whether the input data are in metric (centimeters and meters) or imperial (inches and feet) units. Inputs must be all metric or all imperial (do not mix-and-match units). Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param sp_codes Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention. Must be set to either “4letter” or “fia”. The default is set to “4letter”.
+#' @param units Specifies whether the input data are in metric (centimeters, meters, and trees per hectare) or imperial (inches, feet, and trees per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.
 #' @param measurement Specifies whether duff and litter were measured together or separately. Must be set to "combined" or "separate". The default is set to "separate".
 #'
 #' @return A dataframe with the following columns:
 #' \itemize{
 #'  \item If measurement is set to "separate"
 #'    \itemize{
-#'      \item time
-#'      \item site
-#'      \item plot
+#'      \item time: as described above
+#'      \item site: as described above
+#'      \item plot: as described above
 #'      \item litter_Mg_ha (or litter_ton_ac): litter load in megagrams per hectare (or US tons per acre)
 #'      \item duff_Mg_ha (or duff_ton_ac): duff load in megagrams per hectare (or US tons per acre)
 #'    }
 #'  \item If measurement is set to "combined"
 #'    \itemize{
-#'      \item time
-#'      \item site
-#'      \item plot
+#'      \item time: as described above
+#'      \item site: as described above
+#'      \item plot: as described above
 #'      \item lit_duff_Mg_ha (or lit_duff_ton_ac): combined litter and duff load in megagrams per hectare (or US tons per acre)
 #'    }
 #' }
+#'
+#' @examples
+#' LitterDuff(tree_data = overstory_demo,
+#'            fuel_data = lit_duff_demo)
 #'
 #' @export
 

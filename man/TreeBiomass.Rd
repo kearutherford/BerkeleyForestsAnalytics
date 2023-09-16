@@ -46,20 +46,20 @@ Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate 
 }
 \examples{
 TreeBiomass(data = bio_demo_data,
-           status = "Live",
-           species = "SPP",
-           dbh = "DBH_CM",
-           ht = "HT_M",
-           sp_codes = "4letter",
-           units = "metric")
+            status = "Live",
+            species = "SPP",
+            dbh = "DBH_CM",
+            ht = "HT_M",
+            sp_codes = "4letter",
+            units = "metric")
 
 TreeBiomass(data = bio_demo_data,
-           status = "Live",
-           species = "SPP",
-           dbh = "DBH_CM",
-           ht = "HT_M",
-           decay_class = "Decay",
-           sp_codes = "4letter",
-           units = "metric")
+            status = "Live",
+            species = "SPP",
+            dbh = "DBH_CM",
+            ht = "HT_M",
+            decay_class = "Decay",
+            sp_codes = "4letter",
+            units = "metric")
 
 }

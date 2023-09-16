@@ -49,13 +49,13 @@ Compiles forest composition at the plot level. Measured as relative basal area o
 }
 \examples{
 ForestComp(data = for_demo_data,
-          site = "Forest",
-          plot = "Plot_id",
-          exp_factor = "SPH",
-          status = "Live",
-          species = "SPP",
-          dbh = "DBH_CM",
-          relative = "BA",
-          units = "metric")
+           site = "Forest",
+           plot = "Plot_id",
+           exp_factor = "SPH",
+           status = "Live",
+           species = "SPP",
+           dbh = "DBH_CM",
+           relative = "BA",
+           units = "metric")
 
 }
