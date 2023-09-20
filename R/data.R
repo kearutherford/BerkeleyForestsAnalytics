@@ -218,6 +218,276 @@
 "lit_duff_avg_demo"
 
 
+#' @title Tree data for vignette, version 1
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 2250 rows and 10 columns:
+#' \describe{
+#'   \item{id}{time:site combined}
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual tree was measured}
+#'   \item{exp_factor}{stems per hectare}
+#'   \item{status}{live (1) or dead (0)}
+#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{diameter at breast height in centimeters}
+#'   \item{ht}{tree height in meters}
+#' }
+#'
+#' @source BLANK
+"vign_trees_1"
+
+
+#' @title Tree data for vignette, version 2
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 2250 rows and 10 columns:
+#' \describe{
+#'   \item{id}{time:site combined}
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual tree was measured}
+#'   \item{exp_factor}{stems per hectare}
+#'   \item{status}{live (1) or dead (0)}
+#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{diameter at breast height in centimeters}
+#'   \item{ht}{tree height in meters}
+#' }
+#'
+#' @source BLANK
+"vign_trees_2"
+
+
+#' @title Tree data for vignette, version 3
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 2250 rows and 10 columns:
+#' \describe{
+#'   \item{id}{time:site combined}
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual tree was measured}
+#'   \item{exp_factor}{stems per hectare}
+#'   \item{status}{live (1) or dead (0)}
+#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{diameter at breast height in centimeters}
+#'   \item{ht}{tree height in meters}
+#' }
+#'
+#' @source BLANK
+"vign_trees_3"
+
+
+#' @title Tree data for vignette, version 4
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 2250 rows and 10 columns:
+#' \describe{
+#'   \item{id}{time:site combined}
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual tree was measured}
+#'   \item{exp_factor}{stems per hectare}
+#'   \item{status}{live (1) or dead (0)}
+#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{diameter at breast height in centimeters}
+#'   \item{ht}{tree height in meters}
+#' }
+#'
+#' @source BLANK
+"vign_trees_4"
+
+
+#' @title Tree data for vignette, version 5
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 2250 rows and 10 columns:
+#' \describe{
+#'   \item{id}{time:site combined}
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual tree was measured}
+#'   \item{exp_factor}{stems per hectare}
+#'   \item{status}{live (1) or dead (0)}
+#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{diameter at breast height in centimeters}
+#'   \item{ht}{tree height in meters}
+#' }
+#'
+#' @source BLANK
+"vign_trees_5"
+
+
+#' @title Fuel data for vignette, version 1
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 236 rows and 16 columns:
+#' \describe{
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual transect was measured}
+#'   \item{transect}{azimuth of transect on which the fuel data were collected}
+#'   \item{count_1h}{count of 1-hour fuels}
+#'   \item{count_10h}{count of 10-hour fuels}
+#'   \item{count_100h}{count of 100-hour fuels}
+#'   \item{length_1h}{length of the sampling transect for 1-hour fuels in meters}
+#'   \item{length_10h}{length of the sampling transect for 10-hour fuels in meters}
+#'   \item{length_100h}{length of the sampling transect for 100-hour fuels in meters}
+#'   \item{length_1000h}{length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{ssd_S}{sum-of-squared-diameters for sound 1000-hour fuels}
+#'   \item{ssd_R}{sum-of-squared-diameters for rotten 1000-hour fuels}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{slope}{slope along the transect in percent}
+#' }
+#'
+#' @source BLANK
+"vign_fuels_1"
+
+
+#' @title Fuel data for vignette, version 2
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 236 rows and 16 columns:
+#' \describe{
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual transect was measured}
+#'   \item{transect}{azimuth of transect on which the fuel data were collected}
+#'   \item{count_1h}{count of 1-hour fuels}
+#'   \item{count_10h}{count of 10-hour fuels}
+#'   \item{count_100h}{count of 100-hour fuels}
+#'   \item{length_1h}{length of the sampling transect for 1-hour fuels in meters}
+#'   \item{length_10h}{length of the sampling transect for 10-hour fuels in meters}
+#'   \item{length_100h}{length of the sampling transect for 100-hour fuels in meters}
+#'   \item{length_1000h}{length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{ssd_S}{sum-of-squared-diameters for sound 1000-hour fuels}
+#'   \item{ssd_R}{sum-of-squared-diameters for rotten 1000-hour fuels}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{slope}{slope along the transect in percent}
+#' }
+#'
+#' @source BLANK
+"vign_fuels_2"
+
+
+#' @title Fuel data for vignette, version 3
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 236 rows and 16 columns:
+#' \describe{
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual transect was measured}
+#'   \item{transect}{azimuth of transect on which the fuel data were collected}
+#'   \item{count_1h}{count of 1-hour fuels}
+#'   \item{count_10h}{count of 10-hour fuels}
+#'   \item{count_100h}{count of 100-hour fuels}
+#'   \item{length_1h}{length of the sampling transect for 1-hour fuels in meters}
+#'   \item{length_10h}{length of the sampling transect for 10-hour fuels in meters}
+#'   \item{length_100h}{length of the sampling transect for 100-hour fuels in meters}
+#'   \item{length_1000h}{length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{ssd_S}{sum-of-squared-diameters for sound 1000-hour fuels}
+#'   \item{ssd_R}{sum-of-squared-diameters for rotten 1000-hour fuels}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{slope}{slope along the transect in percent}
+#' }
+#'
+#' @source BLANK
+"vign_fuels_3"
+
+
+#' @title Fuel data for vignette, version 4
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 236 rows and 16 columns:
+#' \describe{
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual transect was measured}
+#'   \item{transect}{azimuth of transect on which the fuel data were collected}
+#'   \item{count_1h}{count of 1-hour fuels}
+#'   \item{count_10h}{count of 10-hour fuels}
+#'   \item{count_100h}{count of 100-hour fuels}
+#'   \item{length_1h}{length of the sampling transect for 1-hour fuels in meters}
+#'   \item{length_10h}{length of the sampling transect for 10-hour fuels in meters}
+#'   \item{length_100h}{length of the sampling transect for 100-hour fuels in meters}
+#'   \item{length_1000h}{length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{ssd_S}{sum-of-squared-diameters for sound 1000-hour fuels}
+#'   \item{ssd_R}{sum-of-squared-diameters for rotten 1000-hour fuels}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{slope}{slope along the transect in percent}
+#' }
+#'
+#' @source BLANK
+"vign_fuels_4"
+
+
+#' @title Fuel data for vignette, version 5
+#'
+#' @description
+#' A dataset
+#'
+#' @format
+#' A dataframe with 236 rows and 16 columns:
+#' \describe{
+#'   \item{time}{pre (pre-burn) or post (post-burn)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot in which the individual transect was measured}
+#'   \item{transect}{azimuth of transect on which the fuel data were collected}
+#'   \item{count_1h}{count of 1-hour fuels}
+#'   \item{count_10h}{count of 10-hour fuels}
+#'   \item{count_100h}{count of 100-hour fuels}
+#'   \item{length_1h}{length of the sampling transect for 1-hour fuels in meters}
+#'   \item{length_10h}{length of the sampling transect for 10-hour fuels in meters}
+#'   \item{length_100h}{length of the sampling transect for 100-hour fuels in meters}
+#'   \item{length_1000h}{length of the sampling transect for 1000-hour fuels in meters}
+#'   \item{ssd_S}{sum-of-squared-diameters for sound 1000-hour fuels}
+#'   \item{ssd_R}{sum-of-squared-diameters for rotten 1000-hour fuels}
+#'   \item{litter_depth}{litter depth in centimeters}
+#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{slope}{slope along the transect in percent}
+#' }
+#'
+#' @source BLANK
+"vign_fuels_5"
+
+
 ######################################################################
 # dataframes used for validating input data
 ######################################################################

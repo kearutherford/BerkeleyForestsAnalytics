@@ -1,0 +1,238 @@
+---
+title: "Berkeley Forests Analytics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Berkeley Forests Analytics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction 
+
+In this vignette, we demonstrate the use of the `BerkeleyForestsAnalytics` package. We provide an example of how you might use the BFA package to compile pre- and post-burn field data. Through this example, we highlight some key components of the BFA package: 
+
+1. Handling of missing data 
+2. Handling of 0-values 
+3. Warning and error messages 
+    * Note: we do not demonstrate the full suite of warning and error messages. We demonstrate a subset of warnings and errors to give you an idea of what kinds of messages to expect, and how you might address them. 
+    
+The vignette is not a replacement for the README file, which covers the inputs and outputs of each function in detail. Additionally, the README gives detailed background information and references for the methods used in the package. We recommend that you review the README prior to or in conjunction with the vignette ([Find README here](https://github.com/kearutherford/BerkeleyForestsAnalytics#demonstration)). 
+    
+To begin, we'll load the required packages:
+
+```{r setup, message = FALSE}
+library(BerkeleyForestsAnalytics)
+library(dplyr)
+```
+
+
+## Description of data 
+
+This vignette uses data from the Fire and Fire Surrogate (FFS) Study. In brief, FFS is an experimental study that was designed to evaluate the impacts of fire-only (prescribed fire), mechanical-only (mechanical thinning from below followed by mastication), and mechanical + fire (mechanical thinning from below followed by mastication followed by prescribed fire) treatments on forest structure, ecological function, and future fire behavior ([Read more about the FFS Study here](https://forests.berkeley.edu/research/current-projects/fire-and-fire-surrogates-study)).
+
+The data used in this vignette are from the fire-only (i.e., prescribed fire) stands. We used data from two time periods: before treatment (2001) and one year after treatment (2003). Note that the data were slightly modified for demonstrations purposes. Therefore, the outputs should not be taken to be actual findings from the FFS Study. 
+
+<br>
+
+The tree data have the following columns: 
+
+1. `id` time:site combined
+2. `time` pre (pre-burn) or post (post-burn)
+3. `site` compartment (60, 340, or 400)
+4. `plot` plot in which the individual tree was measured
+5. `exp_factor` stems per hectare
+6. `status` live (1) or dead (0)
+7. `decay` decay class. 1-5 for standing dead trees. 0 for live trees. 
+8. `species` species of the individual tree, using four-letter species codes
+9. `dbh` diameter at breast height in centimeters 
+10. `ht` total tree height in meters 
+
+<br>
+
+The surface and ground fuels data have the following columns:
+
+1. `time` pre (pre-burn) or post (post-burn)
+2. `site` compartment (60, 340, or 400)
+3. `plot` plot in which the individual transect was measured
+4. `transect` azimuth of transect on which the fuel data were collected
+5. `count_1h` count of 1-hour fuels
+6. `count_10h` count of 10-hour fuels
+7. `count_100h` count of 100-hour fuels
+8. `length_1h` length of the sampling transect for 1-hour fuels in meters
+9. `length_10h` length of the sampling transect for 10-hour fuels in meters
+10. `length_100h` length of the sampling transect for 100-hour fuels in meters
+11. `length_1000h` length of the sampling transect for 1000-hour fuels in meters
+12. `ssd_S` sum-of-squared-diameters for sound 1000-hour fuels
+13. `ssd_R` sum-of-squared-diameters for rotten 1000-hour fuels
+14. `litter_depth` litter depth in centimeters
+15. `duff_depth` duff depth in centimeters
+16. `slope` slope along the transect in percent
+
+
+## Tree biomass
+
+First, we'll use the `SummaryBiomass()` function to get above-ground stem, bark, and branch tree biomass at the plot level. 
+
+Let's investigate the input dataframe:
+
+```{r, include = FALSE}
+vign_trees_1 <- vign_trees_1 %>%
+  mutate(site = as.character(site),
+         plot = as.character(plot),
+         status = as.factor(status),
+         decay = as.character(decay))
+```
+
+```{r}
+# Note that the example data used in this vignette is included with the package
+# which is why we do not have to read in the data
+
+head(vign_trees_1)
+```
+
+<br>
+
+**Attempt 1:** Now, let's try using `SummaryBiomass()`. We'll keep the defaults for sp_codes (= "4letter"), units (= "metric"), and results (= "by_plot):
+
+```{r, error = TRUE}
+tree_bio <- SummaryBiomass(data = vign_trees_1,
+                           site = "id",
+                           plot = "plot",
+                           exp_factor = "exp_factor",
+                           status = "status",
+                           decay_class = "decay",
+                           species = "species",
+                           dbh = "dbh",
+                           ht = "ht")
+```
+
+And we get an error message. It looks like there is an improper use of a 0 expansion factor. An expansion factor of 0 should only be used to represent a plot with no trees. Let's look at where 0 expansion factors show up in the data: 
+
+```{r}
+vign_trees_1 %>%
+  filter(exp_factor == 0)
+
+vign_trees_1 %>%
+  filter(time == "post", site == "60", plot == "112")
+```
+
+It looks like a 0 expansion factor is properly used for post-60-113, but improperly used for post-60-112. We know what plot radius was used for larger trees, so we can confidently fill in the correct exp_factor here (24.69). The expansion factor will differ among studies. If a nested plot design was used, the expansion factor will differ among trees within the same plot. 
+
+<br>
+
+**Attempt 2:** After correcting the expansion factor in the input data, let's try again: 
+
+```{r, error = TRUE}
+tree_bio <- SummaryBiomass(data = vign_trees_2,
+                           site = "id",
+                           plot = "plot",
+                           exp_factor = "exp_factor",
+                           status = "status",
+                           decay_class = "decay",
+                           species = "species",
+                           dbh = "dbh",
+                           ht = "ht",
+                           results = "by_plot")
+```
+
+And we get another error message. It looks like there are some typos/transcription errors in the species codes. Looking at the list of unrecognized codes, we can tell that "ABCCO" should be "ABCO" (*Abies concolor*, commonly known as white fir) and "SME" should probably be "PSME" (*Pseudotsuga menziesii*, commonly known as Douglas-fir). Depending on the severity of the typo, you may want to go back to double check the species recorded on the original datasheet. In this case, the typos are fairly obvious. Let's figure out where these typos occur in the data: 
+
+```{r}
+vign_trees_2 %>%
+  filter(species == "ABCCO" | species == "SME")
+```
+
+<br>
+
+**Attempt 3:** After correcting the species codes in the input data, let's try again: 
+
+```{r}
+tree_bio <- SummaryBiomass(data = vign_trees_3,
+                           site = "id",
+                           plot = "plot",
+                           exp_factor = "exp_factor",
+                           status = "status",
+                           decay_class = "decay",
+                           species = "species",
+                           dbh = "dbh",
+                           ht = "ht",
+                           results = "by_plot")
+
+head(tree_bio)
+```
+
+This time the function runs. However, we get some warning messages. Let's look at the first warning, which tells us that there are trees with mismatched status/decay class. 
+
+<br>
+
+**Attempt 4:** 
+
+```{r}
+tree_bio <- SummaryBiomass(data = vign_trees_4,
+                           site = "id",
+                           plot = "plot",
+                           exp_factor = "exp_factor",
+                           status = "status",
+                           decay_class = "decay",
+                           species = "species",
+                           dbh = "dbh",
+                           ht = "ht",
+                           results = "by_plot")
+```
+
+
+```{r}
+tree_bio <- SummaryBiomass(data = vign_trees_5,
+                           site = "id",
+                           plot = "plot",
+                           exp_factor = "exp_factor",
+                           status = "status",
+                           decay_class = "decay",
+                           species = "species",
+                           dbh = "dbh",
+                           ht = "ht",
+                           results = "by_plot")
+
+head(tree_bio)
+```
+
+
+```{r, error = TRUE}
+FWD <- FineFuels(tree_data = vign_trees_5,
+                 fuel_data = vign_fuels_1)
+```
+
+```{r, error = TRUE}
+FWD <- FineFuels(tree_data = vign_trees_5,
+                 fuel_data = vign_fuels_2)
+```
+
+```{r, error = TRUE}
+FWD <- FineFuels(tree_data = vign_trees_5,
+                 fuel_data = vign_fuels_3)
+```
+
+
+```{r}
+FWD <- FineFuels(tree_data = vign_trees_5,
+                 fuel_data = vign_fuels_4)
+
+head(FWD)
+```
+
+```{r, error = TRUE}
+CWD <- CoarseFuels(tree_data = vign_trees_5,
+                   fuel_data = vign_fuels_4,
+                   summed = "yes")
+```
+
+
+```{r}
+CWD <- CoarseFuels(tree_data = vign_trees_5,
+                   fuel_data = vign_fuels_5,
+                   summed = "yes")
+
+head(CWD)
+```
+
+
