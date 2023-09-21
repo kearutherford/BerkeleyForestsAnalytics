@@ -2242,11 +2242,21 @@ $SCLength_{c,p} = \sum(SCLength_{c,t})$
   timelag class c for transect t measured in plot p
 
 Why are we calculating horizontal length at the plot-level? Transects
-can be different shapes, most often single lines, stars, or triangles.
-For example, you might have three 10-meter sub-transects that radiate
-out from plot center (i.e., a star shape). The three sub-transects form
-a 30-meter transect for the overall plot. See the diagram provided by
-Marshall *et al* (2000) on page 4 for further explanation.
+can be different shapes, most often single lines, stars, or triangles
+(see diagram on pg. 4 of Marshall *et al.* 2000). “Each line transect,
+irrespective of shape, represents a single sampling unit… The shape and
+length of a line transect will vary depending on the protocol employed.
+For example, a triangle with three 30-m lines (i.e., a 90-m transect) is
+often used for determining fuel load prior to a prescribed burn…”
+(Marshall *et al.* 2000). We often use “transect” to describe an
+individual line (e.g., one of the the 30-m lines) rather than to
+describe the sampling unit (e.g., the 90-m transect). It can be helpful
+to remember that “… the sampling points are located, not the line
+transect. The sampling point represents a designated position on the
+line transect. In most cases the sampling point is the end point of the
+line transect, and is where piece measurements are initiated. Once a
+sample point is located, the line transect is installed following a
+specific routine” (Marshall *et al.* 2000).
 
 <br>
 
@@ -2267,13 +2277,13 @@ $SCLength_{c,t} = cos(SlopeDeg_t)*Length_{c,t}$
 
 We can calculate $SlopeDeg_t$ using the following equation:
 
-$SlopeDeg_t = tan^{-1}(SlopePerc_t)$
+$SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 
 *where*
 
-- $cos(SlopeDeg_t)$ is the slope of transect t in degrees
-- $tan^{-1}(SlopePerc_t)$ is the inverse of the tangent of the slope of
-  transect t in percent
+- $SlopeDeg_t$ is the slope of transect t in degrees
+- $tan^{-1}(\frac{SlopePerc_t}{100})$ is the inverse of the tangent of
+  the slope of transect t in percent divided by 100
 
 <br>
 
