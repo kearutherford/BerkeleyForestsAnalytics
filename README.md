@@ -5,9 +5,9 @@ The `BerkeleyForestsAnalytics` package is a suite of open-source R
 functions designed to produce standard metrics for forest management and
 ecology from field inventory data.
 
-*Tip: you can navigate this README file using the table of contents
-found in the upper left-hand corner (just to the left of the
-README.md).*
+> **Tip:** you can navigate this README file using the table of contents
+> found in the upper left-hand corner (just to the left of the
+> README.md)
 
 ## Installation instructions
 
