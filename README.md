@@ -1797,7 +1797,7 @@ unknown tree (UNTR), unknown conifer (UNCO), and unknown hardwood
 (UNHA). UNTR is assigned the average density reduction factor for
 standing dead trees for all species combined by decay class (see Table 7
 of Harmon *et al* 2011). UNCO and UNHA are assigned the average density
-reduction factor for standing dead trees by hardwood/sortwood and decay
+reduction factor for standing dead trees by hardwood/softwood and decay
 class (see Table 6 of Harmon *et al.* 2011).
 
 | common name          | scientific name              | 4-letter code | FIA code | DRF 1 | DRF 2 | DRF 3 | DRF 4 | DRF 5 |
@@ -1935,7 +1935,7 @@ $F_{p} = \frac{\sum(F_{t})}{n}$
 
 - $F_{p}$ is the fuel load in $kg/m^2$ for plot p
 - $F_{t}$ is the fuel load in $kg/m^2$ for transect t measured in plot p
-- $n$ is the number of total number of transects measured at plot p
+- $n$ is the total number of transects measured at plot p
 
 <br>
 
@@ -1990,7 +1990,7 @@ $W_{c,p} = \frac{\sum(W_{c,t})}{n}$
   100-hour) for plot p
 - $F_{c,t}$ is the fuel load for timelag class c for transect t measured
   in plot p
-- $n$ is the number of total number of transects measured at plot p
+- $n$ is the total number of transects measured at plot p
 
 <br>
 
@@ -2177,16 +2177,16 @@ $W_{1000h,p} = \frac{\sum(W_{1000h,t})}{n}$
 *where*
 
 - $W_{1000h,p}$ is the 1000-hour fuel load for plot p
-- $F_{1000h,t}$ is the 1000-hour fuel load for transect t measured in
+- $W_{1000h,t}$ is the 1000-hour fuel load for transect t measured in
   plot p
-- $n$ is the number of total number of transects measured at plot p
+- $n$ is the total number of transects measured at plot p
 
 <br>
 
 We can calculate $W_{1000h,t}$ using the equation provided by Brown
 (1974):
 
-$W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,p} * SLP_{t} * k}{length_{1000h,t}}$
+$W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,s,p} * SLP_{t} * k}{length_{1000h,t}}$
 
 *where*
 
@@ -2256,7 +2256,8 @@ transect. The sampling point represents a designated position on the
 line transect. In most cases the sampling point is the end point of the
 line transect, and is where piece measurements are initiated. Once a
 sample point is located, the line transect is installed following a
-specific routine” (Marshall *et al.* 2000).
+specific routine” (Marshall *et al.* 2000). In many forestry scenarios,
+the sampling point will be plot center.
 
 <br>
 
@@ -2271,7 +2272,7 @@ $SCLength_{c,t} = cos(SlopeDeg_t)*Length_{c,t}$
   plot p  
 - $cos(SlopeDeg_t)$ is the cosine of the slope of transect t in degrees
 - $Length_t$ is the NOT slope-corrected transect length for fuels in
-  timelag class c for transect t measured in plot p
+  timelag class c for transect t
 
 <br>
 
@@ -2282,8 +2283,8 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 *where*
 
 - $SlopeDeg_t$ is the slope of transect t in degrees
-- $tan^{-1}(\frac{SlopePerc_t}{100})$ is the inverse of the tangent of
-  the slope of transect t in percent divided by 100
+- $tan^{-1}( )$ is the inverse of the tangent
+- $SlopePerc_t$ is the slope of transect t in percent
 
 <br>
 

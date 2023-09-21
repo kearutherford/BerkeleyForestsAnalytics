@@ -900,7 +900,7 @@ Standing dead trees (often called snags) lose mass in two ways:
 
 2. Decay: once the biomass is calculated, account for decay by assigning a species and decay class specific density reduction factor (dead:live ratio). Density reduction factors are further discussed below. 
 
-Harmon *et al.* (2011) developed density reduction factors for standing dead trees by species and decay class. Most values in the table below are pulled from Appendix D of Harmon *et al.* (2011). The exceptions are unknown tree (UNTR), unknown conifer (UNCO), and unknown hardwood (UNHA). UNTR is assigned the average density reduction factor for standing dead trees for all species combined by decay class (see Table 7 of Harmon *et al* 2011). UNCO and UNHA are assigned the average density reduction factor for standing dead trees by hardwood/sortwood and decay class (see Table 6 of Harmon *et al.* 2011). 
+Harmon *et al.* (2011) developed density reduction factors for standing dead trees by species and decay class. Most values in the table below are pulled from Appendix D of Harmon *et al.* (2011). The exceptions are unknown tree (UNTR), unknown conifer (UNCO), and unknown hardwood (UNHA). UNTR is assigned the average density reduction factor for standing dead trees for all species combined by decay class (see Table 7 of Harmon *et al* 2011). UNCO and UNHA are assigned the average density reduction factor for standing dead trees by hardwood/softwood and decay class (see Table 6 of Harmon *et al.* 2011). 
 
 |common name|scientific name|4-letter code|FIA code|DRF 1|DRF 2|DRF 3|DRF 4|DRF 5|
 |:---|:---|:---|:---|:---|:---|:---|:---|:---|
@@ -1009,7 +1009,7 @@ The plot-level fuel load can be calculated using the following equation:
 
   * \(F_{p}\) is the fuel load in \(kg/m^2\) for plot p
   * \(F_{t}\) is the fuel load in \(kg/m^2\) for transect t measured in plot p 
-  * \(n\) is the number of total number of transects measured at plot p 
+  * \(n\) is the total number of transects measured at plot p 
   
 <br> 
 
@@ -1051,7 +1051,7 @@ Calculating fuel loads represented by transect counts of 1-hour, 10-hour, and 10
 
   * \(W_{c,p}\) is the fuel load for timelag class c (1-hour, 10-hour, or 100-hour) for plot p
   * \(F_{c,t}\) is the fuel load for timelag class c for transect t measured in plot p 
-  * \(n\) is the number of total number of transects measured at plot p 
+  * \(n\) is the total number of transects measured at plot p 
 
 <br>
 
@@ -1216,14 +1216,14 @@ Calculating loads for 1000-hour fuels is just a special case of the equations gi
 *where* 
 
   * \(W_{1000h,p}\) is the 1000-hour fuel load for plot p
-  * \(F_{1000h,t}\) is the 1000-hour fuel load for transect t measured in plot p 
-  * \(n\) is the number of total number of transects measured at plot p 
+  * \(W_{1000h,t}\) is the 1000-hour fuel load for transect t measured in plot p 
+  * \(n\) is the total number of transects measured at plot p 
 
 <br>
 
 We can calculate \(W_{1000h,t}\) using the equation provided by Brown (1974):  
 
-\(W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,p} * SLP_{t} * k}{length_{1000h,t}}\)  
+\(W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,s,p} * SLP_{t} * k}{length_{1000h,t}}\)  
 
 *where* 
 
@@ -1257,7 +1257,7 @@ We can calculate the total horizontal length of transect sampled at a specific p
   * \(SCLength_{c,p}\) is the slope-corrected transect length for fuels in timelag class c (1-, 10-, 100-, or 1000-hour) for plot p 
   * \(SCLength_{c,t}\) is the slope-corrected transect length for fuels in timelag class c for transect t measured in plot p  
 
-Why are we calculating horizontal length at the plot-level? Transects can be different shapes, most often single lines, stars, or triangles (see diagram on pg. 4 of Marshall *et al.* 2000). "Each line transect, irrespective of shape, represents a single sampling unit... The shape and length of a line transect will vary depending on the protocol employed. For example, a triangle with three 30-m lines (i.e., a 90-m transect) is often used for determining fuel load prior to a prescribed burn..." (Marshall *et al.* 2000). We often use "transect" to describe an individual line (e.g., one of the the 30-m lines) rather than to describe the sampling unit (e.g., the 90-m transect). It can be helpful to remember that "... the sampling points are located, not the line transect. The sampling point represents a designated position on the line transect. In most cases the sampling point is the end point of the line transect, and is where piece measurements are initiated. Once a sample point is located, the line transect is installed following a specific routine" (Marshall *et al.* 2000). 
+Why are we calculating horizontal length at the plot-level? Transects can be different shapes, most often single lines, stars, or triangles (see diagram on pg. 4 of Marshall *et al.* 2000). "Each line transect, irrespective of shape, represents a single sampling unit... The shape and length of a line transect will vary depending on the protocol employed. For example, a triangle with three 30-m lines (i.e., a 90-m transect) is often used for determining fuel load prior to a prescribed burn..." (Marshall *et al.* 2000). We often use "transect" to describe an individual line (e.g., one of the the 30-m lines) rather than to describe the sampling unit (e.g., the 90-m transect). It can be helpful to remember that "... the sampling points are located, not the line transect. The sampling point represents a designated position on the line transect. In most cases the sampling point is the end point of the line transect, and is where piece measurements are initiated. Once a sample point is located, the line transect is installed following a specific routine" (Marshall *et al.* 2000). In many forestry scenarios, the sampling point will be plot center. 
 
 <br> 
 
@@ -1269,7 +1269,7 @@ We can calculate \(SCLength_{c,t}\) using the following equation:
 
 * \(SCLength_{c,t}\) is the slope-corrected transect length for fuels in timelag class c (1-, 10-, 100-, 1000-hour) for transect t measured in plot p  
 * \(cos(SlopeDeg_t)\) is the cosine of the slope of transect t in degrees 
-* \(Length_t\) is the NOT slope-corrected transect length for fuels in timelag class c for transect t measured in plot p 
+* \(Length_t\) is the NOT slope-corrected transect length for fuels in timelag class c for transect t
 
 <br> 
 
@@ -1280,7 +1280,8 @@ We can calculate \(SlopeDeg_t\) using the following equation:
 *where*
 
 * \(SlopeDeg_t\) is the slope of transect t in degrees 
-* \(tan^{-1}(\frac{SlopePerc_t}{100})\) is the inverse of the tangent of the slope of transect t in percent divided by 100
+* \(tan^{-1}( )\) is the inverse of the tangent
+* \(SlopePerc_t\) is the slope of transect t in percent
 
 <br>
 
