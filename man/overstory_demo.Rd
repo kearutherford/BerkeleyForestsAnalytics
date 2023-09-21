@@ -16,7 +16,7 @@ A dataframe with 14 rows and 6 columns:
 }
 }
 \source{
-Created by Kea Rutherford for demonstration purposes.
+Created by Kea Rutherford for demonstration purposes
 }
 \usage{
 overstory_demo

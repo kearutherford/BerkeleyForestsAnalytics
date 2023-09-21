@@ -15,20 +15,20 @@
 #'   \item{Plot_id}{Plot in which the individual tree was measured}
 #'   \item{SPH}{Stems per hectare}
 #'   \item{Live}{Live (1) or dead (0)}
-#'   \item{Decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{Decay}{1-5 for standing dead trees. NA for live trees.}
 #'   \item{SPP}{Species of the individual tree, using four-letter species codes}
 #'   \item{DBH_CM}{Diameter at breast height in centimeters}
 #'   \item{HT_M}{Tree height in meters}
 #' }
 #'
-#' @source Created by Kea Rutherford for demonstration purposes.
+#' @source Created by Kea Rutherford for demonstration purposes
 "bio_demo_data"
 
 
 #' @title Data for biomass demonstrations
 #'
 #' @description
-#' A fake dataset created for biomass demonstration purposes only
+#' A fake dataset created for biomass demonstration purposes only. Includes a plot without trees.
 #'
 #' @format
 #' A dataframe with 9 rows and 7 columns:
@@ -37,13 +37,13 @@
 #'   \item{Plot_id}{Plot in which the individual tree was measured}
 #'   \item{SPH}{Stems per hectare}
 #'   \item{Live}{Live (1) or dead (0)}
-#'   \item{Decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{Decay}{1-5 for standing dead trees. NA for live trees.}
 #'   \item{SPP}{Species of the individual tree, using four-letter species codes}
 #'   \item{DBH_CM}{Diameter at breast height in centimeters}
 #'   \item{HT_M}{Tree height in meters}
 #' }
 #'
-#' @source Created by Kea Rutherford for demonstration purposes.
+#' @source Created by Kea Rutherford for demonstration purposes
 "bio_NT_demo"
 
 
@@ -64,14 +64,14 @@
 #'   \item{HT_M}{Tree height in meters}
 #' }
 #'
-#' @source Created by Kea Rutherford for demonstration purposes.
+#' @source Created by Kea Rutherford for demonstration purposes
 "for_demo_data"
 
 
 #' @title Data for forest composition and structure demonstrations
 #'
 #' @description
-#' A fake dataset created for composition and structure demonstration purposes only
+#' A fake dataset created for composition and structure demonstration purposes only. Includes a plot without trees.
 #'
 #' @format
 #' A dataframe with 9 rows and 7 columns:
@@ -105,7 +105,7 @@
 #'   \item{dbh}{Diameter at breast height in centimeters}
 #' }
 #'
-#' @source Created by Kea Rutherford for demonstration purposes.
+#' @source Created by Kea Rutherford for demonstration purposes
 "overstory_demo"
 
 
@@ -130,14 +130,14 @@
 #'   \item{slope}{Slope along the transect in percent}
 #' }
 #'
-#' @source Created by Kea Rutherford for demonstration purposes.
+#' @source Created by Kea Rutherford for demonstration purposes
 "fwd_demo"
 
 
 #' @title Data for coarse woody debris demonstrations
 #'
 #' @description
-#' A fake dataset created for coarse surface fuel demonstration purposes only
+#' A fake dataset created for coarse surface fuel demonstration purposes only. Sum-of-squared-diameters for sound and rotten 1000-hour fuels NOT already calculated.
 #'
 #' @format
 #' A dataframe with 16 rows and 8 columns:
@@ -152,14 +152,14 @@
 #'   \item{status}{Rotten (R) or sound (S)}
 #' }
 #'
-#' @source Created by Kea Rutherford for demonstration purposes.
+#' @source Created by Kea Rutherford for demonstration purposes
 "cwd_NS_demo"
 
 
 #' @title Data for coarse woody debris demonstrations
 #'
 #' @description
-#' A fake dataset created for coarse surface fuel demonstration purposes only
+#' A fake dataset created for coarse surface fuel demonstration purposes only. Sum-of-squared-diameters for sound and rotten 1000-hour fuels already calculated.
 #'
 #' @format
 #' A dataframe with 12 rows and 8 columns:
@@ -181,7 +181,7 @@
 #' @title Data for duff and litter demonstrations
 #'
 #' @description
-#' A fake dataset created for duff and litter fuel demonstration purposes only
+#' A fake dataset created for duff and litter fuel demonstration purposes only. Depths NOT already averaged together for each transect.
 #'
 #' @format
 #' A dataframe with 24 rows and 6 columns:
@@ -190,8 +190,8 @@
 #'   \item{site}{Broader location or forest where the data were collected}
 #'   \item{plot}{Plot in which the individual transect was measured}
 #'   \item{transect}{Transect on which the duff/litter depths were measured}
-#'   \item{litter_depth}{litter depth in centimeters}
-#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{litter_depth}{Litter depth in centimeters}
+#'   \item{duff_depth}{Duff depth in centimeters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
@@ -201,7 +201,7 @@
 #' @title Data for duff and litter demonstrations
 #'
 #' @description
-#' A fake dataset created for duff and litter fuel demonstration purposes only
+#' A fake dataset created for duff and litter fuel demonstration purposes only. Depths already averaged together for each transect.
 #'
 #' @format
 #' A dataframe with 24 rows and 6 columns:
@@ -210,8 +210,8 @@
 #'   \item{site}{Broader location or forest where the data were collected}
 #'   \item{plot}{Plot in which the individual transect was measured}
 #'   \item{transect}{Transect on which the duff/litter depths were measured}
-#'   \item{litter_depth}{litter depth in centimeters}
-#'   \item{duff_depth}{duff depth in centimeters}
+#'   \item{litter_depth}{Litter depth in centimeters}
+#'   \item{duff_depth}{Duff depth in centimeters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
@@ -221,133 +221,133 @@
 #' @title Tree data for vignette, version 1
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
 #' A dataframe with 2250 rows and 10 columns:
 #' \describe{
 #'   \item{id}{time:site combined}
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
-#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
 #'   \item{species}{Species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
 #'   \item{ht}{tree height in meters}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_trees_1"
 
 
 #' @title Tree data for vignette, version 2
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
 #' A dataframe with 2250 rows and 10 columns:
 #' \describe{
 #'   \item{id}{time:site combined}
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
-#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
 #'   \item{species}{Species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
 #'   \item{ht}{tree height in meters}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_trees_2"
 
 
 #' @title Tree data for vignette, version 3
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional warnings for demonstration purposes
 #'
 #' @format
 #' A dataframe with 2250 rows and 10 columns:
 #' \describe{
 #'   \item{id}{time:site combined}
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
-#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
 #'   \item{species}{Species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
 #'   \item{ht}{tree height in meters}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_trees_3"
 
 
 #' @title Tree data for vignette, version 4
 #'
 #' @description
-#' A dataset
+#'  A dataset with intentional warnings for demonstration purposes
 #'
 #' @format
 #' A dataframe with 2250 rows and 10 columns:
 #' \describe{
 #'   \item{id}{time:site combined}
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
-#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
 #'   \item{species}{Species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
 #'   \item{ht}{tree height in meters}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_trees_4"
 
 
 #' @title Tree data for vignette, version 5
 #'
 #' @description
-#' A dataset
+#' A clean dataset for demonstration purposes
 #'
 #' @format
 #' A dataframe with 2250 rows and 10 columns:
 #' \describe{
 #'   \item{id}{time:site combined}
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
-#'   \item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+#'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
 #'   \item{species}{Species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
 #'   \item{ht}{tree height in meters}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_trees_5"
 
 
 #' @title Fuel data for vignette, version 1
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
 #' A dataframe with 236 rows and 16 columns:
 #' \describe{
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual transect was measured}
 #'   \item{transect}{azimuth of transect on which the fuel data were collected}
 #'   \item{count_1h}{count of 1-hour fuels}
@@ -364,20 +364,20 @@
 #'   \item{slope}{slope along the transect in percent}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_fuels_1"
 
 
 #' @title Fuel data for vignette, version 2
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
 #' A dataframe with 236 rows and 16 columns:
 #' \describe{
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual transect was measured}
 #'   \item{transect}{azimuth of transect on which the fuel data were collected}
 #'   \item{count_1h}{count of 1-hour fuels}
@@ -394,20 +394,20 @@
 #'   \item{slope}{slope along the transect in percent}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_fuels_2"
 
 
 #' @title Fuel data for vignette, version 3
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
 #' A dataframe with 236 rows and 16 columns:
 #' \describe{
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual transect was measured}
 #'   \item{transect}{azimuth of transect on which the fuel data were collected}
 #'   \item{count_1h}{count of 1-hour fuels}
@@ -424,20 +424,20 @@
 #'   \item{slope}{slope along the transect in percent}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_fuels_3"
 
 
 #' @title Fuel data for vignette, version 4
 #'
 #' @description
-#' A dataset
+#' A dataset with intentional errors and warnings for demonstration purposes
 #'
 #' @format
 #' A dataframe with 236 rows and 16 columns:
 #' \describe{
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual transect was measured}
 #'   \item{transect}{azimuth of transect on which the fuel data were collected}
 #'   \item{count_1h}{count of 1-hour fuels}
@@ -454,20 +454,20 @@
 #'   \item{slope}{slope along the transect in percent}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_fuels_4"
 
 
 #' @title Fuel data for vignette, version 5
 #'
 #' @description
-#' A dataset
+#' A clean dataset for demonstration purposes
 #'
 #' @format
 #' A dataframe with 236 rows and 16 columns:
 #' \describe{
 #'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment}
+#'   \item{site}{compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual transect was measured}
 #'   \item{transect}{azimuth of transect on which the fuel data were collected}
 #'   \item{count_1h}{count of 1-hour fuels}
@@ -484,7 +484,7 @@
 #'   \item{slope}{slope along the transect in percent}
 #' }
 #'
-#' @source BLANK
+#' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 "vign_fuels_5"
 
 

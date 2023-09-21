@@ -8,7 +8,7 @@
 A dataframe with 236 rows and 16 columns:
 \describe{
 \item{time}{pre (pre-burn) or post (post-burn)}
-\item{site}{compartment}
+\item{site}{compartment (60, 340, or 400)}
 \item{plot}{plot in which the individual transect was measured}
 \item{transect}{azimuth of transect on which the fuel data were collected}
 \item{count_1h}{count of 1-hour fuels}
@@ -26,12 +26,12 @@ A dataframe with 236 rows and 16 columns:
 }
 }
 \source{
-BLANK
+Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 }
 \usage{
 vign_fuels_4
 }
 \description{
-A dataset
+A dataset with intentional errors and warnings for demonstration purposes
 }
 \keyword{datasets}

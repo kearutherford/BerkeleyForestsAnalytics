@@ -1,24 +1,31 @@
 Package: BerkeleyForestsAnalytics
-Title: Produce Standard Metrics for Forest Management and Ecology from Field Inventory Data
+Title: Produce Standard Metrics for Forest Management and Ecology from
+    Field Inventory Data
 Version: 0.1.0
 Authors@R: c(
-    person("Kea", "Rutherford", email = "krutherford@berkeley.edu", role = c("aut", "cre")),
+    person("Kea", "Rutherford", , "krutherford@berkeley.edu", role = c("aut", "cre")),
     person("John", "Battles", role = "aut"),
-    person("Danny", "Foster", role = "aut"))
-Description: A suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data.
-URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
+    person("Danny", "Foster", role = "aut")
+  )
+Description: A suite of open-source R functions designed to produce
+    standard metrics for forest management and ecology from field
+    inventory data.
 License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
 Depends: 
     R (>= 2.10)
-LazyData: true
-Suggests: 
-    knitr,
-    rmarkdown,
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
 Imports: 
     utils
-VignetteBuilder: knitr
+Suggests: 
+    dplyr,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    tidyr
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3

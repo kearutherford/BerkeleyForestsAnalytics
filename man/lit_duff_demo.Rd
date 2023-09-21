@@ -11,8 +11,8 @@ A dataframe with 24 rows and 6 columns:
 \item{site}{Broader location or forest where the data were collected}
 \item{plot}{Plot in which the individual transect was measured}
 \item{transect}{Transect on which the duff/litter depths were measured}
-\item{litter_depth}{litter depth in centimeters}
-\item{duff_depth}{duff depth in centimeters}
+\item{litter_depth}{Litter depth in centimeters}
+\item{duff_depth}{Duff depth in centimeters}
 }
 }
 \source{
@@ -22,6 +22,6 @@ Created by Kea Rutherford for demonstration purposes.
 lit_duff_demo
 }
 \description{
-A fake dataset created for duff and litter fuel demonstration purposes only
+A fake dataset created for duff and litter fuel demonstration purposes only. Depths NOT already averaged together for each transect.
 }
 \keyword{datasets}

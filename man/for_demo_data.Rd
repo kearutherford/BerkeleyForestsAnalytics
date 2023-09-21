@@ -17,7 +17,7 @@ A dataframe with 9 rows and 7 columns:
 }
 }
 \source{
-Created by Kea Rutherford for demonstration purposes.
+Created by Kea Rutherford for demonstration purposes
 }
 \usage{
 for_demo_data

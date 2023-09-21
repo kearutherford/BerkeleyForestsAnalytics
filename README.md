@@ -11,7 +11,7 @@ ecology from field inventory data.
 
 ## Installation instructions
 
-To install the `BerkeleyForestAnalytics` package from GitHub:
+To install the `BerkeleyForestsAnalytics` package from GitHub:
 
 ``` r
 # install and load devtools
@@ -20,8 +20,15 @@ library(devtools)
 ```
 
 ``` r
-# install and load Rbiomass
+# install and load BerkeleyForestsAnalytics 
 devtools::install_github('kearutherford/BerkeleyForestsAnalytics')
+library(BerkeleyForestsAnalytics)
+```
+
+``` r
+# install and load BerkeleyForestsAnalytics 
+# and request vignettes
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics', build_vignettes = TRUE)
 library(BerkeleyForestsAnalytics)
 ```
 
@@ -47,6 +54,18 @@ citation("BerkeleyForestsAnalytics")
     ##     year = {2023},
     ##     url = {https://github.com/kearutherford/BerkeleyForestsAnalytics},
     ##   }
+
+## Vignette
+
+To access the Vignette for `BerkeleyForestsAnalytics`:
+
+``` r
+# Option 1:
+vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
+
+# Option 2: 
+browseVignettes("BerkeleyForestsAnalytics")
+```
 
 # Tree biomass estimations
 

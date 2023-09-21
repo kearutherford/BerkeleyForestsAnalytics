@@ -11,19 +11,19 @@ A dataframe with 9 rows and 7 columns:
 \item{Plot_id}{Plot in which the individual tree was measured}
 \item{SPH}{Stems per hectare}
 \item{Live}{Live (1) or dead (0)}
-\item{Decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+\item{Decay}{1-5 for standing dead trees. NA for live trees.}
 \item{SPP}{Species of the individual tree, using four-letter species codes}
 \item{DBH_CM}{Diameter at breast height in centimeters}
 \item{HT_M}{Tree height in meters}
 }
 }
 \source{
-Created by Kea Rutherford for demonstration purposes.
+Created by Kea Rutherford for demonstration purposes
 }
 \usage{
 bio_NT_demo
 }
 \description{
-A fake dataset created for biomass demonstration purposes only
+A fake dataset created for biomass demonstration purposes only. Includes a plot without trees.
 }
 \keyword{datasets}

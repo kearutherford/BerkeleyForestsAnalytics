@@ -21,7 +21,7 @@ A dataframe with 12 rows and 11 columns:
 }
 }
 \source{
-Created by Kea Rutherford for demonstration purposes.
+Created by Kea Rutherford for demonstration purposes
 }
 \usage{
 fwd_demo

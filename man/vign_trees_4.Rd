@@ -9,23 +9,23 @@ A dataframe with 2250 rows and 10 columns:
 \describe{
 \item{id}{time:site combined}
 \item{time}{pre (pre-burn) or post (post-burn)}
-\item{site}{compartment}
+\item{site}{compartment (60, 340, or 400)}
 \item{plot}{plot in which the individual tree was measured}
 \item{exp_factor}{stems per hectare}
 \item{status}{live (1) or dead (0)}
-\item{decay}{1-5 for standing dead trees. NA or 0 for live trees.}
+\item{decay}{1-5 for standing dead trees. 0 for live trees.}
 \item{species}{Species of the individual tree, using four-letter species codes}
 \item{dbh}{diameter at breast height in centimeters}
 \item{ht}{tree height in meters}
 }
 }
 \source{
-BLANK
+Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
 }
 \usage{
 vign_trees_4
 }
 \description{
-A dataset
+A dataset with intentional warnings for demonstration purposes
 }
 \keyword{datasets}

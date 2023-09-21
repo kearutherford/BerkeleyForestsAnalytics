@@ -24,6 +24,6 @@ Created by Kea Rutherford for demonstration purposes.
 cwd_YS_demo
 }
 \description{
-A fake dataset created for coarse surface fuel demonstration purposes only
+A fake dataset created for coarse surface fuel demonstration purposes only. Sum-of-squared-diameters for sound and rotten 1000-hour fuels already calculated.
 }
 \keyword{datasets}

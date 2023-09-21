@@ -241,7 +241,7 @@ for_comp <- ForestComp(data = vign_trees_5,
                        units = "metric")
 ```
 
-We got an error message. It looks like we set the "relative" parameter to "ba" instead of "BA". That's easy to fix: 
+We get an error message. It looks like we set the "relative" parameter to "ba" instead of "BA". That's easy to fix: 
 
 ```{r}
 for_comp <- ForestComp(data = vign_trees_5,
@@ -257,7 +257,7 @@ for_comp <- ForestComp(data = vign_trees_5,
 head(for_comp, n = 16)
 ```
 
-This time the function runs without any warning or error messages. However, there is a note with a list of all the species present in the input data. Notice in the output (we just show two plots here) that each species present is accounted for in each plot, even if the dominance for the specific species is 0. When you compile the data from the plot level to the compartment or study area level, it's important that the 0 dominance values are captured. 
+This time the function runs without any warning or error messages. However, there is a note with a list of all the species present in the input data. Notice in the output (we just show two plots here) that each species present is accounted for in each plot, even if the dominance for the specific species is 0. When you compile the data beyond the plot level (e.g. to the compartment level), it's important that the 0 dominance values are captured. 
 
 Before moving on, let's quickly look at the output for the plot with no trees: 
 
@@ -280,7 +280,7 @@ If there are no trees present on plot p, then \(BA_{total,p}\) will be 0. And an
 
 ### ForestStr()
 
-Now let's try using `ForestStr()`. We'll keep the default for units (= "metric): 
+Now let's try using `ForestStr()`. We'll keep the default for units (= "metric"): 
 
 ```{r, error = TRUE}
 for_str <- ForestStr(data = vign_trees_5,
@@ -291,7 +291,7 @@ for_str <- ForestStr(data = vign_trees_5,
                      ht = "ht")
 ```
 
-We got an error message. Right, we have a column named "exp_factor" but not "Exp_factor" (column names are case sensitive)! That's easy to fix: 
+We get an error message. Right, we have a column named "exp_factor" but not "Exp_factor" (column names are case sensitive)! That's easy to fix: 
 
 ```{r}
 for_str <- ForestStr(data = vign_trees_5,
@@ -311,7 +311,7 @@ for_str %>%
   filter(site == "post_60", plot == "113")
 ```
 
-Notice that basal area (ba_m2_ha) and stems per hectare (sph) are both 0. This is correct for a plot with no trees. Then, average quadratic mean diameter (qmd_cm), average diameter at breast height (dbh_cm), and average height (ht_m) are all NA. These tree-level variables are not applicable for a plot without trees. For example, there is no "average diameter at breast height" if there are no diameters at breast height to take an average of. The average diameter at breast height is not 0 in this case! When you compile the data from the plot level to the compartment or study area level, it's important that the 0s and NAs are accurately captured. A 0 qmd_cm here (at the plot level) would incorrectly pull down the compartment and/or study area qmd_cm.  
+Notice that basal area (ba_m2_ha) and stems per hectare (sph) are both 0. This is correct for a plot with no trees. Then, average quadratic mean diameter (qmd_cm), average diameter at breast height (dbh_cm), and average height (ht_m) are all NA. These tree-level variables are not applicable for a plot without trees. For example, there is no "average diameter at breast height" if there are no diameters at breast height to take an average of. The average diameter at breast height is not 0 in this case! When you compile the data beyond the plot level (e.g., to the compartment level), it's important that the 0s and NAs are accurately captured. A 0 qmd_cm here (at the plot level) would incorrectly pull down the compartment qmd_cm.  
 
 
 ## Surface and ground fuel loads 
@@ -333,7 +333,7 @@ FWD <- FineFuels(tree_data = vign_trees_5,
                  fuel_data = vign_fuels_1)
 ```
 
-And we got an error message. It looks like there is a duplicate time:site:plot:transect observation for post-400-9-159. Let's take a closer look: 
+And we get an error message. It looks like there is a duplicate time:site:plot:transect observation for post-400-9-159. Let's take a closer look: 
 
 ```{r}
 vign_fuels_1 %>%
@@ -377,7 +377,7 @@ And we get yet another error message. Remember that there must be a one-to-one m
 
 <br>
 
-**Attempt 4:** After correcting the plot id in input fuel data, let's try again:
+**Attempt 4:** After correcting the plot id in the input fuel data, let's try again:
 
 ```{r}
 FWD <- FineFuels(tree_data = vign_trees_5,
@@ -514,7 +514,7 @@ fwd_sum <- FWD %>%
          w_load_1h = w_1h*load_1h_Mg_ha,
          w_load_10h = w_1h*load_10h_Mg_ha,
          w_load_100h = w_1h*load_100h_Mg_ha,
-         w_load_fwd = w_load_1h + w_load_10h + w_load_100h) %>% # Note: you have a missing 1h, 10h, or 100h load estimate, the total fine woody debris load estimate should be NA
+         w_load_fwd = w_load_1h + w_load_10h + w_load_100h) %>% # Note: if you have a missing 1h, 10h, or 100h load estimate, the total fine woody debris load estimate should be NA
   
   # get average fine fuel loads for each compartment (i.e., each experimental unit) first 
   summarize(avg_1h_comp = mean(w_load_1h, na.rm = TRUE), # average 1-hour fuel load for the compartment
@@ -550,7 +550,7 @@ Additionally, "if line transects at different sampling points have different len
     
 * n is the number of line transects established on an area 
     
-* \(y_i\) is value per unit area based on line transect i (e.g., Mg/ha)
+* \(y_i\) is the value per unit area based on line transect i (e.g., Mg/ha)
     
 * \(w_i\) is \(\frac{L_i}{(\frac{\sum_{i=1}^{n}(L_i)}{n})}\)
     

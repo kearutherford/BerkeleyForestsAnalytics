@@ -23,6 +23,6 @@ Created by Kea Rutherford for demonstration purposes.
 for_NT_demo
 }
 \description{
-A fake dataset created for composition and structure demonstration purposes only
+A fake dataset created for composition and structure demonstration purposes only. Includes a plot without trees.
 }
 \keyword{datasets}
