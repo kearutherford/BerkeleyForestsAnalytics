@@ -437,10 +437,6 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, deca
 
 Discount <- function(tree_data, tree_sp_codes) {
 
-  # bring in live:dead ratio table
-  discount <- read.csv(system.file('extdata', 'sd_ratios.csv', package = "BerkeleyForestsAnalytics"),
-                       stringsAsFactors = FALSE)
-
   # make sure decay_class and fia_code are character columns
   discount$decay_class <- as.character(discount$decay_class)
   discount$fia_code <- as.character(discount$fia_code)

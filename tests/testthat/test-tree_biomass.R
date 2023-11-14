@@ -75,9 +75,6 @@ test_that("Final column classes are as expected", {
 
 test_that("Package and hand calculations match", {
 
-  results_by_hand <- read.csv(system.file('extdata', 'results_check.csv', package = "BerkeleyForestsAnalytics"),
-                              stringsAsFactors = FALSE)
-
   # 4letter and metric --------------------------
   results_by_package1 <- TreeBiomass(data = results_by_hand,
                                      status = "Live",
