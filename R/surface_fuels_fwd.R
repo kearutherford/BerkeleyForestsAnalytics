@@ -459,9 +459,9 @@ FWDLoad <- function(fwd_fuel_data, fwd_tree_data, fwd_units, fwd_sp_codes) {
       # here hypotenuse = transect length and adjacent = slope corrected transect length
       fwd_fuel_data$slope_deg <- atan(fwd_fuel_data$slope/100) # convert % to degrees
       fwd_fuel_data$slope_cos <- cos(fwd_fuel_data$slope_deg) # take the cosine
-      fwd_fuel_data$sc_length_1h <- fwd_fuel_data$slope_cos*fwd_fuel_data$length_1h # 1h transect length corrected
-      fwd_fuel_data$sc_length_10h <- fwd_fuel_data$slope_cos*fwd_fuel_data$length_10h # 10h transect length corrected
-      fwd_fuel_data$sc_length_100h <- fwd_fuel_data$slope_cos*fwd_fuel_data$length_100h # 100h transect length corrected
+      fwd_fuel_data$sc_length_1h <- ifelse(is.na(fwd_fuel_data$count_1h), 0, fwd_fuel_data$slope_cos*fwd_fuel_data$length_1h) # 1h transect length corrected
+      fwd_fuel_data$sc_length_10h <- ifelse(is.na(fwd_fuel_data$count_10h), 0, fwd_fuel_data$slope_cos*fwd_fuel_data$length_10h) # 10h transect length corrected
+      fwd_fuel_data$sc_length_100h <- ifelse(is.na(fwd_fuel_data$count_100h), 0, fwd_fuel_data$slope_cos*fwd_fuel_data$length_100h) # 100h transect length corrected
 
   # constant k
   k <- 1.234
@@ -498,9 +498,17 @@ FWDLoad <- function(fwd_fuel_data, fwd_tree_data, fwd_units, fwd_sp_codes) {
 
   for(i in 1:k) {
 
-    fwd_ag$sc_length_1h[i] <- trn_ag[trn_ag$time == fwd_ag$time[i] & trn_ag$site == fwd_ag$site[i] & trn_ag$plot == fwd_ag$plot[i], "sc_length_1h"]
-    fwd_ag$sc_length_10h[i] <- trn_ag[trn_ag$time == fwd_ag$time[i] & trn_ag$site == fwd_ag$site[i] & trn_ag$plot == fwd_ag$plot[i], "sc_length_10h"]
-    fwd_ag$sc_length_100h[i] <- trn_ag[trn_ag$time == fwd_ag$time[i] & trn_ag$site == fwd_ag$site[i] & trn_ag$plot == fwd_ag$plot[i], "sc_length_100h"]
+    if(!is.na(fwd_ag$load_1h_Mg_ha[i])) {
+      fwd_ag$sc_length_1h[i] <- trn_ag[trn_ag$time == fwd_ag$time[i] & trn_ag$site == fwd_ag$site[i] & trn_ag$plot == fwd_ag$plot[i], "sc_length_1h"]
+    }
+
+    if(!is.na(fwd_ag$load_10h_Mg_ha[i])) {
+      fwd_ag$sc_length_10h[i] <- trn_ag[trn_ag$time == fwd_ag$time[i] & trn_ag$site == fwd_ag$site[i] & trn_ag$plot == fwd_ag$plot[i], "sc_length_10h"]
+    }
+
+    if(!is.na(fwd_ag$load_100h_Mg_ha[i])) {
+      fwd_ag$sc_length_100h[i] <- trn_ag[trn_ag$time == fwd_ag$time[i] & trn_ag$site == fwd_ag$site[i] & trn_ag$plot == fwd_ag$plot[i], "sc_length_100h"]
+    }
 
   }
 

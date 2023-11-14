@@ -32,7 +32,8 @@ A dataframe with the following columns:
 \item load_1000s_Mg_ha (or load_1000s_ton_ac): fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
 \item load_1000r_Mg_ha (or load_1000r_ton_ac): fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
 \item load_cwd_Mg_ha (or load_cwd_ton_ac): total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
-\item sc_length_1000h: slope-corrected transect length (i.e., horizontal transect length) for 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1000-hour fuels at the specific time:site:plot.
+\item sc_length_1000s: slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for sound 1000-hour fuels at the specific time:site:plot.
+\item sc_length_1000r: slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for rotten 1000-hour fuels at the specific time:site:plot.
 }
 }
 \description{

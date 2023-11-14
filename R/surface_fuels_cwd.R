@@ -24,7 +24,8 @@
 #' \item load_1000s_Mg_ha (or load_1000s_ton_ac): fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_1000r_Mg_ha (or load_1000r_ton_ac): fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
 #' \item load_cwd_Mg_ha (or load_cwd_ton_ac): total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
-#' \item sc_length_1000h: slope-corrected transect length (i.e., horizontal transect length) for 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1000-hour fuels at the specific time:site:plot.
+#' \item sc_length_1000s: slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for sound 1000-hour fuels at the specific time:site:plot.
+#' \item sc_length_1000r: slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for rotten 1000-hour fuels at the specific time:site:plot.
 #' }
 #'
 #' @examples
@@ -237,7 +238,7 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
     }
 
     # pull out transects with cwd
-    obs_w_cwd <- subset(fuel_data_val, fuel_data_val$diameter > 0)
+    obs_w_cwd <- subset(fuel_data_val, diameter > 0 | is.na(diameter))
 
     # check for diameter range
     if(any(obs_w_cwd$diameter <= 7.62, na.rm = TRUE)) {
@@ -280,9 +281,6 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
               'Consider investigating these missing values in your data.\n',
               ' \n')
     }
-
-    # map missing status to R (rotten)
-    fuel_data_val[is.na(fuel_data_val$status), "status"] = "R"
 
 
     # --------------------------------------------------------------------------
@@ -351,39 +349,50 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
 
       }
 
-      # get sum-of-squared-diameters for rotten and sound fuels
-      sound <- subset(all_cwd, status == "S")
-      rotten <- subset(all_cwd, status == "R")
+      if(nrow(all_cwd) == 1 & all(is.na(all_cwd$diameter)) & all(is.na(all_cwd$status))) {
 
-      if(nrow(sound) > 0 & all(is.na(sound$diameter))) {
         ssd_sound <- NA
-      } else if (nrow(sound) == 0) {
-        ssd_sound <- 0
-      } else {
-        ssd_sound <- sum(sound$sq_diam, na.rm = TRUE)
-      }
-
-      if(nrow(rotten) > 0 & all(is.na(rotten$diameter))) {
         ssd_rotten <- NA
-      } else if (nrow(rotten) == 0) {
-        ssd_rotten <- 0
+
       } else {
-        ssd_rotten <- sum(rotten$sq_diam, na.rm = TRUE)
+
+        # map missing status to R (rotten)
+        all_cwd[is.na(all_cwd$status), "status"] = "R"
+
+        # get sum-of-squared-diameters for rotten and sound fuels
+        sound <- subset(all_cwd, status == "S")
+        rotten <- subset(all_cwd, status == "R")
+
+        if(nrow(sound) > 0 & all(is.na(sound$diameter))) {
+          ssd_sound <- NA
+        } else if (nrow(sound) == 0) {
+          ssd_sound <- 0
+        } else {
+          ssd_sound <- sum(sound$sq_diam, na.rm = TRUE)
+        }
+
+        if(nrow(rotten) > 0 & all(is.na(rotten$diameter))) {
+          ssd_rotten <- NA
+        } else if (nrow(rotten) == 0) {
+          ssd_rotten <- 0
+        } else {
+          ssd_rotten <- sum(rotten$sq_diam, na.rm = TRUE)
+        }
+
       }
 
+        # fill in dataframe
+        return_df[nrow(return_df) + 1, ] <- NA
+        k <- nrow(return_df)
 
-      # fill in dataframe
-      return_df[nrow(return_df) + 1, ] <- NA
-      k <- nrow(return_df)
-
-      return_df$time[k] <- all_cwd$time[1]
-      return_df$site[k] <- all_cwd$site[1]
-      return_df$plot[k] <- all_cwd$plot[1]
-      return_df$transect[k] <- all_cwd$transect[1]
-      return_df$length_1000h[k] <- all_cwd$length_1000h[1]
-      return_df$slope[k] <- all_cwd$slope[1]
-      return_df$ssd_S[k] <- ssd_sound
-      return_df$ssd_R[k] <- ssd_rotten
+        return_df$time[k] <- all_cwd$time[1]
+        return_df$site[k] <- all_cwd$site[1]
+        return_df$plot[k] <- all_cwd$plot[1]
+        return_df$transect[k] <- all_cwd$transect[1]
+        return_df$length_1000h[k] <- all_cwd$length_1000h[1]
+        return_df$slope[k] <- all_cwd$slope[1]
+        return_df$ssd_S[k] <- ssd_sound
+        return_df$ssd_R[k] <- ssd_rotten
 
     }
 
@@ -588,7 +597,8 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
       # here hypotenuse = transect length and adjacent = slope corrected transect length
       cwd_fuel_data$slope_deg <- atan(cwd_fuel_data$slope/100) # convert % to degrees
       cwd_fuel_data$slope_cos <- cos(cwd_fuel_data$slope_deg) # take the cosine
-      cwd_fuel_data$sc_length_1000h <- cwd_fuel_data$slope_cos*cwd_fuel_data$length_1000h # 1000h transect length corrected
+      cwd_fuel_data$sc_length_1000s <- ifelse(is.na(cwd_fuel_data$ssd_S), 0, cwd_fuel_data$slope_cos*cwd_fuel_data$length_1000h) # 1000s transect length corrected
+      cwd_fuel_data$sc_length_1000r <- ifelse(is.na(cwd_fuel_data$ssd_R), 0, cwd_fuel_data$slope_cos*cwd_fuel_data$length_1000h) # 1000r transect length corrected
 
   # constant k
   k <- 1.234
@@ -607,7 +617,7 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
   cwd_ag[cwd_ag == "NaN"] <- NA
 
   # horizontal transect length calculations
-  trn_subset <- subset(cwd_fuel_data, select = c(time, site, plot, sc_length_1000h))
+  trn_subset <- subset(cwd_fuel_data, select = c(time, site, plot, sc_length_1000s, sc_length_1000r))
 
   trn_ag <- aggregate(data = trn_subset,
                       . ~ time + site + plot,
@@ -618,11 +628,18 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
 
   k <- nrow(cwd_ag)
 
-  cwd_ag$sc_length_1000h <- NA
+  cwd_ag$sc_length_1000s <- NA
+  cwd_ag$sc_length_1000r <- NA
 
   for(i in 1:k) {
 
-    cwd_ag$sc_length_1000h[i] <- trn_ag[trn_ag$time == cwd_ag$time[i] & trn_ag$site == cwd_ag$site[i] & trn_ag$plot == cwd_ag$plot[i], "sc_length_1000h"]
+    if(!is.na(cwd_ag$load_1000s_Mg_ha[i])) {
+      cwd_ag$sc_length_1000s[i] <- trn_ag[trn_ag$time == cwd_ag$time[i] & trn_ag$site == cwd_ag$site[i] & trn_ag$plot == cwd_ag$plot[i], "sc_length_1000s"]
+    }
+
+    if(!is.na(cwd_ag$load_1000r_Mg_ha[i])) {
+      cwd_ag$sc_length_1000r[i] <- trn_ag[trn_ag$time == cwd_ag$time[i] & trn_ag$site == cwd_ag$site[i] & trn_ag$plot == cwd_ag$plot[i], "sc_length_1000r"]
+    }
 
   }
 
@@ -636,9 +653,10 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
     cwd_ag$load_1000s_ton_ac <- cwd_ag$load_1000s_Mg_ha*0.44609
     cwd_ag$load_1000r_ton_ac <- cwd_ag$load_1000r_Mg_ha*0.44609
     cwd_ag$load_cwd_ton_ac <- cwd_ag$load_cwd_Mg_ha*0.44609
-    cwd_ag$sc_length_1000h <- cwd_ag$sc_length_1000h*3.28084
+    cwd_ag$sc_length_1000s <- cwd_ag$sc_length_1000s*3.28084
+    cwd_ag$sc_length_1000r <- cwd_ag$sc_length_1000r*3.28084
 
-    cwd_imperial <- subset(cwd_ag, select = c(time, site, plot, load_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac, sc_length_1000h))
+    cwd_imperial <- subset(cwd_ag, select = c(time, site, plot, load_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac, sc_length_1000s, sc_length_1000r))
 
     return(cwd_imperial)
 
@@ -648,5 +666,5 @@ CWDLoad <- function(cwd_fuel_data, cwd_tree_data, cwd_units, cwd_sp_codes) {
 
 globalVariables(c("time", "sec_1000h_wt", "sg_1000s_wt", "aggregate", "coef_1000s", "coef_1000r", "load_1000s_Mg_ha",
                   "load_1000r_Mg_ha", "na.pass", "load_1000s_ton_ac", "load_1000r_ton_ac", "load_cwd_ton_ac", "obs_id",
-                  "transect", "length_1000h", "slope", "ssd_S", "ssd_R", "sc_length_1000h", "count"))
+                  "transect", "length_1000h", "slope", "ssd_S", "ssd_R", "sc_length_1000s", "sc_length_1000r", "count", "diameter"))
 

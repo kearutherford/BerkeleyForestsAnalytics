@@ -1248,13 +1248,21 @@ A dataframe with the following columns:
     fuel load (1000-hour sound + 1000-hour rotten) in megagrams per
     hectare (or US tons per acre)
 
-7.  `sc_length_1000h`: slope-corrected transect length (i.e., horizontal
-    transect length) for 1000-hour fuels in either meters or feet. This
-    is the total horizontal length of transect sampled for 1000-hour
-    fuels at the specific time:site:plot. See “Slope-corrected transect
-    length” section in “Background information for surface and ground
-    fuel load calculations” for details on why and how this is
+7.  `sc_length_1000s`: slope-corrected transect length (i.e., horizontal
+    transect length) for sound 1000-hour fuels in either meters or feet.
+    This is the total horizontal length of transect sampled for sound
+    1000-hour fuels at the specific time:site:plot. See “Slope-corrected
+    transect length” section in “Background information for surface and
+    ground fuel load calculations” for details on why and how this is
     calculated.
+
+8.  `sc_length_1000r`: slope-corrected transect length (i.e., horizontal
+    transect length) for rotten 1000-hour fuels in either meters or
+    feet. This is the total horizontal length of transect sampled for
+    rotten 1000-hour fuels at the specific time:site:plot. See
+    “Slope-corrected transect length” section in “Background information
+    for surface and ground fuel load calculations” for details on why
+    and how this is calculated.
 
 ### Demonstrations
 

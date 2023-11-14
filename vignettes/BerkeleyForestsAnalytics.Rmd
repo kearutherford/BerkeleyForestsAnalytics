@@ -384,6 +384,8 @@ FWD <- FineFuels(tree_data = vign_trees_5,
                  fuel_data = vign_fuels_4)
 
 head(FWD)
+
+FWD %>% filter(time == "post", site == "400", plot == "2")
 ```
 
 This time the function runs. However, we get some warning messages. Let's look at the first warning, which tells us that there are missing 10-hour counts. Let's look at where NA count_10h values show up in the data:

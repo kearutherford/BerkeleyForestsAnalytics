@@ -229,12 +229,12 @@ test_that("Output dataframe has expected column names", {
 
   expect_named(CoarseFuels(fuel_data = good_cwd_m,
                            tree_data = good_sf_trees_m),
-               c("time", "site", "plot", "load_1000s_Mg_ha", "load_1000r_Mg_ha", "load_cwd_Mg_ha", "sc_length_1000h"))
+               c("time", "site", "plot", "load_1000s_Mg_ha", "load_1000r_Mg_ha", "load_cwd_Mg_ha", "sc_length_1000s", "sc_length_1000r"))
 
   expect_named(CoarseFuels(fuel_data = good_cwd_i,
                            tree_data = good_sf_trees_i,
                            units = "imperial"),
-               c("time", "site", "plot", "load_1000s_ton_ac", "load_1000r_ton_ac", "load_cwd_ton_ac", "sc_length_1000h"))
+               c("time", "site", "plot", "load_1000s_ton_ac", "load_1000r_ton_ac", "load_cwd_ton_ac", "sc_length_1000s", "sc_length_1000r"))
 
 })
 
@@ -250,7 +250,8 @@ test_that("Final column classes are as expected", {
   expect_equal(class(cwd_trial$load_1000r_Mg_ha), "numeric")
   expect_equal(class(cwd_trial$load_1000s_Mg_ha), "numeric")
   expect_equal(class(cwd_trial$load_cwd_Mg_ha), "numeric")
-  expect_equal(class(cwd_trial$sc_length_1000h), "numeric")
+  expect_equal(class(cwd_trial$sc_length_1000s), "numeric")
+  expect_equal(class(cwd_trial$sc_length_1000r), "numeric")
 
 })
 
