@@ -3029,6 +3029,28 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 
 Coming soon… this section is in progress.
 
+## General equations
+
+**Simple random sampling:**
+
+**Stratified random sampling:**
+
+Stratum values:
+
+*Estimate of the mean:*
+
+$\bar{y}_h = \frac{\sum(y_{h_i})}{n_h}$
+
+*Variance of the observations:*
+
+$s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
+
+*Standard deviation of the mean:*
+
+$s_{\bar{y}_h} = \sqrt(\frac{s_{y_h}^2}{n_h})$
+
+**Fire and Fire Surrogate:**
+
 <br>
 
 # Contact information
