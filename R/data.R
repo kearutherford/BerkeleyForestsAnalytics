@@ -218,6 +218,155 @@
 "lit_duff_avg_demo"
 
 
+#' @title Fine woody debris data for compilation demonstrations
+#'
+#' @description
+#' A fake dataset created for fine woody debris compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 9 rows and 11 columns:
+#' \describe{
+#'   \item{time}{year in which the data were collected}
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{stratum}{stratum within site}
+#'   \item{plot}{plot within stratum}
+#'   \item{load_1h_Mg_ha}{fuel load of 1-hour fuels in megagrams per hectare}
+#'   \item{load_10h_Mg_ha}{fuel load of 10-hour fuels in megagrams per hectare}
+#'   \item{load_100h_Mg_ha}{fuel load of 100-hour fuels in megagrams per hectare}
+#'   \item{load_fwd_Mg_ha}{total fine woody debris fuel load in megagrams per hectare}
+#'   \item{sc_length_1h}{slope-corrected transect length for 1-hour fuels in meters}
+#'   \item{sc_length_10h}{slope-corrected transect length for 10-hour fuels in meters}
+#'   \item{sc_length_100h}{slope-corrected transect length for 100-hour fuels in meters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_fwd_demo"
+
+
+#' @title Coarse woody debris data for compilation demonstrations
+#'
+#' @description
+#' A fake dataset created for coarse woody debris compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 9 rows and 9 columns:
+#' \describe{
+#'   \item{time}{year in which the data were collected}
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{stratum}{stratum within site}
+#'   \item{plot}{plot within stratum}
+#'   \item{load_1000s_Mg_ha}{fuel load of sound 1000-hour fuels in megagrams per hectare}
+#'   \item{load_1000r_Mg_ha}{fuel load of rotten 1000-hour fuels in megagrams per hectare}
+#'   \item{load_cwd_Mg_ha}{total coarse woody debris fuel load in megagrams per hectare}
+#'   \item{sc_length_1000s}{slope-corrected transect length for sound 1000-hour fuels in meters}
+#'   \item{sc_length_1000r}{slope-corrected transect length for rotten 1000-hour fuels in meters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_cwd_demo"
+
+
+#' @title Data for general stratified random sampling demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 9 rows and 8 columns:
+#' \describe{
+#'   \item{time}{year in which the data were collected}
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{stratum}{stratum within site}
+#'   \item{plot}{plot within stratum}
+#'   \item{sph}{stems per hectare}
+#'   \item{ba_m2_ha}{basal area in meters squared per hectare}
+#'   \item{qmd_cm}{quadratic mean diameter in centimeters}
+#'   \item{dbh_cm}{average diameter at breast height in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_strs_demo"
+
+
+#' @title Weight data for stratified random sampling demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 4 rows and 3 columns:
+#' \describe{
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{stratum}{stratum within site}
+#'   \item{wh}{stratum weight}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_wt_demo"
+
+
+#' @title Data for general simple random sampling demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 9 rows and 7 columns:
+#' \describe{
+#'   \item{time}{year in which the data were collected}
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{plot}{plot within site}
+#'   \item{sph}{stems per hectare}
+#'   \item{ba_m2_ha}{basal area in meters squared per hectare}
+#'   \item{qmd_cm}{quadratic mean diameter in centimeters}
+#'   \item{dbh_cm}{average diameter at breast height in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_srs_demo"
+
+
+#' @title Data for general simple random sampling demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 8 rows and 8 columns:
+#' \describe{
+#'   \item{time}{year in which the data were collected}
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{plot}{plot within site}
+#'   \item{species}{tree species}
+#'   \item{dominance}{relative basal area in percent}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_srs_sp_demo"
+
+
+#' @title Data for general Fire and Fire Surrogate demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 9 rows and 8 columns:
+#' \describe{
+#'   \item{time}{year in which the data were collected}
+#'   \item{trt_type}{treatment type (burn, thin, thin + burn, control)}
+#'   \item{site}{compartment}
+#'   \item{plot}{plot within compartment}
+#'   \item{sph}{stems per hectare}
+#'   \item{ba_m2_ha}{basal area in meters squared per hectare}
+#'   \item{qmd_cm}{quadratic mean diameter in centimeters}
+#'   \item{dbh_cm}{average diameter at breast height in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_ffs_demo"
+
+
 #' @title Tree data for vignette, version 1
 #'
 #' @description
@@ -1581,4 +1730,1212 @@ bad_duff_8 <- data.frame(
   litter_depth = c(2,NA,6,7,5,5,3,6), # missing depth
   duff_depth = c(5,1,3,2,4,4,2,1),
   lit_duff_depth = c(7,NA,9,9,9,9,5,7) # missing depth
+)
+
+
+######################################################################
+# dataframes used for compilation function tests
+######################################################################
+
+#---------------------------------------------------------------------
+# General compilation dataframes
+#---------------------------------------------------------------------
+
+# stratified random sampling -----------------------------------------
+g_strs <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_strs_sp <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2), # intentionally numeric
+  plot = as.character(c(1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2)),
+  species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_strs_wh_1 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  wh = c(0.3,0.7,0.8,0.2)
+)
+
+g_strs_wh_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2,1,2,1,2)),
+  wh = c(0.3,0.7,0.8,0.2,0.1,0.9,0.5,0.5)
+)
+
+b_strs_1 <- data.frame(
+  #time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),  missing column
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  #site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),  missing column
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),  missing column
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  #plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),  missing column
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_5 <- data.frame(
+  time = c("pre", NA, "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),  # missing time
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_6 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", NA, "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"), # missing site
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_7 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", NA, "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"), # missing stratum
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_8 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,NA,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # missing plot
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_9 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  ba = as.character(c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25)), # wrong class
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_10 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,1,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # repeat time:site:stratum:plot
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_sp_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1",  "2", "2", "2", "2"),
+  plot = as.character(c(1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2)),
+  species =  c("PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"), # missing species
+  bio = c(42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_sp_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1",  "2", "2", "2", "2"),
+  plot = as.character(c(1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2)),
+  species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = as.character(c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)) # wrong class
+)
+
+b_strs_sp_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "1", "1", "1", "1",  "2", "2", "2", "2"),
+  plot = as.character(c(1,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2)),
+  species =  c("ABCO", "ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"), # repeat species
+  bio = c(20, 31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_wh_1 <- data.frame(
+  #site = c("SEKI", "SEKI", "YOMI", "YOMI"),  missing column
+  stratum = as.character(c(1,2,1,2)),
+  wh = c(0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_2 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  #stratum = as.character(c(1,2,1,2)),  missing column
+  wh = c(0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_3 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2))
+  #wh = c(0.3,0.7,0.8,0.2)  missing column
+)
+
+b_strs_wh_4 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  wh = as.character(c(0.3,0.7,0.8,0.2)) # wrong class
+)
+
+b_strs_wh_5 <- data.frame(
+  time = c(NA, "pre", "pre", "pre", "post", "post", "post", "post"), # missing time
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2,1,2,1,2)),
+  wh = c(0.3,0.7,0.8,0.2,0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_6 <- data.frame(
+  site = c(NA, "SEKI", "YOMI", "YOMI"), # missing site
+  stratum = as.character(c(1,2,1,2)),
+  wh = c(0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_7 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(NA,2,1,2)), # missing stratum
+  wh = c(0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_8 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  wh = c(NA,0.7,0.8,0.2) # missing weight
+)
+
+b_strs_wh_9 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,3,1,2)), # mismatch site:stratum
+  wh = c(0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_10 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,3,1,2,1,2,1,2)), # mismatch time:site:stratum
+  wh = c(0.3,0.7,0.8,0.2,0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_11 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,2,1,2)), # repeat site:stratum
+  wh = c(0.3,0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_12 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,2,1,2,1,2,1,2)), # repeat time:site:stratum
+  wh = c(0.3,0.3,0.7,0.8,0.2,0.3,0.7,0.8,0.2)
+)
+
+b_strs_wh_13 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  wh = c(0.2,0.7,0.8,0.2) # incorrect weighting
+)
+
+# simple random sampling -----------------------------------------
+g_srs <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_srs_sp <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4)),
+  species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_srs_sp_class <- data.frame(
+  time = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+  site = c(20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 30, 30, 30, 30, 30, 30, 30, 30, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 30, 30, 30, 30, 30, 30, 30, 30),
+  plot = c(1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4),
+  species =  c(130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131),
+  bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_srs_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  ba = as.character(c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25)), # wrong class
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_srs_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)), # repeat observation
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_srs_sp_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4), # intentionally keep as numeric here
+  species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = as.character(c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)) # wrong class
+)
+
+b_srs_sp_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4), # intentionally keep as numeric here
+  species =  c("ABCO", "ABCO", "PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"), # repeat observation
+  bio = c(21,31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_srs_sp_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4), # intentionally keep as numeric here
+  species =  c("PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = c(42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+# Fire and fire surrogate -----------------------------------------
+g_ffs <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_ffs_sp <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c(1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2), # intentionally numeric
+  site = as.character(c(360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530, 360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530)),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2)),
+  species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_ffs_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  #trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), missing column
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_ffs_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", NA, "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), # missing trt type
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_ffs_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), # missing trt type
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  ba = as.character(c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25)), # wrong class
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_ffs_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,1,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)), # repeat observation
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_ffs_sp_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = as.character(c(1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2)),
+  site = as.character(c(360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530, 360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530)),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2)),
+  species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
+  bio = as.character(c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)) # wrong_class
+)
+
+b_ffs_sp_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = as.character(c(1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2)),
+  site = as.character(c(360, 360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530, 360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530)),
+  plot = as.character(c(1,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2)),
+  species =  c("ABCO","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"), # repeat observation
+  bio = c(31,31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_ffs_sp_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = as.character(c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2)),
+  site = as.character(c(360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530, 360, 360, 360, 360, 220, 220, 220, 220, 220, 220, 460, 460, 460, 460, 530, 530, 530, 530)),
+  plot = as.character(c(1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2)),
+  species =  c("PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"), # missing species
+  bio = c(42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+
+#---------------------------------------------------------------------
+# Surface fuel compilation dataframes
+#---------------------------------------------------------------------
+
+# stratified random sampling -----------------------------------------
+# FWD -------
+g_strs_fwd_m <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2), # intentially numeric
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+g_strs_fwd_i <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)), missing column
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_2 <- data.frame(
+  time = c("pre", NA, "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"), # missing time
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", NA, "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"), # missing site
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,NA,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)), # missing stratum
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_5 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,NA,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # missing plot
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_6 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,3,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # repeat observation
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_m_7 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,4,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # merging dataframes check
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_strs_fwd_i_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  #load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2), missing column
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+# CWD -------
+g_strs_cwd_m <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+g_strs_cwd_i <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_m_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)), missing column
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_m_2 <- data.frame(
+  time = c("pre", NA, "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"), # missing time
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_m_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", NA, "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"), # missing site
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_m_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,NA,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)), # missing stratum
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_m_5 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,NA,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # missing plot
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_m_6 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,3,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # repeat observation
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_strs_cwd_i_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,1,1,2,2,1,1,2,2,1,1,1,2,2,1,1,2,2)),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
+  #load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4), missing column
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+
+# simple random sampling -----------------------------------------
+# FWD -----
+g_srs_fwd_m <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+g_srs_fwd_m_class <- data.frame(
+  time = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+  site = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
+  plot = c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+g_srs_fwd_i <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)), missing column
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = as.character(c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2)), # wrong class
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = as.character(c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3)), # wrong class
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = as.character(c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4)), # wrong class
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_5 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = as.character(c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)), # wrong class
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_6 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = as.character(c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)), # wrong class
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_7 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = as.character(c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)) # wrong class
+)
+
+b_srs_fwd_m_8 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)), # repeat observation
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_m_9 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,5,1,2,3,4,5,1,2,3,4)), # merging dataframes check
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_i_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  #load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2), missing column
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_i_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_ton_ac = as.character(c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2)), # wrong class
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_i_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_ton_ac = as.character(c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3)), # wrong class
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_srs_fwd_i_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = as.character(c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4)), # wrong class
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+# CWD ------
+g_srs_cwd_m <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+g_srs_cwd_m_class <- data.frame(
+  time = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+  site = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+g_srs_cwd_i <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_m_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)), missing column
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_m_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = as.character(c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4)), # wrong class
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_m_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = as.character(c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9)), # wrong class
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_m_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = as.character(c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13)), # wrong class
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_m_5 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = as.character(c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)), # wrong class
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_m_6 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = as.character(c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)) # wrong class
+)
+
+b_srs_cwd_m_7 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)), # repeat observation
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_i_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  #load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4), missing column
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_i_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_ton_ac = as.character(c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4)), # wrong class
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_i_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_ton_ac = as.character(c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9)), # wrong class
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_srs_cwd_i_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
+  load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = as.character(c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13)), # wrong class
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+
+# Fire and fire surrogate -----------------------------------------
+# FWD -----
+g_ffs_fwd_m <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+g_ffs_fwd_m_class <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+g_ffs_fwd_i <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_ffs_fwd_m_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  #trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), missing column
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_ffs_fwd_m_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", NA, "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), # missing type
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_ffs_fwd_m_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,2,1,2,1,2,1,2,1,2,3,1,2,1,2)), # repeat observation
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_ffs_fwd_m_4 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,4,1,2,1,2,1,2,1,2,3,1,2,1,2)), # merging dataframes check
+  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
+  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+b_ffs_fwd_i_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  #load_1h_ton_ac = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2), missing column
+  load_10h_ton_ac = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
+  load_100h_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_fwd_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
+)
+
+# CWD -----
+g_ffs_cwd_m <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+g_ffs_cwd_m_class <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+g_ffs_cwd_i <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_ffs_cwd_m_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  #trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), missing column
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_ffs_cwd_m_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", NA, "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"), # missing type
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_ffs_cwd_m_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,2,1,2,1,2,1,2,1,2,3,1,2,1,2)), # repeat observation
+  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
+  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
+)
+
+b_ffs_cwd_i_1 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
+  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
+  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
+  #load_1000s_ton_ac = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4), missing column
+  load_1000r_ton_ac = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
+  load_cwd_ton_ac = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
+  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
+  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
 )

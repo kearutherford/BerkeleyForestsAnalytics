@@ -450,7 +450,6 @@ The function runs. Once again, we are familiar with this particular warning mess
 
 Now that we have everything summarized at the plot level, let's try compiling some of the data to the compartment level and then to the entire treatment (here the fire-only treatment) level. 
 
-
 ### Tree biomass 
 
 **Step 1:** estimate tree biomass at the plot level 
@@ -463,30 +462,29 @@ head(tree_bio)
 
 <br> 
 
-**Step 2:** calculate mean biomass for the fire-only treatment (pre- and post-burn)
-
+**Step 2:** create all necessary columns for input into the `CompilePlots()` function
 ```{r}
-tree_bio_sum <- tree_bio %>%
+tree_bio_2 <- tree_bio %>%
   separate(site, c("time", "site")) %>% # separate id into time and site columns 
-  
-  # get average tree biomass for each compartment (i.e., each experimental unit) first 
-  group_by(time, site) %>% # group by time:site
-  summarize(avg_live_comp = mean(live_Mg_ha, na.rm = TRUE), # average live tree biomass for the compartment
-            avg_dead_comp = mean(dead_Mg_ha, na.rm = TRUE)) %>% # average dead tree biomass for the compartment
-  ungroup() %>% 
-  
-  # then get the mean and se for the fire-only treatment as a whole 
-  group_by(time) %>% # group by time
-  summarize(mean_live = round(mean(avg_live_comp),2), # mean live tree biomass for fire-only treatment 
-            se_live = round(sd(avg_live_comp)/sqrt(n()),2), # standard error of the mean 
-            mean_dead = round(mean(avg_dead_comp),2), # mean dead tree biomass for fire-only treatment
-            se_dead = round(sd(avg_dead_comp)/sqrt(n()),2)) %>% # standard error of the mean 
-  ungroup()
-  
-tree_bio_sum
+  mutate(trt_type = "fire") %>% # create a trt_type column 
+  select(time, trt_type, site, plot, everything()) # organize columns as desired 
+
+head(tree_bio_2)
 ```
 
-The important thing to note is that you must compile to the compartment (i.e., experimental unit) level first. If you have a stratified random sampling design (rather than an experimental design, as demonstrated in this vignette), you must calculate stratum values before calculating overall values.
+<br>
+
+**Step 3:** input data into `CompilePlots()`
+```{r}
+# keep the defaults for wt_data (= "not_needed")
+tree_bio_sum <- CompilePlots(data = tree_bio_2,
+                             design = "FFS")
+```
+
+```{r}
+tree_bio_sum$site # pull out site-level summary 
+tree_bio_sum$trt_type # pull out treatment-level summary 
+```
 
 
 ### Fine woody debris 
@@ -501,62 +499,26 @@ head(FWD)
 
 <br> 
 
-**Step 2:** calculate mean fine fuel loads for the fire-only treatment (pre- and post-burn)
-
+**Step 2:** create all necessary columns for input into the `CompileSurfaceFuels()` function
 ```{r}
-fwd_sum <- FWD %>%
-  group_by(time, site) %>%  # group by time:site
-  
-  # weight estimates by the line transect length 
-  mutate(w_1h = sc_length_1h/(sum(sc_length_1h)/n()),
-         w_10h = sc_length_10h/(sum(sc_length_10h)/n()),
-         w_100h = sc_length_100h/(sum(sc_length_100h)/n()),
-         w_load_1h = w_1h*load_1h_Mg_ha,
-         w_load_10h = w_1h*load_10h_Mg_ha,
-         w_load_100h = w_1h*load_100h_Mg_ha,
-         w_load_fwd = w_load_1h + w_load_10h + w_load_100h) %>% # Note: if you have a missing 1h, 10h, or 100h load estimate, the total fine woody debris load estimate should be NA
-  
-  # get average fine fuel loads for each compartment (i.e., each experimental unit) first 
-  summarize(avg_1h_comp = mean(w_load_1h, na.rm = TRUE), # average 1-hour fuel load for the compartment
-            avg_10h_comp = mean(w_load_10h, na.rm = TRUE), 
-            avg_100h_comp = mean(w_load_100h, na.rm = TRUE), 
-            avg_fwd_comp = mean(w_load_fwd, na.rm = TRUE)) %>% 
-  ungroup() %>% 
-  
-  # then get the mean and se for the fire-only treatment as a whole 
-  group_by(time) %>%
-  summarize(mean_1h = round(mean(avg_1h_comp),2), # mean 1-hour fuel load for fire-only treatment 
-            se_1h = round(sd(avg_1h_comp)/sqrt(n()),2), # standard error of the mean 
-            mean_10h = round(mean(avg_10h_comp),2),
-            se_10h = round(sd(avg_10h_comp)/sqrt(n()),2),
-            mean_100h = round(mean(avg_100h_comp),2),
-            se_100h = round(sd(avg_100h_comp)/sqrt(n()),2),
-            mean_fwd = round(mean(avg_fwd_comp),2),
-            se_fwd = round(sd(avg_fwd_comp)/sqrt(n()),2)) %>% 
-  ungroup()
+FWD_2 <- FWD %>%
+  mutate(trt_type = "fire") %>% # create a trt_type column 
+  select(time, trt_type, site, plot, everything()) # organize columns as desired 
 
-head(fwd_sum)
+head(FWD_2)
 ```
 
-As noted above, you must compile to the compartment (i.e., experimental unit) level first. If you have a stratified random sampling design (rather than an experimental design, as demonstrated in this vignette), you must calculate stratum values before calculating overall values.
+<br>
 
-Additionally, "if line transects at different sampling points have different lengths, then estimates should be weighted by the line transect length" (Marshall *et al.* 2000). The mean and it's standard error become:
-  
-\(\bar{y}_w = \frac{\sum_{i=1}^{n}(w_iy_i)}{n}\)   (Eq. 21 in Marshall *et al.* (2000))
-    
-\(S_{\bar{y}} = \sqrt{\frac{\sum_{i=1}^{n}(w_i*(y_i - \bar{y}_w)^2)}{n*(n-1)}}\)   (Eq. 22 in Marshall *et al.* (2000))
-    
-*where* 
-    
-* n is the number of line transects established on an area 
-    
-* \(y_i\) is the value per unit area based on line transect i (e.g., Mg/ha)
-    
-* \(w_i\) is \(\frac{L_i}{(\frac{\sum_{i=1}^{n}(L_i)}{n})}\)
-    
-  \(L_i\) is the length of transect i  
-  
-Note that here we do not calculate the standard error of the mean at the compartment level. However, for a stratified random sampling design, you may want to calculate the standard error for each stratum. In this case, you would refer to Eq. 22 provided above. Note that the equations provided in Marshall *et al.* (2000) apply for simple random sampling or systematic sampling. They are not written using stratified random sampling notation (which often includes a subscript h to indicate the stratum in which you are working). 
+**Step 3:** input data into `CompileSurfaceFuels()`
+```{r}
+# keep the defaults for cwd_data (= "none), wt_data (= "not_needed"), and units (= "metric")
+FWD_sum <- CompileSurfaceFuels(fwd_data = FWD_2,
+                               design = "FFS")
+```
 
-As a final note of caution, be mindful of NA load_xh_Mg_ha values. For example, if you had an NA load_10h_Mg_ha in compartment 340, you would want to adjust the n from 20 to 19 (including the n in \(\sum_{i=1}^{n}\)). 
+```{r}
+FWD_sum$site # pull out site-level summary
+FWD_sum$trt_type # pull out treatment-level summary 
+```
 

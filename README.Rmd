@@ -1,13 +1,12 @@
 ---
-output: 
-  github_document
+output: github_document
 ---
 
 # Berkeley Forests Analystics 
 
 The `BerkeleyForestsAnalytics` package is a suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data. 
 
-> **Tip:** you can navigate this README file using the table of contents found in the upper left-hand corner (just to the left of the README.md)
+> **Tip:** you can navigate this README file using the table of contents found in the upper right-hand corner.
 
 ## Installation instructions
 
@@ -801,6 +800,276 @@ duff_demo2
 
 <br>
 
+# Further data summarization   
+
+The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize data beyond the plot level. These functions are specifically designed to further summarize the outputs from other `BerkeleyForestsAnalytics` functions. The functions recognize simple random sampling and stratified random sampling designs. They also recognize the design of the Fire and Fire Surrogate study. 
+
+## :eight_spoked_asterisk: `CompilePlots( )`
+
+### Inputs
+
+1. `data` A dataframe or tibble. Each row must be an observation of an individual plot. Required columns depend on the sampling design: 
+
+    * If sampling design is simple random: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. 
+        * **other columns:** Any numeric variables of interest. Can have any column names. 
+    
+    * If sampling design is stratified random: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. 
+        * **other columns:** Any numeric variables of interest. Can have any column names. 
+        
+    * If sampling design is Fire and Fire Surrogate: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
+        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. 
+        * **other columns:** Any numeric variables of interest. Can have any column names. 
+
+2. `design` Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
+
+3. `wt_data` A dataframe or tibble. Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS". Required columns: 
+
+### Outputs
+
+Depends on the sampling design: 
+
+* Simple random sampling: a dataframe with site-level summaries.
+
+* Stratified random sampling: a list with two components: (1) a dataframe with stratum-level summaries and (2) a dataframe with site-level summaries.
+
+* Fire and Fire Surrogate: a list with two components: (1) a dataframe with site-level (i.e., compartment-level) summaries and (2) a dataframe with treatment-level summaries.
+
+### Demonstrations
+
+**Simple random sampling design:**
+```{r}
+# investigate input data
+compilation_srs_demo
+```
+
+<br>
+
+```{r}
+# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# keep default wt_data (= "not_needed")
+srs_demo1 <- CompilePlots(data = compilation_srs_demo,
+                          design = "SRS")
+
+srs_demo1
+```
+
+<br>
+
+**Simple random sampling design, summarized by species:**
+```{r}
+# investigate input data
+compilation_srs_sp_demo
+```
+
+<br>
+
+```{r}
+# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# keep default wt_data (= "not_needed")
+srs_demo2 <- CompilePlots(data = compilation_srs_sp_demo,
+                          design = "SRS")
+
+srs_demo2
+```
+
+<br>
+
+**Stratified random sampling design:**
+```{r}
+# investigate input data
+compilation_strs_demo
+```
+
+```{r}
+# investigate input wt_data
+compilation_wt_demo
+```
+
+<br>
+
+```{r}
+# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+strs_demo <- CompilePlots(data = compilation_strs_demo,
+                          design = "STRS",
+                          wt_data = compilation_wt_demo)
+
+strs_demo
+```
+
+<br>
+
+**Fire and Fire Surrogate design:**
+```{r}
+# investigate input data
+compilation_ffs_demo
+```
+
+<br>
+
+```{r}
+# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# keep default wt_data (= "not_needed")
+ffs_demo <- CompilePlots(data = compilation_ffs_demo,
+                         design = "FFS")
+
+ffs_demo
+```
+
+<br>
+
+## :eight_spoked_asterisk: `CompileSurfaceFuels( )`
+
+The `CompileSurfaceFuels` function is specifically designed to further summarize outputs from the `FineFuels` and `CoarseFuels` functions. Specifically, the function weights the fuel load estimates by the length of the line transect actually sampled (i.e., the slope-corrected transect length). See "Background information for surface and ground fuel load calculations: Slope-corrected transect length" and "Background information for further data summarization" below for further details on why and how estimes should be weighted by the line transect length. 
+
+### Inputs
+
+1. `fwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no fine woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
+
+    * If sampling design is simple random: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+        * **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
+        * **sc_length_1h:** Slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet
+        * **sc_length_10h:** Slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet
+        * **sc_length_100h:** Slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet
+    
+    * If sampling design is stratified random: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
+        * **sc_length_1h:** Slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet
+        * **sc_length_10h:** Slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet
+        * **sc_length_100h:** Slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet
+        
+    * If sampling design is Fire and Fire Surrogate: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
+        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
+        * **sc_length_1h:** Slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet
+        * **sc_length_10h:** Slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet
+        * **sc_length_100h:** Slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet
+        
+2. `cwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no coarse woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
+
+    * If sampling design is simple random: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+        * **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
+        * **sc_length_1000s:** Slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet
+        * **sc_length_1000r:** Slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet
+    
+    * If sampling design is stratified random: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
+        * **sc_length_1000s:** Slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet
+        * **sc_length_1000r:** Slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet
+        
+    * If sampling design is Fire and Fire Surrogate: 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
+        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
+        * **plot:**  Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
+        * **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
+        * **sc_length_1000s:** Slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet
+        * **sc_length_1000r:** Slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet
+
+3. `design` Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
+
+4. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
+
+5. `units` Specifies whether the input data are in metric (megagrams per hectare) or imperial (US tons per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.
+
+### Outputs
+
+Depends on the sampling design: 
+
+* Simple random sampling: a dataframe with site-level summaries.
+
+* Stratified random sampling: a list with two components: (1) a dataframe with stratum-level summaries and (2) a dataframe with site-level summaries.
+
+* Fire and Fire Surrogate: a list with two components: (1) a dataframe with site-level (i.e., compartment-level) summaries and (2) a dataframe with treatment-level summaries.
+
+### Demonstrations
+
+```{r}
+# investigate input fwd_data
+compilation_fwd_demo
+```
+
+```{r}
+# investigate input data
+compilation_cwd_demo
+```
+
+```{r}
+# investigate input wt_data
+compilation_wt_demo
+```
+
+<br>
+
+**Stratified random sampling design, with both fwd and cwd data supplied:**
+```{r}
+# call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
+strs_surface_demo1 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
+                                          cwd_data = compilation_cwd_demo,
+                                          design = "STRS",
+                                          wt_data = compilation_wt_demo,
+                                          units = "metric")
+
+strs_surface_demo1
+```
+
+<br>
+
+**Stratified random sampling design, with only fwd data supplied:**
+```{r}
+# call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
+strs_surface_demo2 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
+                                          cwd_data = "none",
+                                          design = "STRS",
+                                          wt_data = compilation_wt_demo,
+                                          units = "metric")
+
+strs_surface_demo2
+```
+
+<br>
+
 # Background information for tree biomass estimations 
 
 ## Allometric equations
@@ -1320,6 +1589,12 @@ We can calculate \(SlopeDeg_t\) using the following equation:
   * van Wagtendonk, J.W., Benedict, J.M., & Sydoriak, W.M. (1996). Physical properties of woody fuel particles of Sierra Nevada conifers. *International Journal of Wildland Fire*, 6(3), 117–123. https://doi.org/10.1071/WF9960117
   
   * van Wagtendonk, J.W., Benedict, J.M. & Sydoriak, W.M. (1998). Fuel bed characteristics of Sierra Nevada conifers. *Western Journal of Applied Forestry*, 13(3), 73–84. https://doi.org/10.1093/wjaf/13.3.73
+
+<br>
+
+# Background information for further data summarization 
+
+Coming soon... this section is in progress. 
 
 <br>
 
