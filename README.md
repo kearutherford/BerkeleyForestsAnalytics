@@ -3073,7 +3073,7 @@ $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
 <br>
 
-**Fire and Fire Surrogate:**
+**Fire and Fire Surrogate**
 
 ## Weighted equations
 
@@ -3084,6 +3084,8 @@ $\bar{y_w} = \frac{\sum(w_i*y_i)}{n}$
 *Variance of the observations:*
 
 $s_{\bar{y}} = \sqrt(\frac{\sum(w_i*(y_i-\bar{y_w})^2)}{n*(n-1)})$
+
+$\frac{L_i}{\frac{\sum(L_i)}{n}}$
 
 <br>
 
