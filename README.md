@@ -3131,7 +3131,7 @@ $\bar{y_h} = \frac{\sum(w_{h_i}*y_{h_i})}{n_h}$
 
 *Weighted standard error:*
 
-$s_{\bar{y_h}} = \sqrt{\frac{\sum(w_{h_i}*(y_{h_i}-\bar{y_h})^2)}{n_h*(n_h-1)}}$
+$s_{\bar{y_h}} = \sqrt{\frac{\sum(w_{hi}*(y_{hi}-\bar{y_h})^2)}{n_h*(n_h-1)}}$
 
 $\frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
 
