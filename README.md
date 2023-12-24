@@ -3039,7 +3039,7 @@ Stratum values:
 
 *Estimate of the mean:*
 
-$\bar(y_h) = \frac{\sum(y_{h_i})}{n_h}$
+$\bar{y_h} = \frac{\sum(y_{h_i})}{n_h}$
 
 *Variance of the observations:*
 
