@@ -3045,6 +3045,8 @@ $s_y^2 = \frac{\sum(y_i^2) - \frac{(\sum(y_i))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
+<br>
+
 **Stratified random sampling**
 
 Stratum values ———————————
@@ -3075,17 +3077,73 @@ $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
 **Fire and Fire Surrogate**
 
+Compartment values ——————————-
+
+*Estimate of the mean:*
+
+$\bar{y_c} = \frac{\sum(y_{c_i})}{n_c}$
+
+*Variance of the observations:*
+
+$s_{y_c}^2 = \frac{\sum(y_{c_i}^2) - \frac{(\sum(y_{c_i}))^2}{n_c}}{n_c-1}$
+
+*Standard deviation of the mean:*
+
+$s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+
+Overall values ———————————–
+
+*Estimate of the mean:*
+
+$\bar{y} = \frac{\sum(y_c)}{n}$
+
+*Variance of the observations:*
+
+$s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
+
+*Standard deviation of the mean:*
+
+$s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
+
 ## Weighted equations
 
-*Weighted estimate of the mean:*
+**Simple random sampling**
+
+*Weighted mean:*
 
 $\bar{y_w} = \frac{\sum(w_i*y_i)}{n}$
 
-*Variance of the observations:*
+*Weighted standard error:*
 
 $s_{\bar{y}} = \sqrt(\frac{\sum(w_i*(y_i-\bar{y_w})^2)}{n*(n-1)})$
 
 $\frac{L_i}{\frac{\sum(L_i)}{n}}$
+
+<br>
+
+**Stratified random sampling**
+
+Stratum values ———————————
+
+*Weighted mean:*
+
+$\bar{y}_{h_w} = \frac{\sum(w_i*y_i)}{n}$
+
+*Weighted standard error:*
+
+$s_{\bar{y}} = \sqrt(\frac{\sum(w_i*(y_i-\bar{y_w})^2)}{n*(n-1)})$
+
+$\frac{L_i}{\frac{\sum(L_i)}{n}}$
+
+Overall values ———————————-
+
+*Estimate of the mean:*
+
+$\bar{y} = \sum(\bar{y_h} * W_h)$
+
+*Standard deviation of the mean:*
+
+$s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
 <br>
 
