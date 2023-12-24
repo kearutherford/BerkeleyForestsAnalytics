@@ -1701,9 +1701,9 @@ Stratum values ---------------------------------
 
 *Weighted standard error:*
 
-\(\frac{\sum(w_{h_i}*(y_{h_i}-\bar{y_h})^2)}{n_h-1}\)
+\(s_{y_h}^2 = \frac{\sum(w_{h_i}*(y_{h_i}-\bar{y_h})^2)}{n_h-1}\)
 
-\(s_{\bar{y_h}} = \sqrt{\frac{x}{n_h}}\)
+\(s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}\)
 
 \(\frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}\)
 
