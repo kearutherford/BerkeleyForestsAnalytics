@@ -1607,7 +1607,7 @@ Stratum values:
 
 *Estimate of the mean:*
 
-\(\bar{y}_h = \frac{\sum(y_{h_i})}{n_h}\)
+\(\bar y_h = \frac{\sum(y_{h_i})}{n_h}\)
 
 *Variance of the observations:*
 
@@ -1615,7 +1615,7 @@ Stratum values:
 
 *Standard deviation of the mean:*
 
-\(s_{\bar{y}_h} = \sqrt{\frac{s_{y_h}^2}{n_h}}\)
+\(s_{\bar y_h} = \sqrt{\frac{s_{y_h}^2}{n_h}}\)
 
 **Fire and Fire Surrogate:** 
 
