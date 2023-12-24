@@ -3031,11 +3031,11 @@ Coming soon… this section is in progress.
 
 ## General equations
 
-**Simple random sampling:**
+**Simple random sampling**
 
-**Stratified random sampling:**
+**Stratified random sampling**
 
-Stratum values:
+Stratum values
 
 *Estimate of the mean:*
 
@@ -3048,6 +3048,18 @@ $s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
 *Standard deviation of the mean:*
 
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+
+Overall values
+
+*Estimate of the mean:*
+
+$\bar{y}_{ST} = \sum(\bar{y_h} * W_h)$
+
+*Variance of the observations:*
+
+$s_{\bar{y}_{ST}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
+
+*Standard deviation of the mean:*
 
 **Fire and Fire Surrogate:**
 
