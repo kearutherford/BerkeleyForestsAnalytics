@@ -3111,11 +3111,11 @@ $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
 *Weighted mean:*
 
-$\bar{y_w} = \frac{\sum(w_i*y_i)}{n}$
+$\bar{y} = \frac{\sum(w_i*y_i)}{n}$
 
 *Weighted standard error:*
 
-$s_{\bar{y}} = \sqrt(\frac{\sum(w_i*(y_i-\bar{y_w})^2)}{n*(n-1)})$
+$s_{\bar{y}} = \sqrt(\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)})$
 
 $\frac{L_i}{\frac{\sum(L_i)}{n}}$
 
