@@ -1621,14 +1621,11 @@ Overall values
 
 *Estimate of the mean:*
 
-\(\bar{y}_{ST} = \sum(\bar{y_h} * W_h)\)
+\(\bar{y} = \sum(\bar{y_h} * W_h)\)
 
 *Variance of the observations:*
 
-\(s_{\bar{y}_{ST}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}\)
-
-*Standard deviation of the mean:*
-
+\(s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}\)
 
 
 **Fire and Fire Surrogate:** 
