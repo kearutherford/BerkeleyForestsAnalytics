@@ -3127,23 +3127,23 @@ Stratum values ———————————
 
 *Weighted mean:*
 
-$\bar{y}_{h_w} = \frac{\sum(w_i*y_i)}{n}$
+$\bar{y}_{hw} = \frac{\sum(w_{h_i}*y_{h_i})}{n_h}$
 
 *Weighted standard error:*
 
-$s_{\bar{y}} = \sqrt(\frac{\sum(w_i*(y_i-\bar{y_w})^2)}{n*(n-1)})$
+$s_{\bar{y}_{hw}} = \sqrt(\frac{\sum(w_{h_i}*(y_{h_i}-\bar{y}_{hw})^2)}{n_h*(n_h-1)})$
 
-$\frac{L_i}{\frac{\sum(L_i)}{n}}$
+$\frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
 
 Overall values ———————————-
 
 *Estimate of the mean:*
 
-$\bar{y} = \sum(\bar{y_h} * W_h)$
+$\bar{y_w} = \sum(\bar{y}_{hw} * W_h)$
 
 *Standard deviation of the mean:*
 
-$s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
+$s_{\bar{y_w}} = \sqrt{\sum(s_{\bar{y}_{hw}}^2 * W_h^2)}$
 
 <br>
 
