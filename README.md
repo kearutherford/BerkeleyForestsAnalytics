@@ -3033,15 +3033,13 @@ Coming soon… this section is in progress.
 
 **Simple random sampling**
 
-*Estimate of the mean:*
+*Mean:*
 
 $\bar{y} = \frac{\sum(y_i)}{n}$
 
-*Variance of the observations:*
+*Standard error:*
 
 $s_y^2 = \frac{\sum(y_i^2) - \frac{(\sum(y_i))^2}{n}}{n-1}$
-
-*Standard deviation of the mean:*
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
@@ -3051,25 +3049,23 @@ $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
 Stratum values ———————————
 
-*Estimate of the mean:*
+*Mean:*
 
 $\bar{y_h} = \frac{\sum(y_{h_i})}{n_h}$
 
-*Variance of the observations:*
+*Standard error:*
 
 $s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
-
-*Standard deviation of the mean:*
 
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 
 Overall values ———————————-
 
-*Estimate of the mean:*
+*Mean:*
 
 $\bar{y} = \sum(\bar{y_h} * W_h)$
 
-*Standard deviation of the mean:*
+*Standard error:*
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
@@ -3079,29 +3075,25 @@ $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
 Compartment values ——————————-
 
-*Estimate of the mean:*
+*Mean:*
 
 $\bar{y_c} = \frac{\sum(y_{c_i})}{n_c}$
 
-*Variance of the observations:*
+*Standard error:*
 
 $s_{y_c}^2 = \frac{\sum(y_{c_i}^2) - \frac{(\sum(y_{c_i}))^2}{n_c}}{n_c-1}$
-
-*Standard deviation of the mean:*
 
 $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 
 Overall values ———————————–
 
-*Estimate of the mean:*
+*Mean:*
 
 $\bar{y} = \frac{\sum(y_c)}{n}$
 
-*Variance of the observations:*
+*Standard error:*
 
 $s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
-
-*Standard deviation of the mean:*
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
@@ -3139,13 +3131,43 @@ $\frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
 
 Overall values ———————————-
 
-*Estimate of the mean:*
+*Mean:*
 
 $\bar{y} = \sum(\bar{y_h} * W_h)$
 
-*Standard deviation of the mean:*
+*Standard error:*
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
+
+<br>
+
+**Fire and Fire Surrogate**
+
+Stratum values ———————————
+
+*Weighted mean:*
+
+$\bar{y_c} = \frac{\sum(w_{c_i}*y_{c_i})}{n_c}$
+
+*Weighted standard error:*
+
+$s_{y_c}^2 = \frac{\sum(w_{c_i}*(y_{c_i}-\bar{y_c})^2)}{n_c-1}$
+
+$s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+
+$\frac{L_{c_i}}{\frac{\sum(L_{c_i})}{n_c}}$
+
+Overall values ———————————-
+
+*Mean:*
+
+$\bar{y} = \frac{\sum(y_c)}{n}$
+
+*Standard error:*
+
+$s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
+
+$s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
 <br>
 
