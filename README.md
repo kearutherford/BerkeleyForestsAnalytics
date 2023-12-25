@@ -3043,6 +3043,8 @@ $s_y^2 = \frac{\sum(y_i^2) - \frac{(\sum(y_i))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
+*Definitions:*
+
 - $y_i$ value per plot i
 - $n$ number of plots
 
@@ -3062,6 +3064,8 @@ $s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
 
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 
+*Definitions:*
+
 - $y_{h_i}$ value per plot i in stratum h
 - $n_h$ number of plots in stratum h
 
@@ -3074,6 +3078,8 @@ $\bar{y} = \sum(\bar{y_h} * W_h)$
 *Standard error:*
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
+
+*Definitions:*
 
 - $W_h = \frac{N_h}{N} =$ weight assigned to stratum h
   - $N_h$ size of stratum h
@@ -3095,6 +3101,8 @@ $s_{y_c}^2 = \frac{\sum(y_{c_i}^2) - \frac{(\sum(y_{c_i}))^2}{n_c}}{n_c-1}$
 
 $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 
+*Definitions:*
+
 - $y_{c_i}$ value per plot i in compartment c
 - $n_c$ number of plots in compartment c
 
@@ -3110,6 +3118,8 @@ $s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
+*Definitions:*
+
 - $n$ number of compartments
 
 ## Weighted equations
@@ -3124,7 +3134,12 @@ $\bar{y} = \frac{\sum(w_i*y_i)}{n}$
 
 $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}}$
 
-$\frac{L_i}{\frac{\sum(L_i)}{n}}$
+*Definitions:*
+
+- $w_i = \frac{L_i}{\frac{\sum(L_i)}{n}}$
+  - $L_i$ length of transect i
+- $n$ number of plots/number of transects (they are the same thing here)
+- $y_i$ value per plot i
 
 <br>
 
@@ -3142,7 +3157,13 @@ $s_{y_h}^2 = \frac{\sum(w_{h_i}*(y_{h_i}-\bar{y_h})^2)}{n_h-1}$
 
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 
-$\frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
+*Definitions:*
+
+- $w_{h_i} = \frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
+  - $L_{h_i}$ length of transect i in stratum h
+- $n_h$ number of plots/number of transects in stratum h (they are the
+  same thing here)
+- $y_{h_i}$ value per plot i in stratum h
 
 Overall values ———————————-
 
@@ -3154,11 +3175,17 @@ $\bar{y} = \sum(\bar{y_h} * W_h)$
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
+*Definitions:*
+
+- $W_h = \frac{N_h}{N} =$ weight assigned to stratum h
+  - $N_h$ size of stratum h
+  - $N$ size of population
+
 <br>
 
 **Fire and Fire Surrogate**
 
-Stratum values ———————————
+Compartment values ——————————
 
 *Weighted mean:*
 
@@ -3170,7 +3197,13 @@ $s_{y_c}^2 = \frac{\sum(w_{c_i}*(y_{c_i}-\bar{y_c})^2)}{n_c-1}$
 
 $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 
-$\frac{L_{c_i}}{\frac{\sum(L_{c_i})}{n_c}}$
+*Definitions:*
+
+- $w_{c_i} = \frac{L_{c_i}}{\frac{\sum(L_{c_i})}{n_c}}$
+  - $L_{c_i}$ length of transect i in compartment c
+- $n_c$ number of plots/number of transects in compartment c (they are
+  the same thing here)
+- $y_{c_i}$ value per plot i in compartment c
 
 Overall values ———————————-
 
@@ -3183,6 +3216,10 @@ $\bar{y} = \frac{\sum(y_c)}{n}$
 $s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
+
+*Definitions:*
+
+- $n$ number of compartments
 
 <br>
 
