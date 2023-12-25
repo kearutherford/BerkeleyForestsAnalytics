@@ -3043,6 +3043,9 @@ $s_y^2 = \frac{\sum(y_i^2) - \frac{(\sum(y_i))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
+- $y_i$ value per plot i
+- $n$ number of plots
+
 <br>
 
 **Stratified random sampling**
@@ -3059,6 +3062,9 @@ $s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
 
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 
+- $y_{h_i}$ value per plot i in stratum h
+- $n_h$ number of plots in stratum h
+
 Overall values ———————————-
 
 *Mean:*
@@ -3068,6 +3074,10 @@ $\bar{y} = \sum(\bar{y_h} * W_h)$
 *Standard error:*
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
+
+- $W_h = \frac{N_h}{N} =$ weight assigned to stratum h
+  - $N_h$ size of stratum h
+  - $N$ size of population
 
 <br>
 
@@ -3085,6 +3095,9 @@ $s_{y_c}^2 = \frac{\sum(y_{c_i}^2) - \frac{(\sum(y_{c_i}))^2}{n_c}}{n_c-1}$
 
 $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 
+- $y_{c_i}$ value per plot i in compartment c
+- $n_c$ number of plots in compartment c
+
 Overall values ———————————–
 
 *Mean:*
@@ -3096,6 +3109,8 @@ $\bar{y} = \frac{\sum(y_c)}{n}$
 $s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
+
+- $n$ number of compartments
 
 ## Weighted equations
 

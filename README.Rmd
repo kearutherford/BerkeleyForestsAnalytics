@@ -1559,9 +1559,9 @@ We can calculate \(SCLength_{c,t}\) using the following equation:
 
 *where*
 
-* \(SCLength_{c,t}\) is the slope-corrected transect length for fuels in timelag class c (1-, 10-, 100-, 1000-hour) for transect t measured in plot p  
-* \(cos(SlopeDeg_t)\) is the cosine of the slope of transect t in degrees 
-* \(Length_t\) is the NOT slope-corrected transect length for fuels in timelag class c for transect t
+  * \(SCLength_{c,t}\) is the slope-corrected transect length for fuels in timelag class c (1-, 10-, 100-, 1000-hour) for transect t measured in plot p  
+  * \(cos(SlopeDeg_t)\) is the cosine of the slope of transect t in degrees 
+  * \(Length_t\) is the NOT slope-corrected transect length for fuels in timelag class c for transect t
 
 <br> 
 
@@ -1571,9 +1571,9 @@ We can calculate \(SlopeDeg_t\) using the following equation:
 
 *where*
 
-* \(SlopeDeg_t\) is the slope of transect t in degrees 
-* \(tan^{-1}( )\) is the inverse of the tangent
-* \(SlopePerc_t\) is the slope of transect t in percent
+  * \(SlopeDeg_t\) is the slope of transect t in degrees 
+  * \(tan^{-1}( )\) is the inverse of the tangent
+  * \(SlopePerc_t\) is the slope of transect t in percent
 
 <br>
 
@@ -1611,6 +1611,9 @@ Coming soon... this section is in progress.
 
 \(s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}\)
 
+  * \(y_i\) value per plot i 
+  * \(n\) number of plots 
+
 <br>
 
 **Stratified random sampling** 
@@ -1627,6 +1630,9 @@ Stratum values ---------------------------------
 
 \(s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}\)
 
+  * \(y_{h_i}\) value per plot i in stratum h
+  * \(n_h\) number of plots in stratum h 
+  
 Overall values ----------------------------------
 
 *Mean:*
@@ -1636,6 +1642,10 @@ Overall values ----------------------------------
 *Standard error:*
 
 \(s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}\)
+
+  * \(W_h = \frac{N_h}{N} =\) weight assigned to stratum h 
+      * \(N_h\) size of stratum h
+      * \(N\) size of population 
 
 <br>
 
@@ -1653,6 +1663,8 @@ Compartment values -------------------------------
 
 \(s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}\)
 
+  * \(y_{c_i}\) value per plot i in compartment c
+  * \(n_c\) number of plots in compartment c 
 
 Overall values -----------------------------------
 
@@ -1665,6 +1677,8 @@ Overall values -----------------------------------
 \(s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}\)
 
 \(s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}\)
+
+  * \(n\) number of compartments 
 
 
 ## Weighted equations 
