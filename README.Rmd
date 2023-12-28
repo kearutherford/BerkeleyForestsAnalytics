@@ -803,7 +803,7 @@ duff_demo2
 
 # Further data summarization   
 
-The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize data beyond the plot level. These functions are specifically designed to further summarize the outputs from other `BerkeleyForestsAnalytics` functions. The functions recognize simple random sampling and stratified random sampling designs. They also recognize the design of the Fire and Fire Surrogate study. 
+The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize data beyond the plot level. These functions are specifically designed to further summarize the outputs from other `BerkeleyForestsAnalytics` functions. The functions recognize simple random sampling and stratified random sampling designs. They also recognize the design of the Fire and Fire Surrogate study. See "Background information for further data summarization" below for further details. 
 
 ## :eight_spoked_asterisk: `CompilePlots( )`
 
@@ -933,7 +933,7 @@ ffs_demo
 
 ## :eight_spoked_asterisk: `CompileSurfaceFuels( )`
 
-The `CompileSurfaceFuels` function is specifically designed to further summarize outputs from the `FineFuels` and `CoarseFuels` functions. Specifically, the function weights the fuel load estimates by the length of the line transect actually sampled (i.e., the slope-corrected transect length). See "Background information for surface and ground fuel load calculations: Slope-corrected transect length" and "Background information for further data summarization" below for further details on why and how estimates should be weighted by the line transect length. 
+The `CompileSurfaceFuels` function is specifically designed to further summarize outputs from the `FineFuels` and `CoarseFuels` functions. Specifically, the function weights the fuel load estimates by the length of the line transect actually sampled (i.e., the slope-corrected transect length). See "Background information for surface and ground fuel load calculations: Slope-corrected transect length" and "Background information for further data summarization: Weighted equations" below for further details on why and how estimates should be weighted by the line transect length. 
 
 ### Inputs
 
@@ -1579,7 +1579,7 @@ We can calculate \(SlopeDeg_t\) using the following equation:
 
 If you have a stratified random sampling design, you must calculate stratum values before calculating overall values. Similarly, for the Fire and Fire Surrogate design, you must calculate compartment values before calculating overall values. 
 
-## General equations 
+## General equations used in CompilePlots function
 
 **Simple random sampling**
 
@@ -1673,7 +1673,7 @@ Overall values -----------------------------------
   * \(n\) number of compartments 
 
 
-## Weighted equations 
+## Weighted equations used in CompileSurfaceFuels function 
 
 See "Slope-corrected transect length" section above for additional background information. The equations below are applicable for summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel loads. For other surface and ground fuel load combinations (e.g., 1-hour + 10-hour + 100-hour + litter), create the necessary columns and use the general equations provided above (weighting the estimates by the length of the line transect is not applicable in the same way for these combined fuel loads). 
 

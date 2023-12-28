@@ -1660,7 +1660,8 @@ data beyond the plot level. These functions are specifically designed to
 further summarize the outputs from other `BerkeleyForestsAnalytics`
 functions. The functions recognize simple random sampling and stratified
 random sampling designs. They also recognize the design of the Fire and
-Fire Surrogate study.
+Fire Surrogate study. See “Background information for further data
+summarization” below for further details.
 
 ## :eight_spoked_asterisk: `CompilePlots( )`
 
@@ -1927,8 +1928,9 @@ Specifically, the function weights the fuel load estimates by the length
 of the line transect actually sampled (i.e., the slope-corrected
 transect length). See “Background information for surface and ground
 fuel load calculations: Slope-corrected transect length” and “Background
-information for further data summarization” below for further details on
-why and how estimates should be weighted by the line transect length.
+information for further data summarization: Weighted equations” below
+for further details on why and how estimates should be weighted by the
+line transect length.
 
 ### Inputs
 
@@ -2912,7 +2914,7 @@ stratum values before calculating overall values. Similarly, for the
 Fire and Fire Surrogate design, you must calculate compartment values
 before calculating overall values.
 
-## General equations
+## General equations used in CompilePlots function
 
 **Simple random sampling**
 
@@ -3005,7 +3007,7 @@ $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
 - $n$ number of compartments
 
-## Weighted equations
+## Weighted equations used in CompileSurfaceFuels function
 
 See “Slope-corrected transect length” section above for additional
 background information. The equations below are applicable for
