@@ -1691,39 +1691,16 @@ Fire Surrogate study.
       - **other columns:** Any numeric variables of interest. Can have
         any column names.
     - If sampling design is stratified random:
-      - **time:** Depending on the project, the time identifier could be
-        the year of measurement, the month of measurement, etc. For
-        example, if plots are remeasured every summer for five years,
-        the time identifier might be the year of measurement. If plots
-        were measured pre- and post-burn, the time identifier might be
-        “pre” or “post”. If time is not important (e.g., all plots were
-        measured once in the same summer), the time identifier might be
-        set to all the same year. Time identifier is very flexible, and
-        should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
-      - **site:** Describes the broader location or forest where the
-        data were collected. The class of this variable will be coerced
-        to character.
+      - **time:** As described above.
+      - **site:** As desicribed above.
       - **stratum:** Identifies the stratum within site. The class of
         this variable will be coerced to character.
       - **plot:** Identifies the plot within stratum. The class of this
         variable will be coerced to character.
-      - **species:** Optional column. If a species column is included in
-        the input dataframe/tibble, the results will be summarized by
-        species.
-      - **other columns:** Any numeric variables of interest. Can have
-        any column names.
+      - **species:** As described above.
+      - **other columns:** As desicribed above.
     - If sampling design is Fire and Fire Surrogate:
-      - **time:** Depending on the project, the time identifier could be
-        the year of measurement, the month of measurement, etc. For
-        example, if plots are remeasured every summer for five years,
-        the time identifier might be the year of measurement. If plots
-        were measured pre- and post-burn, the time identifier might be
-        “pre” or “post”. If time is not important (e.g., all plots were
-        measured once in the same summer), the time identifier might be
-        set to all the same year. Time identifier is very flexible, and
-        should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
+      - **time:** As described above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
         The class of this variable will be coerced to character.
@@ -1732,11 +1709,8 @@ Fire Surrogate study.
         character.
       - **plot:** Identifies the plot within compartment. The class of
         this variable will be coerced to character.
-      - **species:** Optional column. If a species column is included in
-        the input dataframe/tibble, the results will be summarized by
-        species.
-      - **other columns:** Any numeric variables of interest. Can have
-        any column names.
+      - **species:** As described above.
+      - **other columns:** As described above.
 
 2.  `design` Specifies the sampling design. Must be set to “SRS” (simple
     random sample), “STRS” (stratified random sample), or “FFS” (Fire
@@ -1954,7 +1928,7 @@ of the line transect actually sampled (i.e., the slope-corrected
 transect length). See “Background information for surface and ground
 fuel load calculations: Slope-corrected transect length” and “Background
 information for further data summarization” below for further details on
-why and how estimes should be weighted by the line transect length.
+why and how estimates should be weighted by the line transect length.
 
 ### Inputs
 
@@ -1964,6 +1938,22 @@ why and how estimes should be weighted by the line transect length.
     least one dataframe/tibble - fwd_data and/or cwd_data). Required
     columns depend on the sampling design:
 
+    - All sampling designs:
+      - **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels
+        in megagrams per hectare (or US tons per acre)
+      - **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour
+        fuels in megagrams per hectare (or US tons per acre)
+      - **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour
+        fuels in megagrams per hectare (or US tons per acre)
+      - **sc_length_1h:** Slope-corrected transect length (i.e.,
+        horizontal transect length) for 1-hour fuels in either meters or
+        feet
+      - **sc_length_10h:** Slope-corrected transect length (i.e.,
+        horizontal transect length) for 10-hour fuels in either meters
+        or feet
+      - **sc_length_100h:** Slope-corrected transect length (i.e.,
+        horizontal transect length) for 100-hour fuels in either meters
+        or feet
     - If sampling design is simple random:
       - **time:** Depending on the project, the time identifier could be
         the year of measurement, the month of measurement, etc. For
@@ -1980,65 +1970,15 @@ why and how estimes should be weighted by the line transect length.
         to character.
       - **plot:** Identifies the plot in which the data were collected.
         The class of this variable will be coerced to character.
-      - **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels
-        in megagrams per hectare (or US tons per acre)
-      - **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour
-        fuels in megagrams per hectare (or US tons per acre)
-      - **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour
-        fuels in megagrams per hectare (or US tons per acre)
-      - **sc_length_1h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 1-hour fuels in either meters or
-        feet
-      - **sc_length_10h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 10-hour fuels in either meters
-        or feet
-      - **sc_length_100h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 100-hour fuels in either meters
-        or feet
     - If sampling design is stratified random:
-      - **time:** Depending on the project, the time identifier could be
-        the year of measurement, the month of measurement, etc. For
-        example, if plots are remeasured every summer for five years,
-        the time identifier might be the year of measurement. If plots
-        were measured pre- and post-burn, the time identifier might be
-        “pre” or “post”. If time is not important (e.g., all plots were
-        measured once in the same summer), the time identifier might be
-        set to all the same year. Time identifier is very flexible, and
-        should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
-      - **site:** Describes the broader location or forest where the
-        data were collected. The class of this variable will be coerced
-        to character.
+      - **time:** As described above.
+      - **site:** As described above.
       - **stratum:** Identifies the stratum within site. The class of
         this variable will be coerced to character.
       - **plot:** Identifies the plot within stratum. The class of this
         variable will be coerced to character.
-      - **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels
-        in megagrams per hectare (or US tons per acre)
-      - **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour
-        fuels in megagrams per hectare (or US tons per acre)
-      - **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour
-        fuels in megagrams per hectare (or US tons per acre)
-      - **sc_length_1h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 1-hour fuels in either meters or
-        feet
-      - **sc_length_10h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 10-hour fuels in either meters
-        or feet
-      - **sc_length_100h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 100-hour fuels in either meters
-        or feet
     - If sampling design is Fire and Fire Surrogate:
-      - **time:** Depending on the project, the time identifier could be
-        the year of measurement, the month of measurement, etc. For
-        example, if plots are remeasured every summer for five years,
-        the time identifier might be the year of measurement. If plots
-        were measured pre- and post-burn, the time identifier might be
-        “pre” or “post”. If time is not important (e.g., all plots were
-        measured once in the same summer), the time identifier might be
-        set to all the same year. Time identifier is very flexible, and
-        should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
+      - **time:** As desribed above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
         The class of this variable will be coerced to character.
@@ -2047,21 +1987,6 @@ why and how estimes should be weighted by the line transect length.
         character.
       - **plot:** Identifies the plot within compartment. The class of
         this variable will be coerced to character.
-      - **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels
-        in megagrams per hectare (or US tons per acre)
-      - **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour
-        fuels in megagrams per hectare (or US tons per acre)
-      - **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour
-        fuels in megagrams per hectare (or US tons per acre)
-      - **sc_length_1h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 1-hour fuels in either meters or
-        feet
-      - **sc_length_10h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 10-hour fuels in either meters
-        or feet
-      - **sc_length_100h:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for 100-hour fuels in either meters
-        or feet
 
 2.  `cwd_data` A dataframe or tibble. Each row must be an observation of
     an individual plot. Default is set to “none”, indicating that no
@@ -2069,6 +1994,20 @@ why and how estimes should be weighted by the line transect length.
     least one dataframe/tibble - fwd_data and/or cwd_data). Required
     columns depend on the sampling design:
 
+    - All sampling designs:
+      - **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound
+        1000-hour fuels in megagrams per hectare (or US tons per acre)
+      - **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten
+        1000-hour fuels in megagrams per hectare (or US tons per acre)
+      - **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody
+        debris fuel load (1000-hour sound + 1000-hour rotten) in
+        megagrams per hectare (or US tons per acre)
+      - **sc_length_1000s:** Slope-corrected transect length (i.e.,
+        horizontal transect length) for sound 1000-hour fuels in either
+        meters or feet
+      - **sc_length_1000r:** Slope-corrected transect length (i.e.,
+        horizontal transect length) for rotten 1000-hour fuels in either
+        meters or feet
     - If sampling design is simple random:
       - **time:** Depending on the project, the time identifier could be
         the year of measurement, the month of measurement, etc. For
@@ -2085,61 +2024,15 @@ why and how estimes should be weighted by the line transect length.
         to character.
       - **plot:** Identifies the plot in which the data were collected.
         The class of this variable will be coerced to character.
-      - **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound
-        1000-hour fuels in megagrams per hectare (or US tons per acre)
-      - **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten
-        1000-hour fuels in megagrams per hectare (or US tons per acre)
-      - **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody
-        debris fuel load (1000-hour sound + 1000-hour rotten) in
-        megagrams per hectare (or US tons per acre)
-      - **sc_length_1000s:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for sound 1000-hour fuels in either
-        meters or feet
-      - **sc_length_1000r:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for rotten 1000-hour fuels in either
-        meters or feet
     - If sampling design is stratified random:
-      - **time:** Depending on the project, the time identifier could be
-        the year of measurement, the month of measurement, etc. For
-        example, if plots are remeasured every summer for five years,
-        the time identifier might be the year of measurement. If plots
-        were measured pre- and post-burn, the time identifier might be
-        “pre” or “post”. If time is not important (e.g., all plots were
-        measured once in the same summer), the time identifier might be
-        set to all the same year. Time identifier is very flexible, and
-        should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
-      - **site:** Describes the broader location or forest where the
-        data were collected. The class of this variable will be coerced
-        to character.
+      - **time:** As described above.
+      - **site:** As described above.
       - **stratum:** Identifies the stratum within site. The class of
         this variable will be coerced to character.
       - **plot:** Identifies the plot within stratum. The class of this
         variable will be coerced to character.
-      - **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound
-        1000-hour fuels in megagrams per hectare (or US tons per acre)
-      - **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten
-        1000-hour fuels in megagrams per hectare (or US tons per acre)
-      - **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody
-        debris fuel load (1000-hour sound + 1000-hour rotten) in
-        megagrams per hectare (or US tons per acre)
-      - **sc_length_1000s:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for sound 1000-hour fuels in either
-        meters or feet
-      - **sc_length_1000r:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for rotten 1000-hour fuels in either
-        meters or feet
     - If sampling design is Fire and Fire Surrogate:
-      - **time:** Depending on the project, the time identifier could be
-        the year of measurement, the month of measurement, etc. For
-        example, if plots are remeasured every summer for five years,
-        the time identifier might be the year of measurement. If plots
-        were measured pre- and post-burn, the time identifier might be
-        “pre” or “post”. If time is not important (e.g., all plots were
-        measured once in the same summer), the time identifier might be
-        set to all the same year. Time identifier is very flexible, and
-        should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
+      - **time:** As described above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
         The class of this variable will be coerced to character.
@@ -2148,19 +2041,6 @@ why and how estimes should be weighted by the line transect length.
         character.
       - **plot:** Identifies the plot within compartment. The class of
         this variable will be coerced to character.
-      - **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound
-        1000-hour fuels in megagrams per hectare (or US tons per acre)
-      - **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten
-        1000-hour fuels in megagrams per hectare (or US tons per acre)
-      - **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody
-        debris fuel load (1000-hour sound + 1000-hour rotten) in
-        megagrams per hectare (or US tons per acre)
-      - **sc_length_1000s:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for sound 1000-hour fuels in either
-        meters or feet
-      - **sc_length_1000r:** Slope-corrected transect length (i.e.,
-        horizontal transect length) for rotten 1000-hour fuels in either
-        meters or feet
 
 3.  `design` Specifies the sampling design. Must be set to “SRS” (simple
     random sample), “STRS” (stratified random sample), or “FFS” (Fire
@@ -2916,7 +2796,7 @@ loads documentation above - the same concepts are applied here.
 In the above calculations, we used the slope correction factor from
 Brown (1974) for converting mass per unit area on a slope basis to a
 horizontal basis. However, for further compilation (e.g., to the stratum
-or site level), we need to “weight estimates by the length of the line
+or site level), we should “weight estimates by the length of the line
 transect actually sampled” (Marshall *et al.* 2000).
 
 Marshall *et al.* (2000) describes the importance of obtaining
@@ -3027,7 +2907,10 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 
 # Background information for further data summarization
 
-Coming soon… this section is in progress.
+If you have a stratified random sampling design, you must calculate
+stratum values before calculating overall values. Similarly, for the
+Fire and Fire Surrogate design, you must calculate compartment values
+before calculating overall values.
 
 ## General equations
 
@@ -3124,6 +3007,15 @@ $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
 ## Weighted equations
 
+See “Slope-corrected transect length” section above for additional
+background information. The equations below are applicable for
+summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel loads. For
+other surface and ground fuel load combinations (e.g., 1-hour +
+10-hour + 100-hour + litter), create the necessary columns and use the
+general equations provided above (weighting the estimates by the length
+of the line transect is not applicable in the same way for these
+combined fuel loads).
+
 **Simple random sampling**
 
 *Weighted mean:*
@@ -3137,7 +3029,7 @@ $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}}$
 *Definitions:*
 
 - $w_i = \frac{L_i}{\frac{\sum(L_i)}{n}}$
-  - $L_i$ length of transect i
+  - $L_i$ horizontal length of transect i
 - $n$ number of plots/number of transects (they are the same thing here)
 - $y_i$ value per plot i
 
@@ -3160,7 +3052,7 @@ $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 *Definitions:*
 
 - $w_{h_i} = \frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
-  - $L_{h_i}$ length of transect i in stratum h
+  - $L_{h_i}$ horizontal length of transect i in stratum h
 - $n_h$ number of plots/number of transects in stratum h (they are the
   same thing here)
 - $y_{h_i}$ value per plot i in stratum h
@@ -3200,7 +3092,7 @@ $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 *Definitions:*
 
 - $w_{c_i} = \frac{L_{c_i}}{\frac{\sum(L_{c_i})}{n_c}}$
-  - $L_{c_i}$ length of transect i in compartment c
+  - $L_{c_i}$ horizontal length of transect i in compartment c
 - $n_c$ number of plots/number of transects in compartment c (they are
   the same thing here)
 - $y_{c_i}$ value per plot i in compartment c
