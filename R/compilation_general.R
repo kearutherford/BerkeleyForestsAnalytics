@@ -26,6 +26,15 @@
 #' \item Fire and Fire Surrogate: a list with two components: (1) a dataframe with site-level (i.e., compartment-level) summaries and (2) a dataframe with treatment-level summaries.
 #' }
 #'
+#' @examples
+#' CompilePlots(data = compilation_srs_demo,
+#'              design = "SRS",
+#'              wt_data = "not_needed")
+#'
+#' CompilePlots(data = compilation_strs_demo,
+#'              design = "STRS",
+#'              wt_data = compilation_wt_demo)
+#'
 #' @export
 
 CompilePlots <- function(data, design, wt_data = "not_needed") {

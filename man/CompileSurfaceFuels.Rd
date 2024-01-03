@@ -44,3 +44,17 @@ Depends on the sampling design:
 \description{
 Compiles surface fuel data beyond the plot level. Specifically designed to further summarize outputs from the FineFuels and/or CoarseFuels functions. Recognizes simple random sampling and stratified random sampling designs. Also recognizes the design of the Fire and Fire Surrogate. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
 }
+\examples{
+CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
+                    cwd_data = compilation_cwd_demo,
+                    design = "STRS",
+                    wt_data = compilation_wt_demo,
+                    units = "metric")
+
+CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
+                    cwd_data = "none",
+                    design = "STRS",
+                    wt_data = compilation_wt_demo,
+                    units = "metric")
+
+}

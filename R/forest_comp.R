@@ -82,6 +82,10 @@ ForestComp <- function(data, site, plot, exp_factor, status, species, dbh, relat
 
 ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, sp_val, dbh_val, rel_val, units_val) {
 
+  # coerce tibble inputs into data.frame
+  data_val <- as.data.frame(data_val)
+
+
   ###########################################################
   # Check that all columns are in the provided dataframe
   ###########################################################

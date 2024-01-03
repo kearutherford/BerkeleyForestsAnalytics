@@ -29,3 +29,13 @@ Depends on the sampling design:
 \description{
 Compiles data beyond the plot level. Recognizes simple random sampling and stratified random sampling designs. Also recognizes the design of the Fire and Fire Surrogate. See \href{https://github.com/kearutherford/BerkeleyForestsAnalytics/tree/main}{README} for details.
 }
+\examples{
+CompilePlots(data = compilation_srs_demo,
+             design = "SRS",
+             wt_data = "not_needed")
+
+CompilePlots(data = compilation_strs_demo,
+             design = "STRS",
+             wt_data = compilation_wt_demo)
+
+}

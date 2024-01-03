@@ -68,6 +68,10 @@ ForestStr <- function(data, site, plot, exp_factor, dbh, ht = "ignore", units = 
 
 ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_val, units_val) {
 
+  # coerce tibble inputs into data.frame
+  data_val <- as.data.frame(data_val)
+
+
   ###########################################################
   # Check that all columns are in the provided dataframe
   ###########################################################

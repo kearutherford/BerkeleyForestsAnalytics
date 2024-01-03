@@ -33,6 +33,19 @@
 #' \item Fire and Fire Surrogate: a list with two components: (1) a dataframe with site-level (i.e., compartment-level) summaries and (2) a dataframe with treatment-level summaries.
 #' }
 #'
+#' @examples
+#' CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
+#'                     cwd_data = compilation_cwd_demo,
+#'                     design = "STRS",
+#'                     wt_data = compilation_wt_demo,
+#'                     units = "metric")
+#'
+#' CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
+#'                     cwd_data = "none",
+#'                     design = "STRS",
+#'                     wt_data = compilation_wt_demo,
+#'                     units = "metric")
+#'
 #' @export
 
 CompileSurfaceFuels <- function(fwd_data = "none", cwd_data = "none", design, wt_data = "not_needed", units = "metric") {
