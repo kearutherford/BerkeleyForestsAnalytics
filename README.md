@@ -39,7 +39,7 @@ citation("BerkeleyForestsAnalytics")
 
     ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
-    ##   Kea Rutherford, John Battles, Danny Foster (2023).
+    ##   Kea Rutherford, Danny Foster, John Battles (2023).
     ##   _BerkeleyForestsAnalytics_. Battles Lab: Forest Ecology and Ecosystem
     ##   Dynamics, University of California, Berkeley.
     ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
@@ -48,7 +48,7 @@ citation("BerkeleyForestsAnalytics")
     ## 
     ##   @Manual{,
     ##     title = {BerkeleyForestsAnalytics},
-    ##     author = {{Kea Rutherford} and {John Battles} and {Danny Foster}},
+    ##     author = {{Kea Rutherford} and {Danny Foster} and {John Battles}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
     ##     year = {2023},
     ##     url = {https://github.com/kearutherford/BerkeleyForestsAnalytics},

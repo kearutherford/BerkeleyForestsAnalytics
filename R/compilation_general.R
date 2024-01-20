@@ -638,7 +638,7 @@ STRS_calcs <- function(data, wh_data) {
 
   }
 
-  # add column with stratum wights
+  # add column with stratum weights
   str_df_wh <- StratumWeights(str_df, wh_data)
 
   # overall values ----------------------------------------
