@@ -37,7 +37,7 @@
 #'
 #' @export
 
-CompilePlots <- function(data, design, wt_data = "not_needed") {
+CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_needed") {
 
   # coerce tibble inputs into data.frame
   data <- as.data.frame(data)
@@ -46,27 +46,42 @@ CompilePlots <- function(data, design, wt_data = "not_needed") {
     wt_data <- as.data.frame(wt_data)
   }
 
+  if(all(fpc_data != "not_needed")) {
+    fpc_data <- as.data.frame(fpc_data)
+  }
+
   # check and prep input data
   step1 <- ValidatePlotData(data_check = data,
                             design_check = design,
                             wt_data_check = wt_data)
 
-  # summarize data
-  if(design == "SRS") {
+  # get finite population correction factor data ready
+  if(all(fpc_data != "not_needed")) {
 
-    step2 <- SRS_calcs(data = step1)
+    step2 <- FPC(fpc_data, design)
 
-  } else if (design == "STRS") {
+  } else {
 
-    step2 <- STRS_calcs(data = step1, wh_data = wt_data)
-
-  } else if (design == "FFS") {
-
-    step2 <- FFS_calcs(data = step1)
+    step2 <- fpc_data
 
   }
 
-  return(step2)
+  # summarize data
+  if(design == "SRS") {
+
+    step3 <- SRS_calcs(data = step1, fpc = step2)
+
+  } else if (design == "STRS") {
+
+    step3 <- STRS_calcs(data = step1, wh_data = wt_data, fpc = step2)
+
+  } else if (design == "FFS") {
+
+    step3 <- FFS_calcs(data = step1, fpc = step2)
+
+  }
+
+  return(step3)
 
 }
 
@@ -932,6 +947,53 @@ StratumValues <- function(df, variable) {
 # function for pulling out stratum weights
 ################################################################
 
+FPC <- function(df, des) {
+
+  # create id column
+  if(des == "STRS" && "time" %in% colnames(df)) {
+
+    df$fpc_id <- paste0(df$time,'_',df$site,'_',df$stratum)
+
+  } else if (des == "STRS" && !("time" %in% colnames(df))) {
+
+    df$fpc_id <- paste0(df$site,'_',df$stratum)
+
+  } else if (des == "SRS" && "time" %in% colnames(df)) {
+
+    df$fpc_id <- paste0(df$time,'_',df$site)
+
+  } else if (des == "SRS" && !("time" %in% colnames(df))) {
+
+    df$fpc_id <- paste0(df$site)
+
+  } else if (des == "FFS" && "time" %in% colnames(df)) {
+
+    df$fpc_id <- paste0(df$time,'_',df$trt_type,'_',df$site)
+
+  } else if (des == "FFS" && !("time" %in% colnames(df))) {
+
+    df$fpc_id <- paste0(df$trt_type,'_',df$site)
+
+  }
+
+  # create fpc column
+  df$fpc_value <- (df$N - df$n)/df$N
+
+  # return df with necessary columns
+  return(df)
+
+}
+
+test <- data.frame(site = c("SEKI", "SEKI", "SEKI", "SEKI"),
+              stratum = c(1,2,1,2),
+              N = c(200,300,400,500),
+              n = c(20,70,30,10))
+
+
+################################################################
+# function for pulling out stratum weights
+################################################################
+
 StratumWeights <- function(df, wh_df) {
 
   # create columns to match
@@ -944,6 +1006,7 @@ StratumWeights <- function(df, wh_df) {
 
     wh_df$wh_id <- paste0(wh_df$site,'_',wh_df$stratum)
     df$wh_id <- paste0(df$site,'_',df$stratum)
+
   }
 
   # loop through df and assign stratum weights
