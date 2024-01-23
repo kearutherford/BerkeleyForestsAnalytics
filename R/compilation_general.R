@@ -55,15 +55,11 @@ CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_n
                             design_check = design,
                             wt_data_check = wt_data)
 
-  # get finite population correction factor data ready
+  # get finite population correction factor data prepped
   if(all(fpc_data != "not_needed")) {
-
     step2 <- FPC(fpc_data, design)
-
   } else {
-
     step2 <- fpc_data
-
   }
 
   # summarize data
@@ -517,7 +513,7 @@ ValidateColClass <- function(data_val, design_val) {
 ################################################################
 # function for simple random sampling
 ################################################################
-SRS_calcs <- function(data) {
+SRS_calcs <- function(data, fpc) {
 
   # create new columns to reduce looping
   if("species" %in% colnames(data)) {
@@ -584,7 +580,7 @@ SRS_calcs <- function(data) {
     for(m in sites) {
 
       all_plots_2 <- subset(data, ts == m)
-      var_calcs <- StratumValues(all_plots_2, var_name) # uses same formulas as stratum-level values in STRS
+      var_calcs <- StratumValues(all_plots_2, var_name, fpc, "SRS") # uses same formulas as stratum-level values in STRS
       compiled_df[[avg_name]] <- ifelse(compiled_df$ts == m, var_calcs[1], compiled_df[[avg_name]])
       compiled_df[[se_name]] <- ifelse(compiled_df$ts == m, var_calcs[2], compiled_df[[se_name]])
 
@@ -602,7 +598,7 @@ SRS_calcs <- function(data) {
 # function for stratified random sampling
 ################################################################
 
-STRS_calcs <- function(data, wh_data) {
+STRS_calcs <- function(data, wh_data, fpc) {
 
   # create new columns to reduce looping
   if("species" %in% colnames(data)) {
@@ -716,7 +712,7 @@ STRS_calcs <- function(data, wh_data) {
     for(k in strats) {
 
       all_plots_2 <- subset(data, tss == k)
-      var_calcs <- StratumValues(all_plots_2, var_name)
+      var_calcs <- StratumValues(all_plots_2, var_name, fpc, "STRS")
       str_df_wh[[avg_name]] <- ifelse(str_df_wh$tss == k, var_calcs[1], str_df_wh[[avg_name]])
       str_df_wh[[se_name]] <- ifelse(str_df_wh$tss == k, var_calcs[2], str_df_wh[[se_name]])
 
@@ -754,7 +750,7 @@ STRS_calcs <- function(data, wh_data) {
 # function for FFS
 ################################################################
 
-FFS_calcs <- function(data) {
+FFS_calcs <- function(data, fpc) {
 
   # create new columns to reduce looping
   if("species" %in% colnames(data)) {
@@ -865,7 +861,7 @@ FFS_calcs <- function(data) {
     for(k in comps) {
 
       all_plots_2 <- subset(data, tts == k)
-      var_calcs <- StratumValues(all_plots_2, var_name)
+      var_calcs <- StratumValues(all_plots_2, var_name, fpc, "FFS")
       comp_df[[avg_name]] <- ifelse(comp_df$tts == k, var_calcs[1], comp_df[[avg_name]])
       comp_df[[se_name]] <- ifelse(comp_df$tts == k, var_calcs[2], comp_df[[se_name]])
 
@@ -880,7 +876,7 @@ FFS_calcs <- function(data) {
     for(m in treats) {
 
       all_comps_2 <- subset(comp_df, tt == m)
-      var_calcs_2 <- StratumValues(all_comps_2, avg_name)
+      var_calcs_2 <- StratumValues(all_comps_2, avg_name, "not_needed")
       type_df[[avg_name]] <- ifelse(type_df$tt == m, var_calcs_2[1], type_df[[avg_name]])
       type_df[[se_name]] <- ifelse(type_df$tt == m, var_calcs_2[2], type_df[[se_name]])
 
@@ -903,7 +899,7 @@ FFS_calcs <- function(data) {
 # function for calculating stratum-level values
 ################################################################
 
-StratumValues <- function(df, variable) {
+StratumValues <- function(df, variable, fpc_df, des = "not_needed") {
 
   df$n <- ifelse(is.na(df[[variable]]),0,1)
   n_h <- sum(df$n)
@@ -930,10 +926,38 @@ StratumValues <- function(df, variable) {
     ybar_h <- sum_y_hi/n_h
 
     # standard error
-    df$yi_ybar <- (df[[variable]] - ybar_h)^2
-    sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
-    s_yh_2 <- sum_yi_ybar/(n_h - 1)
-    s_ybar_h <- sqrt(s_yh_2/n_h)
+    if(all(fpc_df != "not_needed")) {
+
+      if(des == "STRS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$site[1],'_',df$stratum[1])
+      } else if (des == "STRS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$site[1],'_',df$stratum[1])
+      } else if (des == "SRS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$site[1])
+      } else if (des == "SRS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$site[1])
+      } else if (des == "FFS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$trt_type[1],'_',df$site[1])
+      } else if (des == "FFS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$trt_type[1],'_',df$site[1])
+      }
+
+      fpc_info <- subset(fpc_df, fpc_id == fpc_id_match)
+      fpc_h <- fpc_info$fpc_value
+
+      df$yi_ybar <- (df[[variable]] - ybar_h)^2
+      sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
+      s_yh_2 <- sum_yi_ybar/(n_h - 1)
+      s_ybar_h <- sqrt((s_yh_2/n_h)*fpc_h)
+
+    } else {
+
+      df$yi_ybar <- (df[[variable]] - ybar_h)^2
+      sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
+      s_yh_2 <- sum_yi_ybar/(n_h - 1)
+      s_ybar_h <- sqrt(s_yh_2/n_h)
+
+    }
 
   }
 
@@ -944,36 +968,24 @@ StratumValues <- function(df, variable) {
 }
 
 ################################################################
-# function for pulling out stratum weights
+# function for calculating FPC value
 ################################################################
 
 FPC <- function(df, des) {
 
   # create id column
   if(des == "STRS" && "time" %in% colnames(df)) {
-
     df$fpc_id <- paste0(df$time,'_',df$site,'_',df$stratum)
-
   } else if (des == "STRS" && !("time" %in% colnames(df))) {
-
     df$fpc_id <- paste0(df$site,'_',df$stratum)
-
   } else if (des == "SRS" && "time" %in% colnames(df)) {
-
     df$fpc_id <- paste0(df$time,'_',df$site)
-
   } else if (des == "SRS" && !("time" %in% colnames(df))) {
-
     df$fpc_id <- paste0(df$site)
-
   } else if (des == "FFS" && "time" %in% colnames(df)) {
-
     df$fpc_id <- paste0(df$time,'_',df$trt_type,'_',df$site)
-
   } else if (des == "FFS" && !("time" %in% colnames(df))) {
-
     df$fpc_id <- paste0(df$trt_type,'_',df$site)
-
   }
 
   # create fpc column
@@ -983,11 +995,6 @@ FPC <- function(df, des) {
   return(df)
 
 }
-
-test <- data.frame(site = c("SEKI", "SEKI", "SEKI", "SEKI"),
-              stratum = c(1,2,1,2),
-              N = c(200,300,400,500),
-              n = c(20,70,30,10))
 
 
 ################################################################
