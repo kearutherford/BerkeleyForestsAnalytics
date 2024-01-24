@@ -53,7 +53,8 @@ CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_n
   # check and prep input data
   step1 <- ValidatePlotData(data_check = data,
                             design_check = design,
-                            wt_data_check = wt_data)
+                            wt_data_check = wt_data,
+                            fpc_data_check = fpc_data)
 
   # get finite population correction factor data prepped
   if(all(fpc_data != "not_needed")) {
@@ -92,7 +93,7 @@ CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_n
 # overarching data validation function
 ################################################################
 
-ValidatePlotData <- function(data_check, design_check, wt_data_check) {
+ValidatePlotData <- function(data_check, design_check, wt_data_check, fpc_data_check) {
 
   # check that options are set appropriately
   ValidateOptions(design_val = design_check, wt_data_val = wt_data_check)
@@ -114,6 +115,10 @@ ValidatePlotData <- function(data_check, design_check, wt_data_check) {
   # check weights dataframe
   if(design_check == "STRS") {
     ValidateWeights(data_val = data_check, wt_data_val = wt_data_check, data_name = "data")
+  }
+  # check fpc dataframe
+  if(all(fpc_data_check != "not_needed")) {
+    ValidateFPC(data_val = data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "data")
   }
 
   # coerce ID columns to be character
@@ -472,6 +477,187 @@ ValidateWeights <- function(data_val, wt_data_val, data_name) {
 
     stop('For each site, or time:site, the stratum weights must add to 1.\n',
          'Sites, or time:sites, with stratum weights that do not sum to 1: ', issues_return)
+
+  }
+
+}
+
+###################################################################
+# function to check fpc dataframe
+###################################################################
+
+ValidateFPC <- function(data_val, fpc_data_val, design_val, data_name) {
+
+  # check that all required columns exist
+  if(!("site" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "site" column.')
+  }
+
+  if(!("N" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "N" column.')
+  }
+
+  if(!("n" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "n" column.')
+  }
+
+  if(design_val == "STRS" && !("stratum" %in% colnames(data_val))) {
+    stop('The fpc_data input is missing the required "stratum" column.\n',
+         'This column is required because you set design to "STRS".')
+  }
+
+  if(design_val == "FFS" && !("trt_type" %in% colnames(data_val))) {
+    stop('The fpc_data input is missing the required "trt_type" column.\n',
+         'This column is required because you set design to "FFS".')
+  }
+
+  # check column classes
+  if(!is.numeric(fpc_data_val$N)) {
+    stop('For fpc_data, the N column must be numeric.\n',
+         'The N column is currently class: ', class(fpc_data_val$N))
+  }
+
+  if(!is.numeric(fpc_data_val$n)) {
+    stop('For fpc_data, the n column must be numeric.\n',
+         'The n column is currently class: ', class(fpc_data_val$n))
+  }
+
+  # Check for missing values
+  if("time" %in% colnames(fpc_data_val)) {
+
+    if('TRUE' %in% is.na(fpc_data_val$time)) {
+      stop('For fpc_data, there are missing values in the time column.')
+    }
+
+  }
+
+  if('TRUE' %in% is.na(fpc_data_val$site)) {
+    stop('For fpc_data, there are missing values in the site column.')
+  }
+
+  if('TRUE' %in% is.na(fpc_data_val$N)) {
+    stop('For fpc_data, there are missing values in the N column.')
+  }
+
+  if('TRUE' %in% is.na(fpc_data_val$n)) {
+    stop('For fpc_data, there are missing values in the n column.')
+  }
+
+  if(design_val == "STRS") {
+
+    if('TRUE' %in% is.na(fpc_data_val$stratum)) {
+      stop('For fpc_data, there are missing values in the stratum column.')
+    }
+
+  }
+
+  if(design_val == "FFS") {
+
+    if('TRUE' %in% is.na(fpc_data_val$trt_type)) {
+      stop('For fpc_data, there are missing values in the trt_type column.')
+    }
+
+  }
+
+  # Check for matches between data and fpc_data
+  if(design_val == "STRS" && ("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id <- paste0(data_val$time,'_',data_val$site,'_',data_val$stratum)
+    fpc_data_val$unq_id <- paste0(fpc_data_val$time,'_',fpc_data_val$site,'_',fpc_data_val$stratum)
+
+  } else if (design_val == "STRS" && !("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id <- paste0(data_val$site,'_',data_val$stratum)
+    fpc_data_val$unq_id <- paste0(fpc_data_val$site,'_',fpc_data_val$stratum)
+
+  } else if (design_val == "SRS" && ("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$time,'_',data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$time,'_',fpc_data_val$site)
+
+  } else if (design_val == "SRS" && !("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$site)
+
+  } else if (design_val == "FFS" && ("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$time,'_',data_val$trt_type,'_',data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$time,'_',fpc_data_val$trt_type,'_',fpc_data_val$site)
+
+  } else if (design_val == "FFS" && !("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$trt_type,'_',data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$trt_type,'_',fpc_data_val$site)
+
+  }
+
+  if(!all(is.element(data_val$unq_id,fpc_data_val$unq_id)) ||
+     !all(is.element(fpc_data_val$unq_id,data_val$unq_id))) {
+
+    plots_wo_fpc <- paste0(unique(data_val[!is.element(data_val$unq_id,fpc_data_val$unq_id), "unq_id"]), sep = " ")
+    fpc_wo_plots <- paste0(unique(fpc_data_val[!is.element(fpc_data_val$unq_id,data_val$unq_id), "unq_id"]), sep = " ")
+
+    stop(data_name,' and fpc_data did not completely match!\n',
+         'In ',data_name,' but does not have a match in fpc_data: ', plots_wo_fpc, '\n',
+         'In fpc_data but does not have a match in ',data_name,': ', fpc_wo_plots)
+
+  }
+
+  # Check that there are no repeats
+  fpc_data_val$count <- 1
+  fpc_ag <- aggregate(data = fpc_data_val, count ~ unq_id, FUN = sum)
+
+  if(any(fpc_ag$count > 1)) {
+
+    count_sub <- subset(fpc_ag, fpc_ag$count > 1)
+    all_id <- paste0(count_sub$unq_id, sep = "   ")
+
+    if(design_val == "STRS" && ("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat time:site:stratum values.\n',
+           'Each row should correspond to a unique time:site:stratum.\n',
+           'Investigate the following time:site:stratum combinations: ', all_id)
+
+    } else if (design_val == "STRS" && !("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat site:stratum values.\n',
+           'Each row should correspond to a unique site:stratum.\n',
+           'Investigate the following site:stratum combinations: ', all_id)
+
+    } else if (design_val == "SRS" && ("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat time:site values.\n',
+           'Each row should correspond to a unique time:site.\n',
+           'Investigate the following time:site combinations: ', all_id)
+
+    } else if (design_val == "SRS" && !("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat site values.\n',
+           'Each row should correspond to a unique site.\n',
+           'Investigate the following site combinations: ', all_id)
+
+    } else if (design_val == "FFS" && ("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat time:trt_type:site values.\n',
+           'Each row should correspond to a unique time:trt_type:site.\n',
+           'Investigate the following time:trt_type:site combinations: ', all_id)
+
+    } else if (design_val == "FFS" && !("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat trt_type:site values.\n',
+           'Each row should correspond to a unique trt_type:site.\n',
+           'Investigate the following trt_type:site combinations: ', all_id)
+
+    }
+
+  }
+
+  # check that N >= n
+  if(any(fpc_data_val$N < fpc_data_val$n)) {
+
+    stop('For fpc_data, there are cases where N < n.\n',
+         'N must be >= n.')
 
   }
 
@@ -995,7 +1181,6 @@ FPC <- function(df, des) {
   return(df)
 
 }
-
 
 ################################################################
 # function for pulling out stratum weights
