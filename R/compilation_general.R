@@ -116,6 +116,7 @@ ValidatePlotData <- function(data_check, design_check, wt_data_check, fpc_data_c
   if(design_check == "STRS") {
     ValidateWeights(data_val = data_check, wt_data_val = wt_data_check, data_name = "data")
   }
+
   # check fpc dataframe
   if(all(fpc_data_check != "not_needed")) {
     ValidateFPC(data_val = data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "data")

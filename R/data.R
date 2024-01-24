@@ -1773,6 +1773,21 @@ g_strs_wh_2 <- data.frame(
   wh = c(0.3,0.7,0.8,0.2,0.1,0.9,0.5,0.5)
 )
 
+g_strs_fpc_1 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+g_strs_fpc_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2,1,2,1,2)),
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,35)
+)
+
 b_strs_1 <- data.frame(
   #time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),  missing column
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
@@ -1971,6 +1986,34 @@ b_strs_wh_13 <- data.frame(
   wh = c(0.2,0.7,0.8,0.2) # incorrect weighting
 )
 
+b_strs_fpc_1 <- data.frame(
+  #site = c("SEKI", "SEKI", "YOMI", "YOMI"),  missing column
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_2 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  #stratum = as.character(c(1,2,1,2)),  missing column
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_3 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  #N = c(300,400,500,600),  missing column
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_4 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  #n = c(5,10,20,40)  missing column
+)
+
 # simple random sampling -----------------------------------------
 g_srs <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
@@ -1994,6 +2037,19 @@ g_srs_sp_class <- data.frame(
   plot = c(1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4),
   species =  c(130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131),
   bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_srs_fpc_1 <- data.frame(
+  site = c("SEKI", "YOMI"),
+  N = c(700,1000),
+  n = c(15,60)
+)
+
+g_srs_fpc_2 <- data.frame(
+  time = c("pre", "pre", "post", "post"),
+  site = c("SEKI", "YOMI", "SEKI", "YOMI"),
+  N = c(700,1000,700,1000),
+  n = c(15,60,14,57)
 )
 
 b_srs_1 <- data.frame(
@@ -2053,6 +2109,21 @@ g_ffs_sp <- data.frame(
   plot = as.character(c(1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2)),
   species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
   bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_ffs_fpc_1 <- data.frame(
+  trt_type = c("burn", "burn", "mech", "mech"),
+  site = c("360", "220", "460", "530"),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+g_ffs_fpc_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "mech", "mech", "burn", "burn", "mech", "mech"),
+  site = c("360", "220", "460", "530", "360", "220", "460", "530"),
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,37)
 )
 
 b_ffs_1 <- data.frame(
