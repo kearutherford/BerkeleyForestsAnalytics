@@ -48,7 +48,7 @@
 #'
 #' @export
 
-CompileSurfaceFuels <- function(fwd_data = "none", cwd_data = "none", design, wt_data = "not_needed", units = "metric") {
+CompileSurfaceFuels <- function(fwd_data = "none", cwd_data = "none", design, wt_data = "not_needed", fpc_data = "not_needed", units = "metric") {
 
   # coerce tibble inputs into data.frame
   if(all(fwd_data != "none")) {
@@ -59,8 +59,12 @@ CompileSurfaceFuels <- function(fwd_data = "none", cwd_data = "none", design, wt
     cwd_data <- as.data.frame(cwd_data)
   }
 
-  if(all(wt_data != "not_needed")) {
+  if(all(wt_data != "not_needed", na.rm = TRUE)) {
     wt_data <- as.data.frame(wt_data)
+  }
+
+  if(all(fpc_data != "not_needed", na.rm = TRUE)) {
+    fpc_data <- as.data.frame(fpc_data)
   }
 
   # determine structure of inputs
@@ -72,24 +76,35 @@ CompileSurfaceFuels <- function(fwd_data = "none", cwd_data = "none", design, wt
                                cwd_data_check = cwd_data,
                                design_check = design,
                                wt_data_check = wt_data,
+                               fpc_data_check = fpc_data,
                                unit_check = units,
                                type_check = type)
+
+  # get finite population correction factor data prepped
+  if(all(fpc_data != "not_needed")) {
+    step2 <- FPC(fpc_data, design)
+  } else {
+    step2 <- fpc_data
+  }
 
   # summarize data
   if(design == "SRS") {
 
     step2 <- SRS_CalcsSf(data = step1,
+                         fpc = step2,
                          input_type = type)
 
   } else if (design == "STRS") {
 
     step2 <- STRS_CalcsSf(data = step1,
                           wh_data = wt_data,
+                          fpc = step2,
                           input_type = type)
 
   } else if (design == "FFS") {
 
     step2 <- FFS_CalcsSf(data = step1,
+                         fpc = step2,
                          input_type = type)
 
   }

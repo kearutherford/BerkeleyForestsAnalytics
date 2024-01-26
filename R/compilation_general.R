@@ -42,11 +42,11 @@ CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_n
   # coerce tibble inputs into data.frame
   data <- as.data.frame(data)
 
-  if(all(wt_data != "not_needed")) {
+  if(all(wt_data != "not_needed", na.rm = TRUE)) {
     wt_data <- as.data.frame(wt_data)
   }
 
-  if(all(fpc_data != "not_needed")) {
+  if(all(fpc_data != "not_needed", na.rm = TRUE)) {
     fpc_data <- as.data.frame(fpc_data)
   }
 
@@ -118,7 +118,7 @@ ValidatePlotData <- function(data_check, design_check, wt_data_check, fpc_data_c
   }
 
   # check fpc dataframe
-  if(all(fpc_data_check != "not_needed")) {
+  if(all(fpc_data_check != "not_needed", na.rm = TRUE)) {
     ValidateFPC(data_val = data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "data")
   }
 
@@ -141,17 +141,17 @@ ValidateOptions <- function(design_val, wt_data_val) {
     stop('The "design" parameter must be set to "SRS", "STRS", or "FFS".')
   }
 
-  if(design_val == "STRS" && all(wt_data_val == "not_needed")) {
+  if(design_val == "STRS" && all(wt_data_val == "not_needed", na.rm = TRUE)) {
     stop('For a stratified random sampling - STRS - design, you must supply wt_data.\n',
          'You left wt_data as the default "not_needed".')
   }
 
-  if(design_val == "SRS" && all(wt_data_val != "not_needed")) {
+  if(design_val == "SRS" && all(wt_data_val != "not_needed", na.rm = TRUE)) {
     stop('For a simple random sampling - SRS - design, you do not need to supply wt_data.\n',
          'For SRS, you should leave wt_data as the default "not_needed".')
   }
 
-  if(design_val == "FFS" && all(wt_data_val != "not_needed")) {
+  if(design_val == "FFS" && all(wt_data_val != "not_needed", na.rm = TRUE)) {
     stop('For a Fire and Fire Surrogate - FFS - design, you do not need to supply wt_data.\n',
          'For FFS, you should leave wt_data as the default "not_needed".')
   }
@@ -502,14 +502,14 @@ ValidateFPC <- function(data_val, fpc_data_val, design_val, data_name) {
     stop('The fpc_data input is missing the required "n" column.')
   }
 
-  if(design_val == "STRS" && !("stratum" %in% colnames(data_val))) {
+  if(design_val == "STRS" && !("stratum" %in% colnames(fpc_data_val))) {
     stop('The fpc_data input is missing the required "stratum" column.\n',
-         'This column is required because you set design to "STRS".')
+         'This column is required when you have a "STRS" design.')
   }
 
-  if(design_val == "FFS" && !("trt_type" %in% colnames(data_val))) {
+  if(design_val == "FFS" && !("trt_type" %in% colnames(fpc_data_val))) {
     stop('The fpc_data input is missing the required "trt_type" column.\n',
-         'This column is required because you set design to "FFS".')
+         'This column is required when you have a "FFS" design.')
   }
 
   # check column classes
