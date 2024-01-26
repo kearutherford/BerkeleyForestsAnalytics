@@ -353,7 +353,7 @@ FinalSfDf <- function(data, design_type, input_type, input_unit) {
 # overarching data validation function
 ################################################################
 
-ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt_data_check, unit_check, type_check) {
+ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt_data_check, fpc_data_check, unit_check, type_check) {
 
   # check that options are set appropriately
   # function defined in compilation_general.R
@@ -423,6 +423,20 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
     ValidateWeights(data_val = return_cwd, wt_data_val = wt_data_check, data_name = "cwd_data")
   } else if(design_check == "STRS" && type_check == "type3") {
     ValidateWeights(data_val = return_merge, wt_data_val = wt_data_check, data_name = "combined fwd_cwd_data")
+  }
+
+  # check fpc dataframe
+  # function defined in compilation_general.R
+  if(all(fpc_data_check != "not_needed", na.rm = TRUE)) {
+
+    if(type_check == "type1") {
+      ValidateFPC(data_val = return_fwd, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "fwd_data")
+    } else if (type_check == "type2") {
+      ValidateFPC(data_val = return_cwd, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "cwd_data")
+    } else if (type_check == "type3") {
+      ValidateFPC(data_val = return_merge, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "combined fwd_cwd_data")
+    }
+
   }
 
   # return appropriate dataframe
@@ -840,7 +854,7 @@ MergeDfs <- function(fwd_df, cwd_df, design_type) {
 # function for simple random sampling
 ################################################################
 
-SRS_CalcsSf <- function(data, input_type) {
+SRS_CalcsSf <- function(data, fpc, input_type) {
 
   # create column to reduce looping
   data$ts <- paste0(data$time,'_',data$site)
@@ -910,7 +924,7 @@ SRS_CalcsSf <- function(data, input_type) {
 # function for stratified random sampling
 ################################################################
 
-STRS_CalcsSf <- function(data, wh_data, input_type) {
+STRS_CalcsSf <- function(data, wh_data, fpc, input_type) {
 
   # create columns to reduce looping
   data$tss <- paste0(data$time,'_',data$site,'_',data$stratum)
@@ -1051,7 +1065,7 @@ STRS_CalcsSf <- function(data, wh_data, input_type) {
 # function for FFS
 ################################################################
 
-FFS_CalcsSf <- function(data, input_type) {
+FFS_CalcsSf <- function(data, fpc, input_type) {
 
   # create columns to reduce looping
   data$tts <- paste0(data$time,'_',data$trt_type,'_',data$site)
@@ -1189,7 +1203,7 @@ FFS_CalcsSf <- function(data, input_type) {
 # function for calculating weighted values
 ################################################################
 
-WeightedValues <- function(df, load, sc_length) {
+WeightedValues <- function(df, load, sc_length, fpc_df, des = "not_needed") {
 
   # number of transects
   df$n_col <- ifelse(is.na(df[[load]]),0,1)
