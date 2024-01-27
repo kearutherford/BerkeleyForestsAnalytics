@@ -24,6 +24,12 @@
 #' }
 #' @param design Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified ransom sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 #' @param wt_data Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
+#' @param fpc_data  An optional dataframe or tibble. Incorporates the finite population correction factor (FPC) when samples were taken without replacement. The default is set to "not_needed". Required columns depend on the sampling design:
+#' \itemize{
+#' \item Simple random sampling: must have site, N, and n columns. A time column is optional.
+#' \item Stratified random sampling: must have site, stratum, N, and n columns. A time column is optional.
+#' \item Fire and Fire Surrogate: must have trt_type, site, N and n columns. A time column in optional.
+#' }
 #' @param units Specifies whether the input data are in metric (megagrams per hectare) or imperial (US tons per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.
 #'
 #' @return Depends on the sampling design:
@@ -38,12 +44,14 @@
 #'                     cwd_data = compilation_cwd_demo,
 #'                     design = "STRS",
 #'                     wt_data = compilation_wt_demo,
+#'                     fpc_data = "not_needed",
 #'                     units = "metric")
 #'
 #' CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
 #'                     cwd_data = "none",
 #'                     design = "STRS",
 #'                     wt_data = compilation_wt_demo,
+#'                     fpc_data = "not_needed",
 #'                     units = "metric")
 #'
 #' @export
@@ -892,9 +900,9 @@ SRS_CalcsSf <- function(data, fpc, input_type) {
 
     if(input_type == "type1" || input_type == "type3") {
 
-      one <- WeightedValues(all_plots, "load_1h", "sc_length_1h")
-      ten <- WeightedValues(all_plots, "load_10h", "sc_length_10h")
-      hun <- WeightedValues(all_plots, "load_100h", "sc_length_100h")
+      one <- WeightedValues(all_plots, "load_1h", "sc_length_1h", fpc, "SRS")
+      ten <- WeightedValues(all_plots, "load_10h", "sc_length_10h", fpc, "SRS")
+      hun <- WeightedValues(all_plots, "load_100h", "sc_length_100h", fpc, "SRS")
 
       compiled_df$avg_load_1h[l] <- one[1]
       compiled_df$se_load_1h[l] <- one[2]
@@ -907,7 +915,7 @@ SRS_CalcsSf <- function(data, fpc, input_type) {
 
     if(input_type == "type2" || input_type == "type3") {
 
-      tho <- WeightedValues(all_plots, "load_1000h", "sc_length_1000h")
+      tho <- WeightedValues(all_plots, "load_1000h", "sc_length_1000h", fpc, "SRS")
 
       compiled_df$avg_load_1000h[l] <- tho[1]
       compiled_df$se_load_1000h[l] <- tho[2]
@@ -966,9 +974,9 @@ STRS_CalcsSf <- function(data, wh_data, fpc, input_type) {
 
     if(input_type == "type1" || input_type == "type3") {
 
-      one <- WeightedValues(all_plots, "load_1h", "sc_length_1h")
-      ten <- WeightedValues(all_plots, "load_10h", "sc_length_10h")
-      hun <- WeightedValues(all_plots, "load_100h", "sc_length_100h")
+      one <- WeightedValues(all_plots, "load_1h", "sc_length_1h", fpc, "STRS")
+      ten <- WeightedValues(all_plots, "load_10h", "sc_length_10h", fpc, "STRS")
+      hun <- WeightedValues(all_plots, "load_100h", "sc_length_100h", fpc, "STRS")
 
       str_df$avg_load_1h[j] <- one[1]
       str_df$se_load_1h[j] <- one[2]
@@ -981,7 +989,7 @@ STRS_CalcsSf <- function(data, wh_data, fpc, input_type) {
 
     if(input_type == "type2" || input_type == "type3") {
 
-      tho <- WeightedValues(all_plots, "load_1000h", "sc_length_1000h")
+      tho <- WeightedValues(all_plots, "load_1000h", "sc_length_1000h", fpc, "STRS")
 
       str_df$avg_load_1000h[j] <- tho[1]
       str_df$se_load_1000h[j] <- tho[2]
@@ -1107,9 +1115,9 @@ FFS_CalcsSf <- function(data, fpc, input_type) {
 
     if(input_type == "type1" || input_type == "type3") {
 
-      one <- WeightedValues(all_plots, "load_1h", "sc_length_1h")
-      ten <- WeightedValues(all_plots, "load_10h", "sc_length_10h")
-      hun <- WeightedValues(all_plots, "load_100h", "sc_length_100h")
+      one <- WeightedValues(all_plots, "load_1h", "sc_length_1h", fpc, "FFS")
+      ten <- WeightedValues(all_plots, "load_10h", "sc_length_10h", fpc, "FFS")
+      hun <- WeightedValues(all_plots, "load_100h", "sc_length_100h", fpc, "FFS")
 
       comp_df$avg_load_1h[j] <- one[1]
       comp_df$se_load_1h[j] <- one[2]
@@ -1122,7 +1130,7 @@ FFS_CalcsSf <- function(data, fpc, input_type) {
 
     if(input_type == "type2" || input_type == "type3") {
 
-      tho <- WeightedValues(all_plots, "load_1000h", "sc_length_1000h")
+      tho <- WeightedValues(all_plots, "load_1000h", "sc_length_1000h", fpc, "FFS")
 
       comp_df$avg_load_1000h[j] <- tho[1]
       comp_df$se_load_1000h[j] <- tho[2]
@@ -1165,9 +1173,9 @@ FFS_CalcsSf <- function(data, fpc, input_type) {
 
     if(input_type == "type1" || input_type == "type3") {
 
-      one_cp <- StratumValues(all_comps, "avg_load_1h")
-      ten_cp <- StratumValues(all_comps, "avg_load_10h")
-      hun_cp <- StratumValues(all_comps, "avg_load_100h")
+      one_cp <- StratumValues(all_comps, "avg_load_1h", "not_needed")
+      ten_cp <- StratumValues(all_comps, "avg_load_10h", "not_needed")
+      hun_cp <- StratumValues(all_comps, "avg_load_100h", "not_needed")
 
       type_df$avg_load_1h[l] <- one_cp[1]
       type_df$se_load_1h[l] <- one_cp[2]
@@ -1180,7 +1188,7 @@ FFS_CalcsSf <- function(data, fpc, input_type) {
 
     if(input_type == "type2" || input_type == "type3") {
 
-      tho_cp <- StratumValues(all_comps, "avg_load_1000h")
+      tho_cp <- StratumValues(all_comps, "avg_load_1000h", "not_needed")
 
       type_df$avg_load_1000h[l] <- tho_cp[1]
       type_df$se_load_1000h[l] <- tho_cp[2]
@@ -1238,7 +1246,33 @@ WeightedValues <- function(df, load, sc_length, fpc_df, des = "not_needed") {
     # standard error
     df$wi_yi_ybarw <- df$wi*(df[[load]] - ybar_w)^2
     sum_top <- sum(df$wi_yi_ybarw, na.rm = TRUE)
-    s_ybar <- sqrt(sum_top/(n*(n-1)))
+
+    if(all(fpc_df != "not_needed")) {
+
+      if(des == "STRS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$site[1],'_',df$stratum[1])
+      } else if (des == "STRS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$site[1],'_',df$stratum[1])
+      } else if (des == "SRS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$site[1])
+      } else if (des == "SRS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$site[1])
+      } else if (des == "FFS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$trt_type[1],'_',df$site[1])
+      } else if (des == "FFS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$trt_type[1],'_',df$site[1])
+      }
+
+      fpc_info <- subset(fpc_df, fpc_id == fpc_id_match)
+      fpc_val <- fpc_info$fpc_value
+
+      s_ybar <- sqrt((sum_top/(n*(n-1)))*fpc_val)
+
+    } else {
+
+      s_ybar <- sqrt(sum_top/(n*(n-1)))
+
+    }
 
   }
 

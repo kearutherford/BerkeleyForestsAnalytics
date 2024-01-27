@@ -18,6 +18,12 @@
 #' }
 #' @param design Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 #' @param wt_data Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
+#' @param fpc_data  An optional dataframe or tibble. Incorporates the finite population correction factor (FPC) when samples were taken without replacement. The default is set to "not_needed". Required columns depend on the sampling design:
+#' \itemize{
+#' \item Simple random sampling: must have site, N, and n columns. A time column is optional.
+#' \item Stratified random sampling: must have site, stratum, N, and n columns. A time column is optional.
+#' \item Fire and Fire Surrogate: must have trt_type, site, N and n columns. A time column in optional.
+#' }
 #'
 #' @return Depends on the sampling design:
 #' \itemize{
@@ -29,11 +35,13 @@
 #' @examples
 #' CompilePlots(data = compilation_srs_demo,
 #'              design = "SRS",
-#'              wt_data = "not_needed")
+#'              wt_data = "not_needed",
+#'              fpc_data = "not_needed")
 #'
 #' CompilePlots(data = compilation_strs_demo,
 #'              design = "STRS",
-#'              wt_data = compilation_wt_demo)
+#'              wt_data = compilation_wt_demo,
+#'              fpc_data = "not_needed")
 #'
 #' @export
 
@@ -1113,6 +1121,10 @@ StratumValues <- function(df, variable, fpc_df, des = "not_needed") {
     ybar_h <- sum_y_hi/n_h
 
     # standard error
+    df$yi_ybar <- (df[[variable]] - ybar_h)^2
+    sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
+    s_yh_2 <- sum_yi_ybar/(n_h - 1)
+
     if(all(fpc_df != "not_needed")) {
 
       if(des == "STRS" && "time" %in% colnames(fpc_df)) {
@@ -1132,16 +1144,10 @@ StratumValues <- function(df, variable, fpc_df, des = "not_needed") {
       fpc_info <- subset(fpc_df, fpc_id == fpc_id_match)
       fpc_h <- fpc_info$fpc_value
 
-      df$yi_ybar <- (df[[variable]] - ybar_h)^2
-      sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
-      s_yh_2 <- sum_yi_ybar/(n_h - 1)
       s_ybar_h <- sqrt((s_yh_2/n_h)*fpc_h)
 
     } else {
 
-      df$yi_ybar <- (df[[variable]] - ybar_h)^2
-      sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
-      s_yh_2 <- sum_yi_ybar/(n_h - 1)
       s_ybar_h <- sqrt(s_yh_2/n_h)
 
     }

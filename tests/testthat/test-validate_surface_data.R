@@ -1,11 +1,11 @@
 
-test_that("Properly formatted data frames throw no errors, warnings, or messages", {
+test_that("Properly formatted data frames for STRS throw no errors, warnings, or messages", {
 
-  # STRS ------------------------------------------
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
                                       cwd_data_check = g_strs_cwd_m,
                                       design_check = "STRS",
                                       wt_data_check = g_strs_wh_1,
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type3"))
 
@@ -13,6 +13,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_strs_cwd_m,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type3"))
 
@@ -20,13 +21,66 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_strs_cwd_m,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type3"))
+
+
+  expect_no_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                      cwd_data_check = g_strs_cwd_m,
+                                      design_check = "STRS",
+                                      wt_data_check = g_strs_wh_1,
+                                      fpc_data_check = g_strs_fpc_1,
+                                      unit_check = "metric",
+                                      type_check = "type3"))
+
+  expect_no_warning(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                        cwd_data_check = g_strs_cwd_m,
+                                        design_check = "STRS",
+                                        wt_data_check = g_strs_wh_1,
+                                        fpc_data_check =  g_strs_fpc_1,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+  expect_no_message(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                        cwd_data_check = g_strs_cwd_m,
+                                        design_check = "STRS",
+                                        wt_data_check = g_strs_wh_1,
+                                        fpc_data_check =  g_strs_fpc_1,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+
+  expect_no_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                      cwd_data_check = g_strs_cwd_m,
+                                      design_check = "STRS",
+                                      wt_data_check = g_strs_wh_1,
+                                      fpc_data_check = g_strs_fpc_2,
+                                      unit_check = "metric",
+                                      type_check = "type3"))
+
+  expect_no_warning(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                        cwd_data_check = g_strs_cwd_m,
+                                        design_check = "STRS",
+                                        wt_data_check = g_strs_wh_1,
+                                        fpc_data_check =  g_strs_fpc_2,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+  expect_no_message(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                        cwd_data_check = g_strs_cwd_m,
+                                        design_check = "STRS",
+                                        wt_data_check = g_strs_wh_1,
+                                        fpc_data_check =  g_strs_fpc_2,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_i,
                                       cwd_data_check = g_strs_cwd_i,
                                       design_check = "STRS",
                                       wt_data_check = g_strs_wh_1,
+                                      fpc_data_check = "not_needed",
                                       unit_check = "imperial",
                                       type_check = "type3"))
 
@@ -34,6 +88,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_strs_cwd_i,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "imperial",
                                         type_check = "type3"))
 
@@ -41,13 +96,16 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_strs_cwd_i,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "imperial",
                                         type_check = "type3"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
                                       cwd_data_check = "none",
                                       design_check = "STRS",
                                       wt_data_check = g_strs_wh_1,
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type1"))
 
@@ -55,6 +113,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = "none",
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1"))
 
@@ -62,13 +121,16 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = "none",
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = "none",
                                       cwd_data_check = g_strs_cwd_m,
                                       design_check = "STRS",
                                       wt_data_check = g_strs_wh_1,
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type2"))
 
@@ -76,6 +138,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_strs_cwd_m,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2"))
 
@@ -83,14 +146,20 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_strs_cwd_m,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2"))
 
-  # SRS ---------------------------------------------
+})
+
+
+test_that("Properly formatted data frames for SRS throw no errors, warnings, or messages", {
+
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
                                       cwd_data_check = g_srs_cwd_m,
                                       design_check = "SRS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type3"))
 
@@ -98,6 +167,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_srs_cwd_m,
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type3"))
 
@@ -105,13 +175,66 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_srs_cwd_m,
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type3"))
+
+
+  expect_no_error(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
+                                      cwd_data_check = g_srs_cwd_m,
+                                      design_check = "SRS",
+                                      wt_data_check = "not_needed",
+                                      fpc_data_check = g_srs_fpc_1,
+                                      unit_check = "metric",
+                                      type_check = "type3"))
+
+  expect_no_warning(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
+                                        cwd_data_check = g_srs_cwd_m,
+                                        design_check = "SRS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_srs_fpc_1,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+  expect_no_message(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
+                                        cwd_data_check = g_srs_cwd_m,
+                                        design_check = "SRS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_srs_fpc_1,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+
+  expect_no_error(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
+                                      cwd_data_check = g_srs_cwd_m,
+                                      design_check = "SRS",
+                                      wt_data_check = "not_needed",
+                                      fpc_data_check = g_srs_fpc_2,
+                                      unit_check = "metric",
+                                      type_check = "type3"))
+
+  expect_no_warning(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
+                                        cwd_data_check = g_srs_cwd_m,
+                                        design_check = "SRS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_srs_fpc_2,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+  expect_no_message(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
+                                        cwd_data_check = g_srs_cwd_m,
+                                        design_check = "SRS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_srs_fpc_2,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_srs_fwd_i,
                                       cwd_data_check = g_srs_cwd_i,
                                       design_check = "SRS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "imperial",
                                       type_check = "type3"))
 
@@ -119,6 +242,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_srs_cwd_i,
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "imperial",
                                         type_check = "type3"))
 
@@ -126,13 +250,16 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_srs_cwd_i,
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "imperial",
                                         type_check = "type3"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_srs_fwd_m,
                                       cwd_data_check = "none",
                                       design_check = "SRS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type1"))
 
@@ -140,6 +267,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = "none",
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1"))
 
@@ -147,13 +275,16 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = "none",
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = "none",
                                       cwd_data_check = g_srs_cwd_m,
                                       design_check = "SRS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type2"))
 
@@ -161,6 +292,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_srs_cwd_m,
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2"))
 
@@ -168,14 +300,20 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_srs_cwd_m,
                                         design_check = "SRS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2"))
 
-  # FFS ---------------------------------------------
+})
+
+
+test_that("Properly formatted data frames for FFS throw no errors, warnings, or messages", {
+
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
                                       cwd_data_check = g_ffs_cwd_m,
                                       design_check = "FFS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type3"))
 
@@ -183,6 +321,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_ffs_cwd_m,
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type3"))
 
@@ -190,13 +329,66 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_ffs_cwd_m,
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type3"))
+
+
+  expect_no_error(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
+                                      cwd_data_check = g_ffs_cwd_m,
+                                      design_check = "FFS",
+                                      wt_data_check = "not_needed",
+                                      fpc_data_check = g_ffs_fpc_1,
+                                      unit_check = "metric",
+                                      type_check = "type3"))
+
+  expect_no_warning(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
+                                        cwd_data_check = g_ffs_cwd_m,
+                                        design_check = "FFS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_ffs_fpc_1,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+  expect_no_message(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
+                                        cwd_data_check = g_ffs_cwd_m,
+                                        design_check = "FFS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_ffs_fpc_1,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+
+  expect_no_error(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
+                                      cwd_data_check = g_ffs_cwd_m,
+                                      design_check = "FFS",
+                                      wt_data_check = "not_needed",
+                                      fpc_data_check = g_ffs_fpc_2,
+                                      unit_check = "metric",
+                                      type_check = "type3"))
+
+  expect_no_warning(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
+                                        cwd_data_check = g_ffs_cwd_m,
+                                        design_check = "FFS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_ffs_fpc_2,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
+  expect_no_message(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
+                                        cwd_data_check = g_ffs_cwd_m,
+                                        design_check = "FFS",
+                                        wt_data_check = "not_needed",
+                                        fpc_data_check = g_ffs_fpc_2,
+                                        unit_check = "metric",
+                                        type_check = "type3"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_i,
                                       cwd_data_check = g_ffs_cwd_i,
                                       design_check = "FFS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "imperial",
                                       type_check = "type3"))
 
@@ -204,6 +396,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_ffs_cwd_i,
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "imperial",
                                         type_check = "type3"))
 
@@ -211,13 +404,16 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_ffs_cwd_i,
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "imperial",
                                         type_check = "type3"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = g_ffs_fwd_m,
                                       cwd_data_check = "none",
                                       design_check = "FFS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type1"))
 
@@ -225,6 +421,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = "none",
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1"))
 
@@ -232,13 +429,16 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = "none",
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1"))
+
 
   expect_no_error(ValidateSurfaceData(fwd_data_check = "none",
                                       cwd_data_check = g_ffs_cwd_m,
                                       design_check = "FFS",
                                       wt_data_check = "not_needed",
+                                      fpc_data_check = "not_needed",
                                       unit_check = "metric",
                                       type_check = "type2"))
 
@@ -246,6 +446,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_ffs_cwd_m,
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2"))
 
@@ -253,6 +454,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
                                         cwd_data_check = g_ffs_cwd_m,
                                         design_check = "FFS",
                                         wt_data_check = "not_needed",
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2"))
 
@@ -265,6 +467,7 @@ test_that("Invalid options throw an error", {
                                    cwd_data_check = g_srs_cwd_m,
                                    design_check = "SRSS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'The "design" parameter must be set to "SRS", "STRS", or "FFS".')
@@ -273,6 +476,7 @@ test_that("Invalid options throw an error", {
                                    cwd_data_check = g_srs_cwd_m,
                                    design_check = "STRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'For a stratified random sampling - STRS - design, you must supply wt_data.\nYou left wt_data as the default "not_needed".')
@@ -281,6 +485,7 @@ test_that("Invalid options throw an error", {
                                    cwd_data_check = g_srs_cwd_m,
                                    design_check = "SRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'For a simple random sampling - SRS - design, you do not need to supply wt_data.\nFor SRS, you should leave wt_data as the default "not_needed".')
@@ -289,6 +494,7 @@ test_that("Invalid options throw an error", {
                                    cwd_data_check = g_srs_cwd_m,
                                    design_check = "FFS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'For a Fire and Fire Surrogate - FFS - design, you do not need to supply wt_data.\nFor FFS, you should leave wt_data as the default "not_needed".')
@@ -297,6 +503,7 @@ test_that("Invalid options throw an error", {
                                    cwd_data_check = g_srs_cwd_m,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metricc",
                                    type_check = "type3"),
                'The "units" parameter must be set to "metric" or "imperial".')
@@ -311,6 +518,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'fwd_data is missing necessary columns!\nFor a STRS design and metric units, fwd_data must include: time, site, stratum, plot,\nload_1h_Mg_ha, load_10h_Mg_ha, load_100h_Mg_ha, sc_length_1h, sc_length_10h, and sc_length_100h')
@@ -319,6 +527,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = g_strs_cwd_i,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'fwd_data is missing necessary columns!\nFor a STRS design and imperial units, fwd_data must include: time, site, stratum, plot,\nload_1h_ton_ac, load_10h_ton_ac, load_100h_ton_ac, sc_length_1h, sc_length_10h, and sc_length_100h')
@@ -327,6 +536,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = b_strs_cwd_m_1,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'cwd_data is missing necessary columns!\nFor a STRS design and metric units, cwd_data must include: time, site, stratum, plot,\nload_1000s_Mg_ha, load_1000r_Mg_ha, load_cwd_Mg_ha, sc_length_1000s, and sc_length_1000r')
@@ -335,6 +545,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = b_strs_cwd_i_1,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'cwd_data is missing necessary columns!\nFor a STRS design and imperial units, cwd_data must include: time, site, stratum, plot,\nload_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac, sc_length_1000s, and sc_length_1000r')
@@ -344,6 +555,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'fwd_data is missing necessary columns!\nFor a SRS design and metric units, fwd_data must include: time, site, plot,\nload_1h_Mg_ha, load_10h_Mg_ha, load_100h_Mg_ha, sc_length_1h, sc_length_10h, and sc_length_100h')
@@ -352,6 +564,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = g_srs_cwd_i,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'fwd_data is missing necessary columns!\nFor a SRS design and imperial units, fwd_data must include: time, site, plot,\nload_1h_ton_ac, load_10h_ton_ac, load_100h_ton_ac, sc_length_1h, sc_length_10h, and sc_length_100h')
@@ -360,6 +573,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = b_srs_cwd_m_1,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'cwd_data is missing necessary columns!\nFor a SRS design and metric units, cwd_data must include: time, site, plot,\nload_1000s_Mg_ha, load_1000r_Mg_ha, load_cwd_Mg_ha, sc_length_1000s, and sc_length_1000r')
@@ -368,6 +582,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = b_srs_cwd_i_1,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'cwd_data is missing necessary columns!\nFor a SRS design and imperial units, cwd_data must include: time, site, plot,\nload_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac, sc_length_1000s, and sc_length_1000r')
@@ -377,6 +592,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'fwd_data is missing necessary columns!\nFor a FFS design and metric units, fwd_data must include: time, trt_type, site, plot,\nload_1h_Mg_ha, load_10h_Mg_ha, load_100h_Mg_ha, sc_length_1h, sc_length_10h, and sc_length_100h')
@@ -385,6 +601,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = g_ffs_cwd_i,
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'fwd_data is missing necessary columns!\nFor a FFS design and imperial units, fwd_data must include: time, trt_type, site, plot,\nload_1h_ton_ac, load_10h_ton_ac, load_100h_ton_ac, sc_length_1h, sc_length_10h, and sc_length_100h')
@@ -393,6 +610,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = b_ffs_cwd_m_1,
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'cwd_data is missing necessary columns!\nFor a FFS design and metric units, cwd_data must include: time, trt_type, site, plot,\nload_1000s_Mg_ha, load_1000r_Mg_ha, load_cwd_Mg_ha, sc_length_1000s, and sc_length_1000r')
@@ -401,6 +619,7 @@ test_that("Missing columns throw an error", {
                                    cwd_data_check = b_ffs_cwd_i_1,
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'cwd_data is missing necessary columns!\nFor a FFS design and imperial units, cwd_data must include: time, trt_type, site, plot,\nload_1000s_ton_ac, load_1000r_ton_ac, load_cwd_ton_ac, sc_length_1000s, and sc_length_1000r')
@@ -415,6 +634,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are missing values in the time column.')
@@ -423,6 +643,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are missing values in the site column.')
@@ -431,6 +652,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are missing values in the stratum column.')
@@ -439,6 +661,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are missing values in the plot column.')
@@ -447,6 +670,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are missing values in the trt_type column.')
@@ -456,6 +680,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = b_strs_cwd_m_2,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are missing values in the time column.')
@@ -464,6 +689,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check =  b_strs_cwd_m_3,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are missing values in the site column.')
@@ -472,6 +698,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = b_strs_cwd_m_4,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are missing values in the stratum column.')
@@ -480,6 +707,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = b_strs_cwd_m_5,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are missing values in the plot column.')
@@ -488,6 +716,7 @@ test_that("Missing values throw an error", {
                                    cwd_data_check = b_ffs_cwd_m_2,
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are missing values in the trt_type column.')
@@ -502,6 +731,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, the load_1h_Mg_ha column must be numeric.\nCurrently, the column is class: character')
@@ -510,6 +740,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, the load_10h_Mg_ha column must be numeric.\nCurrently, the column is class: character')
@@ -518,6 +749,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = g_srs_cwd_m,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'For fwd_data, the load_100h_Mg_ha column must be numeric.\nCurrently, the column is class: character')
@@ -526,6 +758,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, the sc_length_1h column must be numeric.\nCurrently, the column is class: character')
@@ -534,6 +767,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, the sc_length_10h column must be numeric.\nCurrently, the column is class: character')
@@ -542,6 +776,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, the sc_length_100h column must be numeric.\nCurrently, the column is class: character')
@@ -550,6 +785,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type1"),
                'For fwd_data, the load_1h_ton_ac column must be numeric.\nCurrently, the column is class: character')
@@ -558,6 +794,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type1"),
                'For fwd_data, the load_10h_ton_ac column must be numeric.\nCurrently, the column is class: character')
@@ -566,6 +803,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = g_srs_cwd_i,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'For fwd_data, the load_100h_ton_ac column must be numeric.\nCurrently, the column is class: character')
@@ -575,6 +813,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_m_2,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, the load_1000s_Mg_ha column must be numeric.\nCurrently, the column is class: character')
@@ -583,6 +822,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_m_3,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, the load_1000r_Mg_ha column must be numeric.\nCurrently, the column is class: character')
@@ -591,6 +831,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_m_4,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'For cwd_data, the load_cwd_Mg_ha column must be numeric.\nCurrently, the column is class: character')
@@ -599,6 +840,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_m_5,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, the sc_length_1000s column must be numeric.\nCurrently, the column is class: character')
@@ -607,6 +849,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_m_6,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, the sc_length_1000r column must be numeric.\nCurrently, the column is class: character')
@@ -615,6 +858,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_i_2,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type2"),
                'For cwd_data, the load_1000s_ton_ac column must be numeric.\nCurrently, the column is class: character')
@@ -623,6 +867,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_i_3,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type2"),
                'For cwd_data, the load_1000r_ton_ac column must be numeric.\nCurrently, the column is class: character')
@@ -631,6 +876,7 @@ test_that("Wrong column class throws an error", {
                                    cwd_data_check = b_srs_cwd_i_4,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'For cwd_data, the load_cwd_ton_ac column must be numeric.\nCurrently, the column is class: character')
@@ -645,6 +891,7 @@ test_that("Repeat observations throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are repeat time:site:stratum:plot observations.\nThere should only be one observation/row for an individual plot at a specific time:site:stratum.\nInvestigate the following time:site:stratum:plot combinations: pre_SEKI_1_3')
@@ -653,6 +900,7 @@ test_that("Repeat observations throw an error", {
                                    cwd_data_check = b_strs_cwd_m_6,
                                    design_check = "STRS",
                                    wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are repeat time:site:stratum:plot observations.\nThere should only be one observation/row for an individual plot at a specific time:site:stratum.\nInvestigate the following time:site:stratum:plot combinations: pre_SEKI_1_3')
@@ -662,6 +910,7 @@ test_that("Repeat observations throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are repeat time:site:plot observations.\nThere should only be one observation/row for an individual plot at a specific time:site.\nInvestigate the following time:site:plot combinations: pre_SEKI_1')
@@ -670,6 +919,7 @@ test_that("Repeat observations throw an error", {
                                    cwd_data_check = b_srs_cwd_m_7,
                                    design_check = "SRS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are repeat time:site:plot observations.\nThere should only be one observation/row for an individual plot at a specific time:site.\nInvestigate the following time:site:plot combinations: pre_SEKI_1')
@@ -679,6 +929,7 @@ test_that("Repeat observations throw an error", {
                                    cwd_data_check = "none",
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'For fwd_data, there are repeat time:trt_type:site:plot observations.\nThere should only be one observation/row for an individual plot at a specific time:trt_type:site.\nInvestigate the following time:trt_type:site:plot combinations: pre_burn_220_2')
@@ -687,6 +938,7 @@ test_that("Repeat observations throw an error", {
                                    cwd_data_check = b_ffs_cwd_m_3,
                                    design_check = "FFS",
                                    wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'For cwd_data, there are repeat time:trt_type:site:plot observations.\nThere should only be one observation/row for an individual plot at a specific time:trt_type:site.\nInvestigate the following time:trt_type:site:plot combinations: pre_burn_220_2')
@@ -701,6 +953,7 @@ test_that("Dataframe merging works", {
                                      cwd_data_check = g_strs_cwd_m,
                                      design_check = "STRS",
                                      wt_data_check = g_strs_wh_1,
+                                     fpc_data_check = "not_needed",
                                      unit_check = "metric",
                                      type_check = "type3"),
                 'fwd_data and cwd_data did not completely match!\nThese plots are in "fwd_data" but do not have matches in "cwd_data": pre_SEKI_1_4 \nThese plots are in "cwd_data" but do not have matches in "fwd_data": pre_SEKI_1_3 \nPlots without matches will NOT be dropped when the two dataframes are merged.\nNA values will be filled in as needed for a full merge.')
@@ -710,6 +963,7 @@ test_that("Dataframe merging works", {
                                      cwd_data_check = g_srs_cwd_m,
                                      design_check = "SRS",
                                      wt_data_check = "not_needed",
+                                     fpc_data_check = "not_needed",
                                      unit_check = "metric",
                                      type_check = "type3"),
                'fwd_data and cwd_data did not completely match!\nThese plots are in "fwd_data" but do not have matches in "cwd_data": pre_YOMI_5 \nThese plots are in "cwd_data" but do not have matches in "fwd_data": pre_YOMI_4 \nPlots without matches will NOT be dropped when the two dataframes are merged.\nNA values will be filled in as needed for a full merge.')
@@ -719,6 +973,7 @@ test_that("Dataframe merging works", {
                                      cwd_data_check = g_ffs_cwd_m,
                                      design_check = "FFS",
                                      wt_data_check = "not_needed",
+                                     fpc_data_check = "not_needed",
                                      unit_check = "metric",
                                      type_check = "type3"),
                'fwd_data and cwd_data did not completely match!\nThese plots are in "fwd_data" but do not have matches in "cwd_data": pre_burn_220_4 \nThese plots are in "cwd_data" but do not have matches in "fwd_data": pre_burn_220_3 \nPlots without matches will NOT be dropped when the two dataframes are merged.\nNA values will be filled in as needed for a full merge.')
@@ -732,6 +987,7 @@ test_that("Weights dataframe handling works", {
                                    cwd_data_check = g_strs_cwd_m,
                                    design_check = "STRS",
                                    wt_data_check = b_strs_wh_9,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type3"),
                'combined fwd_cwd_data and wt_data did not completely match!\nThese strata are in combined fwd_cwd_data but do not have a match in wt_data: SEKI_2 \nThese strata are in wt_data but do not have a match in combined fwd_cwd_data: SEKI_3')
@@ -740,6 +996,7 @@ test_that("Weights dataframe handling works", {
                                    cwd_data_check = "none",
                                    design_check = "STRS",
                                    wt_data_check = b_strs_wh_9,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type1"),
                'fwd_data and wt_data did not completely match!\nThese strata are in fwd_data but do not have a match in wt_data: SEKI_2 \nThese strata are in wt_data but do not have a match in fwd_data: SEKI_3')
@@ -748,9 +1005,42 @@ test_that("Weights dataframe handling works", {
                                    cwd_data_check = g_strs_cwd_m,
                                    design_check = "STRS",
                                    wt_data_check = b_strs_wh_9,
+                                   fpc_data_check = "not_needed",
                                    unit_check = "metric",
                                    type_check = "type2"),
                'cwd_data and wt_data did not completely match!\nThese strata are in cwd_data but do not have a match in wt_data: SEKI_2 \nThese strata are in wt_data but do not have a match in cwd_data: SEKI_3')
+
+})
+
+
+test_that("FPC dataframe handling works", {
+
+  expect_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                   cwd_data_check = g_strs_cwd_m,
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = b_strs_fpc_13,
+                                   unit_check = "metric",
+                                   type_check = "type3"),
+               'combined fwd_cwd_data and fpc_data did not completely match!\nIn combined fwd_cwd_data but does not have a match in fpc_data: SEKI_2 \nIn fpc_data but does not have a match in combined fwd_cwd_data: SEKI_3')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = g_strs_fwd_m,
+                                   cwd_data_check = "none",
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = b_strs_fpc_13,
+                                   unit_check = "metric",
+                                   type_check = "type1"),
+               'fwd_data and fpc_data did not completely match!\nIn fwd_data but does not have a match in fpc_data: SEKI_2 \nIn fpc_data but does not have a match in fwd_data: SEKI_3')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = "none",
+                                   cwd_data_check = g_strs_cwd_m,
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = b_strs_fpc_13,
+                                   unit_check = "metric",
+                                   type_check = "type2"),
+               'cwd_data and fpc_data did not completely match!\nIn cwd_data but does not have a match in fpc_data: SEKI_2 \nIn fpc_data but does not have a match in cwd_data: SEKI_3')
 
 })
 
@@ -762,6 +1052,7 @@ test_that("Final column classes are as expected", {
                                         cwd_data_check = "none",
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type1")
 
@@ -771,6 +1062,7 @@ test_that("Final column classes are as expected", {
                                         cwd_data_check = g_strs_cwd_m,
                                         design_check = "STRS",
                                         wt_data_check = g_strs_wh_1,
+                                        fpc_data_check = "not_needed",
                                         unit_check = "metric",
                                         type_check = "type2")
 
@@ -781,6 +1073,7 @@ test_that("Final column classes are as expected", {
                                        cwd_data_check = "none",
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type1")
 
@@ -792,6 +1085,7 @@ test_that("Final column classes are as expected", {
                                        cwd_data_check = g_srs_cwd_m_class,
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type2")
 
@@ -804,6 +1098,7 @@ test_that("Final column classes are as expected", {
                                        cwd_data_check = "none",
                                        design_check = "FFS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type1")
 
@@ -813,6 +1108,7 @@ test_that("Final column classes are as expected", {
                                        cwd_data_check = g_ffs_cwd_m_class,
                                        design_check = "FFS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type2")
 
@@ -827,6 +1123,7 @@ test_that("Final columns are as expected", {
                                        cwd_data_check = "none",
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type1")
 
@@ -836,6 +1133,7 @@ test_that("Final columns are as expected", {
                                        cwd_data_check = "none",
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "imperial",
                                        type_check = "type1")
 
@@ -845,6 +1143,7 @@ test_that("Final columns are as expected", {
                                        cwd_data_check = g_srs_cwd_m,
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type2")
 
@@ -854,6 +1153,7 @@ test_that("Final columns are as expected", {
                                        cwd_data_check = g_srs_cwd_i,
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "imperial",
                                        type_check = "type2")
 
@@ -863,6 +1163,7 @@ test_that("Final columns are as expected", {
                                        cwd_data_check = g_srs_cwd_m,
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "metric",
                                        type_check = "type3")
 
@@ -873,6 +1174,7 @@ test_that("Final columns are as expected", {
                                        cwd_data_check = g_srs_cwd_i,
                                        design_check = "SRS",
                                        wt_data_check = "not_needed",
+                                       fpc_data_check = "not_needed",
                                        unit_check = "imperial",
                                        type_check = "type3")
 

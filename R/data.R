@@ -345,6 +345,23 @@
 "compilation_srs_sp_demo"
 
 
+#' @title FPC data for general simple random sampling demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 2 rows and 3 columns:
+#' \describe{
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{N}{number of possible plots for the site}
+#'   \item{n}{number of plots measured}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_fpc_demo"
+
+
 #' @title Data for general Fire and Fire Surrogate demonstrations
 #'
 #' @description
