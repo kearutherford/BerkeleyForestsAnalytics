@@ -1717,11 +1717,39 @@ summarization” below for further details.
     random sample), “STRS” (stratified random sample), or “FFS” (Fire
     and Fire Surrogate). There is no default.
 
-3.  `wt_data` A dataframe or tibble. Only required for stratified random
-    sampling designs. A dataframe or tibble with the following columns:
-    time (optional), site, stratum, and wh (stratum weight). The default
-    is set to “not_needed”, and should be left as such for design =
-    “SRS” or design = “FFS”. Required columns:
+3.  `wt_data` Only required for stratified random sampling designs. A
+    dataframe or tibble with the following columns: time (optional),
+    site, stratum, and wh (stratum weight). The default is set to
+    “not_needed”, and should be left as such for design = “SRS” or
+    design = “FFS”.
+
+4.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
+    population correction factor (FPC) when samples were taken without
+    replacement (see “Background information for further data
+    summarization: Finite population correction factor” below for
+    further details on what the FPC is and when the FPC is applicable).
+    The default is set to “not_needed”. Required columns depend on the
+    sampling design:
+
+    - If sampling design is simple random:
+      - **time:** Optional. As described above.
+      - **site:** As desicribed above.
+      - **N:** Number of possible plots in the population. For example,
+        if you have a 60 hectare unit and 0.1 hectare plots, N would be
+        600.
+      - **n:** Number of plots measured.
+    - If sampling design is stratified random:
+      - **time:** Optional. As described above.
+      - **site:** As desicribed above.
+      - **stratum:** As described above.
+      - **N:** As described above.
+      - **n:** As described above.
+    - If sampling design is Fire and Fire Surrogate:
+      - **time:** Optional. As described above.
+      - **trt_type:** As desicribed above.
+      - **site:** As described above.
+      - **N:** As described above.
+      - **n:** As described above.
 
 ### Outputs
 
@@ -1761,7 +1789,7 @@ compilation_srs_demo
 
 ``` r
 # call the CompilePlots() function in the BerkeleyForestsAnalystics package
-# keep default wt_data (= "not_needed")
+# keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 srs_demo1 <- CompilePlots(data = compilation_srs_demo,
                           design = "SRS")
 
@@ -1798,7 +1826,7 @@ compilation_srs_sp_demo
 
 ``` r
 # call the CompilePlots() function in the BerkeleyForestsAnalystics package
-# keep default wt_data (= "not_needed")
+# keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 srs_demo2 <- CompilePlots(data = compilation_srs_sp_demo,
                           design = "SRS")
 
@@ -1808,6 +1836,55 @@ srs_demo2
     ##   time site species avg_dominance se_dominance
     ## 1 2021 SEKI    ABCO        89.425     5.057729
     ## 2 2021 SEKI    PIPO        10.575     5.057729
+
+<br>
+
+**Simple random sampling design, with finite population correction
+factor:**
+
+``` r
+# investigate input data
+compilation_srs_demo
+```
+
+    ##   time site plot sph ba_m2_ha qmd_cm dbh_cm
+    ## 1 2021 SEKI    1 140    21.76   44.5   44.1
+    ## 2 2021 SEKI    2 100    11.60   38.4   36.4
+    ## 3 2021 SEKI    3 380    20.96   26.5   21.9
+    ## 4 2021 SEKI    4 160    53.24   65.1   49.4
+    ## 5 2021 SEKI    5 120    49.70   72.6   59.1
+    ## 6 2021 YOMI    1 330    58.18   47.4   37.7
+    ## 7 2021 YOMI    2 140    25.26   47.9   42.4
+    ## 8 2021 YOMI    3 320    20.08   28.3   25.8
+    ## 9 2021 YOMI    4 440    53.84   39.5   28.2
+
+``` r
+# investigate input fpc_data
+compilation_fpc_demo
+```
+
+    ##   site   N n
+    ## 1 SEKI 100 5
+    ## 2 YOMI  60 4
+
+<br>
+
+``` r
+# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# keep default wt_data (= "not_needed")
+srs_demo3 <- CompilePlots(data = compilation_srs_demo,
+                          design = "SRS",
+                          fpc_data = compilation_fpc_demo)
+
+srs_demo3
+```
+
+    ##   time site avg_sph   se_sph avg_ba_m2_ha se_ba_m2_ha avg_qmd_cm se_qmd_cm
+    ## 1 2021 SEKI   180.0 49.69909       31.452    8.171701     49.420  8.310958
+    ## 2 2021 YOMI   307.5 59.99306       39.340    9.393099     40.775  4.426376
+    ##   avg_dbh_cm se_dbh_cm
+    ## 1     42.180  6.113299
+    ## 2     33.525  3.785341
 
 <br>
 
@@ -1844,6 +1921,7 @@ compilation_wt_demo
 
 ``` r
 # call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# keep default fpc_data (= "not_needed)
 strs_demo <- CompilePlots(data = compilation_strs_demo,
                           design = "STRS",
                           wt_data = compilation_wt_demo)
@@ -1895,7 +1973,7 @@ compilation_ffs_demo
 
 ``` r
 # call the CompilePlots() function in the BerkeleyForestsAnalystics package
-# keep default wt_data (= "not_needed")
+# keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 ffs_demo <- CompilePlots(data = compilation_ffs_demo,
                          design = "FFS")
 
@@ -2054,7 +2132,35 @@ line transect length.
     “not_needed”, and should be left as such for design = “SRS” or
     design = “FFS”.
 
-5.  `units` Specifies whether the input data are in metric (megagrams
+5.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
+    population correction factor (FPC) when samples were taken without
+    replacement (see “Background information for further data
+    summarization: Finite population correction factor” below for
+    further details on what the FPC is and when the FPC is applicable).
+    The default is set to “not_needed”. Required columns depend on the
+    sampling design:
+
+    - If sampling design is simple random:
+      - **time:** Optional. As described above.
+      - **site:** As desicribed above.
+      - **N:** Number of possible plots in the population. For example,
+        if you have a 60 hectare unit and 0.1 hectare plots, N would be
+        600.
+      - **n:** Number of plots measured.
+    - If sampling design is stratified random:
+      - **time:** Optional. As described above.
+      - **site:** As desicribed above.
+      - **stratum:** As described above.
+      - **N:** As described above.
+      - **n:** As described above.
+    - If sampling design is Fire and Fire Surrogate:
+      - **time:** Optional. As described above.
+      - **trt_type:** As desicribed above.
+      - **site:** As described above.
+      - **N:** As described above.
+      - **n:** As described above.
+
+6.  `units` Specifies whether the input data are in metric (megagrams
     per hectare) or imperial (US tons per acre) units. Inputs must be
     all metric or all imperial (do not mix-and-match units). The output
     units will match the input units (i.e., if inputs are in metric then
@@ -2909,12 +3015,90 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 
 # Background information for further data summarization
 
-If you have a stratified random sampling design, you must calculate
-stratum values before calculating overall values. Similarly, for the
-Fire and Fire Surrogate design, you must calculate compartment values
-before calculating overall values.
+## Finite population correction factor
+
+**General definition of finite population correction factor (FPC):**
+
+$\frac{N-n}{N}$
+
+*where*
+
+- $N$ is the total number of sample units in the entire population
+- $n$ is the number of units in the sample
+
+FPC is a modifier used on the standard error:
+
+$s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}*\frac{N-n}{N}}$
+
+“\[The\] fpc will always be a number between 0 and 1. To understand the
+purpose of the fpc, first look at the most intensive sampling situation.
+If all sampling units in the population were measured (that is, n = N, a
+100% sample), then the sample mean would be the population mean (that
+is, everything in the population was measured, so the true population
+mean is known). Therefore, the estimate of the population mean has no
+variability, and since the fpc equals zero, the variance of the sample
+mean… is also zero. \[Without the fpc\], the variance estimate of the
+mean would not be zero when all sampling units are measured, which would
+be illogical… it seems logical that if n is almost as big as N, the
+resulting means of different samples of size n will have less
+variability than they would if n were smaller relative to N. This is the
+desirable logical property that the fpc gives \[$s_{\bar{y}}$\]” (Shiver
+and Borders 1996, pg. 33).
+
+<br>
+
+**When to use FPC:**
+
+“The units may be selected with or without replacement. If selection is
+with replacement, each unit is allowed to appear in the sample as often
+as it is selected. In sampling without replacement, a particular unit is
+allowed to appear in the sample only once. Most forest sampling is
+without replacement… the procedure for computing standard errors depends
+on whether sampling was with or without replacement… \[The fpc\] is used
+when units are selected without replacement. If units are selected with
+replacement, the fpc is omitted… Even when sampling is without
+replacement, the sampling fraction (n/N) may be extremely small, making
+the fpc very close to unity. If n/N is less than 0.05, the fpc is
+commonly ignored and the standard error computed from the shortened
+formula” (Freese 1962, pg. 21-23).
+
+In summary, you only need to use the FPC if:
+
+- Sampling was done without replacement AND
+- The sampling fraction (n/N) is greater than 0.05 (i.e., when more than
+  5% of the population is sampled)
+
+*Note: the recommendation to ignore the fpc when the sampling fraction
+is less than 0.05 is common throughout forest sampling textbooks. We
+recommend BFA users follow this accepted 5% rule.*
+
+<br>
+
+**An example of how to get N:**
+
+- you have a 20 hectare tract
+- you have a sample size of 50 plots, each 0.1 (1/10) hectares in size
+- N would be 20\*10 = 200
+
+<br>
+
+**References:**
+
+- Freese, F. (1962). *Elementary forest sampling.* Agriculture Handbook
+  No. 232. USDA Forest Service, Southern Forest Experiment Station.
+  <https://www.govinfo.gov/content/pkg/GOVPUB-A-PURL-gpo21243/pdf/GOVPUB-A-PURL-gpo21243.pdf>
+
+- Shiver, B.D., & Borders, B.E. (1996). *Sampling techniques for forest
+  resource inventory.* J. Wiley, New York, New York, USA.
 
 ## General equations used in CompilePlots function
+
+A general note on data compilation: If you have a stratified random
+sampling design, you must calculate stratum values before calculating
+overall values. Similarly, for the Fire and Fire Surrogate design, you
+must calculate compartment values before calculating overall values.
+
+<br>
 
 **Simple random sampling**
 
@@ -2926,12 +3110,16 @@ $\bar{y} = \frac{\sum(y_i)}{n}$
 
 $s_y^2 = \frac{\sum(y_i^2) - \frac{(\sum(y_i))^2}{n}}{n-1}$
 
-$s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
+without FPC, $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
+
+with FPC, $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}*\frac{N-n}{N}}$
 
 *Definitions:*
 
 - $y_i$ value per plot i
 - $n$ number of plots
+- $\frac{N-n}{N}$ finite population correction factor, see background
+  info on FPC above
 
 <br>
 
@@ -2947,12 +3135,17 @@ $\bar{y_h} = \frac{\sum(y_{h_i})}{n_h}$
 
 $s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
 
-$s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+without FPC, $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+
+with FPC,
+$s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}*\frac{N_h-n_h}{N_h}}$
 
 *Definitions:*
 
 - $y_{h_i}$ value per plot i in stratum h
 - $n_h$ number of plots in stratum h
+- $\frac{N_h-n_h}{N_h}$ finite population correction factor, see
+  background info on FPC above
 
 Overall values ———————————-
 
@@ -2984,12 +3177,17 @@ $\bar{y_c} = \frac{\sum(y_{c_i})}{n_c}$
 
 $s_{y_c}^2 = \frac{\sum(y_{c_i}^2) - \frac{(\sum(y_{c_i}))^2}{n_c}}{n_c-1}$
 
-$s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+without FPC, $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+
+with FPC,
+$s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}*\frac{N_c-n_c}{N_c}}$
 
 *Definitions:*
 
 - $y_{c_i}$ value per plot i in compartment c
 - $n_c$ number of plots in compartment c
+- $\frac{N_c-n_c}{N_c}$ finite population correction factor, see
+  background info on FPC above
 
 Overall values ———————————–
 
@@ -3009,6 +3207,13 @@ $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
 ## Weighted equations used in CompileSurfaceFuels function
 
+A general note on data compilation: If you have a stratified random
+sampling design, you must calculate stratum values before calculating
+overall values. Similarly, for the Fire and Fire Surrogate design, you
+must calculate compartment values before calculating overall values.
+
+<br>
+
 See “Slope-corrected transect length” section above for additional
 background information. The equations below are applicable for
 summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel loads. For
@@ -3026,7 +3231,11 @@ $\bar{y} = \frac{\sum(w_i*y_i)}{n}$
 
 *Weighted standard error:*
 
+without FPC:
 $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}}$
+
+with FPC:
+$s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}*\frac{N-n}{N}}$
 
 *Definitions:*
 
@@ -3034,6 +3243,8 @@ $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}}$
   - $L_i$ horizontal length of transect i
 - $n$ number of plots/number of transects (they are the same thing here)
 - $y_i$ value per plot i
+- $\frac{N-n}{N}$ finite population correction factor, see background
+  info on FPC above
 
 <br>
 
@@ -3049,7 +3260,10 @@ $\bar{y_h} = \frac{\sum(w_{h_i}*y_{h_i})}{n_h}$
 
 $s_{y_h}^2 = \frac{\sum(w_{h_i}*(y_{h_i}-\bar{y_h})^2)}{n_h-1}$
 
-$s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+without FPC: $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+
+with FPC:
+$s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}*\frac{N_h-n_h}{N_h}}$
 
 *Definitions:*
 
@@ -3058,6 +3272,8 @@ $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 - $n_h$ number of plots/number of transects in stratum h (they are the
   same thing here)
 - $y_{h_i}$ value per plot i in stratum h
+- $\frac{N_h-n_h}{N_h}$ finite population correction factor, see
+  background info on FPC above
 
 Overall values ———————————-
 
@@ -3089,7 +3305,10 @@ $\bar{y_c} = \frac{\sum(w_{c_i}*y_{c_i})}{n_c}$
 
 $s_{y_c}^2 = \frac{\sum(w_{c_i}*(y_{c_i}-\bar{y_c})^2)}{n_c-1}$
 
-$s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+without FPC: $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+
+with FPC:
+$s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}*\frac{N_c-n_c}{N_c}}$
 
 *Definitions:*
 
@@ -3098,6 +3317,8 @@ $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 - $n_c$ number of plots/number of transects in compartment c (they are
   the same thing here)
 - $y_{c_i}$ value per plot i in compartment c
+- $\frac{N_c-n_c}{N_c}$ finite population correction factor, see
+  background info on FPC above
 
 Overall values ———————————-
 
@@ -3128,4 +3349,4 @@ Wagtendonk *et al.* (1996, 1998).
 
 **Contact email:** <krutherford@berkeley.edu>
 
-**Pronouns:** she/her/they/them
+**Pronouns:** they/she

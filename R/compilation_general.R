@@ -1245,5 +1245,5 @@ OverallValues <- function(df, variable, se) {
 }
 
 
-globalVariables(c("tt", "tts", "trt_type", "ts", "tss", "stratum", "wh", "wh_id", "unq_id"))
+globalVariables(c("tt", "tts", "trt_type", "ts", "tss", "stratum", "wh", "wh_id", "unq_id", "fpc_id"))
 

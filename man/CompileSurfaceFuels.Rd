@@ -9,6 +9,7 @@ CompileSurfaceFuels(
   cwd_data = "none",
   design,
   wt_data = "not_needed",
+  fpc_data = "not_needed",
   units = "metric"
 )
 }
@@ -31,6 +32,13 @@ CompileSurfaceFuels(
 
 \item{wt_data}{Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".}
 
+\item{fpc_data}{An optional dataframe or tibble. Incorporates the finite population correction factor (FPC) when samples were taken without replacement. The default is set to "not_needed". Required columns depend on the sampling design:
+\itemize{
+\item Simple random sampling: must have site, N, and n columns. A time column is optional.
+\item Stratified random sampling: must have site, stratum, N, and n columns. A time column is optional.
+\item Fire and Fire Surrogate: must have trt_type, site, N and n columns. A time column in optional.
+}}
+
 \item{units}{Specifies whether the input data are in metric (megagrams per hectare) or imperial (US tons per acre) units. Inputs must be all metric or all imperial (do not mix-and-match units). The output units will match the input units (i.e., if inputs are in metric then outputs will be in metric). Must be set to either “metric” or “imperial”. The default is set to “metric”.}
 }
 \value{
@@ -49,12 +57,14 @@ CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                     cwd_data = compilation_cwd_demo,
                     design = "STRS",
                     wt_data = compilation_wt_demo,
+                    fpc_data = "not_needed",
                     units = "metric")
 
 CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                     cwd_data = "none",
                     design = "STRS",
                     wt_data = compilation_wt_demo,
+                    fpc_data = "not_needed",
                     units = "metric")
 
 }
