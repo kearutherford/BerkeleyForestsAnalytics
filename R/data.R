@@ -345,6 +345,23 @@
 "compilation_srs_sp_demo"
 
 
+#' @title FPC data for general simple random sampling demonstrations
+#'
+#' @description
+#' A fake dataset created for general compilation demonstration purposes only.
+#'
+#' @format
+#' A dataframe with 2 rows and 3 columns:
+#' \describe{
+#'   \item{site}{broader location or forest where the data were collected}
+#'   \item{N}{number of possible plots for the site}
+#'   \item{n}{number of plots measured}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes.
+"compilation_fpc_demo"
+
+
 #' @title Data for general Fire and Fire Surrogate demonstrations
 #'
 #' @description
@@ -1773,6 +1790,21 @@ g_strs_wh_2 <- data.frame(
   wh = c(0.3,0.7,0.8,0.2,0.1,0.9,0.5,0.5)
 )
 
+g_strs_fpc_1 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+g_strs_fpc_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2,1,2,1,2)),
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,35)
+)
+
 b_strs_1 <- data.frame(
   #time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),  missing column
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
@@ -1971,6 +2003,121 @@ b_strs_wh_13 <- data.frame(
   wh = c(0.2,0.7,0.8,0.2) # incorrect weighting
 )
 
+b_strs_fpc_1 <- data.frame(
+  #site = c("SEKI", "SEKI", "YOMI", "YOMI"),  missing column
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_2 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  #stratum = as.character(c(1,2,1,2)),  missing column
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_3 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  #N = c(300,400,500,600),  missing column
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_4 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600)
+  #n = c(5,10,20,40)  missing column
+)
+
+b_strs_fpc_5 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = as.character(c(300,400,500,600)), # wrong class
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_6 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = as.character(c(5,10,20,40)) # wrong class
+)
+
+b_strs_fpc_7 <- data.frame(
+  time = c("pre", NA, "pre", "pre", "post", "post", "post", "post"), # missing time
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2,1,2,1,2)),
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,35)
+)
+
+b_strs_fpc_8 <- data.frame(
+  site = c("SEKI", NA, "YOMI", "YOMI"), # missing site
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_9 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,NA,1,2)), # missing stratum
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_10 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,NA,500,600), # missing N
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_11 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,NA,20,40) # missing n
+)
+
+b_strs_fpc_12 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,3,1,2,1,2,1,2)), # mismatch time:site:stratum
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,35)
+)
+
+b_strs_fpc_13 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,3,1,2)), # mismatch site:stratum
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_strs_fpc_14 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post", "post"), # repeat time:site:stratum
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2,1,2,1,2,2)),
+  N = c(300,400,500,600,300,400,500,600,600),
+  n = c(5,10,20,40,5,9,18,35,35)
+)
+
+b_strs_fpc_15 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI", "YOMI"), # repeat site:stratum
+  stratum = as.character(c(1,2,1,2,2)),
+  N = c(300,400,500,600,600),
+  n = c(5,10,20,40,40)
+)
+
+b_strs_fpc_16 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  stratum = as.character(c(1,2,1,2)),
+  N = c(300,400,500,600),
+  n = c(5,1000,20,40) # n > N
+)
+
 # simple random sampling -----------------------------------------
 g_srs <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
@@ -1994,6 +2141,19 @@ g_srs_sp_class <- data.frame(
   plot = c(1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4,1,1,2,2,3,3,4,4,5,5,1,1,2,2,3,3,4,4),
   species =  c(130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131,130,131),
   bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_srs_fpc_1 <- data.frame(
+  site = c("SEKI", "YOMI"),
+  N = c(700,1000),
+  n = c(15,60)
+)
+
+g_srs_fpc_2 <- data.frame(
+  time = c("pre", "pre", "post", "post"),
+  site = c("SEKI", "YOMI", "SEKI", "YOMI"),
+  N = c(700,1000,700,1000),
+  n = c(15,60,14,57)
 )
 
 b_srs_1 <- data.frame(
@@ -2036,6 +2196,32 @@ b_srs_sp_3 <- data.frame(
   bio = c(42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
 )
 
+b_srs_fpc_1 <- data.frame(
+  time = c("pre", "pre", "post", "post"),
+  site = c("YOPI", "YOMI", "SEKI", "YOMI"), # mismatch time:site
+  N = c(700,1000,700,1000),
+  n = c(15,60,14,57)
+)
+
+b_srs_fpc_2 <- data.frame(
+  site = c("YOPI", "YOMI"), # mismatch site
+  N = c(700,1000),
+  n = c(15,60)
+)
+
+b_srs_fpc_3 <- data.frame(
+  time = c("pre", "pre", "post", "post", "post"), # repeat time:site
+  site = c("SEKI", "YOMI", "SEKI", "YOMI", "YOMI"),
+  N = c(700,1000,700,1000,1000),
+  n = c(15,60,14,57,57)
+)
+
+b_srs_fpc_4 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI"), # repeat site
+  N = c(700,1000,1000),
+  n = c(15,60,60)
+)
+
 # Fire and fire surrogate -----------------------------------------
 g_ffs <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
@@ -2053,6 +2239,21 @@ g_ffs_sp <- data.frame(
   plot = as.character(c(1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2)),
   species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
   bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+g_ffs_fpc_1 <- data.frame(
+  trt_type = c("burn", "burn", "mech", "mech"),
+  site = c("360", "220", "460", "530"),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+g_ffs_fpc_2 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "mech", "mech", "burn", "burn", "mech", "mech"),
+  site = c("360", "220", "460", "530", "360", "220", "460", "530"),
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,37)
 )
 
 b_ffs_1 <- data.frame(
@@ -2118,6 +2319,49 @@ b_ffs_sp_3 <- data.frame(
   bio = c(42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
 )
 
+b_ffs_fpc_1 <- data.frame(
+  #trt_type = c("burn", "burn", "mech", "mech"), missing column
+  site = c("360", "220", "460", "530"),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_ffs_fpc_2 <- data.frame(
+  trt_type = c("burn", NA, "mech", "mech"), # missing trt_type
+  site = c("360", "220", "460", "530"),
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_ffs_fpc_3 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post"),
+  trt_type = c("burn", "burn", "mech", "mech", "burn", "burn", "mech", "mech"),
+  site = c("3600", "220", "460", "530", "360", "220", "460", "530"), # mismatch time:trt_type:site
+  N = c(300,400,500,600,300,400,500,600),
+  n = c(5,10,20,40,5,9,18,37)
+)
+
+b_ffs_fpc_4 <- data.frame(
+  trt_type = c("burn", "burn", "mech", "mech"),
+  site = c("3600", "220", "460", "530"), # mismatch trt_type:site
+  N = c(300,400,500,600),
+  n = c(5,10,20,40)
+)
+
+b_ffs_fpc_5 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "post", "post", "post", "post", "post"), # repeat time:trt_type:site
+  trt_type = c("burn", "burn", "mech", "mech", "burn", "burn", "mech", "mech", "mech"),
+  site = c("360", "220", "460", "530", "360", "220", "460", "530", "530"),
+  N = c(300,400,500,600,300,400,500,600,600),
+  n = c(5,10,20,40,5,9,18,37,37)
+)
+
+b_ffs_fpc_6 <- data.frame(
+  trt_type = c("burn", "burn", "mech", "mech", "mech"), # repeat trt_type:site
+  site = c("360", "220", "460", "530", "530"),
+  N = c(300,400,500,600,600),
+  n = c(5,10,20,40,40)
+)
 
 #---------------------------------------------------------------------
 # Surface fuel compilation dataframes

@@ -18,6 +18,12 @@
 #' }
 #' @param design Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 #' @param wt_data Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
+#' @param fpc_data  An optional dataframe or tibble. Incorporates the finite population correction factor (FPC) when samples were taken without replacement. The default is set to "not_needed". Required columns depend on the sampling design:
+#' \itemize{
+#' \item Simple random sampling: must have site, N, and n columns. A time column is optional.
+#' \item Stratified random sampling: must have site, stratum, N, and n columns. A time column is optional.
+#' \item Fire and Fire Surrogate: must have trt_type, site, N and n columns. A time column in optional.
+#' }
 #'
 #' @return Depends on the sampling design:
 #' \itemize{
@@ -29,44 +35,58 @@
 #' @examples
 #' CompilePlots(data = compilation_srs_demo,
 #'              design = "SRS",
-#'              wt_data = "not_needed")
+#'              wt_data = "not_needed",
+#'              fpc_data = "not_needed")
 #'
 #' CompilePlots(data = compilation_strs_demo,
 #'              design = "STRS",
-#'              wt_data = compilation_wt_demo)
+#'              wt_data = compilation_wt_demo,
+#'              fpc_data = "not_needed")
 #'
 #' @export
 
-CompilePlots <- function(data, design, wt_data = "not_needed") {
+CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_needed") {
 
   # coerce tibble inputs into data.frame
   data <- as.data.frame(data)
 
-  if(all(wt_data != "not_needed")) {
+  if(all(wt_data != "not_needed", na.rm = TRUE)) {
     wt_data <- as.data.frame(wt_data)
+  }
+
+  if(all(fpc_data != "not_needed", na.rm = TRUE)) {
+    fpc_data <- as.data.frame(fpc_data)
   }
 
   # check and prep input data
   step1 <- ValidatePlotData(data_check = data,
                             design_check = design,
-                            wt_data_check = wt_data)
+                            wt_data_check = wt_data,
+                            fpc_data_check = fpc_data)
+
+  # get finite population correction factor data prepped
+  if(all(fpc_data != "not_needed")) {
+    step2 <- FPC(fpc_data, design)
+  } else {
+    step2 <- fpc_data
+  }
 
   # summarize data
   if(design == "SRS") {
 
-    step2 <- SRS_calcs(data = step1)
+    step3 <- SRS_calcs(data = step1, fpc = step2)
 
   } else if (design == "STRS") {
 
-    step2 <- STRS_calcs(data = step1, wh_data = wt_data)
+    step3 <- STRS_calcs(data = step1, wh_data = wt_data, fpc = step2)
 
   } else if (design == "FFS") {
 
-    step2 <- FFS_calcs(data = step1)
+    step3 <- FFS_calcs(data = step1, fpc = step2)
 
   }
 
-  return(step2)
+  return(step3)
 
 }
 
@@ -81,7 +101,7 @@ CompilePlots <- function(data, design, wt_data = "not_needed") {
 # overarching data validation function
 ################################################################
 
-ValidatePlotData <- function(data_check, design_check, wt_data_check) {
+ValidatePlotData <- function(data_check, design_check, wt_data_check, fpc_data_check) {
 
   # check that options are set appropriately
   ValidateOptions(design_val = design_check, wt_data_val = wt_data_check)
@@ -105,6 +125,11 @@ ValidatePlotData <- function(data_check, design_check, wt_data_check) {
     ValidateWeights(data_val = data_check, wt_data_val = wt_data_check, data_name = "data")
   }
 
+  # check fpc dataframe
+  if(all(fpc_data_check != "not_needed", na.rm = TRUE)) {
+    ValidateFPC(data_val = data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "data")
+  }
+
   # coerce ID columns to be character
   return_df <- ValidateColClass(data_val = data_check, design_val = design_check)
 
@@ -124,17 +149,17 @@ ValidateOptions <- function(design_val, wt_data_val) {
     stop('The "design" parameter must be set to "SRS", "STRS", or "FFS".')
   }
 
-  if(design_val == "STRS" && all(wt_data_val == "not_needed")) {
+  if(design_val == "STRS" && all(wt_data_val == "not_needed", na.rm = TRUE)) {
     stop('For a stratified random sampling - STRS - design, you must supply wt_data.\n',
          'You left wt_data as the default "not_needed".')
   }
 
-  if(design_val == "SRS" && all(wt_data_val != "not_needed")) {
+  if(design_val == "SRS" && all(wt_data_val != "not_needed", na.rm = TRUE)) {
     stop('For a simple random sampling - SRS - design, you do not need to supply wt_data.\n',
          'For SRS, you should leave wt_data as the default "not_needed".')
   }
 
-  if(design_val == "FFS" && all(wt_data_val != "not_needed")) {
+  if(design_val == "FFS" && all(wt_data_val != "not_needed", na.rm = TRUE)) {
     stop('For a Fire and Fire Surrogate - FFS - design, you do not need to supply wt_data.\n',
          'For FFS, you should leave wt_data as the default "not_needed".')
   }
@@ -467,6 +492,187 @@ ValidateWeights <- function(data_val, wt_data_val, data_name) {
 }
 
 ###################################################################
+# function to check fpc dataframe
+###################################################################
+
+ValidateFPC <- function(data_val, fpc_data_val, design_val, data_name) {
+
+  # check that all required columns exist
+  if(!("site" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "site" column.')
+  }
+
+  if(!("N" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "N" column.')
+  }
+
+  if(!("n" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "n" column.')
+  }
+
+  if(design_val == "STRS" && !("stratum" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "stratum" column.\n',
+         'This column is required when you have a "STRS" design.')
+  }
+
+  if(design_val == "FFS" && !("trt_type" %in% colnames(fpc_data_val))) {
+    stop('The fpc_data input is missing the required "trt_type" column.\n',
+         'This column is required when you have a "FFS" design.')
+  }
+
+  # check column classes
+  if(!is.numeric(fpc_data_val$N)) {
+    stop('For fpc_data, the N column must be numeric.\n',
+         'The N column is currently class: ', class(fpc_data_val$N))
+  }
+
+  if(!is.numeric(fpc_data_val$n)) {
+    stop('For fpc_data, the n column must be numeric.\n',
+         'The n column is currently class: ', class(fpc_data_val$n))
+  }
+
+  # Check for missing values
+  if("time" %in% colnames(fpc_data_val)) {
+
+    if('TRUE' %in% is.na(fpc_data_val$time)) {
+      stop('For fpc_data, there are missing values in the time column.')
+    }
+
+  }
+
+  if('TRUE' %in% is.na(fpc_data_val$site)) {
+    stop('For fpc_data, there are missing values in the site column.')
+  }
+
+  if('TRUE' %in% is.na(fpc_data_val$N)) {
+    stop('For fpc_data, there are missing values in the N column.')
+  }
+
+  if('TRUE' %in% is.na(fpc_data_val$n)) {
+    stop('For fpc_data, there are missing values in the n column.')
+  }
+
+  if(design_val == "STRS") {
+
+    if('TRUE' %in% is.na(fpc_data_val$stratum)) {
+      stop('For fpc_data, there are missing values in the stratum column.')
+    }
+
+  }
+
+  if(design_val == "FFS") {
+
+    if('TRUE' %in% is.na(fpc_data_val$trt_type)) {
+      stop('For fpc_data, there are missing values in the trt_type column.')
+    }
+
+  }
+
+  # Check for matches between data and fpc_data
+  if(design_val == "STRS" && ("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id <- paste0(data_val$time,'_',data_val$site,'_',data_val$stratum)
+    fpc_data_val$unq_id <- paste0(fpc_data_val$time,'_',fpc_data_val$site,'_',fpc_data_val$stratum)
+
+  } else if (design_val == "STRS" && !("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id <- paste0(data_val$site,'_',data_val$stratum)
+    fpc_data_val$unq_id <- paste0(fpc_data_val$site,'_',fpc_data_val$stratum)
+
+  } else if (design_val == "SRS" && ("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$time,'_',data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$time,'_',fpc_data_val$site)
+
+  } else if (design_val == "SRS" && !("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$site)
+
+  } else if (design_val == "FFS" && ("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$time,'_',data_val$trt_type,'_',data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$time,'_',fpc_data_val$trt_type,'_',fpc_data_val$site)
+
+  } else if (design_val == "FFS" && !("time" %in% colnames(fpc_data_val))) {
+
+    data_val$unq_id  <- paste0(data_val$trt_type,'_',data_val$site)
+    fpc_data_val$unq_id  <- paste0(fpc_data_val$trt_type,'_',fpc_data_val$site)
+
+  }
+
+  if(!all(is.element(data_val$unq_id,fpc_data_val$unq_id)) ||
+     !all(is.element(fpc_data_val$unq_id,data_val$unq_id))) {
+
+    plots_wo_fpc <- paste0(unique(data_val[!is.element(data_val$unq_id,fpc_data_val$unq_id), "unq_id"]), sep = " ")
+    fpc_wo_plots <- paste0(unique(fpc_data_val[!is.element(fpc_data_val$unq_id,data_val$unq_id), "unq_id"]), sep = " ")
+
+    stop(data_name,' and fpc_data did not completely match!\n',
+         'In ',data_name,' but does not have a match in fpc_data: ', plots_wo_fpc, '\n',
+         'In fpc_data but does not have a match in ',data_name,': ', fpc_wo_plots)
+
+  }
+
+  # Check that there are no repeats
+  fpc_data_val$count <- 1
+  fpc_ag <- aggregate(data = fpc_data_val, count ~ unq_id, FUN = sum)
+
+  if(any(fpc_ag$count > 1)) {
+
+    count_sub <- subset(fpc_ag, fpc_ag$count > 1)
+    all_id <- paste0(count_sub$unq_id, sep = "   ")
+
+    if(design_val == "STRS" && ("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat time:site:stratum values.\n',
+           'Each row should correspond to a unique time:site:stratum.\n',
+           'Investigate the following time:site:stratum combinations: ', all_id)
+
+    } else if (design_val == "STRS" && !("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat site:stratum values.\n',
+           'Each row should correspond to a unique site:stratum.\n',
+           'Investigate the following site:stratum combinations: ', all_id)
+
+    } else if (design_val == "SRS" && ("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat time:site values.\n',
+           'Each row should correspond to a unique time:site.\n',
+           'Investigate the following time:site combinations: ', all_id)
+
+    } else if (design_val == "SRS" && !("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat site values.\n',
+           'Each row should correspond to a unique site.\n',
+           'Investigate the following site combinations: ', all_id)
+
+    } else if (design_val == "FFS" && ("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat time:trt_type:site values.\n',
+           'Each row should correspond to a unique time:trt_type:site.\n',
+           'Investigate the following time:trt_type:site combinations: ', all_id)
+
+    } else if (design_val == "FFS" && !("time" %in% colnames(fpc_data_val))) {
+
+      stop('For fpc_data, there are repeat trt_type:site values.\n',
+           'Each row should correspond to a unique trt_type:site.\n',
+           'Investigate the following trt_type:site combinations: ', all_id)
+
+    }
+
+  }
+
+  # check that N >= n
+  if(any(fpc_data_val$N < fpc_data_val$n)) {
+
+    stop('For fpc_data, there are cases where N < n.\n',
+         'N must be >= n.')
+
+  }
+
+}
+
+###################################################################
 # function to coerce column class
 ###################################################################
 
@@ -502,7 +708,7 @@ ValidateColClass <- function(data_val, design_val) {
 ################################################################
 # function for simple random sampling
 ################################################################
-SRS_calcs <- function(data) {
+SRS_calcs <- function(data, fpc) {
 
   # create new columns to reduce looping
   if("species" %in% colnames(data)) {
@@ -569,7 +775,7 @@ SRS_calcs <- function(data) {
     for(m in sites) {
 
       all_plots_2 <- subset(data, ts == m)
-      var_calcs <- StratumValues(all_plots_2, var_name) # uses same formulas as stratum-level values in STRS
+      var_calcs <- StratumValues(all_plots_2, var_name, fpc, "SRS") # uses same formulas as stratum-level values in STRS
       compiled_df[[avg_name]] <- ifelse(compiled_df$ts == m, var_calcs[1], compiled_df[[avg_name]])
       compiled_df[[se_name]] <- ifelse(compiled_df$ts == m, var_calcs[2], compiled_df[[se_name]])
 
@@ -587,7 +793,7 @@ SRS_calcs <- function(data) {
 # function for stratified random sampling
 ################################################################
 
-STRS_calcs <- function(data, wh_data) {
+STRS_calcs <- function(data, wh_data, fpc) {
 
   # create new columns to reduce looping
   if("species" %in% colnames(data)) {
@@ -701,7 +907,7 @@ STRS_calcs <- function(data, wh_data) {
     for(k in strats) {
 
       all_plots_2 <- subset(data, tss == k)
-      var_calcs <- StratumValues(all_plots_2, var_name)
+      var_calcs <- StratumValues(all_plots_2, var_name, fpc, "STRS")
       str_df_wh[[avg_name]] <- ifelse(str_df_wh$tss == k, var_calcs[1], str_df_wh[[avg_name]])
       str_df_wh[[se_name]] <- ifelse(str_df_wh$tss == k, var_calcs[2], str_df_wh[[se_name]])
 
@@ -739,7 +945,7 @@ STRS_calcs <- function(data, wh_data) {
 # function for FFS
 ################################################################
 
-FFS_calcs <- function(data) {
+FFS_calcs <- function(data, fpc) {
 
   # create new columns to reduce looping
   if("species" %in% colnames(data)) {
@@ -850,7 +1056,7 @@ FFS_calcs <- function(data) {
     for(k in comps) {
 
       all_plots_2 <- subset(data, tts == k)
-      var_calcs <- StratumValues(all_plots_2, var_name)
+      var_calcs <- StratumValues(all_plots_2, var_name, fpc, "FFS")
       comp_df[[avg_name]] <- ifelse(comp_df$tts == k, var_calcs[1], comp_df[[avg_name]])
       comp_df[[se_name]] <- ifelse(comp_df$tts == k, var_calcs[2], comp_df[[se_name]])
 
@@ -865,7 +1071,7 @@ FFS_calcs <- function(data) {
     for(m in treats) {
 
       all_comps_2 <- subset(comp_df, tt == m)
-      var_calcs_2 <- StratumValues(all_comps_2, avg_name)
+      var_calcs_2 <- StratumValues(all_comps_2, avg_name, "not_needed")
       type_df[[avg_name]] <- ifelse(type_df$tt == m, var_calcs_2[1], type_df[[avg_name]])
       type_df[[se_name]] <- ifelse(type_df$tt == m, var_calcs_2[2], type_df[[se_name]])
 
@@ -888,7 +1094,7 @@ FFS_calcs <- function(data) {
 # function for calculating stratum-level values
 ################################################################
 
-StratumValues <- function(df, variable) {
+StratumValues <- function(df, variable, fpc_df, des = "not_needed") {
 
   df$n <- ifelse(is.na(df[[variable]]),0,1)
   n_h <- sum(df$n)
@@ -918,13 +1124,68 @@ StratumValues <- function(df, variable) {
     df$yi_ybar <- (df[[variable]] - ybar_h)^2
     sum_yi_ybar <- sum(df$yi_ybar, na.rm = TRUE)
     s_yh_2 <- sum_yi_ybar/(n_h - 1)
-    s_ybar_h <- sqrt(s_yh_2/n_h)
+
+    if(all(fpc_df != "not_needed")) {
+
+      if(des == "STRS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$site[1],'_',df$stratum[1])
+      } else if (des == "STRS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$site[1],'_',df$stratum[1])
+      } else if (des == "SRS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$site[1])
+      } else if (des == "SRS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$site[1])
+      } else if (des == "FFS" && "time" %in% colnames(fpc_df)) {
+        fpc_id_match <- paste0(df$time[1],'_',df$trt_type[1],'_',df$site[1])
+      } else if (des == "FFS" && !("time" %in% colnames(fpc_df))) {
+        fpc_id_match <- paste0(df$trt_type[1],'_',df$site[1])
+      }
+
+      fpc_info <- subset(fpc_df, fpc_id == fpc_id_match)
+      fpc_h <- fpc_info$fpc_value
+
+      s_ybar_h <- sqrt((s_yh_2/n_h)*fpc_h)
+
+    } else {
+
+      s_ybar_h <- sqrt(s_yh_2/n_h)
+
+    }
 
   }
 
   # save values into a vector
   return_vec <- c(ybar_h, s_ybar_h)
   return(return_vec)
+
+}
+
+################################################################
+# function for calculating FPC value
+################################################################
+
+FPC <- function(df, des) {
+
+  # create id column
+  if(des == "STRS" && "time" %in% colnames(df)) {
+    df$fpc_id <- paste0(df$time,'_',df$site,'_',df$stratum)
+  } else if (des == "STRS" && !("time" %in% colnames(df))) {
+    df$fpc_id <- paste0(df$site,'_',df$stratum)
+  } else if (des == "SRS" && "time" %in% colnames(df)) {
+    df$fpc_id <- paste0(df$time,'_',df$site)
+  } else if (des == "SRS" && !("time" %in% colnames(df))) {
+    df$fpc_id <- paste0(df$site)
+  } else if (des == "FFS" && "time" %in% colnames(df)) {
+    df$fpc_id <- paste0(df$time,'_',df$trt_type,'_',df$site)
+  } else if (des == "FFS" && !("time" %in% colnames(df))) {
+    df$fpc_id <- paste0(df$trt_type,'_',df$site)
+  }
+
+  # create fpc column
+  df$fpc_value <- (df$N - df$n)/df$N
+
+  # return df with necessary columns
+  return(df)
 
 }
 
@@ -944,6 +1205,7 @@ StratumWeights <- function(df, wh_df) {
 
     wh_df$wh_id <- paste0(wh_df$site,'_',wh_df$stratum)
     df$wh_id <- paste0(df$site,'_',df$stratum)
+
   }
 
   # loop through df and assign stratum weights
@@ -983,5 +1245,5 @@ OverallValues <- function(df, variable, se) {
 }
 
 
-globalVariables(c("tt", "tts", "trt_type", "ts", "tss", "stratum", "wh", "wh_id", "unq_id"))
+globalVariables(c("tt", "tts", "trt_type", "ts", "tss", "stratum", "wh", "wh_id", "unq_id", "fpc_id"))
 
