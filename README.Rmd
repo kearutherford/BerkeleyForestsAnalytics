@@ -1084,7 +1084,7 @@ compilation_fwd_demo
 ```
 
 ```{r}
-# investigate input data
+# investigate input cwd_data
 compilation_cwd_demo
 ```
 

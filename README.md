@@ -2208,7 +2208,7 @@ compilation_fwd_demo
     ## 9           7.03         5.63          5.63           8.45
 
 ``` r
-# investigate input data
+# investigate input cwd_data
 compilation_cwd_demo
 ```
 
