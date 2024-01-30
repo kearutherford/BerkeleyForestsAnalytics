@@ -2287,7 +2287,7 @@ strs_surface_demo1
 
 ``` r
 # call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
-# keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
+# keep default fpc_data (= "not_needed)
 strs_surface_demo2 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                                           cwd_data = "none",
                                           design = "STRS",
