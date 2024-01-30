@@ -1724,20 +1724,19 @@ summarization” below for further details.
     design = “FFS”.
 
 4.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
-    population correction factor (FPC) when samples were taken without
-    replacement (see “Background information for further data
-    summarization: Finite population correction factor” below for
-    further details on what the FPC is and when the FPC is applicable).
-    The default is set to “not_needed”. Required columns depend on the
-    sampling design:
+    population correction factor (FPC; see “Background information for
+    further data summarization: Finite population correction factor”
+    below for further details on the definition of the FPC and when the
+    FPC is applicable). The default is set to “not_needed”. Required
+    columns depend on the sampling design:
 
     - If sampling design is simple random:
       - **time:** Optional. As described above.
       - **site:** As desicribed above.
-      - **N:** Number of possible plots in the population. For example,
-        if you have a 60 hectare unit and 0.1 hectare plots, N would be
-        600.
-      - **n:** Number of plots measured.
+      - **N:** Total number of plots in the entire population. For
+        example, if you have a 60 hectare tract and 0.1 hectare plots, N
+        would be 600.
+      - **n:** Number of plots in the sample.
     - If sampling design is stratified random:
       - **time:** Optional. As described above.
       - **site:** As desicribed above.
@@ -2133,20 +2132,19 @@ line transect length.
     design = “FFS”.
 
 5.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
-    population correction factor (FPC) when samples were taken without
-    replacement (see “Background information for further data
-    summarization: Finite population correction factor” below for
-    further details on what the FPC is and when the FPC is applicable).
-    The default is set to “not_needed”. Required columns depend on the
-    sampling design:
+    population correction factor (FPC; see “Background information for
+    further data summarization: Finite population correction factor”
+    below for further details on the definition of the FPC and when the
+    FPC is applicable). The default is set to “not_needed”. Required
+    columns depend on the sampling design:
 
     - If sampling design is simple random:
       - **time:** Optional. As described above.
       - **site:** As desicribed above.
-      - **N:** Number of possible plots in the population. For example,
-        if you have a 60 hectare unit and 0.1 hectare plots, N would be
-        600.
-      - **n:** Number of plots measured.
+      - **N:** Total number of plots in the entire population. For
+        example, if you have a 60 hectare tract and 0.1 hectare plots, N
+        would be 600.
+      - **n:** Number of plots in the sample.
     - If sampling design is stratified random:
       - **time:** Optional. As described above.
       - **site:** As desicribed above.
@@ -2253,6 +2251,7 @@ supplied:**
 
 ``` r
 # call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
+# keep default fpc_data (= "not_needed)
 strs_surface_demo1 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                                           cwd_data = compilation_cwd_demo,
                                           design = "STRS",
@@ -2288,6 +2287,7 @@ strs_surface_demo1
 
 ``` r
 # call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
+# keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 strs_surface_demo2 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                                           cwd_data = "none",
                                           design = "STRS",
@@ -3042,8 +3042,8 @@ mean would not be zero when all sampling units are measured, which would
 be illogical… it seems logical that if n is almost as big as N, the
 resulting means of different samples of size n will have less
 variability than they would if n were smaller relative to N. This is the
-desirable logical property that the fpc gives \[$s_{\bar{y}}$\]” (Shiver
-and Borders 1996, pg. 33).
+desirable logical property that the fpc gives $s_{\bar{y}}$” (Shiver and
+Borders 1996, pg. 33).
 
 <br>
 
@@ -3068,7 +3068,7 @@ In summary, you only need to use the FPC if:
 - The sampling fraction (n/N) is greater than 0.05 (i.e., when more than
   5% of the population is sampled)
 
-*Note: the recommendation to ignore the fpc when the sampling fraction
+*Note: the recommendation to ignore the FPC when the sampling fraction
 is less than 0.05 is common throughout forest sampling textbooks. We
 recommend BFA users follow this accepted 5% rule.*
 
@@ -3098,23 +3098,21 @@ sampling design, you must calculate stratum values before calculating
 overall values. Similarly, for the Fire and Fire Surrogate design, you
 must calculate compartment values before calculating overall values.
 
-<br>
-
 **Simple random sampling**
 
-*Mean:*
+Mean:
 
 $\bar{y} = \frac{\sum(y_i)}{n}$
 
-*Standard error:*
+Standard error:
 
 $s_y^2 = \frac{\sum(y_i^2) - \frac{(\sum(y_i))^2}{n}}{n-1}$
 
-without FPC, $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
+*without FPC,* $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
-with FPC, $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}*\frac{N-n}{N}}$
+*with FPC,* $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}*\frac{N-n}{N}}$
 
-*Definitions:*
+Definitions:
 
 - $y_i$ value per plot i
 - $n$ number of plots
@@ -3127,20 +3125,20 @@ with FPC, $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}*\frac{N-n}{N}}$
 
 Stratum values ———————————
 
-*Mean:*
+Mean:
 
 $\bar{y_h} = \frac{\sum(y_{h_i})}{n_h}$
 
-*Standard error:*
+Standard error:
 
 $s_{y_h}^2 = \frac{\sum(y_{h_i}^2) - \frac{(\sum(y_{h_i}))^2}{n_h}}{n_h-1}$
 
-without FPC, $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+*without FPC,* $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 
-with FPC,
+*with FPC,*
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}*\frac{N_h-n_h}{N_h}}$
 
-*Definitions:*
+Definitions:
 
 - $y_{h_i}$ value per plot i in stratum h
 - $n_h$ number of plots in stratum h
@@ -3149,15 +3147,15 @@ $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}*\frac{N_h-n_h}{N_h}}$
 
 Overall values ———————————-
 
-*Mean:*
+Mean:
 
 $\bar{y} = \sum(\bar{y_h} * W_h)$
 
-*Standard error:*
+Standard error:
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
-*Definitions:*
+Definitions:
 
 - $W_h = \frac{N_h}{N} =$ weight assigned to stratum h
   - $N_h$ size of stratum h
@@ -3169,20 +3167,20 @@ $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
 Compartment values ——————————-
 
-*Mean:*
+Mean:
 
 $\bar{y_c} = \frac{\sum(y_{c_i})}{n_c}$
 
-*Standard error:*
+Standard error:
 
 $s_{y_c}^2 = \frac{\sum(y_{c_i}^2) - \frac{(\sum(y_{c_i}))^2}{n_c}}{n_c-1}$
 
-without FPC, $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+*without FPC,* $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 
-with FPC,
+*with FPC,*
 $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}*\frac{N_c-n_c}{N_c}}$
 
-*Definitions:*
+Definitions:
 
 - $y_{c_i}$ value per plot i in compartment c
 - $n_c$ number of plots in compartment c
@@ -3191,17 +3189,17 @@ $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}*\frac{N_c-n_c}{N_c}}$
 
 Overall values ———————————–
 
-*Mean:*
+Mean:
 
 $\bar{y} = \frac{\sum(y_c)}{n}$
 
-*Standard error:*
+Standard error:
 
 $s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
-*Definitions:*
+Definitions:
 
 - $n$ number of compartments
 
@@ -3211,8 +3209,6 @@ A general note on data compilation: If you have a stratified random
 sampling design, you must calculate stratum values before calculating
 overall values. Similarly, for the Fire and Fire Surrogate design, you
 must calculate compartment values before calculating overall values.
-
-<br>
 
 See “Slope-corrected transect length” section above for additional
 background information. The equations below are applicable for
@@ -3225,19 +3221,19 @@ combined fuel loads).
 
 **Simple random sampling**
 
-*Weighted mean:*
+Weighted mean:
 
 $\bar{y} = \frac{\sum(w_i*y_i)}{n}$
 
-*Weighted standard error:*
+Weighted standard error:
 
-without FPC:
+*without FPC,*
 $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}}$
 
-with FPC:
+*with FPC,*
 $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}*\frac{N-n}{N}}$
 
-*Definitions:*
+Definitions:
 
 - $w_i = \frac{L_i}{\frac{\sum(L_i)}{n}}$
   - $L_i$ horizontal length of transect i
@@ -3252,20 +3248,20 @@ $s_{\bar{y}} = \sqrt{\frac{\sum(w_i*(y_i-\bar{y})^2)}{n*(n-1)}*\frac{N-n}{N}}$
 
 Stratum values ———————————
 
-*Weighted mean:*
+Weighted mean:
 
 $\bar{y_h} = \frac{\sum(w_{h_i}*y_{h_i})}{n_h}$
 
-*Weighted standard error:*
+Weighted standard error:
 
 $s_{y_h}^2 = \frac{\sum(w_{h_i}*(y_{h_i}-\bar{y_h})^2)}{n_h-1}$
 
-without FPC: $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
+*without FPC,* $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}}$
 
-with FPC:
+*with FPC,*
 $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}*\frac{N_h-n_h}{N_h}}$
 
-*Definitions:*
+Definitions:
 
 - $w_{h_i} = \frac{L_{h_i}}{\frac{\sum(L_{h_i})}{n_h}}$
   - $L_{h_i}$ horizontal length of transect i in stratum h
@@ -3277,15 +3273,15 @@ $s_{\bar{y_h}} = \sqrt{\frac{s_{y_h}^2}{n_h}*\frac{N_h-n_h}{N_h}}$
 
 Overall values ———————————-
 
-*Mean:*
+Mean:
 
 $\bar{y} = \sum(\bar{y_h} * W_h)$
 
-*Standard error:*
+Standard error:
 
 $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
-*Definitions:*
+Definitions:
 
 - $W_h = \frac{N_h}{N} =$ weight assigned to stratum h
   - $N_h$ size of stratum h
@@ -3297,20 +3293,20 @@ $s_{\bar{y}} = \sqrt{\sum(s_{\bar{y_h}}^2 * W_h^2)}$
 
 Compartment values ——————————
 
-*Weighted mean:*
+Weighted mean:
 
 $\bar{y_c} = \frac{\sum(w_{c_i}*y_{c_i})}{n_c}$
 
-*Weighted standard error:*
+Weighted standard error:
 
 $s_{y_c}^2 = \frac{\sum(w_{c_i}*(y_{c_i}-\bar{y_c})^2)}{n_c-1}$
 
-without FPC: $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
+*without FPC,* $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}}$
 
-with FPC:
+*with FPC,*
 $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}*\frac{N_c-n_c}{N_c}}$
 
-*Definitions:*
+Definitions:
 
 - $w_{c_i} = \frac{L_{c_i}}{\frac{\sum(L_{c_i})}{n_c}}$
   - $L_{c_i}$ horizontal length of transect i in compartment c
@@ -3322,17 +3318,17 @@ $s_{\bar{y_c}} = \sqrt{\frac{s_{y_c}^2}{n_c}*\frac{N_c-n_c}{N_c}}$
 
 Overall values ———————————-
 
-*Mean:*
+Mean:
 
 $\bar{y} = \frac{\sum(y_c)}{n}$
 
-*Standard error:*
+Standard error:
 
 $s_y^2 = \frac{\sum(y_c^2) - \frac{(\sum(y_c))^2}{n}}{n-1}$
 
 $s_{\bar{y}} = \sqrt{\frac{s_y^2}{n}}$
 
-*Definitions:*
+Definitions:
 
 - $n$ number of compartments
 
