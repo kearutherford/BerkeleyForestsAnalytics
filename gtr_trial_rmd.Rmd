@@ -1,0 +1,292 @@
+
+```{r}
+# division 240, M210, 240, M220 
+
+test_df <- data.frame(
+  species = c(202, 316, 631, 802),
+  status = c(1, 1, 0, 1),
+  dbh = c(20, 11.1, 11.3, 18.1),
+  ht = c(110, 38, 28, 65),
+  ha = c(NA, NA, 21, 59),
+  broken_top = c("N", "N", "Y", "Y"),
+  decay = c(NA, NA, 2, NA),
+  cull = c(0, 3, 10, 2)
+)
+
+test_df
+```
+
+```{r}
+EQ_1 <- function(D,H,a,b,c) {
+  
+  y <- a*(D^b)*(H^c) 
+  return(y)
+  
+}
+
+# k = 9 for softwoods, 11 for hardwoods 
+EQ_2 <- function(D,H,k,a,b,b1,c) {
+  
+  if(D < k) {
+    
+    y <- a*(D^b)*(H^c)
+    
+  } else if (D >= k) {
+    
+    y <- a*(k^(b-b1))*(D^b1)*(H^c) 
+    
+  }
+  
+  return(y)
+  
+}
+
+EQ_3 <- function(D,H,a,a1,b,c,c1) {
+  
+  y <- a*(D^(a1*(1-exp(-b*D))^c1))*(H^c)
+  return(y)
+  
+}
+
+EQ_4 <- function(D,H,a,b,b1,c) {
+  
+  y <- a*(D^b)*(H^c)*exp(-(b1*D))
+  return(y)
+  
+}
+```
+
+
+################################################################################
+EXAMPLE 1
+################################################################################
+
+predict total stem wood volume 
+(Table S1)
+```{r}
+Vtot_ib_Gross <- EQ_2(D = test_df$dbh[1], H = test_df$ht[1], k = 9, a = 0.0019291, b = 2.162413104, b1 = 1.690400253, c = 0.985444005)
+Vtot_ib_Gross
+```
+
+total stem volumn converted to total stem wood dry weight in lbs 
+(specific gravity)
+```{r}
+Wtot_ib <- Vtot_ib_Gross*0.45*62.4
+Wtot_ib
+```
+
+reduced weight due to cull
+(table 1, harmon et al. 2011) 
+```{r}
+Wtot_ib_red <- Vtot_ib_Gross*(1 - (test_df$cull[1]/100)*(1-0.54))*0.45*62.4 # I think this should actually be 0.92? 
+Wtot_ib_red
+```
+
+total stem bark weight 
+(Table S6)
+```{r}
+Wtot_bk <- EQ_1(D = test_df$dbh[1], H = test_df$ht[1], a = 0.009106538, b = 1.437894425, c = 1.336514273)
+Wtot_bk
+```
+
+total branch weight 
+(Table S7)
+```{r}
+Wbranch <- EQ_1(D = test_df$dbh[1], H = test_df$ht[1], a = 9.521330809, b = 1.762316117, c = -0.405742592)
+Wbranch
+```
+
+Reductions to bark and branch weights are only considered for dead trees and trees with broken tops
+Neither of these conditions is present in the current example 
+```{r}
+Wtot_bk_red <- Wtot_bk
+Wbranchred <- Wbranch
+```
+
+Total AGB
+(Table S8)
+```{r}
+AGB_Predicted <- EQ_1(D = test_df$dbh[1], H = test_df$ht[1], a = 0.135206507, b = 1.713527048, c = 1.047613377)
+AGB_Predicted 
+```
+
+ensure consistent est between the 3 independently estimated components 
+```{r}
+AGB_Component_red <- Wtot_ib_red + Wtot_bk_red + Wbranchred
+AGB_Component_red
+```
+
+reduction factor applied to modify AGB_Predicted
+```{r}
+AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
+AGB_Reduce
+```
+
+```{r}
+AGB_Predicted_red <- AGB_Predicted*AGB_Reduce
+AGB_Predicted_red
+```
+
+To harmonize the three components 
+```{r}
+Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
+Wood_Harmonized 
+```
+
+```{r}
+Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
+Bark_Harmonized 
+```
+
+```{r}
+Branch_Harmonized <- AGB_Predicted_red*(Wbranchred/AGB_Component_red)
+Branch_Harmonized 
+```
+
+predict foliage weight 
+(Table S9)
+```{r}
+Wfoliage <- EQ_2(D = test_df$dbh[1], H = test_df$ht[1], k = 9, a = 0.477184596, b = 2.592670352, b1 = 1.249237429, c = -0.325050455)
+Wfoliage
+```
+
+reductions in foliage are only considered for live trees with a broken top
+as no broken top is present: 
+```{r}
+Wfoliagered <- Wfoliage
+Wfoliagered
+```
+
+Carbon content 
+(Table 10)
+```{r}
+C <- AGB_Predicted_red*0.5155958333
+C
+```
+
+
+################################################################################
+EXAMPLE 2
+################################################################################
+
+predict total stem wood volume 
+(Table S1)
+```{r}
+Vtot_ib_Gross <- EQ_1(D = test_df$dbh[2], H = test_df$ht[2], a = 0.001983919, b = 1.810559393, c = 1.129417635)
+Vtot_ib_Gross
+```
+
+total stem volumn converted to total stem wood dry weight in lbs 
+(specific gravity)
+```{r}
+Wtot_ib <- Vtot_ib_Gross*0.49*62.4
+Wtot_ib
+```
+
+reduced weight due to cull
+(table 1, harmon et al. 2011) 
+```{r}
+Wtot_ib_red <- Vtot_ib_Gross*(1 - (test_df$cull[2]/100)*(1-0.54))*0.49*62.4
+Wtot_ib_red
+```
+
+total stem bark weight 
+(Table S6)
+```{r}
+Wtot_bk <- EQ_1(D = test_df$dbh[2], H = test_df$ht[2], a = 0.061595466, b = 1.818642599, c = 0.654020672)
+Wtot_bk
+Wtot_bk_red <- Wtot_bk
+```
+
+total stem weight considering the cull deduction
+```{r}
+Wtot_ob_red <- Wtot_ib_red + Wtot_bk_red
+Wtot_ob_red
+```
+
+total branch weight 
+(Table S7)
+```{r}
+Wbranch <- EQ_1(D = test_df$dbh[2], H = test_df$ht[2], a = 0.011144618, b = 3.269520661, c = 0.421304344)
+Wbranch
+```
+
+For live trees with intact tops, no branch deductions are incurred 
+```{r}
+Wbranchred <- Wbranch
+```
+
+Total AGB
+(Table S8)
+```{r}
+AGB_Predicted <- EQ_4(D = test_df$dbh[2], H = test_df$ht[2], a = 0.315730276, b = 1.853839844, b1 = -0.024745685, c = 0.740557379)
+AGB_Predicted 
+```
+
+ensure consistent est between the 3 independently estimated components 
+```{r}
+AGB_Component_red <- Wtot_ib_red + Wtot_bk_red + Wbranchred
+AGB_Component_red
+```
+
+reduction factor applied to modify AGB_Predicted
+```{r}
+AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
+AGB_Reduce
+```
+
+```{r}
+AGB_Predicted_red <- AGB_Predicted*AGB_Reduce
+AGB_Predicted_red
+```
+
+To harmonize the three components 
+```{r}
+Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
+Wood_Harmonized 
+```
+
+```{r}
+Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
+Bark_Harmonized 
+```
+
+```{r}
+Branch_Harmonized <- AGB_Predicted_red*(Wbranchred/AGB_Component_red)
+Branch_Harmonized 
+```
+
+predict foliage weight 
+(Table S9)
+```{r}
+Wfoliage <- EQ_1(D = test_df$dbh[2], H = test_df$ht[2], a = 0.850316557, b = 1.99896181, c = -0.418446486)
+Wfoliage
+```
+
+reductions in foliage are only considered for live trees with a broken top
+as no broken top is present: 
+```{r}
+Wfoliagered <- Wfoliage
+Wfoliagered
+```
+
+Carbon content 
+(Table 10)
+```{r}
+C <- AGB_Predicted_red*0.4857333333
+C
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
