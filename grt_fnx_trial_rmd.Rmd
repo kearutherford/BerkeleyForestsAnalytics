@@ -1,0 +1,191 @@
+
+Example data set 
+```{r}
+# division 240, M210, 240, M220 
+data <- data.frame(
+  species = c(202, 316, 631, 802),
+  status = c(1, 1, 0, 1),
+  dbh = c(20, 11.1, 11.3, 18.1),
+  ht1 = c(110, 38, 28, 65),
+  ht2 = c(NA, NA, 21, 59),
+  top = c("Y", "Y", "N", "N"),
+  decay_class = c(NA, NA, 2, NA),
+  cull = c(0, 3, 10, 2)
+)
+
+data
+```
+
+```{r}
+Table_1 <- data.frame(
+  type = c("H","H","H","H","H","S","S","S","S","S"),
+  decay_class = c(1,2,3,4,5,1,2,3,4,5),
+  wood_prop = c(0.99,0.8,0.54,0.43,0.43,0.97,1,0.92,0.55,0.55),
+  bark_prop = c(1,0.8,0.5,0.2,0,1,0.8,0.5,0.2,0),
+  branch_prop = c(1,0.5,0.1,0,0,1,0.5,0.1,0,0)
+)
+
+Table_1
+```
+
+Internal datasets 
+```{r}
+REF_SPECIES_BFA <- read.csv(here::here("gtr_data", "REF_SPECIES_BFA.csv"))
+REF_SPECIES_BFA$k <- ifelse(REF_SPECIES_BFA$type == "S", 9, 11)
+REF_SPECIES_BFA
+```
+
+```{r}
+Table_S1a <- read.csv(here::here("gtr_data", "Table S1a_volib_coefs_spcd.csv"))
+Table_S1a
+```
+
+```{r}
+Table_S2a <- read.csv(here::here("gtr_data", "Table S2a_volbk_coefs_spcd.csv"))
+Table_S2a
+```
+
+
+Other supporting functions 
+```{r}
+EQ_set <- function(data, D, H, k) {
+  
+  if(data$model[1] == "1") {
+
+    y <- data$a[1]*(D^data$b[1])*(H^data$c[1]) 
+  
+  } else if(data$model[1] == "2") {
+      
+    if(D < k) {
+        
+      y <- data$a[1]*(D^data$b[1])*(H^data$c[1])
+        
+    } else if (D >= k) {
+        
+      y <- data$a[1]*(k^(data$b[1]-data$b1[1]))*(D^data$b1[1])*(H^data$c[1]) 
+        
+    }
+      
+  } else if (data$model[1] == "3") {
+  
+    y <- data$a[1]*(D^(data$a1[1]*(1-exp(-data$b[1]*D))^data$c1[1]))*(H^data$c[1])
+  
+  } else if(data$model[1] == "4") {
+  
+    y <- data$a[1]*(D^data$b[1])*(H^data$c[1])*exp(-(data$b1[1]*D))
+  
+  }
+
+  return(y)
+  
+}
+```
+
+```{r}
+EQ_5 <- function(data, D, H, WDSG) {
+
+  y <- data$a[1]*(D^data$b[1])*(H^data$c[1])*WDSG
+  return(y)
+
+}
+```
+
+```{r}
+EQ_6 <- function(h,H,alpha,beta) {
+  
+  y <- (1 - (1 - h/H)^a)^b
+  return(y)
+  
+}
+```
+
+```{r}
+EQ_7 <- function(D,H,a,b,c,d,alpha,beta,h) {
+  
+  d - (a*D^b*H^c/0.005454154/H*alpha*beta*(1-(h/H))^(alpha-1)*(1-(1-(h/H))^alpha)^(beta-1))^0.5
+  
+}
+```
+
+```{r}
+NSVB <- function(data, division, sp_codes = "4letter", input_units = "metric", output_units = "metric") {
+  
+  data <- merge(data, REF_SPECIES_BFA, by = "species", all.x = TRUE, all.y = FALSE)
+  
+  data$path <- paste0(data$type,"_",data$status,'_',data$top)
+  data$path[data$path == "S_1_Y"] <- 1
+  data$path[data$path == "S_1_N"] <- 2
+  data$path[data$path == "S_0_Y"] <- 3
+  data$path[data$path == "S_0_N"] <- 4
+  data$path[data$path == "H_1_Y"] <- 5
+  data$path[data$path == "H_1_N"] <- 6
+  data$path[data$path == "H_0_Y"] <- 7
+  data$path[data$path == "H_0_N"] <- 8
+
+  
+  n <- nrow(data)
+
+  for (i in 1:n) {
+  
+    # STEP 1: predict total stem wood volume 
+    if(data$species[i] %in% Table_S1a$SPCD) {
+  
+      Table_S1a_pull <- subset(Table_S1a, SPCD == data$species[i])
+  
+      if(division %in% Table_S1a_pull$DIVISION) {
+    
+        Table_S1a_pull <- subset(Table_S1a_pull, DIVISION == division)
+      
+      } else {
+      
+        Table_S1a_pull <- subset(Table_S1a_pull, DIVISION == "")
+      
+      }
+      
+      Vtot_ib_Gross <- EQ_set(data = Table_S1a_pull, D = data$dbh[i], H = data$ht1[i], k = data$k[i])
+  
+    } else {
+      
+      # Put jenkins here 
+      
+    }
+    
+    # STEP 2: predict total bark volume 
+    if(data$species[i] %in% Table_S2a$SPCD) {
+  
+      Table_S2a_pull <- subset(Table_S2a, SPCD == data$species[i])
+  
+      if(division %in% Table_S2a_pull$DIVISION) {
+    
+        Table_S2a_pull <- subset(Table_S2a_pull, DIVISION == division)
+      
+      } else {
+      
+        Table_S2a_pull <- subset(Table_S2a_pull, DIVISION == "")
+      
+      }
+      
+      Vtot_bk_Gross <- EQ_set(data = Table_S2a_pull, D = data$dbh[i], H = data$ht1[i], k = data$k[i])
+  
+    } else {
+      
+      # Put jenkins here 
+      
+    }
+    
+    # STEP 3: total outside bark volume 
+    Vtot_ob_Gross <- Vtot_ib_Gross + Vtot_bk_Gross 
+    
+    
+    
+    
+    
+  }
+  
+}
+
+
+
+```
+
+
