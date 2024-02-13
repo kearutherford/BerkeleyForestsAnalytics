@@ -516,7 +516,7 @@ NSVB <- function(data) {
         if(data$ht2[i] < h_m) {
           
           R_m_2 <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
-          Vmer_ib_Sound <- ((R_m_2*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)) # *(1 - data$cull[i]/100)
+          Vmer_ib_Sound <- (R_m_2*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross) # *(1 - data$cull[i]/100)
           Vmer_bk_Sound <- (R_m_2*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
           Vmer_ob_Sound <- Vmer_ib_Sound + Vmer_bk_Sound
           
@@ -531,6 +531,19 @@ NSVB <- function(data) {
         Vtot_bk_Sound <- Vtot_ob_Sound - Vtot_ib_Sound
         
         # need to calc Vtop? 
+        
+      }
+      
+      if((data$type[i] == "S" && data$dbh[i] >= 9) || (data$type[i] == "H" && data$dbh[i] >= 11)) {
+        
+        if(data$ht2[i] < h_s) {
+          
+          R_s_2 <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
+          Vsaw_ib_Sound <- (R_s_2*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
+          Vsaw_bk_Sound <- (R_s_2*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
+          Vsaw_ob_Sound <- Vsaw_ib_Sound - Vsaw_bk_Sound
+          
+        }
         
       }
       
@@ -610,16 +623,16 @@ NSVB <- function(data) {
       # If sawlog 
       if((data$type[i] == "S" && data$dbh[i] >= 9) || (data$type[i] == "H" && data$dbh[i] >= 11)) {
         
-        #Wsaw_ib <- Vsaw_ib_Gross*WDSG_Adj*62.4
-        #Wsaw_bk <- Vsaw_bk_Gross*BKSG_Adj*62.4
-        #Wsaw_ob <- Wsaw_ib + Wsaw_bk 
+        Wsaw_ib <- Vsaw_ib_Sound*WDSG_Adj*62.4
+        Wsaw_bk <- Vsaw_bk_Sound*BKSG_Adj*62.4
+        Wsaw_ob <- Wsaw_ib + Wsaw_bk 
         
-        #DRYBIO_TOP_saw <- AGB_Predicted_red - Wsaw_ob - Wstump_ob
+        DRYBIO_TOP_saw <- AGB_Predicted_red - Wsaw_ob - Wstump_ob
         
-        #data$sawlog_wood_bio[i] <- Wsaw_ib
-        #data$sawlog_bark_bio[i] <- Wstump_bk
-        #data$sawlog_total_bio[i] <- Wsaw_ob
-        #data$sawlog_top_bio[i] <- DRYBIO_TOP_saw
+        data$sawlog_wood_bio[i] <- Wsaw_ib
+        data$sawlog_bark_bio[i] <- Wstump_bk
+        data$sawlog_total_bio[i] <- Wsaw_ob
+        data$sawlog_top_bio[i] <- DRYBIO_TOP_saw
         
       } 
       
