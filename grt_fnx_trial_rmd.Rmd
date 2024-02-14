@@ -326,10 +326,9 @@ NSVB <- function(data) {
     # STEP 3: obtain gross total stem outside-bark volume 
     Vtot_ob_Gross <- Vtot_ib_Gross + Vtot_bk_Gross 
     
-    # STEP 4: estimate heights to merchantable and sawlog top diameters
+    # If merchantable... 
+    # STEP 4: estimate heights to merchantable top diameter
     # STEP 5: estimate stem component gross volumes 
-    
-    # If merchantable 
     if(data$dbh[i] >= 5) {
     
       Table_S3_Pull <- Table_Pull(Table_S3a, Table_S3b, data[i,])
@@ -547,33 +546,52 @@ NSVB <- function(data) {
     } else if(data$path[i] == "2") {
       
       # STEP 6: estimate stem component sound volumes 
-      Vtop_ob_Gross <- Vtot_ob_Gross - Vmer_ob_Gross - Vstump_ob_Gross
-      Vtop_ib_Gross <- Vtot_ib_Gross - Vmer_ib_Gross - Vstump_ib_Gross
-      Vtop_bk_Gross <- Vtop_ob_Gross - Vtop_ib_Gross 
+      
+      #Vtop_ob_Gross <- Vtot_ob_Gross - Vmer_ob_Gross - Vstump_ob_Gross
+      #Vtop_ib_Gross <- Vtot_ib_Gross - Vmer_ib_Gross - Vstump_ib_Gross
+      #Vtop_bk_Gross <- Vtop_ob_Gross - Vtop_ib_Gross 
       
       R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
       
-      Vmiss_ob_Gross <- Vtot_ob_Gross*(1 - R_b)
-      Vmiss_ib_Gross <- Vtot_ib_Gross*(1 - R_b)
-      Vmiss_bk_Gross <- Vmiss_ob_Gross - Vmiss_ib_Gross
+      #Vmiss_ob_Gross <- Vtot_ob_Gross*(1 - R_b)
+      #Vmiss_ib_Gross <- Vtot_ib_Gross*(1 - R_b)
+      #Vmiss_bk_Gross <- Vmiss_ob_Gross - Vmiss_ib_Gross
       
-      Vtop_ib_Sound <- (Vtot_ib_Gross - Vmer_ib_Gross - Vstump_ib_Gross - Vmiss_ib_Gross)*(1 - data$cull[i]/100)
-      Vtop_ob_Sound <- Vtop_ib_Sound + Vtot_bk_Gross*(1 - R_m) - Vmiss_bk_Gross
-      Vtop_bk_Sound <- Vtop_ob_Sound - Vtop_ib_Sound
+      #Vtop_ib_Sound <- (Vtot_ib_Gross - Vmer_ib_Gross - Vstump_ib_Gross - Vmiss_ib_Gross)*(1 - data$cull[i]/100)
+      #Vtop_ob_Sound <- Vtop_ib_Sound + Vtot_bk_Gross*(1 - R_m) - Vmiss_bk_Gross
+      #Vtop_bk_Sound <- Vtop_ob_Sound - Vtop_ib_Sound
       
-      Vmer_ib_Sound <- Vmer_ib_Gross*(1 - data$cull[i]/100)
-      Vstump_ib_Sound <- Vstump_ib_Gross*(1 - data$cull[i]/100)
+      if(data$dbh[i] >= 5) {
+        
+        if(data$ht2[i] < h_m) {
+          
+          Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
+          Vmer_bk_Sound <- (R_b*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
+          # Vmer_ob_Sound <- Vmer_ib_Sound + Vmer_bk_Sound
+          
+        } else {
+          
+          Vmer_ib_Sound <- Vmer_ib_Gross
+          Vmer_bk_Sound <- Vmer_bk_Gross
+          
+        }
+        
+        #Vmer_ib_Sound <- Vmer_ib_Gross*(1 - data$cull[i]/100)
+        #Vstump_ib_Sound <- Vstump_ib_Gross*(1 - data$cull[i]/100)
+        
+      }
       
-      Vtot_ib_Sound <- Vmer_ib_Sound + Vstump_ib_Sound + Vtop_ib_Sound
-      # Vtot_ib_Sound <- Vtot_ib_Gross*R_b*(1 - data$cull[i]/100)  # a way to get this value without going through all the top calculations 
-      Vtot_ob_Sound <- Vtot_ib_Sound + Vtot_bk_Gross - Vmiss_bk_Gross
-      # Vtot_ib_Sound + (Vtot_ob_Gross*R_b - Vtot_ib_Gross*R_b)
+      # Vtot_ib_Sound <- Vmer_ib_Sound + Vstump_ib_Sound + Vtop_ib_Sound
+      # Vtot_ob_Sound <- Vtot_ib_Sound + Vtot_bk_Gross - Vmiss_bk_Gross
+      
+      Vtot_ib_Sound <- (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100)
+      Vtot_ob_Sound <- Vtot_ib_Sound + ((Vtot_ob_Gross*R_b) - (Vtot_ib_Gross*R_b))
       Vtot_bk_Sound <- Vtot_ob_Sound - Vtot_ib_Sound
       
       # STEP 7: convert total stem wood gross volume to biomass weight 
+      # Wtot_ib_red <- (Vtot_ib_Gross - Vmiss_ib_Gross)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4 
       Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
-      Wtot_ib_red <- (Vtot_ib_Gross - Vmiss_ib_Gross)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4 
-      # (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4
+      Wtot_ib_red <- (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4
       
       # STEP 8: predict total stem bark biomass 
       Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
@@ -584,6 +602,7 @@ NSVB <- function(data) {
       Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
       Wbranch <- EQ_set(Table_S7_Pull, data[i,])
       
+      # !!! need to change 0.3 to data$cr[i] !!!
       CR <- (data$ht1[i] - data$ht2[i]*(1 - 0.3))/data$ht1[i]
       BranchRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
       Wbranchred <- Wbranch*BranchRem
@@ -611,19 +630,19 @@ NSVB <- function(data) {
       data$total_branch_bio[i] <- Branch_Harmonized
       data$total_ag_bio[i] <- AGB_Predicted_red
       
-      # STEP 13: calculate an adjusted wood density 
-      WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross - Vmiss_ib_Gross)/62.4
-          # Wood_Harmonized/(Vtot_ib_Gross*R_b)/62.4
-      
-      # STEP 14: calculate an adjusted bark density 
-      BKSG_Adj <- Bark_Harmonized/(Vtot_ob_Gross - Vtot_ib_Gross - Vmiss_bk_Gross)/62.4
-          # Bark_Harmonized/(Vtot_bk_Gross*R_b)/62.4
-      
       # If merchantable
       if(data$dbh[i] >= 5) {
         
-        Wmer_ib <- Vmer_ib_Gross*WDSG_Adj*62.4
-        Wmer_bk <- Vmer_bk_Gross*BKSG_Adj*62.4
+        # STEP 13: calculate an adjusted wood density 
+        # WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross - Vmiss_ib_Gross)/62.4
+        WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross*R_b)/62.4
+      
+        # STEP 14: calculate an adjusted bark density 
+        # BKSG_Adj <- Bark_Harmonized/(Vtot_ob_Gross - Vtot_ib_Gross - Vmiss_bk_Gross)/62.4
+        BKSG_Adj <- Bark_Harmonized/(Vtot_bk_Gross*R_b)/62.4
+        
+        Wmer_ib <- Vmer_ib_Sound*WDSG_Adj*62.4
+        Wmer_bk <- Vmer_bk_Sound*BKSG_Adj*62.4
         Wmer_ob <- Wmer_ib + Wmer_bk
         
         Wstump_ib <- Vstump_ib_Gross*WDSG_Adj*62.4
