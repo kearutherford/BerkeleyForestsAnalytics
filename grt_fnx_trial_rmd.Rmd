@@ -3,15 +3,16 @@ Example dataset
 ```{r}
 # division 240, M210, 240, M220 
 data <- data.frame(
-  species = c(202, 316, 631, 802),
-  status = c(1, 1, 0, 1),
-  dbh = c(20, 11.1, 11.3, 18.1),
-  ht1 = c(110, 38, 28, 65),
-  ht2 = c(NA, NA, 21, 59),
-  top = c("Y", "Y", "N", "N"),
-  decay_class = c(NA, NA, 2, NA),
-  cull = c(0, 3, 10, 2),
-  division = c("240", "M210", "240", "M220")
+  species = c(202, 316, 631, 802, 202),
+  status = c(1, 1, 0, 1, 1),
+  dbh = c(20, 11.1, 11.3, 18.1, 4.8),
+  ht1 = c(110, 38, 28, 65, 14),
+  ht2 = c(NA, NA, 21, 59, 12),
+  crown_ratio = c(NA, NA, NA, 0.3, 0.4),
+  top = c("Y", "Y", "N", "N", "N"),
+  decay_class = c(NA, NA, 2, NA, NA),
+  cull = c(0, 3, 10, 2, 0),
+  division = c("240", "M210", "240", "M220", "240")
 )
 
 data
@@ -267,7 +268,7 @@ data$path[data$path == "N_1"] <- "2"
 data$path[data$path == "Y_0"] <- "3"
 data$path[data$path == "N_0"] <- "4"
 
-data
+data 
 ```
 
 Main function 
@@ -275,7 +276,7 @@ Main function
 # other inputs that need to be added to the top level function 
 # sp_codes = "4letter", input_units = "metric", output_units = "metric"
 
-NSVB <- function(data) {
+NSVBCalcs <- function(data) {
   
   data$total_wood_bio <- as.double(NA)
   data$total_bark_bio <- as.double(NA)
@@ -303,13 +304,6 @@ NSVB <- function(data) {
   data$stump_total_c <- as.double(NA)
   data$foliage_c <- as.double(NA)
 
-  ###########################################
-  # just for testing, delete after 
-  #n <- 1
-  #division <- "240"
-  
-  i <- 1
-  ###########################################
   
   n <- nrow(data)
 
@@ -329,6 +323,9 @@ NSVB <- function(data) {
     # If merchantable... 
     # STEP 4: estimate heights to merchantable top diameter
     # STEP 5: estimate stem component gross volumes 
+    
+    Table_S5_Pull <- Table_Pull(Table_S5a, Table_S5b, data[i,]) # Table_S5_Pull used in various calcs, not just for merch 
+    
     if(data$dbh[i] >= 5) {
     
       Table_S3_Pull <- Table_Pull(Table_S3a, Table_S3b, data[i,])
@@ -336,9 +333,7 @@ NSVB <- function(data) {
       
       EQ_7_hm <- uniroot(EQ_7, c(0,data$ht1[i]), tol = 0.001, maxiter = 100000, d = 4, table_data_1 = Table_S3_Pull, table_data_2 = Table_S4_Pull, tree_data = data[i,])
       h_m <- EQ_7_hm$root
-    
-      Table_S5_Pull <- Table_Pull(Table_S5a, Table_S5b, data[i,])
-      
+  
       R_1 <- EQ_6(1, Table_S5_Pull, data[i,])
       R_m <- EQ_6(h_m, Table_S5_Pull, data[i,])
       
@@ -352,13 +347,11 @@ NSVB <- function(data) {
       
     }
     
-    # follow path 1 (live, with intact top) ----------------------------------->
+    # PATH 1 (live, with intact top) ------------------------------------------>
     if(data$path[i] == "1") {
        
       # STEP 6: estimate stem component sound volumes 
-      Vtot_ib_Sound <- Vtot_ib_Gross*(1 - data$cull[i]/100) 
-      Vtot_bk_Sound <- Vtot_bk_Gross
-      Vtot_ob_Sound <- Vtot_ib_Sound + Vtot_bk_Sound
+      # Not a necessary step for this pathway 
       
       # STEP 7: convert total stem wood gross volume to biomass weight 
       Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4
@@ -386,7 +379,6 @@ NSVB <- function(data) {
       # the directly predicted total biomass and the total from the component estimates 
       AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
       AGB_Predicted_red <- AGB_Predicted*AGB_Reduce 
-      AGB_Diff <- AGB_Predicted_red - AGB_Component_red 
       
       Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
       Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
@@ -397,14 +389,14 @@ NSVB <- function(data) {
       data$total_branch_bio[i] <- Branch_Harmonized
       data$total_ag_bio[i] <- AGB_Predicted_red
       
-      # STEP 13: calculate an adjusted wood density 
-      WDSG_Adj <- Wood_Harmonized/Vtot_ib_Gross/62.4
-    
-      # STEP 14: calculate an adjusted bark density 
-      BKSG_Adj <- Bark_Harmonized/Vtot_bk_Gross/62.4
-      
-      # If merchantable
+      # If merchantable...
       if(data$dbh[i] >= 5) {
+        
+        # STEP 13: calculate an adjusted wood density 
+        WDSG_Adj <- Wood_Harmonized/Vtot_ib_Gross/62.4
+    
+        # STEP 14: calculate an adjusted bark density 
+        BKSG_Adj <- Bark_Harmonized/Vtot_bk_Gross/62.4
         
         Wmer_ib <- Vmer_ib_Gross*WDSG_Adj*62.4
         Wmer_bk <- Vmer_bk_Gross*BKSG_Adj*62.4
@@ -430,27 +422,25 @@ NSVB <- function(data) {
       # STEP 15: predict total foliage dry weight 
       Table_S9_Pull <- Table_Pull(Table_S9a, Table_S9b, data[i,])
       Wfoliage <- EQ_set(Table_S9_Pull, data[i,])
-      Wfoliagered <- Wfoliage
-      data$foliage_bio[i] <- Wfoliagered
+      data$foliage_bio[i] <- Wfoliage
       
       # STEP 16: estimate total aboveground carbon 
       CF <- (subset(Table_S10a, SPCD == data$species[i])$fia.wood.c)/100
       
       
-    # follow path 4 (dead, with broken top) ----------------------------------->
-    } else if(data$path[i] == "4") {
-      
-      R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
+    # PATH 2 (live, with broken top) ------------------------------------------>
+    } else if(data$path[i] == "2") {
       
       # STEP 6: estimate stem component sound volumes 
+      R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
+      
+      # If merchantable...
       if(data$dbh[i] >= 5) {
         
         if(data$ht2[i] < h_m) {
           
-          # R_m_2 <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
-          Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross) # *(1 - data$cull[i]/100)
+          Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
           Vmer_bk_Sound <- (R_b*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
-          Vmer_ob_Sound <- Vmer_ib_Sound + Vmer_bk_Sound
           
         } else {
           
@@ -459,29 +449,201 @@ NSVB <- function(data) {
           
         }
         
-        Vstump_ib_Sound <- Vstump_ib_Gross # *(1 - data$cull[i]/100)
-        Vstump_bk_Sound <- Vstump_bk_Gross
-        Vstump_ob_Sound <- Vstump_ib_Sound + Vstump_bk_Gross
-        
-        # Vtot_ob_Sound <- Vmer_ob_Sound + Vstump_ob_Sound
-        # Vtot_ib_Sound <- Vmer_ib_Sound + Vstump_ib_Sound
-        # Vtot_bk_Sound <- Vtot_ob_Sound - Vtot_ib_Sound
-        
       }
-      
-      Vtot_ib_Sound <- Vtot_ib_Gross*R_b
-      Vtot_ob_Sound <- Vtot_ib_Sound + ((Vtot_ob_Gross*R_b) - (Vtot_ib_Gross*R_b))
-      Vtot_bk_Sound <- Vtot_ob_Sound - Vtot_ib_Sound
       
       # STEP 7: convert total stem wood gross volume to biomass weight 
       Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
-      # Wtot_ib_red <- Vtot_ib_Sound/(1 - data$cull[i]/100)*data$WDSG[i]*data$wood_prop[i]*62.4
-      Wtot_ib_red <- Vtot_ib_Sound*data$WDSG[i]*data$wood_prop[i]*62.4
+      Wtot_ib_red <- (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4
       
       # STEP 8: predict total stem bark biomass 
       Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
       Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
-      Wtot_bk_red <- Wtot_bk*R_m_2*data$wood_prop[i]*data$bark_prop[i]
+      Wtot_bk_red <- Wtot_bk*R_b 
+      
+      # STEP 9: predict total branch biomass 
+      Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
+      Wbranch <- EQ_set(Table_S7_Pull, data[i,])
+      
+      CR <- (data$ht1[i] - data$ht2[i]*(1 - data$crown_ratio[i]))/data$ht1[i]
+      BranchRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
+      
+      Wbranchred <- Wbranch*BranchRem
+      
+      # STEP 10: predict total aboveground biomass 
+      Table_S8_Pull <- Table_Pull(Table_S8a, Table_S8b, data[i,])
+      AGB_Predicted <- EQ_set(Table_S8_Pull, data[i,])
+  
+      # STEP 11: sum total stem wood biomass, total stem bark biomass, and total branch biomass
+      # to obtain a second total aboveground biomass 
+      AGB_Component_red <- Wtot_ib_red + Wtot_bk_red + Wbranchred
+      
+      # STEP 12: proportionally distribute the difference between 
+      # the directly predicted total biomass and the total from the component estimates 
+      AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
+      AGB_Predicted_red <- AGB_Predicted*AGB_Reduce 
+      
+      Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
+      Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
+      Branch_Harmonized <- AGB_Predicted_red*(Wbranchred/AGB_Component_red)
+      
+      data$total_wood_bio[i] <- Wood_Harmonized
+      data$total_bark_bio[i] <- Bark_Harmonized
+      data$total_branch_bio[i] <- Branch_Harmonized
+      data$total_ag_bio[i] <- AGB_Predicted_red
+      
+      # If merchantable...
+      if(data$dbh[i] >= 5) {
+        
+        # STEP 13: calculate an adjusted wood density 
+        WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross*R_b)/62.4
+      
+        # STEP 14: calculate an adjusted bark density 
+        BKSG_Adj <- Bark_Harmonized/(Vtot_bk_Gross*R_b)/62.4
+        
+        Wmer_ib <- Vmer_ib_Sound*WDSG_Adj*62.4
+        Wmer_bk <- Vmer_bk_Sound*BKSG_Adj*62.4
+        Wmer_ob <- Wmer_ib + Wmer_bk
+        
+        Wstump_ib <- Vstump_ib_Gross*WDSG_Adj*62.4
+        Wstump_bk <- Vstump_bk_Gross*BKSG_Adj*62.4
+        Wstump_ob <- Wstump_ib + Wstump_bk
+        
+        DRYBIO_TOP_mer <- AGB_Predicted_red - Wmer_ob - Wstump_ob
+        
+        data$merch_wood_bio[i] <- Wmer_ib
+        data$merch_bark_bio[i] <- Wmer_bk
+        data$merch_total_bio[i] <- Wmer_ob
+        data$merch_top_bio[i] <- DRYBIO_TOP_mer
+        
+        data$stump_wood_bio[i] <- Wstump_ib
+        data$stump_bark_bio[i] <- Wstump_bk
+        data$stump_total_bio[i] <- Wstump_ob 
+        
+      } 
+      
+      # STEP 15: predict total foliage dry weight 
+      Table_S9_Pull <- Table_Pull(Table_S9a, Table_S9b, data[i,])
+      Wfoliage <- EQ_set(Table_S9_Pull, data[i,])
+      FoliageRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
+      Wfoliagered <- Wfoliage*FoliageRem
+      data$foliage_bio[i] <- Wfoliagered
+      
+      # STEP 16: estimate total aboveground carbon 
+      CF <- (subset(Table_S10a, SPCD == data$species[i])$fia.wood.c)/100
+    
+    
+    # PATH 3 (dead, with intact top) ------------------------------------------>
+    } else if(data$path[i] == "3") {
+      
+      # STEP 6: estimate stem component sound volumes 
+      # Not a necessary step for this pathway 
+      
+      # STEP 7: convert total stem wood gross volume to biomass weight 
+      Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
+      Wtot_ib_red <- Vtot_ib_Gross*data$WDSG[i]*data$wood_prop[i]*62.4
+      
+      # STEP 8: predict total stem bark biomass 
+      Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
+      Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
+      Wtot_bk_red <- Wtot_bk*data$wood_prop[i]*data$bark_prop[i]
+      
+      # STEP 9: predict total branch biomass 
+      Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
+      Wbranch <- EQ_set(Table_S7_Pull, data[i,])
+      Wbranchred <- Wbranch*data$wood_prop[i]*data$branch_prop[i]
+      
+      # STEP 10: predict total aboveground biomass 
+      Table_S8_Pull <- Table_Pull(Table_S8a, Table_S8b, data[i,])
+      AGB_Predicted <- EQ_set(Table_S8_Pull, data[i,])
+      
+      # STEP 11: sum total stem wood biomass, total stem bark biomass, and total branch biomass
+      # to obtain a second total aboveground biomass 
+      AGB_Component_red <- Wtot_ib_red + Wtot_bk_red + Wbranchred
+      
+      # STEP 12: proportionally distribute the difference between 
+      # the directly predicted total biomass and the total from the component estimates 
+      AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
+      AGB_Predicted_red <- AGB_Predicted*AGB_Reduce 
+      AGB_Diff <- AGB_Predicted_red - AGB_Component_red 
+      
+      Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
+      Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
+      Branch_Harmonized <- AGB_Predicted_red*(Wbranchred/AGB_Component_red)
+      
+      data$total_wood_bio[i] <- Wood_Harmonized
+      data$total_bark_bio[i] <- Bark_Harmonized
+      data$total_branch_bio[i] <- Branch_Harmonized
+      data$total_ag_bio[i] <- AGB_Predicted_red
+      
+      # If merchantable...
+      if(data$dbh[i] >= 5) {
+        
+        # STEP 13: calculate an adjusted wood density 
+        WDSG_Adj <- Wood_Harmonized/Vtot_ib_Gross/62.4
+        
+        # STEP 14: calculate an adjusted bark density 
+        BKSG_Adj <- Bark_Harmonized/Vtot_bk_Gross/62.4 
+        
+        Wmer_ib <- Vmer_ib_Gross*WDSG_Adj*62.4
+        Wmer_bk <- Vmer_bk_Gross*BKSG_Adj*62.4
+        Wmer_ob <- Wmer_ib + Wmer_bk
+        
+        Wstump_ib <- Vstump_ib_Gross*WDSG_Adj*62.4
+        Wstump_bk <- Vstump_bk_Gross*BKSG_Adj*62.4
+        Wstump_ob <- Wstump_ib + Wstump_bk
+        
+        DRYBIO_TOP_mer <- AGB_Predicted_red - Wmer_ob - Wstump_ob
+        
+        data$merch_wood_bio[i] <- Wmer_ib
+        data$merch_bark_bio[i] <- Wmer_bk
+        data$merch_total_bio[i] <- Wmer_ob
+        data$merch_top_bio[i] <- DRYBIO_TOP_mer
+        
+        data$stump_wood_bio[i] <- Wstump_ib
+        data$stump_bark_bio[i] <- Wstump_bk
+        data$stump_total_bio[i] <- Wstump_ob 
+        
+      } 
+      
+      # STEP 15: predict total foliage dry weight 
+      Wfoliage <- 0 
+      data$foliage_bio[i] <- Wfoliage
+      
+      # STEP 16: estimate total aboveground carbon 
+      CF <- (subset(Table_S10b, type == data$type[i] & Decay.code == data$decay_class[i])$C.fraction)/100
+      
+    
+    # PATH 4 (dead, with broken top) ------------------------------------------>
+    } else if(data$path[i] == "4") {
+      
+      # STEP 6: estimate stem component sound volumes 
+      R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
+      
+      # If merchantable...
+      if(data$dbh[i] >= 5) {
+        
+        if(data$ht2[i] < h_m) {
+          
+          Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
+          Vmer_bk_Sound <- (R_b*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
+          
+        } else {
+          
+          Vmer_ib_Sound <- Vmer_ib_Gross
+          Vmer_bk_Sound <- Vmer_bk_Gross
+          
+        }
+        
+      }
+      
+      # STEP 7: convert total stem wood gross volume to biomass weight 
+      Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
+      Wtot_ib_red <- (Vtot_ib_Gross*R_b)*data$WDSG[i]*data$wood_prop[i]*62.4
+      
+      # STEP 8: predict total stem bark biomass 
+      Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
+      Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
+      Wtot_bk_red <- Wtot_bk*R_b*data$wood_prop[i]*data$bark_prop[i]
       
       # STEP 9: predict total branch biomass 
       Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
@@ -516,141 +678,14 @@ NSVB <- function(data) {
       data$total_branch_bio[i] <- Branch_Harmonized
       data$total_ag_bio[i] <- AGB_Predicted_red
       
-      # If merchantable
+      # If merchantable...
       if(data$dbh[i] >= 5) {
         
         # STEP 13: calculate an adjusted wood density 
-        WDSG_Adj <- Wood_Harmonized/Vtot_ib_Sound/62.4
-    
-        # STEP 14: calculate an adjusted bark density 
-        BKSG_Adj <- Bark_Harmonized/Vtot_bk_Sound/62.4 
-        
-        Wmer_ib <- Vmer_ib_Sound*WDSG_Adj*62.4
-        Wmer_bk <- Vmer_bk_Sound*BKSG_Adj*62.4
-        Wmer_ob <- Wmer_ib + Wmer_bk
-        
-        Wstump_ib <- Vstump_ib_Sound*WDSG_Adj*62.4
-        Wstump_bk <- Vstump_bk_Sound*BKSG_Adj*62.4
-        Wstump_ob <- Wstump_ib + Wstump_bk
-        
-        DRYBIO_TOP_mer <- AGB_Predicted_red - Wmer_ob - Wstump_ob
-        
-        data$merch_wood_bio[i] <- Wmer_ib
-        data$merch_bark_bio[i] <- Wmer_bk
-        data$merch_total_bio[i] <- Wmer_ob
-        data$merch_top_bio[i] <- DRYBIO_TOP_mer
-        
-        data$stump_wood_bio[i] <- Wstump_ib
-        data$stump_bark_bio[i] <- Wstump_bk
-        data$stump_total_bio[i] <- Wstump_ob 
-        
-      } 
-      
-      # STEP 15: predict total foliage dry weight 
-      Wfoliagered <- 0 
-      data$foliage_bio[i] <- Wfoliagered
-      
-      # STEP 16: estimate total aboveground carbon 
-      CF <- (subset(Table_S10b, type == data$type[i] & Decay.code == data$decay_class[i])$C.fraction)/100
-    
-    # follow path 2 (live, with broken top) ----------------------------------->
-    } else if(data$path[i] == "2") {
-      
-      # STEP 6: estimate stem component sound volumes 
-      
-      #Vtop_ob_Gross <- Vtot_ob_Gross - Vmer_ob_Gross - Vstump_ob_Gross
-      #Vtop_ib_Gross <- Vtot_ib_Gross - Vmer_ib_Gross - Vstump_ib_Gross
-      #Vtop_bk_Gross <- Vtop_ob_Gross - Vtop_ib_Gross 
-      
-      R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
-      
-      #Vmiss_ob_Gross <- Vtot_ob_Gross*(1 - R_b)
-      #Vmiss_ib_Gross <- Vtot_ib_Gross*(1 - R_b)
-      #Vmiss_bk_Gross <- Vmiss_ob_Gross - Vmiss_ib_Gross
-      
-      #Vtop_ib_Sound <- (Vtot_ib_Gross - Vmer_ib_Gross - Vstump_ib_Gross - Vmiss_ib_Gross)*(1 - data$cull[i]/100)
-      #Vtop_ob_Sound <- Vtop_ib_Sound + Vtot_bk_Gross*(1 - R_m) - Vmiss_bk_Gross
-      #Vtop_bk_Sound <- Vtop_ob_Sound - Vtop_ib_Sound
-      
-      if(data$dbh[i] >= 5) {
-        
-        if(data$ht2[i] < h_m) {
-          
-          Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
-          Vmer_bk_Sound <- (R_b*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
-          # Vmer_ob_Sound <- Vmer_ib_Sound + Vmer_bk_Sound
-          
-        } else {
-          
-          Vmer_ib_Sound <- Vmer_ib_Gross
-          Vmer_bk_Sound <- Vmer_bk_Gross
-          
-        }
-        
-        #Vmer_ib_Sound <- Vmer_ib_Gross*(1 - data$cull[i]/100)
-        #Vstump_ib_Sound <- Vstump_ib_Gross*(1 - data$cull[i]/100)
-        
-      }
-      
-      # Vtot_ib_Sound <- Vmer_ib_Sound + Vstump_ib_Sound + Vtop_ib_Sound
-      # Vtot_ob_Sound <- Vtot_ib_Sound + Vtot_bk_Gross - Vmiss_bk_Gross
-      
-      Vtot_ib_Sound <- (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100)
-      Vtot_ob_Sound <- Vtot_ib_Sound + ((Vtot_ob_Gross*R_b) - (Vtot_ib_Gross*R_b))
-      Vtot_bk_Sound <- Vtot_ob_Sound - Vtot_ib_Sound
-      
-      # STEP 7: convert total stem wood gross volume to biomass weight 
-      # Wtot_ib_red <- (Vtot_ib_Gross - Vmiss_ib_Gross)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4 
-      Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
-      Wtot_ib_red <- (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4
-      
-      # STEP 8: predict total stem bark biomass 
-      Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
-      Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
-      Wtot_bk_red <- Wtot_bk*R_b 
-      
-      # STEP 9: predict total branch biomass 
-      Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
-      Wbranch <- EQ_set(Table_S7_Pull, data[i,])
-      
-      # !!! need to change 0.3 to data$cr[i] !!!
-      CR <- (data$ht1[i] - data$ht2[i]*(1 - 0.3))/data$ht1[i]
-      BranchRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
-      Wbranchred <- Wbranch*BranchRem
-      
-      # STEP 10: predict total aboveground biomass 
-      Table_S8_Pull <- Table_Pull(Table_S8a, Table_S8b, data[i,])
-      AGB_Predicted <- EQ_set(Table_S8_Pull, data[i,])
-  
-      # STEP 11: sum total stem wood biomass, total stem bark biomass, and total branch biomass
-      # to obtain a second total aboveground biomass 
-      AGB_Component_red <- Wtot_ib_red + Wtot_bk_red + Wbranchred
-      
-      # STEP 12: proportionally distribute the difference between 
-      # the directly predicted total biomass and the total from the component estimates 
-      AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
-      AGB_Predicted_red <- AGB_Predicted*AGB_Reduce 
-      AGB_Diff <- AGB_Predicted_red - AGB_Component_red 
-      
-      Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
-      Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
-      Branch_Harmonized <- AGB_Predicted_red*(Wbranchred/AGB_Component_red)
-      
-      data$total_wood_bio[i] <- Wood_Harmonized
-      data$total_bark_bio[i] <- Bark_Harmonized
-      data$total_branch_bio[i] <- Branch_Harmonized
-      data$total_ag_bio[i] <- AGB_Predicted_red
-      
-      # If merchantable
-      if(data$dbh[i] >= 5) {
-        
-        # STEP 13: calculate an adjusted wood density 
-        # WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross - Vmiss_ib_Gross)/62.4
         WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross*R_b)/62.4
-      
+        
         # STEP 14: calculate an adjusted bark density 
-        # BKSG_Adj <- Bark_Harmonized/(Vtot_ob_Gross - Vtot_ib_Gross - Vmiss_bk_Gross)/62.4
-        BKSG_Adj <- Bark_Harmonized/(Vtot_bk_Gross*R_b)/62.4
+        BKSG_Adj <- Bark_Harmonized/(Vtot_bk_Gross*R_b)/62.4 
         
         Wmer_ib <- Vmer_ib_Sound*WDSG_Adj*62.4
         Wmer_bk <- Vmer_bk_Sound*BKSG_Adj*62.4
@@ -674,16 +709,13 @@ NSVB <- function(data) {
       } 
       
       # STEP 15: predict total foliage dry weight 
-      Table_S9_Pull <- Table_Pull(Table_S9a, Table_S9b, data[i,])
-      Wfoliage <- EQ_set(Table_S9_Pull, data[i,])
-      FoliageRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
-      Wfoliagered <- Wfoliage*FoliageRem
-      data$foliage_bio[i] <- Wfoliagered
+      Wfoliage <- 0 
+      data$foliage_bio[i] <- Wfoliage
       
       # STEP 16: estimate total aboveground carbon 
-      CF <- (subset(Table_S10a, SPCD == data$species[i])$fia.wood.c)/100
-      
-    } 
+      CF <- (subset(Table_S10b, type == data$type[i] & Decay.code == data$decay_class[i])$C.fraction)/100
+    
+    }
 
     data$total_wood_c[i] <- data$total_wood_bio[i]*CF
     data$total_bark_c[i] <- data$total_bark_bio[i]*CF
