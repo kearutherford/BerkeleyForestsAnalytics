@@ -667,6 +667,13 @@ sp_code_names <- data.frame(
           "264", "998", "999", "920", NA)
 )
 
+NSVB_sp_code_names <- data.frame(
+  letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
+             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR", NA),
+  fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
+          "312", "316", "352", "361", "431", "492", "631", "746", "801", "802", "805", "818", "920", "981", "998", "999", NA)
+)
+
 VanWag_species <- data.frame (
   letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR", NA),
   fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "298", "998", "999", NA)

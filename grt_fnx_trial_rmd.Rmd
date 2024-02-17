@@ -3,14 +3,15 @@ Example dataset
 ```{r}
 # division 240, M210, 240, M220 
 data <- data.frame(
+  #species = c("PSME", "ACRU", "NODE", "QUAL", "PSME"),
   species = c(202, 316, 631, 802, 202),
-  status = c(1, 1, 0, 1, 1),
+  status = c(1, 1, 0, 1, 0),
   dbh = c(20, 11.1, 11.3, 18.1, 4.8),
   ht1 = c(110, 38, 28, 65, 14),
   ht2 = c(NA, NA, 21, 59, 12),
   crown_ratio = c(NA, NA, NA, 0.3, 0.4),
   top = c("Y", "Y", "N", "N", "N"),
-  decay_class = c(NA, NA, 2, NA, NA),
+  decay_class = c(NA, NA, 2, NA, 3),
   cull = c(0, 3, 10, 2, 0),
   division = c("240", "M210", "240", "M220", "240")
 )
@@ -19,205 +20,80 @@ data
 ```
 
 ```{r}
-use_data(Table_S1a, 
-         Table_S1b,
-         
-         Table_S2a,
-         Table_S2b,
-         
-         Table_S3a,
-         Table_S3b,
-         
-         Table_S4a,
-         Table_S4b,
-         
-         Table_S5a,
-         Table_S5b,
-         
-         Table_S6a,
-         Table_S6b,
-         
-         Table_S7a,
-         Table_S7b,
-         
-         Table_S8a,
-         Table_S8b,
-         
-         Table_S9a,
-         Table_S9b,
-         
-         Table_S10a,
-         Table_S10b,
-         
-         Table_S11, 
-         
-         REF_SPECIES_BFA,
-         
-         discount,
-         
-         results_by_hand,
-         
-         internal = TRUE,
-         
-         overwrite = TRUE)
+DataPrep(data, "imperial", "fia")
 ```
 
-Internal datasets 
-```{r}
-REF_SPECIES_BFA <- read.csv(here::here("gtr_data", "REF_SPECIES_BFA.csv"))
-REF_SPECIES_BFA$k <- ifelse(REF_SPECIES_BFA$type == "S", 9, 11)
-REF_SPECIES_BFA$DensProp <- ifelse(REF_SPECIES_BFA$type == "S", 0.92, 0.54)
-REF_SPECIES_BFA$species <- as.character(REF_SPECIES_BFA$species)
-REF_SPECIES_BFA$JENKINS_SPGRPCD <- as.character(REF_SPECIES_BFA$JENKINS_SPGRPCD)
-REF_SPECIES_BFA
-```
 
 ```{r}
-Table_S1a <- read.csv(here::here("gtr_data", "Table S1a_volib_coefs_spcd.csv"), na.strings = c(""))
-Table_S1a$SPCD <- as.character(Table_S1a$SPCD)
-Table_S1a$model <- as.character(Table_S1a$model)
-Table_S1a
-```
+DataPrep <- function(data, units, sp_codes) {
+  
+  # unit conversions 
+  if(units == "metric") {
+    
+    # preserve original columns 
+    data$dbh_cm <- data$dbh
+    data$ht1_m <- data$ht1
+    data$ht2_m <- data$ht2
+    
+    # create columns in imperial units 
+    data$dbh <- data$dbh/2.54
+    data$ht1 <- data$ht1*3.281
+    data$ht2 <- data$ht2*3.281
+    
+  }
+  
+  # FIA species codes 
+  if(sp_codes == "4letter") {
+    
+    # preserve original column 
+    data$letter <- data$species 
+    
+    # create column with FIA species codes 
+    data <- merge(data, NSVB_sp_code_names, by = "letter", all.x = TRUE, all.y = FALSE)
+    data$species <- data$fia 
+    data <- subset(data, select = -fia)
+    
+  }
+  
+  # fill in some missing values 
+  data$decay_class <- ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class)
+  data$top <- ifelse(is.na(data$top), "Y", data$top)
+  data$cull <- ifelse(is.na(data$cull), 0, data$cull)
+  
+  # add columns for further calculations 
+  data <- merge(data, REF_SPECIES_BFA, by = "species", all.x = TRUE, all.y = FALSE)
+  data <- merge(data, Table_1, by = c("type", "decay_class"), all.x = TRUE, all.y = FALSE)
 
-```{r}
-Table_S1b <- read.csv(here::here("gtr_data", "Table S1b_volib_coefs_jenkins.csv"), na.strings = c(""))
-Table_S1b$JENKINS_SPGRPCD <- as.character(Table_S1b$JENKINS_SPGRPCD)
-Table_S1b$model <- as.character(Table_S1b$model)
-Table_S1b
+  data$path <- paste0(data$top,'_',data$status)
+  data$path[data$path == "Y_1"] <- "1" # live, with intact top 
+  data$path[data$path == "N_1"] <- "2" # live, with broken top
+  data$path[data$path == "Y_0"] <- "3" # dead, with intact top 
+  data$path[data$path == "N_0"] <- "4" # dead, with broken top 
+  
+  # fill in crown ratios 
+  data$Division <- ifelse(data$division %in% Table_S11$Division, data$division, "UNDEFINED")
+  names(Table_S11)[names(Table_S11) == "HWD"] <- "type"
+  Table_S11$cr <- Table_S11$Mean.CR/100
+  Table_S11_CR <- subset(Table_S11, select = c(Division, type, cr))
+  data <- merge(data, Table_S11_CR, by = c("Division", "type"), all.x = TRUE, all.y = FALSE)
+  data$CR <- ifelse(is.na(data$crown_ratio), data$cr, data$crown_ratio)
+  data <- subset(data, select = -c(Division, cr))
+  
+  # add column for trees that will have NA biomass estimates  
+  data$calc_bio <- "Y"
+  data$calc_bio <- ifelse(is.na(data$status), "N", data$calc_bio)
+  data$calc_bio <- ifelse(is.na(data$species), "N", data$calc_bio)
+  data$calc_bio <- ifelse(is.na(data$dbh), "N", data$calc_bio)
+  data$calc_bio <- ifelse(!is.na(data$dbh) & data$dbh < 1.0, "N", data$calc_bio)
+  data$calc_bio <- ifelse(is.na(data$ht1), "N", data$calc_bio)
+  data$calc_bio <- ifelse(!is.na(data$ht1) & data$ht1 < 4.5, "N", data$calc_bio)
+  data$calc_bio <- ifelse(data$top == "N" & is.na(data$ht2), "N", data$calc_bio)
+  data$calc_bio <- ifelse(!is.na(data$ht2) & data$ht2 < 4.5, "N", data$calc_bio)
+  
+  return(data)
+  
+}
 ```
-
-```{r}
-Table_S2a <- read.csv(here::here("gtr_data", "Table S2a_volbk_coefs_spcd.csv"), na.strings = c(""))
-Table_S2a$SPCD <- as.character(Table_S2a$SPCD)
-Table_S2a$model <- as.character(Table_S2a$model)
-Table_S2a
-```
-
-```{r}
-Table_S2b <- read.csv(here::here("gtr_data", "Table S2b_volbk_coefs_jenkins.csv"), na.strings = c(""))
-Table_S2b$JENKINS_SPGRPCD <- as.character(Table_S2b$JENKINS_SPGRPCD)
-Table_S2b$model <- as.character(Table_S2b$model)
-Table_S2b
-```
-
-```{r}
-Table_S3a <- read.csv(here::here("gtr_data", "Table S3a_volob_coefs_spcd.csv"), na.strings = c(""))
-Table_S3a$SPCD <- as.character(Table_S3a$SPCD)
-Table_S3a$model <- as.character(Table_S3a$model)
-Table_S3a
-```
-
-```{r}
-Table_S3b <- read.csv(here::here("gtr_data", "Table S3b_volob_coefs_jenkins.csv"), na.strings = c(""))
-Table_S3b$JENKINS_SPGRPCD <- as.character(Table_S3b$JENKINS_SPGRPCD)
-Table_S3b$model <- as.character(Table_S3b$model)
-Table_S3b
-```
-
-```{r}
-Table_S4a <- read.csv(here::here("gtr_data", "Table S4a_rcumob_coefs_spcd.csv"), na.strings = c(""))
-Table_S4a$SPCD <- as.character(Table_S4a$SPCD)
-Table_S4a$model <- as.character(Table_S4a$model)
-Table_S4a
-```
-
-```{r}
-Table_S4b <- read.csv(here::here("gtr_data", "Table S4b_rcumob_coefs_jenkins.csv"), na.strings = c(""))
-Table_S4b$JENKINS_SPGRPCD <- as.character(Table_S4b$JENKINS_SPGRPCD)
-Table_S4b$model <- as.character(Table_S4b$model)
-Table_S4b
-```
-
-```{r}
-Table_S5a <- read.csv(here::here("gtr_data", "Table S5a_rcumib_coefs_spcd.csv"), na.strings = c(""))
-Table_S5a$SPCD <- as.character(Table_S5a$SPCD)
-Table_S5a$model <- as.character(Table_S5a$model)
-Table_S5a
-```
-
-```{r}
-Table_S5b <- read.csv(here::here("gtr_data", "Table S5b_rcumib_coefs_jenkins.csv"), na.strings = c(""))
-Table_S5b$JENKINS_SPGRPCD <- as.character(Table_S5b$JENKINS_SPGRPCD)
-Table_S5b$model <- as.character(Table_S5b$model)
-Table_S5b
-```
-
-```{r}
-Table_S6a <- read.csv(here::here("gtr_data", "Table S6a_bark_biomass_coefs_spcd.csv"), na.strings = c(""))
-Table_S6a$SPCD <- as.character(Table_S6a$SPCD)
-Table_S6a$model <- as.character(Table_S6a$model)
-Table_S6a
-```
-
-```{r}
-Table_S6b <- read.csv(here::here("gtr_data", "Table S6b_bark_biomass_coefs_jenkins.csv"), na.strings = c(""))
-Table_S6b$JENKINS_SPGRPCD <- as.character(Table_S6b$JENKINS_SPGRPCD)
-Table_S6b$model <- as.character(Table_S6b$model)
-Table_S6b
-```
-
-```{r}
-Table_S7a <- read.csv(here::here("gtr_data", "Table S7a_branch_biomass_coefs_spcd.csv"), na.strings = c(""))
-Table_S7a$SPCD <- as.character(Table_S7a$SPCD)
-Table_S7a$model <- as.character(Table_S7a$model)
-Table_S7a
-```
-
-```{r}
-Table_S7b <- read.csv(here::here("gtr_data", "Table S7b_branch_biomass_coefs_jenkins.csv"), na.strings = c(""))
-Table_S7b$JENKINS_SPGRPCD <- as.character(Table_S7b$JENKINS_SPGRPCD)
-Table_S7b$model <- as.character(Table_S7b$model)
-Table_S7b
-```
-
-```{r}
-Table_S8a <- read.csv(here::here("gtr_data", "Table S8a_total_biomass_coefs_spcd.csv"), na.strings = c(""))
-Table_S8a$SPCD <- as.character(Table_S8a$SPCD)
-Table_S8a$model <- as.character(Table_S8a$model)
-Table_S8a
-```
-
-```{r}
-Table_S8b <- read.csv(here::here("gtr_data", "Table S8b_total_biomass_coefs_jenkins.csv"), na.strings = c(""))
-Table_S8b$JENKINS_SPGRPCD <- as.character(Table_S8b$JENKINS_SPGRPCD)
-Table_S8b$model <- as.character(Table_S8b$model)
-Table_S8b
-```
-
-```{r}
-Table_S9a <- read.csv(here::here("gtr_data", "Table S9a_foliage_coefs_spcd.csv"), na.strings = c(""))
-Table_S9a$SPCD <- as.character(Table_S9a$SPCD)
-Table_S9a$model <- as.character(Table_S9a$model)
-Table_S9a
-```
-
-```{r}
-Table_S9b <- read.csv(here::here("gtr_data", "Table S9b_foliage_coefs_jenkins.csv"), na.strings = c(""))
-Table_S9b$JENKINS_SPGRPCD <- as.character(Table_S9b$JENKINS_SPGRPCD)
-Table_S9b$equation <- as.character(Table_S9b$equation)
-Table_S9b
-```
-
-```{r}
-Table_S10a <- read.csv(here::here("gtr_data", "Table S10a_fia_wood_c_frac_live.csv"))
-Table_S10a$SPCD <- as.character(Table_S10a$SPCD)
-Table_S10a
-```
-
-```{r}
-Table_S10b <- read.csv(here::here("gtr_data", "Table S10b_fia_wood_c_frac_dead.csv"))
-Table_S10b$S.H <- ifelse(Table_S10b$S.H == "Hardwood", "H", "S")
-Table_S10b$Decay.code <- as.character(Table_S10b$Decay.code)
-Table_S10b
-```
-
-```{r}
-Table_S11 <- read.csv(here::here("gtr_data", "Table S11_mean_crprop.csv"))
-Table_S11$HWD <- ifelse(Table_S11$HWD.Y.N == "Y", "H", "S")
-Table_S11 <- subset(Table_S11, select = -c(HWD.Y.N))
-Table_S11
-```
-
 
 Supporting functions 
 ```{r}
@@ -304,40 +180,7 @@ Table_Pull <- function(table_data_a, table_data_b, tree_data) {
 ```
 
 ```{r}
-Table_11_Pull <- function(table_data, tree_data) {
-
-    if(tree_data$division[1] %in% table_data$Division) {
-  
-      return_pull <- subset(table_data, Division == tree_data$division[1] & HWD == tree_data$type[1])
-      
-    } else {
-      
-      return_table <- subset(table_data, Division == "UNDEFINED" & HWD == tree_data$type[1])
-      
-    }
-  
-  return(return_table)
-      
-} 
-```
-
-
-```{r}
 NSVBCalcs(data = data)
-```
-
-```{r}
-# include this in the prep function 
-data <- merge(data, REF_SPECIES_BFA, by = "species", all.x = TRUE, all.y = FALSE)
-data <- merge(data, Table_1, by = c("type", "decay_class"), all.x = TRUE, all.y = FALSE)
-
-data$path <- paste0(data$top,'_',data$status)
-data$path[data$path == "Y_1"] <- "1"
-data$path[data$path == "N_1"] <- "2"
-data$path[data$path == "Y_0"] <- "3"
-data$path[data$path == "N_0"] <- "4"
-
-data 
 ```
 
 Main function 
@@ -459,7 +302,7 @@ NSVBCalcs <- function(data) {
       Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
       Wbranch <- EQ_set(Table_S7_Pull, data[i,])
       
-      CR <- (data$ht1[i] - data$ht2[i]*(1 - data$crown_ratio[i]))/data$ht1[i]
+      CR <- (data$ht1[i] - data$ht2[i]*(1 - data$CR[i]))/data$ht1[i]
       BranchRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
       
       Wbranchred <- Wbranch*BranchRem
@@ -519,11 +362,7 @@ NSVBCalcs <- function(data) {
       # STEP 9: predict total branch biomass 
       Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
       Wbranch <- EQ_set(Table_S7_Pull, data[i,])
-      
-      Table_S11_Pull <- Table_11_Pull(Table_S11, data[i,])
-      CR <- Table_S11_Pull$Mean.CR[1]/100
-      BranchRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
-      
+      BranchRem <- (data$ht2[i] - data$ht1[i]*(1-data$CR[i]))/(data$ht1[i]*data$CR[i])
       Wbranchred <- Wbranch*data$wood_prop[i]*data$branch_prop[i]*BranchRem
     
     } 
