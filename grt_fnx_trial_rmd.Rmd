@@ -6,7 +6,7 @@ data <- data.frame(
   #species = c("PSME", "ACRU", "NODE", "QUAL", "PSME"),
   species = c(202, 316, 631, 802, 202),
   status = c(1, 1, 0, 1, 0),
-  dbh = c(20, 11.1, 11.3, 18.1, 4.8),
+  dbh = c(10, 11.1, 11.3, 18.1, 4.8),
   ht1 = c(110, 38, 28, 65, 14),
   ht2 = c(NA, NA, 21, 59, 12),
   crown_ratio = c(NA, NA, NA, 0.3, 0.4),
@@ -20,9 +20,8 @@ data
 ```
 
 ```{r}
-DataPrep(data, "imperial", "fia")
+data <- DataPrep(data, "imperial", "fia")
 ```
-
 
 ```{r}
 DataPrep <- function(data, units, sp_codes) {
@@ -37,8 +36,8 @@ DataPrep <- function(data, units, sp_codes) {
     
     # create columns in imperial units 
     data$dbh <- data$dbh/2.54
-    data$ht1 <- data$ht1*3.281
-    data$ht2 <- data$ht2*3.281
+    data$ht1 <- data$ht1*3.28084
+    data$ht2 <- data$ht2*3.28084
     
   }
   
@@ -79,7 +78,7 @@ DataPrep <- function(data, units, sp_codes) {
   data$CR <- ifelse(is.na(data$crown_ratio), data$cr, data$crown_ratio)
   data <- subset(data, select = -c(Division, cr))
   
-  # add column for trees that will have NA biomass estimates  
+  # add column for trees that will have NA biomass estimates
   data$calc_bio <- "Y"
   data$calc_bio <- ifelse(is.na(data$status), "N", data$calc_bio)
   data$calc_bio <- ifelse(is.na(data$species), "N", data$calc_bio)
@@ -182,6 +181,22 @@ Table_Pull <- function(table_data_a, table_data_b, tree_data) {
 ```{r}
 NSVBCalcs(data = data)
 ```
+
+```{r}
+CleanDF <- function(  ) {
+  
+  # remove unnecessary columns 
+  # properly name columns 
+  # calculate carbon content 
+  # unit conversion 
+  
+  
+  
+  
+  
+}
+```
+
 
 Main function 
 ```{r}
