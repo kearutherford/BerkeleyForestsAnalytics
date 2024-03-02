@@ -13,21 +13,222 @@ data <- data.frame(
   top = c("Y", "Y", "N", "N", "N"),
   decay_class = c(NA, NA, 2, NA, 3),
   cull = c(0, 3, 10, 2, 0),
-  division = c("240", "M210", "240", "M220", "240")
+  division = c("240", "M210", "240", "M220", "240"),
+  extra_col = "YAY"
 )
 
 data
 ```
 
 ```{r}
-data <- DataPrep(data, "imperial", "fia")
+BiomassNSVB(data = data, sp_codes = "fia", input_units = "imperial")
 ```
 
 ```{r}
-DataPrep <- function(data, units, sp_codes) {
+BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree") {
+  
+  # coerce tibble inputs into data.frame
+  step0 <- as.data.frame(data)
+  
+  # check input data
+  
+  # prep input data 
+  step1 <- DataPrep(data = step0, in_units = input_units, sp = sp_codes)
+  
+  # calculate tree-level biomass & carbon 
+  step2 <- NSVBCalcs(data = step1)
+  
+  # format dataframe 
+  step3 <- CleanDF(data = step2, in_units = input_units, out_units = output_units, sp = sp_codes)
+  
+  return(step3)
+  
+}
+```
+
+
+```{r}
+ValidateNSVB1 <- function(data_val, sp_val, in_units_val, out_units_val, results_val) {
+  
+  ###########################################################
+  # Check that options are set appropriately
+  ###########################################################
+
+  if(sp_val == "4letter" || sp_val == "fia") {
+    # do nothing
+  } else {
+    stop('The "sp_codes" parameter must be set to either "4letter" or "fia."')
+  }
+
+  if(in_units_val == "metric" || in_units_val == "imperial") {
+    # do nothing
+  } else {
+    stop('The "input_units" parameter must be set to either "metric" or "imperial."')
+  }
+  
+  if(out_units_val == "metric" || out_units_val == "imperial") {
+    # do nothing
+  } else {
+    stop('The "output_units" parameter must be set to either "metric" or "imperial."')
+  }
+
+  if(results_val == "by_tree" || results_val == "by_plot" || results_val == "by_species") {
+    # do nothing
+  } else {
+    stop('The "results" parameter must be set to "by_tree", "by_plot" or "by_species".')
+  }
+  
+  
+  ###########################################################
+  # Check that all columns are in the provided dataframe
+  ###########################################################
+  
+  if(!("division" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "division" column.')
+  }
+  
+  if(!("status" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "status" column.')
+  }
+  
+  if(!("decay_class" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "decay_class" column.')
+  }
+  
+  if(!("species" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "species" column.')
+  }
+  
+  if(!("dbh" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "dbh" column.')
+  }
+  
+  if(!("ht1" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "ht1" column.')
+  }
+  
+  if(!("ht2" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "ht2" column.')
+  }
+  
+  if(!("crown_ratio" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "crown_ratio" column.')
+  }
+  
+  if(!("top" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "top" column.')
+  }
+  
+  if(!("cull" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "cull" column.')
+  }
+  
+  
+  ###########################################################
+  # Check that column classes are as expected
+  ###########################################################
+  
+  if(!is.numeric(data_val$dbh)) {
+    stop('"dbh" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$dbh))
+  }
+  
+  if(!is.numeric(data_val$ht1)) {
+    stop('"ht1" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$ht1))
+  }
+  
+  if(!is.numeric(data_val$ht2)) {
+    stop('"ht1" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$ht2))
+  }
+  
+  if(!is.numeric(data_val$crown_ratio)) {
+    stop('"crown_ratio" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$crown_ratio))
+  }
+  
+  if(!is.numeric(data_val$cull)) {
+    stop('"cull" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$cull))
+  }
+  
+  
+  ###########################################################
+  # Check that status is as expected
+  ###########################################################
+
+  data_val$status <- as.factor(data_val$status) # coerce status into factor
+
+  # Check for unrecognized status codes ----------------------------------------
+  if(!all(is.element(data_val$status,
+                     c("0","1", NA)))) {
+
+    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val$status,
+                                                                   c("0", "1", NA)), status]),
+                                       sep = " "))
+
+    stop('Status must be 0 or 1!\n',
+         'Unrecognized status codes: ', unrecognized_status)
+  }
+
+  
+  # MUST FIX THIS!!! Did not finish [ast this point ]
+  # Check for NA ---------------------------------------------------------------
+  plots_w_trees <- subset(data_val, data_val$exp_factor > 0)
+
+  if ('TRUE' %in% is.na(plots_w_trees$status)) {
+
+    warning('There are missing status codes in the provided dataframe.\n',
+            'Trees with NA status codes will have NA biomass estimates.\n',
+            ' \n')
+  }
+
+
+}
+```
+
+```{r}
+ValidateNSVB2 <- function(data_val) {
+  
+   ###########################################################
+   # Check that all columns are in the provided dataframe
+   ###########################################################
+
+    if(!("site" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "site" column.\n',
+           '"site" is required when you set the "results" parameter to "by_plot" or "by_species".')
+    }
+    
+    if(!("plot" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "plot" column.\n',
+           '"plot" is required when you set the "results" parameter to "by_plot" or "by_species".')
+    }
+    
+    if(!("exp_factor" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "exp_factor" column.\n',
+           '"exp_factor" is required when you set the "results" parameter to "by_plot" or "by_species".')
+    }
+  
+   ###########################################################
+   # Check that column classes are as expected
+   ###########################################################
+  
+   if(!is.numeric(data_val$exp_factor)) {
+     stop('"exp_factor" must be a numerical variable.\n',
+          'You have input a variable of class: ', class(data_val$exp_factor))
+   }
+  
+  
+  
+}
+```
+
+```{r}
+DataPrep <- function(data, in_units, sp) {
   
   # unit conversions 
-  if(units == "metric") {
+  if(in_units == "metric") {
     
     # preserve original columns 
     data$dbh_cm <- data$dbh
@@ -42,20 +243,20 @@ DataPrep <- function(data, units, sp_codes) {
   }
   
   # FIA species codes 
-  if(sp_codes == "4letter") {
+  if(sp == "4letter") {
     
     # preserve original column 
-    data$letter <- data$species 
+    data$sp_4letter <- data$species 
     
     # create column with FIA species codes 
     data <- merge(data, NSVB_sp_code_names, by = "letter", all.x = TRUE, all.y = FALSE)
-    data$species <- data$fia 
+    data$species <- data$fia
     data <- subset(data, select = -fia)
     
   }
   
   # fill in some missing values 
-  data$decay_class <- ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class)
+  data$decay_class <- as.character(ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class))
   data$top <- ifelse(is.na(data$top), "Y", data$top)
   data$cull <- ifelse(is.na(data$cull), 0, data$cull)
   
@@ -88,6 +289,12 @@ DataPrep <- function(data, units, sp_codes) {
   data$calc_bio <- ifelse(!is.na(data$ht1) & data$ht1 < 4.5, "N", data$calc_bio)
   data$calc_bio <- ifelse(data$top == "N" & is.na(data$ht2), "N", data$calc_bio)
   data$calc_bio <- ifelse(!is.na(data$ht2) & data$ht2 < 4.5, "N", data$calc_bio)
+  
+  # make sure columns are the correct class 
+  data$status <- as.character(data$status)
+  data$species <- as.character(data$species)
+  data$division <- as.character(data$division)
+  data$JENKINS_SPGRPCD <- as.character(data$JENKINS_SPGRPCD)
   
   return(data)
   
@@ -179,24 +386,149 @@ Table_Pull <- function(table_data_a, table_data_b, tree_data) {
 ```
 
 ```{r}
-NSVBCalcs(data = data)
-```
+CleanDF <- function(data, in_units, out_units, sp) {
+  
+  # make sure DBH and HT outputs are in correct units
+  if(in_units == "imperial" & out_units == "metric") {
+    
+    data$dbh_cm <- data$dbh*2.54
+    data$ht1_m <- data$ht1/3.28084
+    data$ht2_m <- data$ht2/3.28084
+    
+  }
+  
+  # make sure species outputs are clearly labeled 
+  if(sp == "4letter") {
+    
+    data$sp_fia <- data$species
+    data <- subset(data, select = -species)
+    
+  }
+  
+  # make sure biomass/carbon outputs are in correct units 
+  if(out_units == "metric") {
+    
+    data$total_wood_kg <- data$total_wood_bio*0.45359
+    data$total_bark_kg <- data$total_bark_bio*0.45359
+    data$total_branch_kg <- data$total_branch_bio*0.45359
+    data$total_ag_kg <- data$total_ag_bio*0.45359
+    data$merch_wood_kg <- data$merch_wood_bio*0.45359
+    data$merch_bark_kg <- data$merch_bark_bio*0.45359
+    data$merch_total_kg <- data$merch_total_bio*0.45359
+    data$merch_top_kg <- data$merch_top_bio*0.45359
+    data$stump_wood_kg <- data$stump_wood_bio*0.45359
+    data$stump_bark_kg <- data$stump_bark_bio*0.45359
+    data$stump_total_kg <- data$stump_total_bio*0.45359
+    data$foliage_kg <- data$foliage_bio*0.45359
+    
+    data$total_wood_c <- data$total_wood_kg*data$carbon_frac
+    data$total_bark_c <- data$total_bark_kg*data$carbon_frac
+    data$total_branch_c <- data$total_branch_kg*data$carbon_frac
+    data$total_ag_c <- data$total_ag_kg*data$carbon_frac
+    data$merch_wood_c <- data$merch_wood_kg*data$carbon_frac
+    data$merch_bark_c <- data$merch_bark_kg*data$carbon_frac
+    data$merch_total_c <- data$merch_total_kg*data$carbon_frac
+    data$merch_top_c <- data$merch_top_kg*data$carbon_frac
+    data$stump_wood_c <- data$stump_wood_kg*data$carbon_frac
+    data$stump_bark_c <- data$stump_bark_kg*data$carbon_frac
+    data$stump_total_c <- data$stump_total_kg*data$carbon_frac
+    data$foliage_c <- data$foliage_kg*0.5 # kept at 0.5, not as the species-specific carbon value 
+    
+  } else if(out_units == "imperial") {
 
-```{r}
-CleanDF <- function(  ) {
+    data$dbh_in <- data$dbh
+    data$ht1_ft <- data$ht1
+    data$ht2_ft <- data$ht2
+    
+    data$total_wood_tons <- data$total_wood_bio*0.0005
+    data$total_bark_tons <- data$total_bark_bio*0.0005
+    data$total_branch_tons <- data$total_branch_bio*0.0005
+    data$total_ag_tons <- data$total_ag_bio*0.0005
+    data$merch_wood_tons <- data$merch_wood_bio*0.0005
+    data$merch_bark_tons <- data$merch_bark_bio*0.0005
+    data$merch_total_tons <- data$merch_total_bio*0.0005
+    data$merch_top_tons <- data$merch_top_bio*0.0005
+    data$stump_wood_tons <- data$stump_wood_bio*0.0005
+    data$stump_bark_tons <- data$stump_bark_bio*0.0005
+    data$stump_total_tons <- data$stump_total_bio*0.0005
+    data$foliage_tons <- data$foliage_bio*0.0005
+    
+    data$total_wood_c <- data$total_wood_tons*data$carbon_frac
+    data$total_bark_c <- data$total_bark_tons*data$carbon_frac
+    data$total_branch_c <- data$total_branch_tons*data$carbon_frac
+    data$total_ag_c <- data$total_ag_tons*data$carbon_frac
+    data$merch_wood_c <- data$merch_wood_tons*data$carbon_frac
+    data$merch_bark_c <- data$merch_bark_tons*data$carbon_frac
+    data$merch_total_c <- data$merch_total_tons*data$carbon_frac
+    data$merch_top_c <- data$merch_top_tons*data$carbon_frac
+    data$stump_wood_c <- data$stump_wood_tons*data$carbon_frac
+    data$stump_bark_c <- data$stump_bark_tons*data$carbon_frac
+    data$stump_total_c <- data$stump_total_tons*data$carbon_frac
+    data$foliage_c <- data$foliage_tons*0.5 # kept at 0.5, not as the species-specific carbon value 
+    
+  }
   
-  # remove unnecessary columns 
-  # properly name columns 
-  # calculate carbon content 
-  # unit conversion 
+  # select final output columns 
+  data <- subset(data, select = -c(type, JENKINS_SPGRPCD, WDSG, k, DensProp, wood_prop, bark_prop, branch_prop, 
+                                   path, CR, calc_bio, dbh, ht1, ht2,
+                                   total_wood_bio, total_bark_bio, total_branch_bio, total_ag_bio, 
+                                   merch_wood_bio, merch_bark_bio, merch_total_bio, merch_top_bio,
+                                   stump_wood_bio, stump_bark_bio, stump_total_bio, 
+                                   foliage_bio, carbon_frac))
   
+  all_cols <- colnames(data)
   
+  if(out_units == "metric" & sp == "fia") {
+    
+    main_cols <- c("division", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull", 
+                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", 
+                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg", 
+                   "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c")
+    
+  } else if(out_units == "metric" & sp == "4letter") {
+    
+    main_cols <- c("division", "status", "decay_class", "sp_4letter", "sp_fia", 
+                   "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull", 
+                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", 
+                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg", 
+                   "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c")
+    
+  } else if(out_units == "imperial" & sp == "fia") {
+    
+    main_cols <- c("division", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull", 
+                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", 
+                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons", 
+                   "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c")
+    
+  } else if(out_units == "imperial" & sp == "4letter") {
+    
+    main_cols <- c("division", "status", "decay_class", "sp_4letter", "sp_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull", 
+                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", 
+                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons", 
+                   "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c")
+    
+  }
   
+  extra_cols <- all_cols[!(all_cols %in% main_cols)]
+  cols_ordered <- c(main_cols, extra_cols)
+  data <- subset(data, select = cols_ordered)
   
+  return(data)
   
 }
 ```
-
 
 Main function 
 ```{r}
