@@ -48,7 +48,7 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
 
 
 ```{r}
-ValidateNSVB1 <- function(data_val, sp_val, in_units_val, out_units_val, results_val) {
+ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_val) {
   
   ###########################################################
   # Check that options are set appropriately
@@ -82,6 +82,18 @@ ValidateNSVB1 <- function(data_val, sp_val, in_units_val, out_units_val, results
   ###########################################################
   # Check that all columns are in the provided dataframe
   ###########################################################
+  
+  if(!("site" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "site" column.')
+  }
+    
+  if(!("plot" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "plot" column.')
+  }
+    
+  if(!("exp_factor" %in% colnames(data_val))) {
+      stop('Input data is missing the necessary "exp_factor" column.')
+  }
   
   if(!("division" %in% colnames(data_val))) {
       stop('Input data is missing the necessary "division" column.')
@@ -128,6 +140,11 @@ ValidateNSVB1 <- function(data_val, sp_val, in_units_val, out_units_val, results
   # Check that column classes are as expected
   ###########################################################
   
+  if(!is.numeric(data_val$exp_factor)) {
+     stop('"exp_factor" must be a numerical variable.\n',
+          'You have input a variable of class: ', class(data_val$exp_factor))
+  }
+  
   if(!is.numeric(data_val$dbh)) {
     stop('"dbh" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$dbh))
@@ -154,11 +171,78 @@ ValidateNSVB1 <- function(data_val, sp_val, in_units_val, out_units_val, results
   }
   
   
+  #########################################################
+  # check that site and plot are as expected
+  #########################################################
+
+  data_val$site <- as.character(data_val$site) # coerce into character
+  data_val$plot <- as.character(data_val$plot) # coerce into character
+
+  if ('TRUE' %in% is.na(data_val$site)) {
+    stop('There are missing site names in the provided dataframe.')
+  }
+
+  if ('TRUE' %in% is.na(data_val$plot)) {
+    stop('There are missing plot names in the provided dataframe.')
+  }
+  
+  
+  ##########################################################
+  # check that expansion factor is as expected
+  ##########################################################
+
+  # Check for NA ---------------------------------------------------------------
+  if ('TRUE' %in% is.na(data_val$exp_factor)) {
+    stop('There are missing expansion factors in the provided dataframe.\n',
+         'For plots with no trees, put 0 for the exp_factor.')
+  }
+
+  # Check for proper use of 0 ef -----------------------------------------------
+  forests <- unique(data_val$site)
+
+  for(f in forests) {
+
+    all_plots <- subset(data_val, site == f)
+    plot_ids <- unique(all_plots$plot)
+
+    for(p in plot_ids) {
+
+      all_trees <- subset(all_plots, plot == p)
+
+      if('TRUE' %in% is.element(all_trees$exp_factor, 0)) {
+
+        n <- nrow(all_trees)
+
+        if(n > 1) {
+
+          stop('There are plots with a recorded expansion factor of 0, but with more than one row.\n',
+               'Plots with no trees should be represented by a single row with site and plot filled in as appropriate and an exp_factor of 0.')
+
+        }
+
+      }
+
+    }
+
+  }
+
+  plots_wo_trees <- subset(data_val, exp_factor == 0,
+                           select = c(status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, cull))
+
+  if('FALSE' %in% is.na(plots_wo_trees)) {
+
+    stop('There are plots with a recorded expansion factor of 0, but with non-NA status, decay_class, species, dbh, ht1, ht2, crown_ratio, top and/or cull.\n',
+         'Plots with no trees should be represented by a single row with site and plot filled in as appropriate, an exp_factor of 0,\n',
+         'and NA status, decay_class, species, dbh, ht1, ht2, crown_ratio, top and/or cull.')
+
+  }
+  
+  
   ###########################################################
   # Check that status is as expected
   ###########################################################
 
-  data_val$status <- as.factor(data_val$status) # coerce status into factor
+  data_val$status <- as.character(data_val$status) # coerce status into character
 
   # Check for unrecognized status codes ----------------------------------------
   if(!all(is.element(data_val$status,
@@ -172,55 +256,277 @@ ValidateNSVB1 <- function(data_val, sp_val, in_units_val, out_units_val, results
          'Unrecognized status codes: ', unrecognized_status)
   }
 
-  
-  # MUST FIX THIS!!! Did not finish [ast this point ]
   # Check for NA ---------------------------------------------------------------
-  plots_w_trees <- subset(data_val, data_val$exp_factor > 0)
+  plots_w_trees <- subset(data_val, exp_factor > 0)
 
   if ('TRUE' %in% is.na(plots_w_trees$status)) {
 
-    warning('There are missing status codes in the provided dataframe.\n',
-            'Trees with NA status codes will have NA biomass estimates.\n',
+    warning('There are missing status codes in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA status).\n',
+            'Trees with NA status codes will have NA biomass estimates. Consider investigating these trees.\n',
             ' \n')
+  }
+  
+  
+  ###########################################################
+  # Check that decay class is as expected
+  ###########################################################
+
+  data_val$decay_class <- as.character(data_val$decay_class) # coerce decay_val into character
+
+  # Check for unrecognized decay codes -----------------------------------------
+  if(!all(is.element(data_val$decay_class,
+                     c("0","1","2","3","4","5",NA)))) {
+
+    unrecognized_decay <- sort(paste0(unique(data_val[!is.element(data_val$decay_class,
+                                                                  c("0","1","2","3","4","5",NA)), decay_class]),
+                                      sep = " "))
+
+    stop('decay_class must be 0 through 5!\n',
+         'Unrecognized decay class codes: ', unrecognized_decay)
   }
 
 
-}
-```
+  # Check that status and decay_class match ------------------------------------
+  dead_trees <- subset(data_val, !is.na(data_val$status) & data_val$status == "0")
+  dead_miss <- subset(dead_trees, is.na(dead_trees$decay_class) | dead_trees$decay_class == "0")
+  live_trees <- subset(data_val, !is.na(data_val$status) & data_val$status == "1")
+  live_miss <- subset(live_trees, !is.na(live_trees$decay_class) & live_trees$decay_class != "0")
 
-```{r}
-ValidateNSVB2 <- function(data_val) {
+  if (nrow(dead_miss) > 0) {
+
+    warning('There are dead trees with NA and/or 0 decay class codes.\n',
+            'These trees will be assigned a decay class of 3.\n',
+            'Consider investigating these trees with mismatched status/decay class.\n',
+            ' \n')
+
+  }
+
+  if (nrow(live_miss) > 0) {
+
+    warning('There are live trees with 1-5 decay class codes.\n',
+            'Live trees should have decay class codes of NA or 0.\n',
+            'These trees will still be considered live in the biomass/carbon calculations.\n',
+            'But you should consider investigating these trees with mismatched status/decay class.\n',
+            ' \n')
+
+  }
+
   
-   ###########################################################
-   # Check that all columns are in the provided dataframe
-   ###########################################################
+  ###########################################################
+  # Check that species codes are as expected
+  ###########################################################
 
-    if(!("site" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "site" column.\n',
-           '"site" is required when you set the "results" parameter to "by_plot" or "by_species".')
+  data_val$species <- as.character(data_val$species) # coerce species into character
+  plots_w_trees$species <- as.character(plots_w_trees$species)
+
+  # Check for unrecognized species codes ---------------------------------------
+  if (sp_val == "4letter") {
+
+    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names$letter))) {
+
+      stop('No species codes recognized!\n',
+           'Check how you set the "sp_codes" parameter.')
+    }
+
+    if(!all(is.element(data_val$species,
+                       NSVB_sp_code_names$letter))) {
+
+      unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
+                                                                 NSVB_sp_code_names$letter), species]),
+                                     sep = " "))
+
+      stop('Not all species codes were recognized!\n',
+           'Unrecognized codes: ', unrecognized_sp)
     }
     
-    if(!("plot" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "plot" column.\n',
-           '"plot" is required when you set the "results" parameter to "by_plot" or "by_species".')
+    # Check that unknown species codes are correctly applied ---------------------
+    UNHA_trees <- subset(data_val, !is.na(species) & species == "UNHA" & !is.na(status) & status == "1")
+    
+    if (nrow(UNHA_trees) > 0) {
+
+      stop('There are live trees (status = 1) with a species code of "UNHA".\n',
+           '"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown trees (live or dead).\n')
+
     }
     
-    if(!("exp_factor" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "exp_factor" column.\n',
-           '"exp_factor" is required when you set the "results" parameter to "by_plot" or "by_species".')
+    UNCO_trees <- subset(data_val, !is.na(species) & species == "UNCO" & !is.na(status) & status == "1")
+    
+    if (nrow(UNCO_trees) > 0) {
+
+      stop('There are live trees (status = 1) with a species code of "UNCO".\n',
+           '"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown trees (live or dead).\n')
+
     }
   
-   ###########################################################
-   # Check that column classes are as expected
-   ###########################################################
+  # Check for unrecognized species codes ---------------------------------------
+  } else if (sp_codes_val == "fia") {
+
+    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names$fia))) {
+
+      stop('No species codes recognized!\n',
+           'Check how you set the "sp_codes" parameter.')
+    }
+
+    if(!all(is.element(data_val$species,
+                       sp_code_names$fia))) {
+
+      unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
+                                                                 sp_code_names$fia), species]),
+                                     sep = " "))
+
+      stop('Not all species codes were recognized!\n',
+           'Unrecognized codes: ', unrecognized_sp)
+    }
+    
+    # Check that unknown species codes are correctly applied ---------------------
+    UNHA_trees <- subset(data_val, !is.na(species) & species == "998" & !is.na(status) & status == "1")
+    
+    if (nrow(UNHA_trees) > 0) {
+
+      stop('There are live trees (status = 1) with a species code of 998.\n',
+           '998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown trees (live or dead).\n')
+
+    }
+    
+    UNCO_trees <- subset(data_val, !is.na(species) & species == "299" & !is.na(status) & status == "1")
+    
+    if (nrow(UNCO_trees) > 0) {
+
+      stop('There are live trees (status = 1) with a species code of 299.\n',
+           '299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown trees (live or dead).\n')
+
+    }
+    
+  }
+
+  # Check for NA ---------------------------------------------------------------
+  if ('TRUE' %in% is.na(plots_w_trees$species)) {
+
+    warning('There are missing species codes in the provided dataframe.\n',
+            'Trees with NA species codes will have NA biomass estimates.\n',
+            'Consider assigning unknown dead conifer, unknown dead hardwood, or unknown tree (live or dead), as appropriate.\n',
+            ' \n')
+  }
   
-   if(!is.numeric(data_val$exp_factor)) {
-     stop('"exp_factor" must be a numerical variable.\n',
-          'You have input a variable of class: ', class(data_val$exp_factor))
-   }
+  
+  ###########################################################
+  # Check that top is as expected 
+  ###########################################################
+  
+  data_val$top <- as.character(data_val$top) # coerce top into character
+  
+  # Check for unrecognized status codes ----------------------------------------
+  if(!all(is.element(data_val$top,
+                     c("Y","N", NA)))) {
+
+    unrecognized_top <- sort(paste0(unique(data_val[!is.element(data_val$top,
+                                                                c("Y", "N", NA)), top]),
+                                    sep = " "))
+
+    stop('top must be "Y" or "N"!\n',
+         'Unrecognized top codes: ', unrecognized_top)
+  }
+  
+  # Check for NA ---------------------------------------------------------------
+  if ('TRUE' %in% is.na(plots_w_trees$top)) {
+
+    warning('There are missing tree top codes in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA top).\n',
+            'These trees will be assigned top = "Y". Consider investigating these trees.\n',
+            ' \n')
+  }
   
   
+  ###########################################################
+  # Check that DBH and height are within range
+  ###########################################################
+
+  # Check for NA ---------------------------------------------------------------
+  if ('TRUE' %in% is.na(plots_w_trees$dbh)) {
+
+    warning('There are missing DBH values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA dbh).\n',
+            'Trees with NA DBH will have NA biomass estimates. Consider investigating these trees.\n',
+            ' \n')
+  }
   
+  if ('TRUE' %in% is.na(plots_w_trees$ht1)) {
+
+    warning('There are missing ht1 values in the provided dataframe.\n',
+            'Trees with NA ht1 will have NA biomass estimates.\n',
+            ' \n')
+  }
+  
+  trees_N_top <- subset(plots_w_trees, !is.na(top) & top == "N")
+  
+  if ('TRUE' %in% is.na(trees_N_top$ht2)) {
+
+    warning('There are trees without tops (top = "N") with missing ht2 values in the provided dataframe.\n',
+            'Trees without tops with NA ht2 will have NA biomass estimates.\n',
+            ' \n')
+  }
+
+  # Check for allometric equation cutoffs --------------------------------------
+  if (in_units_val == "metric") {
+
+    if (min(data_val$dbh, na.rm = TRUE) < 2.5) {
+      warning('The allometric equations are for trees with DBH >= 2.5cm.\n',
+              'You inputted trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
+              ' \n')
+    }
+
+    if (min(data_val$ht1, na.rm = TRUE) < 1.37) {
+      warning('The allometric equations are for trees with height >= 1.37m.\n',
+              'You inputted trees with ht1 < 1.37m. These trees will have NA biomass estimates.\n',
+              ' \n')
+    }
+    
+    if (min(data_val$ht2, na.rm = TRUE) < 1.37) {
+      warning('The allometric equations are for trees with height >= 1.37m.\n',
+              'You inputted trees with ht2 < 1.37m. These trees will have NA biomass estimates.\n',
+              ' \n')
+    }
+
+  } else if (units_val == "imperial") {
+
+    if (min(live_trees$dbh, na.rm = TRUE) < 1.0) {
+      warning('The allometric equations are for trees with DBH >= 1.0in.\n',
+              'You inputted trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
+              ' \n')
+    }
+
+    if (min(data_val$ht1, na.rm = TRUE) < 4.5) {
+      warning('The allometric equations are for trees with height >= 4.5ft.\n',
+              'You inputted trees with ht1 < 4.5ft. These trees will have NA biomass estimates.\n',
+              ' \n')
+    }
+    
+    if (min(data_val$ht2, na.rm = TRUE) < 4.5) {
+      warning('The allometric equations are for trees with height >= 4.5ft.\n',
+              'You inputted trees with ht2 < 4.5ft. These trees will have NA biomass estimates.\n',
+              ' \n')
+    }
+
+  }
+  
+   # Check that ht1 and ht2 make sense together --------------------------------
+  trees_w_hts <- subset(data_val, !is.na(ht1) & !is.na(ht2))
+  
+  if('TRUE' %in% (trees_w_hts$ht2 > trees_w_hts$ht1)) {
+    stop('There are trees with ht2 > ht1. ht1 must be greater than ht2.\n')
+  }
+  
+  # Check that ht1 and ht2 make sense together ---------------------------------
+  trees_Y_top <- subset(plots_w_trees, !is.na(top) & top == "Y" & !is.na(ht2))
+    
+  if (nrow(trees_Y_top) > 0) {
+
+    warning('There are trees with intact tops (top = "Y") with non-NA ht2 values in the provided dataframe.\n',
+            'Trees with tops should not require ht2 values.\n',
+            'These trees will still be treated as if they have intact tops in the biomass/carbon estimations.\n',
+            'But you should consider investigating these trees with mismatched top/ht2.\n',
+            ' \n')
+    
+  }
+
 }
 ```
 
