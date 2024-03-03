@@ -4,6 +4,9 @@ Example dataset
 # division 240, M210, 240, M220 
 data <- data.frame(
   #species = c("PSME", "ACRU", "NODE", "QUAL", "PSME"),
+  site = "SEKI",
+  plot = 1,
+  exp_factor = 50,
   species = c(202, 316, 631, 802, 202),
   status = c(1, 1, 0, 1, 0),
   dbh = c(10, 11.1, 11.3, 18.1, 4.8),
@@ -31,6 +34,7 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
   step0 <- as.data.frame(data)
   
   # check input data
+  ValidateNSVB(data_val = step0, sp_val = sp_codes, in_units_val = input_units, out_units_val = output_units, results_val = results)
   
   # prep input data 
   step1 <- DataPrep(data = step0, in_units = input_units, sp = sp_codes)
@@ -45,7 +49,6 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
   
 }
 ```
-
 
 ```{r}
 ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_val) {
@@ -241,6 +244,31 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   ###########################################################
   # Check that status is as expected
   ###########################################################
+  
+  data_val$division <- as.character(data_val$division) # coerce division into character
+
+  if ('TRUE' %in% is.na(data_val$division)) {
+    stop('There are missing division codes in the provided dataframe.')
+  }
+
+  # Check for unrecognized division codes --------------------------------------
+  # note, some divisions that are not relevant to CA added to be able to run 
+  # the documented examples 
+  if(!all(is.element(data_val$division,
+                     c("260", "M260", "320", "340", "240", "M210", "M220")))) {
+
+    unrecognized_div <- sort(paste0(unique(data_val[!is.element(data_val$division,
+                                                                c("260", "M260", "320", "340", "240", "M210", "M220")), division]),
+                                    sep = " "))
+
+    stop('division must be 260, M260, 320, or 340!\n',
+         'Unrecognized division codes: ', unrecognized_div)
+  }
+  
+  
+  ###########################################################
+  # Check that status is as expected
+  ###########################################################
 
   data_val$status <- as.character(data_val$status) # coerce status into character
 
@@ -359,7 +387,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     }
   
   # Check for unrecognized species codes ---------------------------------------
-  } else if (sp_codes_val == "fia") {
+  } else if (sp_val == "fia") {
 
     if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names$fia))) {
 
@@ -526,7 +554,56 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             ' \n')
     
   }
+  
+  
+  ###########################################################
+  # Check that crown ratios are as expected 
+  ###########################################################
 
+  # Check for NA ---------------------------------------------------------------
+  trees_live <- subset(plots_w_trees, !is.na(status) & status == "1")
+  
+  if ('TRUE' %in% is.na(trees_live$crown_ratio)) {
+
+    warning('There are live trees with missing live crown ratio values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA crown_ratio).\n',
+            'Live trees with NA crown_ratio will have mean crown ratios substituted in (from table S11). Consider investigating these trees.\n',
+            ' \n')
+  }
+  
+  # Check that crown_ratio is within range -------------------------------------
+  if (min(data_val$crown_ratio, na.rm = TRUE) < 0 || max(data_val$crown_ratio, na.rm = TRUE) > 1) {
+      stop('Crown ratio must be between 0 and 1! You inputted crown ratio values outside of this range.')
+  }
+  
+  # Check that crown_ratio is correctly applied to live trees only -------------
+  trees_dead <- subset(plots_w_trees, !is.na(status) & status == "0")
+  
+  if ('TRUE' %in% is.na(trees_dead$crown_ratio)) {
+
+    warning('There are dead trees with live crown ratio values in the provided dataframe.\n',
+            'Dead trees should not have live crown ratios. Live crown ratios for dead trees will be overwritten to follow the NSVB framework\n',
+            ' \n')
+    
+  }
+  
+  
+  ###########################################################
+  # Check that crown ratios are as expected 
+  ###########################################################
+  
+  # Check for NA ---------------------------------------------------------------
+  if ('TRUE' %in% is.na(plots_w_trees$cull)) {
+
+    warning('There are trees with missing cull values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA cull.\n',
+            'These trees will be assigned a cull of 0 (assuming no cull). Consider investigating these trees.\n',
+            ' \n')
+  }
+  
+  # Check that cull is within range --------------------------------------------
+  if (min(data_val$cull, na.rm = TRUE) < 0 || max(data_val$cull, na.rm = TRUE) > 100) {
+      stop('Cull must be between 0 and 100! You inputted cull values outside of this range.')
+  }
+  
 }
 ```
 
