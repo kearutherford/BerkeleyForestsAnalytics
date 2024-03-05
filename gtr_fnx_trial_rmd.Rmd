@@ -12,7 +12,7 @@ data <- data.frame(
   dbh = c(10, 11.1, 11.3, 18.1, 4.8),
   ht1 = c(110, 38, 28, 65, 14),
   ht2 = c(NA, NA, 21, 59, 12),
-  crown_ratio = c(NA, NA, NA, 0.3, 0.4),
+  crown_ratio = c(0.2, 0.4, NA, 0.3, NA),
   top = c("Y", "Y", "N", "N", "N"),
   decay_class = c(NA, NA, 2, NA, 3),
   cull = c(0, 3, 10, 2, 0),
@@ -24,7 +24,7 @@ data
 ```
 
 ```{r}
-BiomassNSVB(data = data, sp_codes = "fia", input_units = "imperial")
+trial <- BiomassNSVB(data = data, sp_codes = "fia", input_units = "imperial")
 ```
 
 ```{r}
@@ -258,7 +258,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
                      c("260", "M260", "320", "340", "240", "M210", "M220")))) {
 
     unrecognized_div <- sort(paste0(unique(data_val[!is.element(data_val$division,
-                                                                c("260", "M260", "320", "340", "240", "M210", "M220")), division]),
+                                                                c("260", "M260", "320", "340", "240", "M210", "M220")), "division"]),
                                     sep = " "))
 
     stop('division must be 260, M260, 320, or 340!\n',
@@ -277,7 +277,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
                      c("0","1", NA)))) {
 
     unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val$status,
-                                                                   c("0", "1", NA)), status]),
+                                                                   c("0", "1", NA)), "status"]),
                                        sep = " "))
 
     stop('Status must be 0 or 1!\n',
@@ -306,7 +306,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
                      c("0","1","2","3","4","5",NA)))) {
 
     unrecognized_decay <- sort(paste0(unique(data_val[!is.element(data_val$decay_class,
-                                                                  c("0","1","2","3","4","5",NA)), decay_class]),
+                                                                  c("0","1","2","3","4","5",NA)), "decay_class"]),
                                       sep = " "))
 
     stop('decay_class must be 0 through 5!\n',
@@ -360,7 +360,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
                        NSVB_sp_code_names$letter))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names$letter), species]),
+                                                                 NSVB_sp_code_names$letter), "species"]),
                                      sep = " "))
 
       stop('Not all species codes were recognized!\n',
@@ -396,10 +396,10 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     }
 
     if(!all(is.element(data_val$species,
-                       sp_code_names$fia))) {
+                       NSVB_sp_code_names$fia))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 sp_code_names$fia), species]),
+                                                                 NSVB_sp_code_names$fia), "species"]),
                                      sep = " "))
 
       stop('Not all species codes were recognized!\n',
@@ -448,7 +448,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
                      c("Y","N", NA)))) {
 
     unrecognized_top <- sort(paste0(unique(data_val[!is.element(data_val$top,
-                                                                c("Y", "N", NA)), top]),
+                                                                c("Y", "N", NA)), "top"]),
                                     sep = " "))
 
     stop('top must be "Y" or "N"!\n',
@@ -513,7 +513,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
               ' \n')
     }
 
-  } else if (units_val == "imperial") {
+  } else if (in_units_val == "imperial") {
 
     if (min(live_trees$dbh, na.rm = TRUE) < 1.0) {
       warning('The allometric equations are for trees with DBH >= 1.0in.\n',
@@ -578,7 +578,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check that crown_ratio is correctly applied to live trees only -------------
   trees_dead <- subset(plots_w_trees, !is.na(status) & status == "0")
   
-  if ('TRUE' %in% is.na(trees_dead$crown_ratio)) {
+  if ('FALSE' %in% is.na(trees_dead$crown_ratio)) {
 
     warning('There are dead trees with live crown ratio values in the provided dataframe.\n',
             'Dead trees should not have live crown ratios. Live crown ratios for dead trees will be overwritten to follow the NSVB framework\n',
@@ -777,6 +777,11 @@ CleanDF <- function(data, in_units, out_units, sp) {
     data$dbh_cm <- data$dbh*2.54
     data$ht1_m <- data$ht1/3.28084
     data$ht2_m <- data$ht2/3.28084
+    data$exp_factor <- data$exp_factor*2.47105 # SPA to SPH
+    
+  } else if(in_units == "metric" & out_units == "imperial") {
+    
+    data$exp_factor <- data$exp_factor/2.47105 # SPH to SPA
     
   }
   
