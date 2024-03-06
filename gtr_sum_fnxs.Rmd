@@ -1,7 +1,7 @@
 
 ################################################################################
 ################################################################################
-# SumBySpecies function
+# BySpSt function
 ################################################################################
 ################################################################################
 
@@ -189,9 +189,13 @@ BySpSt <- function(data, out_units) {
 
 ################################################################################
 ################################################################################
-# SumByPlot function
+# ByStatus function
 ################################################################################
 ################################################################################
+
+```{r}
+ByStatus(trial, "metric")
+```
 
 ```{r}
 ByStatus <- function(data, out_units) {
@@ -246,60 +250,101 @@ ByStatus <- function(data, out_units) {
                          "merch_total_L", "merch_total_D", "merch_top_L", "merch_top_D", "stump_total_L", "stump_total_D", "foliage_L",
                          "total_wood_LC", "total_wood_DC", "total_bark_LC", "total_bark_DC", "total_branch_LC", "total_branch_DC", "total_ag_LC", "total_ag_DC",
                          "merch_total_LC", "merch_total_DC", "merch_top_LC", "merch_top_DC", "stump_total_LC", "stump_total_DC", "foliage_LC")
-  
-    fill_df <- data.frame(matrix(nrow = 0, ncol = 4))
-    colnames(fill_df) <- c("site", "plot", "live_Mg_ha", "dead_Mg_ha")
 
-    # loop through each site and plot
-    forests <- unique(bio_data$site)
+  # loop through each site and plot
+  forests <- unique(data$site)
 
-    for(f in forests) {
+  for(f in forests) {
 
-      all_plots <- subset(bio_data, site == f)
-      plot_ids <- unique(all_plots$plot)
+    all_plots <- subset(data, site == f)
+    plot_ids <- unique(all_plots$plot)
 
       for(p in plot_ids) {
 
         all_trees <- subset(all_plots, plot == p)
-        sum_stems <- sum(all_trees$ef)
-        alert_NA <- all(is.na(all_trees$Mg_tree))
+        sum_stems <- sum(all_trees$exp_factor)
+        alert <- all(all_trees$calc_bio == "N")
+        
+        fill_df[nrow(fill_df) + 1, ] <- NA
+        n <- nrow(fill_df)
+        
+        fill_df$site[n] <- f
+        fill_df$plot[n] <- p
 
         # if there are no trees in the plot
         if(sum_stems == 0) {
 
-          sum_total_live <- 0
-          sum_total_dead <- 0
+          fill_df[n, 3:32] <- 0
 
           # if there are trees in the plot, but all had NA biomass estimates due to missing data
-        } else if (sum_stems > 0 & alert_NA == "TRUE") {
+        } else if (sum_stems > 0 & alert == "TRUE") {
 
-          sum_total_live <- NA
-          sum_total_dead <- NA
+          fill_df[n, 3:32] <- NA
 
           # there are trees in the plot, and not all had NA biomass estimates
-        } else if (sum_stems > 0 & alert_NA == "FALSE") {
+        } else if (sum_stems > 0 & alert == "FALSE") {
 
-          live_trees <- subset(all_plots, plot == p & status == 1)
-          dead_trees <- subset(all_plots, plot == p & status == 0)
-
-          sum_total_live <- round(sum(live_trees$Mg_tree, na.rm = TRUE),2)
-          sum_total_dead <- round(sum(dead_trees$Mg_tree, na.rm = TRUE),2)
+          live_trees <- subset(all_plots, plot == p & status == "1")
+          dead_trees <- subset(all_plots, plot == p & status == "0")
+          
+          fill_df$total_wood_L[n] <- round(sum(live_trees$total_wood, na.rm = TRUE),5)
+          fill_df$total_wood_D[n] <- round(sum(dead_trees$total_wood, na.rm = TRUE),5)
+          fill_df$total_bark_L[n] <- round(sum(live_trees$total_bark, na.rm = TRUE),5)
+          fill_df$total_bark_D[n] <- round(sum(dead_trees$total_bark, na.rm = TRUE),5)
+          fill_df$total_branch_L[n] <- round(sum(live_trees$total_branch, na.rm = TRUE),5)
+          fill_df$total_branch_D[n] <- round(sum(dead_trees$total_branch, na.rm = TRUE),5)
+          fill_df$total_ag_L[n] <- round(sum(live_trees$total_ag, na.rm = TRUE),5)
+          fill_df$total_ag_D[n] <- round(sum(dead_trees$total_ag, na.rm = TRUE),5)
+          fill_df$merch_total_L[n] <- round(sum(live_trees$merch_total, na.rm = TRUE),5)
+          fill_df$merch_total_D[n] <- round(sum(dead_trees$merch_total, na.rm = TRUE),5)
+          fill_df$merch_top_L[n] <- round(sum(live_trees$merch_top, na.rm = TRUE),5)
+          fill_df$merch_top_D[n] <- round(sum(dead_trees$merch_top, na.rm = TRUE),5)
+          fill_df$stump_total_L[n] <- round(sum(live_trees$stump_total, na.rm = TRUE),5)
+          fill_df$stump_total_D[n] <- round(sum(dead_trees$stump_total, na.rm = TRUE),5)
+          fill_df$foliage_L[n] <- round(sum(live_trees$foliage, na.rm = TRUE),5)
+            
+          fill_df$total_wood_LC[n] <- round(sum(live_trees$total_woodC, na.rm = TRUE),5)
+          fill_df$total_wood_DC[n] <- round(sum(dead_trees$total_woodC, na.rm = TRUE),5)
+          fill_df$total_bark_LC[n] <- round(sum(live_trees$total_barkC, na.rm = TRUE),5)
+          fill_df$total_bark_DC[n] <- round(sum(dead_trees$total_barkC, na.rm = TRUE),5)
+          fill_df$total_branch_LC[n] <- round(sum(live_trees$total_branchC, na.rm = TRUE),5)
+          fill_df$total_branch_DC[n] <- round(sum(dead_trees$total_branchC, na.rm = TRUE),5)
+          fill_df$total_ag_LC[n] <- round(sum(live_trees$total_agC, na.rm = TRUE),5)
+          fill_df$total_ag_DC[n] <- round(sum(dead_trees$total_agC, na.rm = TRUE),5)
+          fill_df$merch_total_LC[n] <- round(sum(live_trees$merch_totalC, na.rm = TRUE),5)
+          fill_df$merch_total_DC[n] <- round(sum(dead_trees$merch_totalC, na.rm = TRUE),5)
+          fill_df$merch_top_LC[n] <- round(sum(live_trees$merch_topC, na.rm = TRUE),5)
+          fill_df$merch_top_DC[n] <- round(sum(dead_trees$merch_topC, na.rm = TRUE),5)
+          fill_df$stump_total_LC[n] <- round(sum(live_trees$stump_totalC, na.rm = TRUE),5)
+          fill_df$stump_total_DC[n] <- round(sum(dead_trees$stump_totalC, na.rm = TRUE),5)
+          fill_df$foliage_LC[n] <- round(sum(live_trees$foliageC, na.rm = TRUE),5)
 
         }
 
-        fill_df[nrow(fill_df) + 1, ] <- NA
-        n <- nrow(fill_df)
-
-        fill_df$site[n] <- f
-        fill_df$plot[n] <- p
-        fill_df$live_Mg_ha[n] <- sum_total_live
-        fill_df$dead_Mg_ha[n] <- sum_total_dead
-
       }
 
-    }
+  }
+  
+  # rename columns, so that units are clear to users 
+  if(out_units == "metric") {
 
-    return(fill_df)
+    colnames(fill_df) <- c("site", "plot", "total_wood_L_Mg_ha", "total_wood_D_Mg_ha", 
+                           "total_bark_L_Mg_ha", "total_bark_D_Mg_ha", "total_branch_L_Mg_ha", "total_branch_D_Mg_ha", "total_ag_L_Mg_ha", "total_ag_D_Mg_ha",
+                           "merch_total_L_Mg_ha", "merch_total_D_Mg_ha", "merch_top_L_Mg_ha", "merch_top_D_Mg_ha", "stump_total_L_Mg_ha", "stump_total_D_Mg_ha", "foliage_L_Mg_ha",
+                           "total_wood_L_c", "total_wood_D_c", "total_bark_L_c", "total_bark_D_c", "total_branch_L_c", "total_branch_D_c", "total_ag_L_c", "total_ag_D_c",
+                           "merch_total_L_c", "merch_total_D_c", "merch_top_L_c", "merch_top_D_c", "stump_total_L_c", "stump_total_D_c", "foliage_L_c")
+    
+  } else if (out_units == "imperial") {
+    
+    colnames(fill_df) <- c("site", "plot", "total_wood_L_t_ac", "total_wood_D_t_ac", 
+                           "total_bark_L_t_ac", "total_bark_D_t_ac", "total_branch_L_t_ac", "total_branch_D_t_ac", "total_ag_L_t_ac", "total_ag_D_t_ac",
+                           "merch_total_L_t_ac", "merch_total_D_t_ac", "merch_top_L_t_ac", "merch_top_D_t_ac", "stump_total_L_t_ac", "stump_total_D_t_ac", "foliage_L_t_ac",
+                           "total_wood_L_c", "total_wood_D_c", "total_bark_L_c", "total_bark_D_c", "total_branch_L_c", "total_branch_D_c", "total_ag_L_c", "total_ag_D_c",
+                           "merch_total_L_c", "merch_total_D_c", "merch_top_L_c", "merch_top_D_c", "stump_total_L_c", "stump_total_D_c", "foliage_L_c")
+
+  }
+
+  return(fill_df)
   
 }
 ```
