@@ -9,10 +9,10 @@ data <- data.frame(
   exp_factor = 50,
   species = c(202, 316, 631, 802, 202),
   status = c(1, 1, 0, 1, 0),
-  dbh = c(10, 11.1, 11.3, 18.1, 4.8), #4.8
+  dbh = c(10, 11.1, 11.3, 18.1, 4.8),
   ht1 = c(110, 38, 28, 65, 14),
   ht2 = c(NA, NA, 21, 59, 12),
-  crown_ratio = c(0.2, 0.4, NA, 0.3, 0.8),
+  crown_ratio = c(0.2, 0.4, NA, 0.3, NA),
   top = c("Y", "Y", "N", "N", "N"),
   decay_class = c(NA, NA, 2, NA, 3),
   cull = c(0, 3, 10, 2, 0),
@@ -24,8 +24,8 @@ data
 ```
 
 ```{r}
-data <- BiomassNSVB(data = data, sp_codes = "fia", input_units = "imperial")
-data
+trial <- BiomassNSVB(data = data, sp_codes = "fia", input_units = "imperial", results = "by_plot")
+trial
 ```
 
 ```{r}
@@ -46,7 +46,17 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
   # format dataframe 
   step3 <- CleanDF(data = step2, in_units = input_units, out_units = output_units, sp = sp_codes)
   
-  return(step3)
+  # 
+  if(results == "by_tree") {
+    
+    return(step3)
+    
+  } else {
+    
+    step4 <- SumBy(sum_data = step3, sum_units = output_units, sum_by = results)
+    return(step4)
+    
+  }
   
 }
 ```
