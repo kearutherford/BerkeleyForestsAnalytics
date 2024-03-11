@@ -1,69 +1,81 @@
 
-Example dataset 
-```{r}
-# division 240, M210, 240, M220 
-data <- data.frame(
-  #species = c("PSME", "ACRU", "NODE", "QUAL", "PSME"),
-  site = "SEKI",
-  plot = 1,
-  exp_factor = 50,
-  species = c(202, 316, 631, 802, 202),
-  status = c(1, 1, 0, 1, 0),
-  dbh = c(10, 11.1, 11.3, 18.1, 4.8),
-  ht1 = c(110, 38, 28, 65, 14),
-  ht2 = c(NA, NA, 21, 59, 12),
-  crown_ratio = c(0.2, 0.4, NA, 0.3, NA),
-  top = c("Y", "Y", "N", "N", "N"),
-  decay_class = c(NA, NA, 2, NA, 3),
-  cull = c(0, 3, 10, 2, 0),
-  division = c("240", "M210", "240", "M220", "240"),
-  extra_col = "YAY"
-)
+################################################################################
+################################################################################
+# Top-level function
+################################################################################
+################################################################################
 
-data
-```
+#' @title BiomassNSVB
+#'
+#' @description
+#' Uses...
+#'
+#' @param data describe
+#' @param sp_codes describe
+#' @param input_units describe
+#' @param output_units describe
+#' @param results describe
+#'
+#' @export
 
-```{r}
-trial <- BiomassNSVB(data = data, sp_codes = "fia", input_units = "imperial", results = "by_plot")
-trial
-```
+BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_plot") {
 
-```{r}
-BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree") {
-  
+  # get start time
+  start_time <- Sys.time()
+
   # coerce tibble inputs into data.frame
   step0 <- as.data.frame(data)
-  
+
   # check input data
   ValidateNSVB(data_val = step0, sp_val = sp_codes, in_units_val = input_units, out_units_val = output_units, results_val = results)
-  
-  # prep input data 
-  step1 <- DataPrep(data = step0, in_units = input_units, sp = sp_codes)
-  
-  # calculate tree-level biomass & carbon 
-  step2 <- NSVBCalcs(data = step1)
-  
-  # format dataframe 
-  step3 <- CleanDF(data = step2, in_units = input_units, out_units = output_units, sp = sp_codes)
-  
-  # 
-  if(results == "by_tree") {
-    
-    return(step3)
-    
-  } else {
-    
-    step4 <- SumBy(sum_data = step3, sum_units = output_units, sum_by = results)
-    return(step4)
-    
-  }
-  
-}
-```
 
-```{r}
+  # prep input data
+  step1 <- DataPrep(data = step0, in_units = input_units, sp = sp_codes)
+
+  # calculate tree-level biomass & carbon
+  step2 <- NSVBCalcs(data = step1)
+
+  # format dataframe
+  step3 <- CleanDF(data = step2, in_units = input_units, out_units = output_units, sp = sp_codes)
+
+  # compile to the plot level, if desired
+  if(results == "by_tree") {
+
+    # get end time
+    end_time <- Sys.time()
+    time_taken <- round(end_time - start_time,2)
+
+    # create return list
+    return_list <- list(time_taken, step3)
+    names(return_list) <- c("run_time", "dataframe")
+    return(return_list)
+
+  } else {
+
+    step4 <- SumBy(sum_data = step3, sum_units = output_units, sum_by = results)
+
+    # get end time
+    end_time <- Sys.time()
+    time_taken <- round(end_time - start_time, 2)
+
+    # create return list
+    return_list <- list(time_taken, step4)
+    names(return_list) <- c("run_time", "dataframe")
+    return(return_list)
+
+  }
+
+}
+
+
+################################################################################
+################################################################################
+# ValidateNSVB function
+################################################################################
+################################################################################
+
 ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_val) {
-  
+
   ###########################################################
   # Check that options are set appropriately
   ###########################################################
@@ -79,7 +91,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   } else {
     stop('The "input_units" parameter must be set to either "metric" or "imperial."')
   }
-  
+
   if(out_units_val == "metric" || out_units_val == "imperial") {
     # do nothing
   } else {
@@ -91,100 +103,100 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   } else {
     stop('The "results" parameter must be set to "by_tree", "by_plot" or "by_species".')
   }
-  
-  
+
+
   ###########################################################
   # Check that all columns are in the provided dataframe
   ###########################################################
-  
+
   if(!("site" %in% colnames(data_val))) {
     stop('Input data is missing the necessary "site" column.')
   }
-    
+
   if(!("plot" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "plot" column.')
+    stop('Input data is missing the necessary "plot" column.')
   }
-    
+
   if(!("exp_factor" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "exp_factor" column.')
+    stop('Input data is missing the necessary "exp_factor" column.')
   }
-  
+
   if(!("division" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "division" column.')
+    stop('Input data is missing the necessary "division" column.')
   }
-  
+
   if(!("status" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "status" column.')
+    stop('Input data is missing the necessary "status" column.')
   }
-  
+
   if(!("decay_class" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "decay_class" column.')
+    stop('Input data is missing the necessary "decay_class" column.')
   }
-  
+
   if(!("species" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "species" column.')
+    stop('Input data is missing the necessary "species" column.')
   }
-  
+
   if(!("dbh" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "dbh" column.')
+    stop('Input data is missing the necessary "dbh" column.')
   }
-  
+
   if(!("ht1" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "ht1" column.')
+    stop('Input data is missing the necessary "ht1" column.')
   }
-  
+
   if(!("ht2" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "ht2" column.')
+    stop('Input data is missing the necessary "ht2" column.')
   }
-  
+
   if(!("crown_ratio" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "crown_ratio" column.')
+    stop('Input data is missing the necessary "crown_ratio" column.')
   }
-  
+
   if(!("top" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "top" column.')
+    stop('Input data is missing the necessary "top" column.')
   }
-  
+
   if(!("cull" %in% colnames(data_val))) {
-      stop('Input data is missing the necessary "cull" column.')
+    stop('Input data is missing the necessary "cull" column.')
   }
-  
-  
+
+
   ###########################################################
   # Check that column classes are as expected
   ###########################################################
-  
+
   if(!is.numeric(data_val$exp_factor)) {
-     stop('"exp_factor" must be a numerical variable.\n',
-          'You have input a variable of class: ', class(data_val$exp_factor))
+    stop('"exp_factor" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$exp_factor))
   }
-  
+
   if(!is.numeric(data_val$dbh)) {
     stop('"dbh" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$dbh))
   }
-  
+
   if(!is.numeric(data_val$ht1)) {
     stop('"ht1" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$ht1))
   }
-  
+
   if(!is.numeric(data_val$ht2)) {
     stop('"ht1" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$ht2))
   }
-  
+
   if(!is.numeric(data_val$crown_ratio)) {
     stop('"crown_ratio" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$crown_ratio))
   }
-  
+
   if(!is.numeric(data_val$cull)) {
     stop('"cull" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$cull))
   }
-  
-  
+
+
   #########################################################
   # check that site and plot are as expected
   #########################################################
@@ -199,8 +211,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if ('TRUE' %in% is.na(data_val$plot)) {
     stop('There are missing plot names in the provided dataframe.')
   }
-  
-  
+
+
   ##########################################################
   # check that expansion factor is as expected
   ##########################################################
@@ -250,12 +262,12 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
          'and NA status, decay_class, species, dbh, ht1, ht2, crown_ratio, top and/or cull.')
 
   }
-  
-  
+
+
   ###########################################################
   # Check that status is as expected
   ###########################################################
-  
+
   data_val$division <- as.character(data_val$division) # coerce division into character
 
   if ('TRUE' %in% is.na(data_val$division)) {
@@ -263,8 +275,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   }
 
   # Check for unrecognized division codes --------------------------------------
-  # note, some divisions that are not relevant to CA added to be able to run 
-  # the documented examples 
+  # note, some divisions that are not relevant to CA added to be able to run
+  # the documented examples
   if(!all(is.element(data_val$division,
                      c("260", "M260", "320", "340", "240", "M210", "M220")))) {
 
@@ -275,8 +287,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     stop('division must be 260, M260, 320, or 340!\n',
          'Unrecognized division codes: ', unrecognized_div)
   }
-  
-  
+
+
   ###########################################################
   # Check that status is as expected
   ###########################################################
@@ -304,8 +316,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             'Trees with NA status codes will have NA biomass estimates. Consider investigating these trees.\n',
             ' \n')
   }
-  
-  
+
+
   ###########################################################
   # Check that decay class is as expected
   ###########################################################
@@ -350,7 +362,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   }
 
-  
+
   ###########################################################
   # Check that species codes are as expected
   ###########################################################
@@ -377,27 +389,27 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
     }
-    
+
     # Check that unknown species codes are correctly applied ---------------------
     UNHA_trees <- subset(data_val, !is.na(species) & species == "UNHA" & !is.na(status) & status == "1")
-    
+
     if (nrow(UNHA_trees) > 0) {
 
       stop('There are live trees (status = 1) with a species code of "UNHA".\n',
            '"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown trees (live or dead).\n')
 
     }
-    
+
     UNCO_trees <- subset(data_val, !is.na(species) & species == "UNCO" & !is.na(status) & status == "1")
-    
+
     if (nrow(UNCO_trees) > 0) {
 
       stop('There are live trees (status = 1) with a species code of "UNCO".\n',
            '"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown trees (live or dead).\n')
 
     }
-  
-  # Check for unrecognized species codes ---------------------------------------
+
+    # Check for unrecognized species codes ---------------------------------------
   } else if (sp_val == "fia") {
 
     if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names$fia))) {
@@ -416,26 +428,26 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
     }
-    
+
     # Check that unknown species codes are correctly applied ---------------------
     UNHA_trees <- subset(data_val, !is.na(species) & species == "998" & !is.na(status) & status == "1")
-    
+
     if (nrow(UNHA_trees) > 0) {
 
       stop('There are live trees (status = 1) with a species code of 998.\n',
            '998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown trees (live or dead).\n')
 
     }
-    
+
     UNCO_trees <- subset(data_val, !is.na(species) & species == "299" & !is.na(status) & status == "1")
-    
+
     if (nrow(UNCO_trees) > 0) {
 
       stop('There are live trees (status = 1) with a species code of 299.\n',
            '299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown trees (live or dead).\n')
 
     }
-    
+
   }
 
   # Check for NA ---------------------------------------------------------------
@@ -446,14 +458,14 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             'Consider assigning unknown dead conifer, unknown dead hardwood, or unknown tree (live or dead), as appropriate.\n',
             ' \n')
   }
-  
-  
+
+
   ###########################################################
-  # Check that top is as expected 
+  # Check that top is as expected
   ###########################################################
-  
+
   data_val$top <- as.character(data_val$top) # coerce top into character
-  
+
   # Check for unrecognized status codes ----------------------------------------
   if(!all(is.element(data_val$top,
                      c("Y","N", NA)))) {
@@ -465,7 +477,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     stop('top must be "Y" or "N"!\n',
          'Unrecognized top codes: ', unrecognized_top)
   }
-  
+
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$top)) {
 
@@ -473,8 +485,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             'These trees will be assigned top = "Y". Consider investigating these trees.\n',
             ' \n')
   }
-  
-  
+
+
   ###########################################################
   # Check that DBH and height are within range
   ###########################################################
@@ -486,16 +498,16 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             'Trees with NA DBH will have NA biomass estimates. Consider investigating these trees.\n',
             ' \n')
   }
-  
+
   if ('TRUE' %in% is.na(plots_w_trees$ht1)) {
 
     warning('There are missing ht1 values in the provided dataframe.\n',
             'Trees with NA ht1 will have NA biomass estimates.\n',
             ' \n')
   }
-  
+
   trees_N_top <- subset(plots_w_trees, !is.na(top) & top == "N")
-  
+
   if ('TRUE' %in% is.na(trees_N_top$ht2)) {
 
     warning('There are trees without tops (top = "N") with missing ht2 values in the provided dataframe.\n',
@@ -506,56 +518,80 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for allometric equation cutoffs --------------------------------------
   if (in_units_val == "metric") {
 
-    if (min(data_val$dbh, na.rm = TRUE) < 2.5) {
-      warning('The allometric equations are for trees with DBH >= 2.5cm.\n',
-              'You inputted trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
-              ' \n')
+    if (!all(is.na(data_val$dbh))) {
+
+      if (min(data_val$dbh, na.rm = TRUE) < 2.5) {
+        warning('The allometric equations are for trees with DBH >= 2.5cm.\n',
+                'You inputted trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
+
     }
 
-    if (min(data_val$ht1, na.rm = TRUE) < 1.37) {
-      warning('The allometric equations are for trees with height >= 1.37m.\n',
-              'You inputted trees with ht1 < 1.37m. These trees will have NA biomass estimates.\n',
-              ' \n')
+    if (!all(is.na(data_val$ht1))) {
+
+      if (min(data_val$ht1, na.rm = TRUE) < 1.37) {
+        warning('The allometric equations are for trees with height >= 1.37m.\n',
+                'You inputted trees with ht1 < 1.37m. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
+
     }
-    
-    if (min(data_val$ht2, na.rm = TRUE) < 1.37) {
-      warning('The allometric equations are for trees with height >= 1.37m.\n',
-              'You inputted trees with ht2 < 1.37m. These trees will have NA biomass estimates.\n',
-              ' \n')
+
+    if (!all(is.na(data_val$ht2))) {
+
+      if (min(data_val$ht2, na.rm = TRUE) < 1.37) {
+        warning('The allometric equations are for trees with height >= 1.37m.\n',
+                'You inputted trees with ht2 < 1.37m. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
+
     }
 
   } else if (in_units_val == "imperial") {
 
-    if (min(live_trees$dbh, na.rm = TRUE) < 1.0) {
-      warning('The allometric equations are for trees with DBH >= 1.0in.\n',
-              'You inputted trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
-              ' \n')
+    if (!all(is.na(data_val$dbh))) {
+
+      if (min(live_trees$dbh, na.rm = TRUE) < 1.0) {
+        warning('The allometric equations are for trees with DBH >= 1.0in.\n',
+                'You inputted trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
+
     }
 
-    if (min(data_val$ht1, na.rm = TRUE) < 4.5) {
-      warning('The allometric equations are for trees with height >= 4.5ft.\n',
-              'You inputted trees with ht1 < 4.5ft. These trees will have NA biomass estimates.\n',
-              ' \n')
+    if (!all(is.na(data_val$ht1))) {
+
+      if (min(data_val$ht1, na.rm = TRUE) < 4.5) {
+        warning('The allometric equations are for trees with height >= 4.5ft.\n',
+                'You inputted trees with ht1 < 4.5ft. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
+
     }
-    
-    if (min(data_val$ht2, na.rm = TRUE) < 4.5) {
-      warning('The allometric equations are for trees with height >= 4.5ft.\n',
-              'You inputted trees with ht2 < 4.5ft. These trees will have NA biomass estimates.\n',
-              ' \n')
+
+    if (!all(is.na(data_val$ht2))) {
+
+      if (min(data_val$ht2, na.rm = TRUE) < 4.5) {
+        warning('The allometric equations are for trees with height >= 4.5ft.\n',
+                'You inputted trees with ht2 < 4.5ft. These trees will have NA biomass estimates.\n',
+                ' \n')
+      }
+
     }
 
   }
-  
-   # Check that ht1 and ht2 make sense together --------------------------------
+
+  # Check that ht1 and ht2 make sense together --------------------------------
   trees_w_hts <- subset(data_val, !is.na(ht1) & !is.na(ht2))
-  
+
   if('TRUE' %in% (trees_w_hts$ht2 > trees_w_hts$ht1)) {
     stop('There are trees with ht2 > ht1. ht1 must be greater than ht2.\n')
   }
-  
+
   # Check that ht1 and ht2 make sense together ---------------------------------
   trees_Y_top <- subset(plots_w_trees, !is.na(top) & top == "Y" & !is.na(ht2))
-    
+
   if (nrow(trees_Y_top) > 0) {
 
     warning('There are trees with intact tops (top = "Y") with non-NA ht2 values in the provided dataframe.\n',
@@ -563,108 +599,121 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             'These trees will still be treated as if they have intact tops in the biomass/carbon estimations.\n',
             'But you should consider investigating these trees with mismatched top/ht2.\n',
             ' \n')
-    
+
   }
-  
-  
+
+
   ###########################################################
-  # Check that crown ratios are as expected 
+  # Check that crown ratios are as expected
   ###########################################################
 
   # Check for NA ---------------------------------------------------------------
   trees_live <- subset(plots_w_trees, !is.na(status) & status == "1")
-  
+
   if ('TRUE' %in% is.na(trees_live$crown_ratio)) {
 
     warning('There are live trees with missing live crown ratio values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA crown_ratio).\n',
             'Live trees with NA crown_ratio will have mean crown ratios substituted in (from table S11). Consider investigating these trees.\n',
             ' \n')
   }
-  
+
   # Check that crown_ratio is within range -------------------------------------
-  if (min(data_val$crown_ratio, na.rm = TRUE) < 0 || max(data_val$crown_ratio, na.rm = TRUE) > 1) {
+  if (!all(is.na(data_val$crown_ratio))) {
+
+    if (min(data_val$crown_ratio, na.rm = TRUE) < 0 || max(data_val$crown_ratio, na.rm = TRUE) > 1) {
       stop('Crown ratio must be between 0 and 1! You inputted crown ratio values outside of this range.')
+    }
+
   }
-  
+
   # Check that crown_ratio is correctly applied to live trees only -------------
   trees_dead <- subset(plots_w_trees, !is.na(status) & status == "0")
-  
+
   if ('FALSE' %in% is.na(trees_dead$crown_ratio)) {
 
     warning('There are dead trees with live crown ratio values in the provided dataframe.\n',
             'Dead trees should not have live crown ratios. Live crown ratios for dead trees will be overwritten to follow the NSVB framework\n',
             ' \n')
-    
+
   }
-  
-  
+
+
   ###########################################################
-  # Check that crown ratios are as expected 
+  # Check that culls are as expected
   ###########################################################
-  
+
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$cull)) {
 
-    warning('There are trees with missing cull values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA cull.\n',
+    warning('There are trees with missing cull values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA cull).\n',
             'These trees will be assigned a cull of 0 (assuming no cull). Consider investigating these trees.\n',
             ' \n')
   }
-  
-  # Check that cull is within range --------------------------------------------
-  if (min(data_val$cull, na.rm = TRUE) < 0 || max(data_val$cull, na.rm = TRUE) > 100) {
-      stop('Cull must be between 0 and 100! You inputted cull values outside of this range.')
-  }
-  
-}
-```
 
-```{r}
+  # Check that cull is within range --------------------------------------------
+  if (!all(is.na(data_val$cull))) {
+
+    if (min(data_val$cull, na.rm = TRUE) < 0 || max(data_val$cull, na.rm = TRUE) > 100) {
+      stop('Cull must be between 0 and 100! You inputted cull values outside of this range.')
+    }
+
+  }
+
+}
+
+
+################################################################################
+################################################################################
+# DataPrep function
+################################################################################
+################################################################################
+
 DataPrep <- function(data, in_units, sp) {
-  
-  # unit conversions 
+
+  # unit conversions
   if(in_units == "metric") {
-    
-    # preserve original columns 
+
+    # preserve original columns
     data$dbh_cm <- data$dbh
     data$ht1_m <- data$ht1
     data$ht2_m <- data$ht2
-    
-    # create columns in imperial units 
+
+    # create columns in imperial units
     data$dbh <- data$dbh/2.54
     data$ht1 <- data$ht1*3.28084
     data$ht2 <- data$ht2*3.28084
-    
+
   }
-  
-  # FIA species codes 
+
+  # FIA species codes
   if(sp == "4letter") {
-    
-    # preserve original column 
-    data$sp_4letter <- data$species 
-    
-    # create column with FIA species codes 
+
+    # preserve original column
+    data$letter <- data$species
+
+    # create column with FIA species codes
     data <- merge(data, NSVB_sp_code_names, by = "letter", all.x = TRUE, all.y = FALSE)
     data$species <- data$fia
     data <- subset(data, select = -fia)
-    
+
   }
-  
-  # fill in some missing values 
+
+  # fill in some missing values
   data$decay_class <- as.character(ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class))
   data$top <- ifelse(is.na(data$top), "Y", data$top)
   data$cull <- ifelse(is.na(data$cull), 0, data$cull)
-  
-  # add columns for further calculations 
+
+  # add columns for further calculations
   data <- merge(data, REF_SPECIES_BFA, by = "species", all.x = TRUE, all.y = FALSE)
   data <- merge(data, Table_1, by = c("type", "decay_class"), all.x = TRUE, all.y = FALSE)
 
   data$path <- paste0(data$top,'_',data$status)
-  data$path[data$path == "Y_1"] <- "1" # live, with intact top 
+  data$path[data$path == "Y_1"] <- "1" # live, with intact top
   data$path[data$path == "N_1"] <- "2" # live, with broken top
-  data$path[data$path == "Y_0"] <- "3" # dead, with intact top 
-  data$path[data$path == "N_0"] <- "4" # dead, with broken top 
-  
-  # fill in crown ratios 
+  data$path[data$path == "Y_0"] <- "3" # dead, with intact top
+  data$path[data$path == "N_0"] <- "4" # dead, with broken top
+
+  # fill in crown ratios
   data$Division <- ifelse(data$division %in% Table_S11$Division, data$division, "UNDEFINED")
   names(Table_S11)[names(Table_S11) == "HWD"] <- "type"
   Table_S11$cr <- Table_S11$Mean.CR/100
@@ -672,7 +721,7 @@ DataPrep <- function(data, in_units, sp) {
   data <- merge(data, Table_S11_CR, by = c("Division", "type"), all.x = TRUE, all.y = FALSE)
   data$CR <- ifelse(is.na(data$crown_ratio) | data$status == "0", data$cr, data$crown_ratio)
   data <- subset(data, select = -c(Division, cr))
-  
+
   # add column for trees that will have NA biomass estimates
   data$calc_bio <- "Y"
   data$calc_bio <- ifelse(is.na(data$status), "N", data$calc_bio)
@@ -683,130 +732,52 @@ DataPrep <- function(data, in_units, sp) {
   data$calc_bio <- ifelse(!is.na(data$ht1) & data$ht1 < 4.5, "N", data$calc_bio)
   data$calc_bio <- ifelse(data$top == "N" & is.na(data$ht2), "N", data$calc_bio)
   data$calc_bio <- ifelse(!is.na(data$ht2) & data$ht2 < 4.5, "N", data$calc_bio)
-  
-  # make sure columns are the correct class 
+
+  # make sure columns are the correct class
   data$status <- as.character(data$status)
   data$species <- as.character(data$species)
   data$division <- as.character(data$division)
   data$JENKINS_SPGRPCD <- as.character(data$JENKINS_SPGRPCD)
-  
+
   return(data)
-  
+
 }
-```
 
-Supporting functions 
-```{r}
-EQ_set <- function(table_data, tree_data) {
-  
-  if(table_data$model[1] == "1") {
 
-    y <- table_data$a[1]*(tree_data$dbh[1]^table_data$b[1])*(tree_data$ht1[1]^table_data$c[1]) 
-  
-  } else if(table_data$model[1] == "2") {
-      
-    if(tree_data$dbh[1] < tree_data$k[1]) {
-        
-      y <- table_data$a[1]*(tree_data$dbh[1]^table_data$b[1])*(tree_data$ht1[1]^table_data$c[1])
-        
-    } else if(tree_data$dbh[1] >= tree_data$k[1]) {
-        
-      y <- table_data$a[1]*(tree_data$k[1]^(table_data$b[1]-table_data$b1[1]))*(tree_data$dbh[1]^table_data$b1[1])*(tree_data$ht1[1]^table_data$c[1]) 
-        
-    }
-      
-  } else if(table_data$model[1] == "3") {
-  
-    y <- table_data$a[1]*(tree_data$dbh[1]^(table_data$a1[1]*(1-exp(-table_data$b[1]*tree_data$dbh[1]))^table_data$c1[1]))*(tree_data$ht1[1]^table_data$c[1])
-  
-  } else if(table_data$model[1] == "4") {
-  
-    y <- table_data$a[1]*(tree_data$dbh[1]^table_data$b[1])*(tree_data$ht1[1]^table_data$c[1])*exp(-(table_data$b1[1]*tree_data$dbh[1]))
-  
-  } else if(table_data$model[1] == "5") {
-    
-    y <- table_data$a[1]*(tree_data$dbh[1]^table_data$b[1])*(tree_data$ht1[1]^table_data$c[1])*tree_data$WDSG[1] 
-    
-  }
+################################################################################
+################################################################################
+# CleanDF function
+################################################################################
+################################################################################
 
-  return(y)
-  
-}
-```
-
-```{r}
-EQ_6 <- function(h, table_data, tree_data) {
-  
-  y <- (1 - (1 - h/tree_data$ht1[1])^table_data$alpha[1])^table_data$beta[1]
-  return(y)
-  
-}
-```
-
-```{r}
-EQ_7 <- function(h, d, table_data_1, table_data_2, tree_data) {
-  
-  d - (table_data_1$a[1]*tree_data$dbh[1]^table_data_1$b[1]*tree_data$ht1[1]^table_data_1$c[1]/0.005454154/tree_data$ht1[1]*table_data_2$alpha[1]*table_data_2$beta[1]*(1-(h/tree_data$ht1[1]))^(table_data_2$alpha[1]-1)*(1-(1-(h/tree_data$ht1[1]))^table_data_2$alpha[1])^(table_data_2$beta[1]-1))^0.5
-  
-}
-```
-
-```{r}
-Table_Pull <- function(table_data_a, table_data_b, tree_data) {
-
-    if(tree_data$species[1] %in% table_data_a$SPCD) {
-  
-      table_pull <- subset(table_data_a, SPCD == tree_data$species[1])
-  
-      if(tree_data$division[1] %in% table_pull$DIVISION) {
-    
-        return_table <- subset(table_pull, DIVISION == tree_data$division[1])
-      
-      } else {
-      
-        return_table <- subset(table_pull, is.na(DIVISION))
-      
-      }
-      
-    } else {
-      
-      return_table <- subset(table_data_b, JENKINS_SPGRPCD == tree_data$JENKINS_SPGRPCD[1])
-      
-    }
-  
-  return(return_table)
-      
-} 
-```
-
-```{r}
 CleanDF <- function(data, in_units, out_units, sp) {
-  
+
   # make sure DBH and HT outputs are in correct units
   if(in_units == "imperial" & out_units == "metric") {
-    
+
     data$dbh_cm <- data$dbh*2.54
     data$ht1_m <- data$ht1/3.28084
     data$ht2_m <- data$ht2/3.28084
     data$exp_factor <- data$exp_factor*2.47105 # SPA to SPH
-    
+
   } else if(in_units == "metric" & out_units == "imperial") {
-    
+
     data$exp_factor <- data$exp_factor/2.47105 # SPH to SPA
-    
+
   }
-  
-  # make sure species outputs are clearly labeled 
+
+  # make sure species outputs are clearly labeled
   if(sp == "4letter") {
-    
-    data$sp_fia <- data$species
-    data <- subset(data, select = -species)
-    
+
+    data$species_fia <- data$species
+    data$species <- data$letter
+    data <- subset(data, select = -letter)
+
   }
-  
-  # make sure biomass/carbon outputs are in correct units 
+
+  # make sure biomass/carbon outputs are in correct units
   if(out_units == "metric") {
-    
+
     data$total_wood_kg <- data$total_wood_bio*0.45359
     data$total_bark_kg <- data$total_bark_bio*0.45359
     data$total_branch_kg <- data$total_branch_bio*0.45359
@@ -819,7 +790,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
     data$stump_bark_kg <- data$stump_bark_bio*0.45359
     data$stump_total_kg <- data$stump_total_bio*0.45359
     data$foliage_kg <- data$foliage_bio*0.45359
-    
+
     data$total_wood_c <- data$total_wood_kg*data$carbon_frac
     data$total_bark_c <- data$total_bark_kg*data$carbon_frac
     data$total_branch_c <- data$total_branch_kg*data$carbon_frac
@@ -831,14 +802,14 @@ CleanDF <- function(data, in_units, out_units, sp) {
     data$stump_wood_c <- data$stump_wood_kg*data$carbon_frac
     data$stump_bark_c <- data$stump_bark_kg*data$carbon_frac
     data$stump_total_c <- data$stump_total_kg*data$carbon_frac
-    data$foliage_c <- data$foliage_kg*0.5 # kept at 0.5, not as the species-specific carbon value 
-    
+    data$foliage_c <- data$foliage_kg*0.5 # kept at 0.5, not as the species-specific carbon value
+
   } else if(out_units == "imperial") {
 
     data$dbh_in <- data$dbh
     data$ht1_ft <- data$ht1
     data$ht2_ft <- data$ht2
-    
+
     data$total_wood_tons <- data$total_wood_bio*0.0005
     data$total_bark_tons <- data$total_bark_bio*0.0005
     data$total_branch_tons <- data$total_branch_bio*0.0005
@@ -851,7 +822,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
     data$stump_bark_tons <- data$stump_bark_bio*0.0005
     data$stump_total_tons <- data$stump_total_bio*0.0005
     data$foliage_tons <- data$foliage_bio*0.0005
-    
+
     data$total_wood_c <- data$total_wood_tons*data$carbon_frac
     data$total_bark_c <- data$total_bark_tons*data$carbon_frac
     data$total_branch_c <- data$total_branch_tons*data$carbon_frac
@@ -863,373 +834,68 @@ CleanDF <- function(data, in_units, out_units, sp) {
     data$stump_wood_c <- data$stump_wood_tons*data$carbon_frac
     data$stump_bark_c <- data$stump_bark_tons*data$carbon_frac
     data$stump_total_c <- data$stump_total_tons*data$carbon_frac
-    data$foliage_c <- data$foliage_tons*0.5 # kept at 0.5, not as the species-specific carbon value 
-    
+    data$foliage_c <- data$foliage_tons*0.5 # kept at 0.5, not as the species-specific carbon value
+
   }
-  
-  # select final output columns 
-  data <- subset(data, select = -c(type, JENKINS_SPGRPCD, WDSG, k, DensProp, wood_prop, bark_prop, branch_prop, 
+
+  # select final output columns
+  data <- subset(data, select = -c(type, JENKINS_SPGRPCD, WDSG, k, DensProp, wood_prop, bark_prop, branch_prop,
                                    path, CR, dbh, ht1, ht2,
-                                   total_wood_bio, total_bark_bio, total_branch_bio, total_ag_bio, 
+                                   total_wood_bio, total_bark_bio, total_branch_bio, total_ag_bio,
                                    merch_wood_bio, merch_bark_bio, merch_total_bio, merch_top_bio,
-                                   stump_wood_bio, stump_bark_bio, stump_total_bio, 
+                                   stump_wood_bio, stump_bark_bio, stump_total_bio,
                                    foliage_bio, carbon_frac))
-  
+
   all_cols <- colnames(data)
-  
+
   if(out_units == "metric" & sp == "fia") {
-    
-    main_cols <- c("division", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull", 
-                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", 
-                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg", 
+
+    main_cols <- c("division", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
+                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
+                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
                    "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
                    "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
-    
+
   } else if(out_units == "metric" & sp == "4letter") {
-    
-    main_cols <- c("division", "status", "decay_class", "sp_4letter", "sp_fia", 
-                   "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull", 
-                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", 
-                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg", 
+
+    main_cols <- c("division", "status", "decay_class", "species", "species_fia",
+                   "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
+                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
+                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
                    "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
                    "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
-    
+
   } else if(out_units == "imperial" & sp == "fia") {
-    
-    main_cols <- c("division", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull", 
-                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", 
-                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons", 
+
+    main_cols <- c("division", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
+                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
                    "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
-    
+
   } else if(out_units == "imperial" & sp == "4letter") {
-    
-    main_cols <- c("division", "status", "decay_class", "sp_4letter", "sp_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull", 
-                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", 
-                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons", 
+
+    main_cols <- c("division", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
+                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", 
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", 
+                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
                    "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
-    
+
   }
-  
+
   extra_cols <- all_cols[!(all_cols %in% main_cols)]
   cols_ordered <- c(main_cols, extra_cols)
   data <- subset(data, select = cols_ordered)
-  
+
   return(data)
-  
+
 }
-```
-
-Main function 
-```{r}
-# other inputs that need to be added to the top level function 
-# sp_codes = "4letter", input_units = "metric", output_units = "metric"
-
-NSVBCalcs <- function(data) {
-  
-  data$total_wood_bio <- as.double(NA)
-  data$total_bark_bio <- as.double(NA)
-  data$total_branch_bio <- as.double(NA)
-  data$total_ag_bio <- as.double(NA)
-  data$merch_wood_bio <- as.double(NA)
-  data$merch_bark_bio <- as.double(NA)
-  data$merch_total_bio <- as.double(NA)
-  data$merch_top_bio <- as.double(NA)
-  data$stump_wood_bio <- as.double(NA)
-  data$stump_bark_bio <- as.double(NA)
-  data$stump_total_bio <- as.double(NA)
-  data$foliage_bio <- as.double(NA)
-  data$carbon_frac <- as.double(NA)
-  
-  n <- nrow(data)
-
-  for (i in 1:n) {
-    
-    if(data$calc_bio[i] == "Y") {
-  
-      # STEP 1: predict gross total stem wood volume 
-      Table_S1_Pull <- Table_Pull(Table_S1a, Table_S1b, data[i,])
-      Vtot_ib_Gross <- EQ_set(Table_S1_Pull, data[i,])
-      
-      # STEP 2: predict gross total stem bark volume
-      Table_S2_Pull <- Table_Pull(Table_S2a, Table_S2b, data[i,])
-      Vtot_bk_Gross <- EQ_set(Table_S2_Pull, data[i,])
-      
-      # STEP 3: obtain gross total stem outside-bark volume 
-      Vtot_ob_Gross <- Vtot_ib_Gross + Vtot_bk_Gross 
-      
-      # If merchantable... 
-      # STEP 4: estimate heights to merchantable top diameter
-      # STEP 5: estimate stem component gross volumes 
-      
-      Table_S5_Pull <- Table_Pull(Table_S5a, Table_S5b, data[i,]) # Table_S5_Pull used in various calcs, not just for merch 
-      
-      if(data$dbh[i] >= 5) {
-      
-        Table_S3_Pull <- Table_Pull(Table_S3a, Table_S3b, data[i,])
-        Table_S4_Pull <- Table_Pull(Table_S4a, Table_S4b, data[i,])
-        
-        EQ_7_hm <- uniroot(EQ_7, c(0,data$ht1[i]), tol = 0.001, maxiter = 100000, d = 4, table_data_1 = Table_S3_Pull, table_data_2 = Table_S4_Pull, tree_data = data[i,])
-        h_m <- EQ_7_hm$root
-    
-        R_1 <- EQ_6(1, Table_S5_Pull, data[i,])
-        R_m <- EQ_6(h_m, Table_S5_Pull, data[i,])
-        
-        Vmer_ib_Gross <- (R_m*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
-        Vmer_ob_Gross <- (R_m*Vtot_ob_Gross) - (R_1*Vtot_ob_Gross)
-        Vmer_bk_Gross <- Vmer_ob_Gross - Vmer_ib_Gross
-        
-        Vstump_ob_Gross <- (R_1*Vtot_ob_Gross)
-        Vstump_ib_Gross <- (R_1*Vtot_ib_Gross)
-        Vstump_bk_Gross <- Vstump_ob_Gross - Vstump_ib_Gross
-        
-      }
-      
-      # PATH 1 (live, with intact top) ------------------------------------------>
-      if(data$path[i] == "1") {
-        
-        # STEP 6: estimate stem component sound volumes 
-        # Not a necessary step for this pathway 
-        
-        # STEP 7: convert total stem wood gross volume to biomass weight 
-        Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4
-        Wtot_ib_red <- Vtot_ib_Gross*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4 
-        
-        # STEP 8: predict total stem bark biomass 
-        Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
-        Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
-        Wtot_bk_red <- Wtot_bk
-        
-        # STEP 9: predict total branch biomass 
-        Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
-        Wbranch <- EQ_set(Table_S7_Pull, data[i,])
-        Wbranchred <- Wbranch
-        
-      # PATH 2 (live, with broken top) ------------------------------------------>
-      } else if(data$path[i] == "2") {
-        
-        # STEP 6: estimate stem component sound volumes 
-        R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
-        
-        # If merchantable...
-        if(data$dbh[i] >= 5) {
-          
-          if(data$ht2[i] < h_m) {
-            
-            Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
-            Vmer_bk_Sound <- (R_b*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
-            
-          } else {
-            
-            Vmer_ib_Sound <- Vmer_ib_Gross
-            Vmer_bk_Sound <- Vmer_bk_Gross
-            
-          }
-          
-        }
-        
-        # STEP 7: convert total stem wood gross volume to biomass weight 
-        Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
-        Wtot_ib_red <- (Vtot_ib_Gross*R_b)*(1 - data$cull[i]/100*(1 - data$DensProp[i]))*data$WDSG[i]*62.4
-        
-        # STEP 8: predict total stem bark biomass 
-        Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
-        Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
-        Wtot_bk_red <- Wtot_bk*R_b 
-        
-        # STEP 9: predict total branch biomass 
-        Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
-        Wbranch <- EQ_set(Table_S7_Pull, data[i,])
-        
-        CR <- (data$ht1[i] - data$ht2[i]*(1 - data$CR[i]))/data$ht1[i]
-        BranchRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
-        
-        Wbranchred <- Wbranch*BranchRem
-      
-      # PATH 3 (dead, with intact top) ------------------------------------------>
-      } else if(data$path[i] == "3") {
-        
-        # STEP 6: estimate stem component sound volumes 
-        # Not a necessary step for this pathway 
-        
-        # STEP 7: convert total stem wood gross volume to biomass weight 
-        Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
-        Wtot_ib_red <- Vtot_ib_Gross*data$WDSG[i]*data$wood_prop[i]*62.4
-        
-        # STEP 8: predict total stem bark biomass 
-        Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
-        Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
-        Wtot_bk_red <- Wtot_bk*data$wood_prop[i]*data$bark_prop[i]
-        
-        # STEP 9: predict total branch biomass 
-        Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
-        Wbranch <- EQ_set(Table_S7_Pull, data[i,])
-        Wbranchred <- Wbranch*data$wood_prop[i]*data$branch_prop[i]
-        
-      # PATH 4 (dead, with broken top) ------------------------------------------>
-      } else if(data$path[i] == "4") {
-        
-        # STEP 6: estimate stem component sound volumes 
-        R_b <- EQ_6(data$ht2[i], Table_S5_Pull, data[i,])
-        
-        # If merchantable...
-        if(data$dbh[i] >= 5) {
-          
-          if(data$ht2[i] < h_m) {
-            
-            Vmer_ib_Sound <- (R_b*Vtot_ib_Gross) - (R_1*Vtot_ib_Gross)
-            Vmer_bk_Sound <- (R_b*Vtot_bk_Gross) - (R_1*Vtot_bk_Gross)
-            
-          } else {
-            
-            Vmer_ib_Sound <- Vmer_ib_Gross
-            Vmer_bk_Sound <- Vmer_bk_Gross
-            
-          }
-          
-        }
-        
-        # STEP 7: convert total stem wood gross volume to biomass weight 
-        Wtot_ib <- Vtot_ib_Gross*data$WDSG[i]*62.4 
-        Wtot_ib_red <- (Vtot_ib_Gross*R_b)*data$WDSG[i]*data$wood_prop[i]*62.4
-        
-        # STEP 8: predict total stem bark biomass 
-        Table_S6_Pull <- Table_Pull(Table_S6a, Table_S6b, data[i,])
-        Wtot_bk <- EQ_set(Table_S6_Pull, data[i,])
-        Wtot_bk_red <- Wtot_bk*R_b*data$wood_prop[i]*data$bark_prop[i]
-        
-        # STEP 9: predict total branch biomass 
-        Table_S7_Pull <- Table_Pull(Table_S7a, Table_S7b, data[i,])
-        Wbranch <- EQ_set(Table_S7_Pull, data[i,])
-        BranchRem <- (data$ht2[i] - data$ht1[i]*(1-data$CR[i]))/(data$ht1[i]*data$CR[i])
-        Wbranchred <- Wbranch*data$wood_prop[i]*data$branch_prop[i]*BranchRem
-      
-      } 
-        
-      # STEP 10: predict total aboveground biomass 
-      Table_S8_Pull <- Table_Pull(Table_S8a, Table_S8b, data[i,])
-      AGB_Predicted <- EQ_set(Table_S8_Pull, data[i,])
-  
-      # STEP 11: sum total stem wood biomass, total stem bark biomass, and total branch biomass
-      # to obtain a second total aboveground biomass 
-      AGB_Component_red <- Wtot_ib_red + Wtot_bk_red + Wbranchred
-        
-      # STEP 12: proportionally distribute the difference between 
-      # the directly predicted total biomass and the total from the component estimates 
-      AGB_Reduce <- AGB_Component_red/(Wtot_ib + Wtot_bk + Wbranch)
-      AGB_Predicted_red <- AGB_Predicted*AGB_Reduce 
-        
-      Wood_Harmonized <- AGB_Predicted_red*(Wtot_ib_red/AGB_Component_red)
-      Bark_Harmonized <- AGB_Predicted_red*(Wtot_bk_red/AGB_Component_red)
-      Branch_Harmonized <- AGB_Predicted_red*(Wbranchred/AGB_Component_red)
-        
-      data$total_wood_bio[i] <- Wood_Harmonized
-      data$total_bark_bio[i] <- Bark_Harmonized
-      data$total_branch_bio[i] <- Branch_Harmonized
-      data$total_ag_bio[i] <- AGB_Predicted_red
-      
-      # If merchantable...
-      if(data$dbh[i] >= 5) {
-        
-        # PATH 1 OR 3 (intact top) ---------------------------------------------->
-        if(data$path[i] == "1" | data$path[i] == "3") {
-          
-          # STEP 13: calculate an adjusted wood density 
-          WDSG_Adj <- Wood_Harmonized/Vtot_ib_Gross/62.4
-      
-          # STEP 14: calculate an adjusted bark density 
-          BKSG_Adj <- Bark_Harmonized/Vtot_bk_Gross/62.4
-          
-          Wmer_ib <- Vmer_ib_Gross*WDSG_Adj*62.4
-          Wmer_bk <- Vmer_bk_Gross*BKSG_Adj*62.4
-          Wmer_ob <- Wmer_ib + Wmer_bk
-          
-        # PATH 2 OR 4 (broken top) ---------------------------------------------->
-        } else if(data$path[i] == "2" | data$path[i] == "4") {
-          
-          # STEP 13: calculate an adjusted wood density 
-          WDSG_Adj <- Wood_Harmonized/(Vtot_ib_Gross*R_b)/62.4
-        
-          # STEP 14: calculate an adjusted bark density 
-          BKSG_Adj <- Bark_Harmonized/(Vtot_bk_Gross*R_b)/62.4
-          
-          Wmer_ib <- Vmer_ib_Sound*WDSG_Adj*62.4
-          Wmer_bk <- Vmer_bk_Sound*BKSG_Adj*62.4
-          Wmer_ob <- Wmer_ib + Wmer_bk
-        
-        } 
-        
-        Wstump_ib <- Vstump_ib_Gross*WDSG_Adj*62.4
-        Wstump_bk <- Vstump_bk_Gross*BKSG_Adj*62.4
-        Wstump_ob <- Wstump_ib + Wstump_bk
-          
-        DRYBIO_TOP <- AGB_Predicted_red - Wmer_ob - Wstump_ob
-          
-        data$merch_wood_bio[i] <- Wmer_ib
-        data$merch_bark_bio[i] <- Wmer_bk
-        data$merch_total_bio[i] <- Wmer_ob
-        data$merch_top_bio[i] <- DRYBIO_TOP
-          
-        data$stump_wood_bio[i] <- Wstump_ib
-        data$stump_bark_bio[i] <- Wstump_bk
-        data$stump_total_bio[i] <- Wstump_ob 
-        
-      }
-      
-      # PATH 1 (live, with intact top) ------------------------------------------>
-      if(data$path[i] == "1") {
-      
-        # STEP 15: predict total foliage dry weight 
-        Table_S9_Pull <- Table_Pull(Table_S9a, Table_S9b, data[i,])
-        Wfoliage <- EQ_set(Table_S9_Pull, data[i,])
-        data$foliage_bio[i] <- Wfoliage
-        
-        # STEP 16: get species-specific carbon fraction  
-        CF <- (subset(Table_S10a, SPCD == data$species[i])$fia.wood.c)/100
-      
-      # PATH 2 (live, with broken top) ------------------------------------------>
-      } else if(data$path[i] == "2") {
-        
-        # STEP 15: predict total foliage dry weight 
-        Table_S9_Pull <- Table_Pull(Table_S9a, Table_S9b, data[i,])
-        Wfoliage <- EQ_set(Table_S9_Pull, data[i,])
-        FoliageRem <- (data$ht2[i] - data$ht1[i]*(1-CR))/(data$ht1[i]*CR)
-        Wfoliagered <- Wfoliage*FoliageRem
-        data$foliage_bio[i] <- Wfoliagered
-        
-        # STEP 16: get species-specific carbon fraction 
-        CF <- (subset(Table_S10a, SPCD == data$species[i])$fia.wood.c)/100
-    
-      # PATH 3 OR 4 (dead) ------------------------------------------------------>
-      } else if(data$path[i] == "3" | data$path[i] == "4") {
-        
-        # STEP 15: predict total foliage dry weight 
-        Wfoliage <- 0 
-        data$foliage_bio[i] <- Wfoliage
-        
-        # STEP 16: get species-specific carbon fraction 
-        CF <- (subset(Table_S10b, S.H == data$type[i] & Decay.code == data$decay_class[i])$C.fraction)/100
-      
-      }
-  
-      data$carbon_frac[i] <- CF
-      
-    }
-    
-  }
-  
-  return(data)
-    
-}
-```
-
 

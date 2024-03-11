@@ -1,0 +1,53 @@
+
+```{r}
+data <- data.frame(
+  #species = c("PSME", "ACRU", "NODE", "QUAL", "PSME"),
+  site = "SEKI",
+  plot = 1,
+  exp_factor = 50,
+  species = c(202, 316, 631, 802, 202),
+  status = c(1, 1, 0, 1, 0),
+  dbh = c(10, 11.1, 11.3, 18.1, 4.8),
+  ht1 = c(110, 38, 28, 65, 14),
+  ht2 = c(NA, NA, 21, 59, 12),
+  crown_ratio = c(0.2, 0.4, NA, 0.3, NA),
+  top = c("Y", "Y", "N", "N", "N"),
+  decay_class = c(NA, NA, 2, NA, 3),
+  cull = c(0, 3, 10, 2, 0),
+  division = c("240", "M210", "240", "M220", "240"),
+  extra_col = "YAY"
+)
+
+data
+```
+
+```{r}
+BiomassNSVB(data, sp_codes = "fia", input_units = "metric", output_units = "metric", results = "by_plot")
+```
+
+```{r}
+check <- vign_trees_5 %>%
+  select(id, plot, exp_factor, species, status, dbh, ht, decay) %>%
+  mutate(site = id,
+         ht1 = ht,
+         decay_class = decay,
+         ht2 = as.numeric(NA),
+         crown_ratio = as.numeric(NA),
+         top = ifelse(exp_factor == 0,NA,"Y"),
+         cull = ifelse(exp_factor == 0,NA,0),
+         division = "M260") %>%
+  select(site, plot, exp_factor, species, status, dbh, ht1, ht2, crown_ratio, top, decay_class, cull, division) %>%
+  filter(exp_factor > 0)
+
+head(check)
+```
+
+```{r}
+new <- bind_rows(check, check, check, check, check, check, check, check, check)
+dim(new)
+```
+
+```{r}
+BiomassNSVB(new, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")
+```
+
