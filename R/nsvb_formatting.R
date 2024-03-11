@@ -8,13 +8,22 @@
 #' @title BiomassNSVB
 #'
 #' @description
-#' Uses...
+#' Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status. The package is specifically designed for use in California ecosystems, and, therefore, only covers the ecodivisions found in California (260, M260, 320, and 340).
 #'
-#' @param data describe
-#' @param sp_codes describe
-#' @param input_units describe
-#' @param output_units describe
-#' @param results describe
+#' @param data A dataframe or tibble with the following columns: site, plot, exp_factor, division, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.
+#' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
+#' @param input_units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param output_units Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (kilograms or megagrams per hectare) or imperial (US tons or US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param results Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by tree, by plot, by plot as well as species, by plot as well as status (live/dead), or by plot as well as species and status. Must be set to either "by_tree", "by_plot", "by_species", "by_status", or "by_sp_st". The default is set to "by_plot".
+#'
+#' @return Depends on the results setting:
+#' \itemize{
+#' \item by_tree: a list with two components: (1) total run time for the function and (2) a dataframe with tree-level biomass and carbon estimates (reported in kilograms or US tons).
+#' \item by_plot: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates (reported in megagrams per hectare or US tons per acre).
+#' \item by_species: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by species (reported in megagrams per hectare or US tons per acre).
+#' \item by_status: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by status (live/dead; reported in megagrams per hectare or US tons per acre).
+#' \item by_sp_st: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by species as well as by status (reported in megagrams per hectare or US tons per acre).
+#' }
 #'
 #' @export
 
@@ -98,10 +107,10 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     stop('The "output_units" parameter must be set to either "metric" or "imperial."')
   }
 
-  if(results_val == "by_tree" || results_val == "by_plot" || results_val == "by_species") {
+  if(results_val == "by_tree" || results_val == "by_plot" || results_val == "by_status" || results_val == "by_species" || results_val == "by_sp_st") {
     # do nothing
   } else {
-    stop('The "results" parameter must be set to "by_tree", "by_plot" or "by_species".')
+    stop('The "results" parameter must be set to "by_tree", "by_plot", "by_status", "by_species", or "by_sp_st".')
   }
 
 
@@ -312,7 +321,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if ('TRUE' %in% is.na(plots_w_trees$status)) {
 
-    warning('There are missing status codes in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA status).\n',
+    warning('There are missing status codes in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA status).\n',
             'Trees with NA status codes will have NA biomass estimates. Consider investigating these trees.\n',
             ' \n')
   }
@@ -454,7 +463,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if ('TRUE' %in% is.na(plots_w_trees$species)) {
 
     warning('There are missing species codes in the provided dataframe.\n',
-            'Trees with NA species codes will have NA biomass estimates.\n',
+            'Trees with NA species codes will have NA biomass/carbon estimates.\n',
             'Consider assigning unknown dead conifer, unknown dead hardwood, or unknown tree (live or dead), as appropriate.\n',
             ' \n')
   }
@@ -481,7 +490,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$top)) {
 
-    warning('There are missing tree top codes in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA top).\n',
+    warning('There are missing tree top codes in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA top).\n',
             'These trees will be assigned top = "Y". Consider investigating these trees.\n',
             ' \n')
   }
@@ -494,15 +503,15 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$dbh)) {
 
-    warning('There are missing DBH values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA dbh).\n',
-            'Trees with NA DBH will have NA biomass estimates. Consider investigating these trees.\n',
+    warning('There are missing DBH values in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA dbh).\n',
+            'Trees with NA DBH will have NA biomass/carbon estimates. Consider investigating these trees.\n',
             ' \n')
   }
 
   if ('TRUE' %in% is.na(plots_w_trees$ht1)) {
 
     warning('There are missing ht1 values in the provided dataframe.\n',
-            'Trees with NA ht1 will have NA biomass estimates.\n',
+            'Trees with NA ht1 will have NA biomass/carbon estimates.\n',
             ' \n')
   }
 
@@ -511,7 +520,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if ('TRUE' %in% is.na(trees_N_top$ht2)) {
 
     warning('There are trees without tops (top = "N") with missing ht2 values in the provided dataframe.\n',
-            'Trees without tops with NA ht2 will have NA biomass estimates.\n',
+            'Trees without tops with NA ht2 will have NA biomass/carbon estimates.\n',
             ' \n')
   }
 
@@ -522,7 +531,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
       if (min(data_val$dbh, na.rm = TRUE) < 2.5) {
         warning('The allometric equations are for trees with DBH >= 2.5cm.\n',
-                'You inputted trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
+                'You inputted trees with DBH < 2.5cm. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 
@@ -532,7 +541,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
       if (min(data_val$ht1, na.rm = TRUE) < 1.37) {
         warning('The allometric equations are for trees with height >= 1.37m.\n',
-                'You inputted trees with ht1 < 1.37m. These trees will have NA biomass estimates.\n',
+                'You inputted trees with ht1 < 1.37m. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 
@@ -542,7 +551,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
       if (min(data_val$ht2, na.rm = TRUE) < 1.37) {
         warning('The allometric equations are for trees with height >= 1.37m.\n',
-                'You inputted trees with ht2 < 1.37m. These trees will have NA biomass estimates.\n',
+                'You inputted trees with ht2 < 1.37m. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 
@@ -554,7 +563,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
       if (min(live_trees$dbh, na.rm = TRUE) < 1.0) {
         warning('The allometric equations are for trees with DBH >= 1.0in.\n',
-                'You inputted trees with DBH < 1.0in. These trees will have NA biomass estimates.\n',
+                'You inputted trees with DBH < 1.0in. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 
@@ -564,7 +573,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
       if (min(data_val$ht1, na.rm = TRUE) < 4.5) {
         warning('The allometric equations are for trees with height >= 4.5ft.\n',
-                'You inputted trees with ht1 < 4.5ft. These trees will have NA biomass estimates.\n',
+                'You inputted trees with ht1 < 4.5ft. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 
@@ -574,7 +583,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
       if (min(data_val$ht2, na.rm = TRUE) < 4.5) {
         warning('The allometric equations are for trees with height >= 4.5ft.\n',
-                'You inputted trees with ht2 < 4.5ft. These trees will have NA biomass estimates.\n',
+                'You inputted trees with ht2 < 4.5ft. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 
@@ -595,7 +604,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if (nrow(trees_Y_top) > 0) {
 
     warning('There are trees with intact tops (top = "Y") with non-NA ht2 values in the provided dataframe.\n',
-            'Trees with tops should not require ht2 values.\n',
+            'Trees with intact tops should not require ht2 values.\n',
             'These trees will still be treated as if they have intact tops in the biomass/carbon estimations.\n',
             'But you should consider investigating these trees with mismatched top/ht2.\n',
             ' \n')
@@ -632,7 +641,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if ('FALSE' %in% is.na(trees_dead$crown_ratio)) {
 
     warning('There are dead trees with live crown ratio values in the provided dataframe.\n',
-            'Dead trees should not have live crown ratios. Live crown ratios for dead trees will be overwritten to follow the NSVB framework\n',
+            'Dead trees should not have live crown ratios. Live crown ratios for dead trees will be overwritten to follow the NSVB framework.\n',
             ' \n')
 
   }
@@ -645,7 +654,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$cull)) {
 
-    warning('There are trees with missing cull values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA cull).\n',
+    warning('There are trees with missing cull values in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA cull).\n',
             'These trees will be assigned a cull of 0 (assuming no cull). Consider investigating these trees.\n',
             ' \n')
   }
