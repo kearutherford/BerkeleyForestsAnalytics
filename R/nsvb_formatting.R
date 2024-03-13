@@ -191,7 +191,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   }
 
   if(!is.numeric(data_val$ht2)) {
-    stop('"ht1" must be a numerical variable.\n',
+    stop('"ht2" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$ht2))
   }
 
@@ -274,7 +274,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
 
   ###########################################################
-  # Check that status is as expected
+  # Check that division is as expected
   ###########################################################
 
   data_val$division <- as.character(data_val$division) # coerce division into character
@@ -321,7 +321,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if ('TRUE' %in% is.na(plots_w_trees$status)) {
 
-    warning('There are missing status codes in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA status).\n',
+    warning('There are missing status codes in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA status.\n',
             'Trees with NA status codes will have NA biomass estimates. Consider investigating these trees.\n',
             ' \n')
   }
