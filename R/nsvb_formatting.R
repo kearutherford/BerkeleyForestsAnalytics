@@ -382,17 +382,17 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for unrecognized species codes ---------------------------------------
   if (sp_val == "4letter") {
 
-    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names$letter))) {
+    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names2$letter))) {
 
       stop('No species codes recognized!\n',
            'Check how you set the "sp_codes" parameter.')
     }
 
     if(!all(is.element(data_val$species,
-                       NSVB_sp_code_names$letter))) {
+                       NSVB_sp_code_names1$letter))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names$letter), "species"]),
+                                                                 NSVB_sp_code_names1$letter), "species"]),
                                      sep = " "))
 
       stop('Not all species codes were recognized!\n',
@@ -404,8 +404,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     if (nrow(UNHA_trees) > 0) {
 
-      stop('There are live trees (status = 1) with a species code of "UNHA".\n',
-           '"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown trees (live or dead).\n')
+      stop('There are live trees with a species code of "UNHA".\n',
+           '"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown live or dead trees.')
 
     }
 
@@ -413,25 +413,25 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     if (nrow(UNCO_trees) > 0) {
 
-      stop('There are live trees (status = 1) with a species code of "UNCO".\n',
-           '"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown trees (live or dead).\n')
+      stop('There are live trees with a species code of "UNCO".\n',
+           '"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown live or dead trees.')
 
     }
 
     # Check for unrecognized species codes ---------------------------------------
   } else if (sp_val == "fia") {
 
-    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names$fia))) {
+    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names2$fia))) {
 
       stop('No species codes recognized!\n',
            'Check how you set the "sp_codes" parameter.')
     }
 
     if(!all(is.element(data_val$species,
-                       NSVB_sp_code_names$fia))) {
+                       NSVB_sp_code_names1$fia))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names$fia), "species"]),
+                                                                 NSVB_sp_code_names1$fia), "species"]),
                                      sep = " "))
 
       stop('Not all species codes were recognized!\n',
@@ -443,8 +443,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     if (nrow(UNHA_trees) > 0) {
 
-      stop('There are live trees (status = 1) with a species code of 998.\n',
-           '998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown trees (live or dead).\n')
+      stop('There are live trees with a species code of 998.\n',
+           '998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown live or dead trees.')
 
     }
 
@@ -452,8 +452,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     if (nrow(UNCO_trees) > 0) {
 
-      stop('There are live trees (status = 1) with a species code of 299.\n',
-           '299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown trees (live or dead).\n')
+      stop('There are live trees with a species code of 299.\n',
+           '299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown live or dead trees.')
 
     }
 
@@ -462,9 +462,9 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$species)) {
 
-    warning('There are missing species codes in the provided dataframe.\n',
+    warning('There are missing species codes in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA species.\n',
             'Trees with NA species codes will have NA biomass/carbon estimates.\n',
-            'Consider assigning unknown dead conifer, unknown dead hardwood, or unknown tree (live or dead), as appropriate.\n',
+            'Consider assigning unknown dead conifer, unknown dead hardwood, or unknown live or dead tree, as appropriate.\n',
             ' \n')
   }
 
@@ -490,7 +490,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$top)) {
 
-    warning('There are missing tree top codes in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA top).\n',
+    warning('There are missing tree top codes in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA top.\n',
             'These trees will be assigned top = "Y". Consider investigating these trees.\n',
             ' \n')
   }
@@ -503,7 +503,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$dbh)) {
 
-    warning('There are missing DBH values in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA dbh).\n',
+    warning('There are missing DBH values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA dbh.\n',
             'Trees with NA DBH will have NA biomass/carbon estimates. Consider investigating these trees.\n',
             ' \n')
   }
@@ -621,7 +621,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if ('TRUE' %in% is.na(trees_live$crown_ratio)) {
 
-    warning('There are live trees with missing live crown ratio values in the provided dataframe (outside of plots with an exp_factor of 0, which should have NA crown_ratio).\n',
+    warning('There are live trees with missing live crown ratio values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA species.\n',
             'Live trees with NA crown_ratio will have mean crown ratios substituted in (from table S11). Consider investigating these trees.\n',
             ' \n')
   }
@@ -654,7 +654,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$cull)) {
 
-    warning('There are trees with missing cull values in the provided dataframe (outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA cull).\n',
+    warning('There are trees with missing cull values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA species.\n',
             'These trees will be assigned a cull of 0 (assuming no cull). Consider investigating these trees.\n',
             ' \n')
   }
@@ -701,7 +701,7 @@ DataPrep <- function(data, in_units, sp) {
     data$letter <- data$species
 
     # create column with FIA species codes
-    data <- merge(data, NSVB_sp_code_names, by = "letter", all.x = TRUE, all.y = FALSE)
+    data <- merge(data, NSVB_sp_code_names1, by = "letter", all.x = TRUE, all.y = FALSE)
     data$species <- data$fia
     data <- subset(data, select = -fia)
 

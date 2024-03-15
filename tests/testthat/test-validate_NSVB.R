@@ -120,7 +120,7 @@ test_that("Properly formatted data frames throw no errors, warnings, or messages
 test_that("Invalid options throw an error", {
 
   expect_error(ValidateNSVB(data_val = nsvb_gm4,
-                            sp_val = "4let",
+                            sp_val = "4let", # intentional error here
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
@@ -128,7 +128,7 @@ test_that("Invalid options throw an error", {
 
   expect_error(ValidateNSVB(data_val = nsvb_gm4,
                             sp_val = "4letter",
-                            in_units_val = "m",
+                            in_units_val = "m", # intentional error here
                             out_units_val = "imperial",
                             results_val = "by_plot"),
                'The "input_units" parameter must be set to either "metric" or "imperial."')
@@ -136,7 +136,7 @@ test_that("Invalid options throw an error", {
   expect_error(ValidateNSVB(data_val = nsvb_gm4,
                             sp_val = "4letter",
                             in_units_val = "metric",
-                            out_units_val = "i",
+                            out_units_val = "i", # intentional error here
                             results_val = "by_plot"),
                'The "output_units" parameter must be set to either "metric" or "imperial."')
 
@@ -144,7 +144,7 @@ test_that("Invalid options throw an error", {
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
-                            results_val = "by_treee"),
+                            results_val = "by_treee"), # intentional error here
                'The "results" parameter must be set to "by_tree", "by_plot", "by_status", "by_species", or "by_sp_st".')
 
 })
@@ -377,7 +377,119 @@ test_that("Status handling works", {
 })
 
 
+test_that("Decay class handling works", {
+
+  expect_error(ValidateNSVB(data_val = nsvb_b29,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'decay_class must be 0 through 5!\nUnrecognized decay class codes: 44 8')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b30,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are dead trees with NA and/or 0 decay class codes.\nThese trees will be assigned a decay class of 3.\nConsider investigating these trees with mismatched status/decay class.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b31,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are live trees with 1-5 decay class codes.\nLive trees should have decay class codes of NA or 0.\nThese trees will still be considered live in the biomass/carbon calculations.\nBut you should consider investigating these trees with mismatched status/decay class.\n')
+
+})
 
 
+test_that("Species code handling works", {
+
+  # FIA ------------------------------------------------------------------------
+  expect_error(ValidateNSVB(data_val = nsvb_gif,
+                            sp_val = "4letter", # set to 4letter but fia used
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'No species codes recognized!\nCheck how you set the "sp_codes" parameter.')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b32,
+                            sp_val = "fia",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'Not all species codes were recognized!\nUnrecognized codes: 155')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b33,
+                            sp_val = "fia",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are live trees with a species code of 998.\n998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown live or dead trees.')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b34,
+                            sp_val = "fia",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are live trees with a species code of 299.\n299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown live or dead trees.')
+
+  # 4-letter -------------------------------------------------------------------
+  expect_error(ValidateNSVB(data_val = nsvb_gm4,
+                            sp_val = "fia", # set to fia but 4letter used
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'No species codes recognized!\nCheck how you set the "sp_codes" parameter.')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b35,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'Not all species codes were recognized!\nUnrecognized codes: ABCOO')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b36,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are live trees with a species code of "UNHA".\n"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown live or dead trees.')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b37,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are live trees with a species code of "UNCO".\n"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown live or dead trees.')
+
+  # General --------------------------------------------------------------------
+  expect_warning(ValidateNSVB(data_val = nsvb_b38,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are missing species codes in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA species.\nTrees with NA species codes will have NA biomass/carbon estimates.\nConsider assigning unknown dead conifer, unknown dead hardwood, or unknown live or dead tree, as appropriate.\n')
+
+})
+
+
+test_that("Top handling works", {
+
+  expect_error(ValidateNSVB(data_val = nsvb_b39,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'top must be "Y" or "N"!\nUnrecognized top codes: 0 1')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b40,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are missing tree top codes in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA top.\nThese trees will be assigned top = "Y". Consider investigating these trees.\n')
+
+})
 
 

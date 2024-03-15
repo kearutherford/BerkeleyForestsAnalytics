@@ -667,11 +667,18 @@ sp_code_names <- data.frame(
           "264", "998", "999", "920", NA)
 )
 
-NSVB_sp_code_names <- data.frame(
+NSVB_sp_code_names1 <- data.frame(
   letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
              "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR", NA),
   fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
           "312", "316", "352", "361", "431", "492", "631", "746", "801", "802", "805", "818", "920", "981", "998", "999", NA)
+)
+
+NSVB_sp_code_names2 <- data.frame(
+  letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
+             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR"),
+  fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
+          "312", "316", "352", "361", "431", "492", "631", "746", "801", "802", "805", "818", "920", "981", "998", "999")
 )
 
 VanWag_species <- data.frame (
@@ -1321,6 +1328,198 @@ nsvb_b28 <- data.frame(
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
   crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
   top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b29 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 8, NA, NA, NA, NA, NA, 44, NA)), # wrong decay class codes
+  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b30 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, NA, NA, NA, NA, NA, NA, 4, NA)), # NA decay class for dead tree
+  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b31 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(1, 2, NA, NA, NA, NA, NA, 4, NA)), # live tree with a decay class
+  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b32 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("202", "155", "202", "202", "15", "81", "818", "15", NA), # species typo
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b33 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("998", "15", "202", "202", "15", "81", "818", "15", NA), # incorrect use of 998
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b34 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("299", "15", "202", "202", "15", "81", "818", "15", NA), # incorrect use of 299
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b35 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("PSME", "ABCOO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA), # species typo
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b36 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("UNHA", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA), # incorrect use of UNHA
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b37 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("UNCO", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA), # incorrect use of UNCO
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b38 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("PSME", NA, "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA), # NA value
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b39 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("1", "Y", "0", "Y", "N", "Y", "Y", "Y", NA), # wrong top code
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b40 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c(NA, "Y", "N", "Y", "N", "Y", "Y", "Y", NA), # NA value
   cull = c(0,0,10,0,0,0,5,0,NA)
 )
 
