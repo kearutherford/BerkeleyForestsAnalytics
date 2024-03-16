@@ -52,7 +52,7 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
 
     # get end time
     end_time <- Sys.time()
-    time_taken <- round(end_time - start_time,2)
+    time_taken <- round(end_time - start_time, 2)
 
     # create return list
     return_list <- list(time_taken, step3)

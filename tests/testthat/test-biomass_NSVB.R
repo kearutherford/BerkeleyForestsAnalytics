@@ -1,9 +1,25 @@
 
 test_that("outputs are lists with two components: (1) total run time and (2) dataframe", {
 
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")), "list")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$run_time), "difftime")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe), "data.frame")
 
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_plot")), "list")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_plot")$run_time), "difftime")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_plot")$dataframe), "data.frame")
 
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_species")), "list")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_species")$run_time), "difftime")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_species")$dataframe), "data.frame")
 
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_status")), "list")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_status")$run_time), "difftime")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_status")$dataframe), "data.frame")
+
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_sp_st")), "list")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_sp_st")$run_time), "difftime")
+  expect_equal(class(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_sp_st")$dataframe), "data.frame")
 
 })
 
@@ -147,6 +163,336 @@ test_that("by_tree dataframes have expected column classes", {
   expect_equal(class(by_tree_check2$stump_total_c), "numeric")
   expect_equal(class(by_tree_check2$foliage_c), "numeric")
   expect_equal(class(by_tree_check2$calc_bio), "character")
+
+})
+
+
+test_that("NA biomass/carbon is as expected", {
+
+  NA_check_small <- subset(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe,
+                    dbh_cm < 12.7,
+                    select = c(merch_wood_kg, merch_bark_kg, merch_total_kg, merch_top_kg, stump_wood_kg, stump_bark_kg, stump_total_kg,
+                               merch_wood_c, merch_bark_c, merch_total_c, merch_top_c, stump_wood_c, stump_bark_c, stump_total_c))
+
+  expect_equal(all(is.na(NA_check_small)), TRUE)
+
+})
+
+
+test_that("by_sp_st dataframes have expected column names", {
+
+  expect_named(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_sp_st")$dataframe,
+               c("site", "plot", "species", "total_wood_L_t_ac", "total_wood_D_t_ac", "total_bark_L_t_ac", "total_bark_D_t_ac", "total_branch_L_t_ac", "total_branch_D_t_ac",
+                 "total_ag_L_t_ac", "total_ag_D_t_ac", "merch_total_L_t_ac", "merch_total_D_t_ac", "merch_top_L_t_ac", "merch_top_D_t_ac", "stump_total_L_t_ac", "stump_total_D_t_ac",
+                 "foliage_L_t_ac", "total_wood_L_c", "total_wood_D_c", "total_bark_L_c", "total_bark_D_c", "total_branch_L_c", "total_branch_D_c", "total_ag_L_c", "total_ag_D_c",
+                 "merch_total_L_c", "merch_total_D_c", "merch_top_L_c", "merch_top_D_c", "stump_total_L_c", "stump_total_D_c", "foliage_L_c"))
+
+  expect_named(BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_sp_st")$dataframe,
+               c("site", "plot", "species", "total_wood_L_Mg_ha", "total_wood_D_Mg_ha", "total_bark_L_Mg_ha", "total_bark_D_Mg_ha", "total_branch_L_Mg_ha", "total_branch_D_Mg_ha",
+                 "total_ag_L_Mg_ha", "total_ag_D_Mg_ha", "merch_total_L_Mg_ha", "merch_total_D_Mg_ha", "merch_top_L_Mg_ha", "merch_top_D_Mg_ha", "stump_total_L_Mg_ha", "stump_total_D_Mg_ha",
+                 "foliage_L_Mg_ha", "total_wood_L_c", "total_wood_D_c", "total_bark_L_c", "total_bark_D_c", "total_branch_L_c", "total_branch_D_c", "total_ag_L_c", "total_ag_D_c",
+                 "merch_total_L_c", "merch_total_D_c", "merch_top_L_c", "merch_top_D_c", "stump_total_L_c", "stump_total_D_c", "foliage_L_c"))
+
+})
+
+
+test_that("by_sp_st dataframes have expected column classes", {
+
+  # Outputs are imperial -------------------------------------------------------
+  by_sp_st_check1 <- BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_sp_st")$dataframe
+
+  expect_equal(class(by_sp_st_check1$site), "character")
+  expect_equal(class(by_sp_st_check1$plot), "character")
+  expect_equal(class(by_sp_st_check1$species), "character")
+  expect_equal(class(by_sp_st_check1$total_wood_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_bark_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_branch_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_ag_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_total_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_top_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$stump_total_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$foliage_L_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_wood_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_bark_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_branch_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_ag_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_total_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_top_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$stump_total_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$foliage_L_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_wood_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_bark_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_branch_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_ag_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_total_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_top_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$stump_total_D_t_ac), "numeric")
+  expect_equal(class(by_sp_st_check1$total_wood_D_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_bark_D_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_branch_D_c), "numeric")
+  expect_equal(class(by_sp_st_check1$total_ag_D_c), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_total_D_c), "numeric")
+  expect_equal(class(by_sp_st_check1$merch_top_D_c), "numeric")
+  expect_equal(class(by_sp_st_check1$stump_total_D_c), "numeric")
+
+  # Outputs are metric ---------------------------------------------------------
+  by_sp_st_check2 <- BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_sp_st")$dataframe
+
+  expect_equal(class(by_sp_st_check2$site), "character")
+  expect_equal(class(by_sp_st_check2$plot), "character")
+  expect_equal(class(by_sp_st_check2$species), "character")
+  expect_equal(class(by_sp_st_check2$total_wood_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_bark_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_branch_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_ag_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_total_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_top_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$stump_total_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$foliage_L_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_wood_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_bark_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_branch_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_ag_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_total_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_top_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$stump_total_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$foliage_L_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_wood_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_bark_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_branch_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_ag_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_total_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_top_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$stump_total_D_Mg_ha), "numeric")
+  expect_equal(class(by_sp_st_check2$total_wood_D_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_bark_D_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_branch_D_c), "numeric")
+  expect_equal(class(by_sp_st_check2$total_ag_D_c), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_total_D_c), "numeric")
+  expect_equal(class(by_sp_st_check2$merch_top_D_c), "numeric")
+  expect_equal(class(by_sp_st_check2$stump_total_D_c), "numeric")
+
+})
+
+
+test_that("by_species dataframes have expected column names", {
+
+  expect_named(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_species")$dataframe,
+               c("site", "plot", "species",
+                 "total_wood_t_ac", "total_bark_t_ac", "total_branch_t_ac", "total_ag_t_ac", "merch_total_t_ac", "merch_top_t_ac", "stump_total_t_ac", "foliage_t_ac",
+                 "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_total_c", "merch_top_c", "stump_total_c", "foliage_c"))
+
+  expect_named(BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_species")$dataframe,
+               c("site", "plot", "species",
+                 "total_wood_Mg_ha", "total_bark_Mg_ha", "total_branch_Mg_ha", "total_ag_Mg_ha", "merch_total_Mg_ha", "merch_top_Mg_ha", "stump_total_Mg_ha", "foliage_Mg_ha",
+                 "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_total_c", "merch_top_c", "stump_total_c", "foliage_c"))
+
+})
+
+
+test_that("by_species dataframes have expected column classes", {
+
+  # Outputs are imperial -------------------------------------------------------
+  by_sp_check1 <- BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_species")$dataframe
+
+  expect_equal(class(by_sp_check1$site), "character")
+  expect_equal(class(by_sp_check1$plot), "character")
+  expect_equal(class(by_sp_check1$species), "character")
+  expect_equal(class(by_sp_check1$total_wood_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$total_bark_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$total_branch_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$total_ag_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$merch_total_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$merch_top_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$stump_total_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$foliage_t_ac), "numeric")
+  expect_equal(class(by_sp_check1$total_wood_c), "numeric")
+  expect_equal(class(by_sp_check1$total_bark_c), "numeric")
+  expect_equal(class(by_sp_check1$total_branch_c), "numeric")
+  expect_equal(class(by_sp_check1$total_ag_c), "numeric")
+  expect_equal(class(by_sp_check1$merch_total_c), "numeric")
+  expect_equal(class(by_sp_check1$merch_top_c), "numeric")
+  expect_equal(class(by_sp_check1$stump_total_c), "numeric")
+  expect_equal(class(by_sp_check1$foliage_c), "numeric")
+
+  # Outputs are metric ---------------------------------------------------------
+  by_sp_check2 <- BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_species")$dataframe
+
+  expect_equal(class(by_sp_check2$site), "character")
+  expect_equal(class(by_sp_check2$plot), "character")
+  expect_equal(class(by_sp_check2$species), "character")
+  expect_equal(class(by_sp_check2$total_wood_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$total_bark_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$total_branch_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$total_ag_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$merch_total_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$merch_top_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$stump_total_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$foliage_Mg_ha), "numeric")
+  expect_equal(class(by_sp_check2$total_wood_c), "numeric")
+  expect_equal(class(by_sp_check2$total_bark_c), "numeric")
+  expect_equal(class(by_sp_check2$total_branch_c), "numeric")
+  expect_equal(class(by_sp_check2$total_ag_c), "numeric")
+  expect_equal(class(by_sp_check2$merch_total_c), "numeric")
+  expect_equal(class(by_sp_check2$merch_top_c), "numeric")
+  expect_equal(class(by_sp_check2$stump_total_c), "numeric")
+  expect_equal(class(by_sp_check2$foliage_c), "numeric")
+
+})
+
+
+test_that("by_status dataframes have expected column names", {
+
+  expect_named(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_status")$dataframe,
+               c("site", "plot", "total_wood_L_t_ac", "total_wood_D_t_ac", "total_bark_L_t_ac", "total_bark_D_t_ac", "total_branch_L_t_ac", "total_branch_D_t_ac",
+                 "total_ag_L_t_ac", "total_ag_D_t_ac", "merch_total_L_t_ac", "merch_total_D_t_ac", "merch_top_L_t_ac", "merch_top_D_t_ac", "stump_total_L_t_ac",
+                 "stump_total_D_t_ac", "foliage_L_t_ac", "total_wood_L_c", "total_wood_D_c", "total_bark_L_c", "total_bark_D_c", "total_branch_L_c", "total_branch_D_c",
+                 "total_ag_L_c", "total_ag_D_c", "merch_total_L_c", "merch_total_D_c", "merch_top_L_c", "merch_top_D_c", "stump_total_L_c", "stump_total_D_c", "foliage_L_c"))
+
+  expect_named(BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_status")$dataframe,
+               c("site", "plot", "total_wood_L_Mg_ha", "total_wood_D_Mg_ha", "total_bark_L_Mg_ha", "total_bark_D_Mg_ha", "total_branch_L_Mg_ha", "total_branch_D_Mg_ha",
+                 "total_ag_L_Mg_ha", "total_ag_D_Mg_ha", "merch_total_L_Mg_ha", "merch_total_D_Mg_ha", "merch_top_L_Mg_ha", "merch_top_D_Mg_ha", "stump_total_L_Mg_ha",
+                 "stump_total_D_Mg_ha", "foliage_L_Mg_ha", "total_wood_L_c", "total_wood_D_c", "total_bark_L_c", "total_bark_D_c", "total_branch_L_c", "total_branch_D_c",
+                 "total_ag_L_c", "total_ag_D_c", "merch_total_L_c", "merch_total_D_c", "merch_top_L_c", "merch_top_D_c", "stump_total_L_c", "stump_total_D_c", "foliage_L_c"))
+
+})
+
+
+test_that("by_status dataframes have expected column classes", {
+
+  # Outputs are imperial -------------------------------------------------------
+  by_st_check1 <- BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_status")$dataframe
+
+  expect_equal(class(by_st_check1$site), "character")
+  expect_equal(class(by_st_check1$plot), "character")
+  expect_equal(class(by_st_check1$total_wood_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_bark_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_branch_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_ag_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$merch_total_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$merch_top_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$stump_total_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$foliage_L_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_wood_L_c), "numeric")
+  expect_equal(class(by_st_check1$total_bark_L_c), "numeric")
+  expect_equal(class(by_st_check1$total_branch_L_c), "numeric")
+  expect_equal(class(by_st_check1$total_ag_L_c), "numeric")
+  expect_equal(class(by_st_check1$merch_total_L_c), "numeric")
+  expect_equal(class(by_st_check1$merch_top_L_c), "numeric")
+  expect_equal(class(by_st_check1$stump_total_L_c), "numeric")
+  expect_equal(class(by_st_check1$foliage_L_c), "numeric")
+  expect_equal(class(by_st_check1$total_wood_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_bark_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_branch_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_ag_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$merch_total_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$merch_top_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$stump_total_D_t_ac), "numeric")
+  expect_equal(class(by_st_check1$total_wood_D_c), "numeric")
+  expect_equal(class(by_st_check1$total_bark_D_c), "numeric")
+  expect_equal(class(by_st_check1$total_branch_D_c), "numeric")
+  expect_equal(class(by_st_check1$total_ag_D_c), "numeric")
+  expect_equal(class(by_st_check1$merch_total_D_c), "numeric")
+  expect_equal(class(by_st_check1$merch_top_D_c), "numeric")
+  expect_equal(class(by_st_check1$stump_total_D_c), "numeric")
+
+  # Outputs are metric ---------------------------------------------------------
+  by_st_check2 <- BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_status")$dataframe
+
+  expect_equal(class(by_st_check2$site), "character")
+  expect_equal(class(by_st_check2$plot), "character")
+  expect_equal(class(by_st_check2$total_wood_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_bark_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_branch_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_ag_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$merch_total_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$merch_top_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$stump_total_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$foliage_L_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_wood_L_c), "numeric")
+  expect_equal(class(by_st_check2$total_bark_L_c), "numeric")
+  expect_equal(class(by_st_check2$total_branch_L_c), "numeric")
+  expect_equal(class(by_st_check2$total_ag_L_c), "numeric")
+  expect_equal(class(by_st_check2$merch_total_L_c), "numeric")
+  expect_equal(class(by_st_check2$merch_top_L_c), "numeric")
+  expect_equal(class(by_st_check2$stump_total_L_c), "numeric")
+  expect_equal(class(by_st_check2$foliage_L_c), "numeric")
+  expect_equal(class(by_st_check2$total_wood_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_bark_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_branch_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_ag_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$merch_total_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$merch_top_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$stump_total_D_Mg_ha), "numeric")
+  expect_equal(class(by_st_check2$total_wood_D_c), "numeric")
+  expect_equal(class(by_st_check2$total_bark_D_c), "numeric")
+  expect_equal(class(by_st_check2$total_branch_D_c), "numeric")
+  expect_equal(class(by_st_check2$total_ag_D_c), "numeric")
+  expect_equal(class(by_st_check2$merch_total_D_c), "numeric")
+  expect_equal(class(by_st_check2$merch_top_D_c), "numeric")
+  expect_equal(class(by_st_check2$stump_total_D_c), "numeric")
+
+})
+
+
+test_that("by_plot dataframes have expected column names", {
+
+  expect_named(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_plot")$dataframe,
+               c("site", "plot", "total_wood_t_ac", "total_bark_t_ac", "total_branch_t_ac", "total_ag_t_ac", "merch_total_t_ac", "merch_top_t_ac", "stump_total_t_ac",
+                 "foliage_t_ac", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_total_c", "merch_top_c", "stump_total_c", "foliage_c"))
+
+  expect_named(BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_plot")$dataframe,
+               c("site", "plot", "total_wood_Mg_ha", "total_bark_Mg_ha","total_branch_Mg_ha", "total_ag_Mg_ha", "merch_total_Mg_ha", "merch_top_Mg_ha",  "stump_total_Mg_ha",
+                 "foliage_Mg_ha", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_total_c", "merch_top_c", "stump_total_c", "foliage_c"))
+
+})
+
+
+test_that("by_plot dataframes have expected column classes", {
+
+  # Outputs are imperial -------------------------------------------------------
+  by_plot_check1 <- BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_plot")$dataframe
+
+  expect_equal(class(by_plot_check1$site), "character")
+  expect_equal(class(by_plot_check1$plot), "character")
+  expect_equal(class(by_plot_check1$total_wood_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$total_bark_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$total_branch_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$total_ag_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$merch_total_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$merch_top_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$stump_total_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$foliage_t_ac), "numeric")
+  expect_equal(class(by_plot_check1$total_wood_c), "numeric")
+  expect_equal(class(by_plot_check1$total_bark_c), "numeric")
+  expect_equal(class(by_plot_check1$total_branch_c), "numeric")
+  expect_equal(class(by_plot_check1$total_ag_c), "numeric")
+  expect_equal(class(by_plot_check1$merch_total_c), "numeric")
+  expect_equal(class(by_plot_check1$merch_top_c), "numeric")
+  expect_equal(class(by_plot_check1$stump_total_c), "numeric")
+  expect_equal(class(by_plot_check1$foliage_c), "numeric")
+
+  # Outputs are metric ---------------------------------------------------------
+  by_plot_check2 <- BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_plot")$dataframe
+
+  expect_equal(class(by_plot_check2$site), "character")
+  expect_equal(class(by_plot_check2$plot), "character")
+  expect_equal(class(by_plot_check2$total_wood_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$total_bark_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$total_branch_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$total_ag_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$merch_total_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$merch_top_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$stump_total_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$foliage_Mg_ha), "numeric")
+  expect_equal(class(by_plot_check2$total_wood_c), "numeric")
+  expect_equal(class(by_plot_check2$total_bark_c), "numeric")
+  expect_equal(class(by_plot_check2$total_branch_c), "numeric")
+  expect_equal(class(by_plot_check2$total_ag_c), "numeric")
+  expect_equal(class(by_plot_check2$merch_total_c), "numeric")
+  expect_equal(class(by_plot_check2$merch_top_c), "numeric")
+  expect_equal(class(by_plot_check2$stump_total_c), "numeric")
+  expect_equal(class(by_plot_check2$foliage_c), "numeric")
 
 })
 
