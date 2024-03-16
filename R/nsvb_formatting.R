@@ -10,7 +10,7 @@
 #' @description
 #' Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status. The package is specifically designed for use in California ecosystems, and, therefore, only covers the ecodivisions found in California (260, M260, 320, and 340).
 #'
-#' @param data A dataframe or tibble with the following columns: site, plot, exp_factor, division, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.
+#' @param data A dataframe or tibble with the following columns: division, site, plot, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.
 #' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
 #' @param input_units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #' @param output_units Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (kilograms or megagrams per hectare) or imperial (US tons or US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
@@ -39,7 +39,7 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
   ValidateNSVB(data_val = step0, sp_val = sp_codes, in_units_val = input_units, out_units_val = output_units, results_val = results)
 
   # prep input data
-  step1 <- DataPrep(data = step0, in_units = input_units, sp = sp_codes)
+  step1 <- DataPrep(data = step0, in_units = input_units, out_units = output_units, sp = sp_codes)
 
   # calculate tree-level biomass & carbon
   step2 <- NSVBCalcs(data = step1)
@@ -118,6 +118,10 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check that all columns are in the provided dataframe
   ###########################################################
 
+  if(!("division" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "division" column.')
+  }
+
   if(!("site" %in% colnames(data_val))) {
     stop('Input data is missing the necessary "site" column.')
   }
@@ -128,10 +132,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if(!("exp_factor" %in% colnames(data_val))) {
     stop('Input data is missing the necessary "exp_factor" column.')
-  }
-
-  if(!("division" %in% colnames(data_val))) {
-    stop('Input data is missing the necessary "division" column.')
   }
 
   if(!("status" %in% colnames(data_val))) {
@@ -175,6 +175,43 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check that column classes are as expected
   ###########################################################
 
+  # Categorical variables --------------------------------------------------------
+  if(!is.character(data_val$division)) {
+    stop('"division" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$division))
+  }
+
+  if(!is.character(data_val$site)) {
+    stop('"site" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$site))
+  }
+
+  if(!is.character(data_val$plot)) {
+    stop('"plot" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$plot))
+  }
+
+  if(!is.character(data_val$status)) {
+    stop('"status" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$status))
+  }
+
+  if(!is.character(data_val$decay)) {
+    stop('"decay" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$decay))
+  }
+
+  if(!is.character(data_val$species)) {
+    stop('"species" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$species))
+  }
+
+  if(!is.character(data_val$top)) {
+    stop('"top" must be a categorical variable.\n',
+         'You have input a variable of class: ', class(data_val$top))
+  }
+
+  # Numerical variables --------------------------------------------------------
   if(!is.numeric(data_val$exp_factor)) {
     stop('"exp_factor" must be a numerical variable.\n',
          'You have input a variable of class: ', class(data_val$exp_factor))
@@ -210,9 +247,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # check that site and plot are as expected
   #########################################################
 
-  data_val$site <- as.character(data_val$site) # coerce into character
-  data_val$plot <- as.character(data_val$plot) # coerce into character
-
   if ('TRUE' %in% is.na(data_val$site)) {
     stop('There are missing site names in the provided dataframe.')
   }
@@ -230,6 +264,11 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if ('TRUE' %in% is.na(data_val$exp_factor)) {
     stop('There are missing expansion factors in the provided dataframe.\n',
          'For plots with no trees, put 0 for the exp_factor.')
+  }
+
+  # Check for negative ef ------------------------------------------------------{
+  if (min(data_val$exp_factor) < 0) {
+      stop('There are negative expansion factors in the provided dataframe. All expansion factors must be >= 0.')
   }
 
   # Check for proper use of 0 ef -----------------------------------------------
@@ -277,8 +316,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check that division is as expected
   ###########################################################
 
-  data_val$division <- as.character(data_val$division) # coerce division into character
-
   if ('TRUE' %in% is.na(data_val$division)) {
     stop('There are missing division codes in the provided dataframe.')
   }
@@ -301,8 +338,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   ###########################################################
   # Check that status is as expected
   ###########################################################
-
-  data_val$status <- as.character(data_val$status) # coerce status into character
 
   # Check for unrecognized status codes ----------------------------------------
   if(!all(is.element(data_val$status,
@@ -330,8 +365,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   ###########################################################
   # Check that decay class is as expected
   ###########################################################
-
-  data_val$decay_class <- as.character(data_val$decay_class) # coerce decay_val into character
 
   # Check for unrecognized decay codes -----------------------------------------
   if(!all(is.element(data_val$decay_class,
@@ -375,9 +408,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   ###########################################################
   # Check that species codes are as expected
   ###########################################################
-
-  data_val$species <- as.character(data_val$species) # coerce species into character
-  plots_w_trees$species <- as.character(plots_w_trees$species)
 
   # Check for unrecognized species codes ---------------------------------------
   if (sp_val == "4letter") {
@@ -473,8 +503,6 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check that top is as expected
   ###########################################################
 
-  data_val$top <- as.character(data_val$top) # coerce top into character
-
   # Check for unrecognized status codes ----------------------------------------
   if(!all(is.element(data_val$top,
                      c("Y","N", NA)))) {
@@ -510,7 +538,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if ('TRUE' %in% is.na(plots_w_trees$ht1)) {
 
-    warning('There are missing ht1 values in the provided dataframe.\n',
+    warning('There are missing ht1 values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA ht1.\n',
             'Trees with NA ht1 will have NA biomass/carbon estimates.\n',
             ' \n')
   }
@@ -519,7 +547,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if ('TRUE' %in% is.na(trees_N_top$ht2)) {
 
-    warning('There are trees without tops (top = "N") with missing ht2 values in the provided dataframe.\n',
+    warning('There are trees without tops, top = "N", with missing ht2 values in the provided dataframe.\n',
             'Trees without tops with NA ht2 will have NA biomass/carbon estimates.\n',
             ' \n')
   }
@@ -561,7 +589,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     if (!all(is.na(data_val$dbh))) {
 
-      if (min(live_trees$dbh, na.rm = TRUE) < 1.0) {
+      if (min(data_val$dbh, na.rm = TRUE) < 1.0) {
         warning('The allometric equations are for trees with DBH >= 1.0in.\n',
                 'You inputted trees with DBH < 1.0in. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
@@ -603,7 +631,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if (nrow(trees_Y_top) > 0) {
 
-    warning('There are trees with intact tops (top = "Y") with non-NA ht2 values in the provided dataframe.\n',
+    warning('There are trees with intact tops, top = "Y", with non-NA ht2 values in the provided dataframe.\n',
             'Trees with intact tops should not require ht2 values.\n',
             'These trees will still be treated as if they have intact tops in the biomass/carbon estimations.\n',
             'But you should consider investigating these trees with mismatched top/ht2.\n',
@@ -621,8 +649,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   if ('TRUE' %in% is.na(trees_live$crown_ratio)) {
 
-    warning('There are live trees with missing live crown ratio values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA species.\n',
-            'Live trees with NA crown_ratio will have mean crown ratios substituted in (from table S11). Consider investigating these trees.\n',
+    warning('There are live trees with missing live crown ratio values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA crown_ratio.\n',
+            'Live trees with NA crown_ratio will have mean crown ratios substituted in from table S11. Consider investigating these trees.\n',
             ' \n')
   }
 
@@ -654,8 +682,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$cull)) {
 
-    warning('There are trees with missing cull values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA species.\n',
-            'These trees will be assigned a cull of 0 (assuming no cull). Consider investigating these trees.\n',
+    warning('There are trees with missing cull values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA cull.\n',
+            'These trees will be assigned a cull of 0, assuming no cull. Consider investigating these trees.\n',
             ' \n')
   }
 
@@ -677,15 +705,19 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 ################################################################################
 ################################################################################
 
-DataPrep <- function(data, in_units, sp) {
+DataPrep <- function(data, in_units, out_units, sp) {
 
   # unit conversions
   if(in_units == "metric") {
 
-    # preserve original columns
-    data$dbh_cm <- data$dbh
-    data$ht1_m <- data$ht1
-    data$ht2_m <- data$ht2
+    if(out_units == "metric") {
+
+      # preserve original columns
+      data$dbh_cm <- data$dbh
+      data$ht1_m <- data$ht1
+      data$ht2_m <- data$ht2
+
+    }
 
     # create columns in imperial units
     data$dbh <- data$dbh/2.54
@@ -708,13 +740,14 @@ DataPrep <- function(data, in_units, sp) {
   }
 
   # fill in some missing values
-  data$decay_class <- as.character(ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class))
-  data$top <- ifelse(is.na(data$top), "Y", data$top)
-  data$cull <- ifelse(is.na(data$cull), 0, data$cull)
+  data$decay_class <- ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class)
+  data$top <- ifelse(data$exp_factor > 0 & is.na(data$top), "Y", data$top)
+  data$cull <- ifelse(data$exp_factor > 0 & is.na(data$cull), 0, data$cull)
 
   # add columns for further calculations
   data <- merge(data, REF_SPECIES_BFA, by = "species", all.x = TRUE, all.y = FALSE)
   data <- merge(data, Table_1, by = c("type", "decay_class"), all.x = TRUE, all.y = FALSE)
+  data$JENKINS_SPGRPCD <- as.character(data$JENKINS_SPGRPCD)
 
   data$path <- paste0(data$top,'_',data$status)
   data$path[data$path == "Y_1"] <- "1" # live, with intact top
@@ -739,14 +772,8 @@ DataPrep <- function(data, in_units, sp) {
   data$calc_bio <- ifelse(!is.na(data$dbh) & data$dbh < 1.0, "N", data$calc_bio)
   data$calc_bio <- ifelse(is.na(data$ht1), "N", data$calc_bio)
   data$calc_bio <- ifelse(!is.na(data$ht1) & data$ht1 < 4.5, "N", data$calc_bio)
-  data$calc_bio <- ifelse(data$top == "N" & is.na(data$ht2), "N", data$calc_bio)
+  data$calc_bio <- ifelse(!is.na(data$top) & data$top == "N" & is.na(data$ht2), "N", data$calc_bio)
   data$calc_bio <- ifelse(!is.na(data$ht2) & data$ht2 < 4.5, "N", data$calc_bio)
-
-  # make sure columns are the correct class
-  data$status <- as.character(data$status)
-  data$species <- as.character(data$species)
-  data$division <- as.character(data$division)
-  data$JENKINS_SPGRPCD <- as.character(data$JENKINS_SPGRPCD)
 
   return(data)
 
@@ -859,7 +886,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   if(out_units == "metric" & sp == "fia") {
 
-    main_cols <- c("division", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
+    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
                    "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
                    "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
                    "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
@@ -869,7 +896,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   } else if(out_units == "metric" & sp == "4letter") {
 
-    main_cols <- c("division", "status", "decay_class", "species", "species_fia",
+    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia",
                    "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
                    "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
                    "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
@@ -880,7 +907,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   } else if(out_units == "imperial" & sp == "fia") {
 
-    main_cols <- c("division", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                    "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
                    "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
@@ -890,7 +917,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   } else if(out_units == "imperial" & sp == "4letter") {
 
-    main_cols <- c("division", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                    "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
                    "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",

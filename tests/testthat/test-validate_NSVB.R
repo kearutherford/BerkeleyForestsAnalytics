@@ -249,6 +249,57 @@ test_that("Missing columns throw an error", {
 
 test_that("Wrong column class throws an error", {
 
+  # Categorical ----------------------------------------------------------------
+  expect_error(ValidateNSVB(data_val = nsvb_b57,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"division" must be a categorical variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b58,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"site" must be a categorical variable.\nYou have input a variable of class: factor')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b59,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"plot" must be a categorical variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b60,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"status" must be a categorical variable.\nYou have input a variable of class: factor')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b61,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"decay" must be a categorical variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b62,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"species" must be a categorical variable.\nYou have input a variable of class: factor')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b63,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"top" must be a categorical variable.\nYou have input a variable of class: factor')
+
+  # Numeric --------------------------------------------------------------------
   expect_error(ValidateNSVB(data_val = nsvb_b14,
                             sp_val = "4letter",
                             in_units_val = "metric",
@@ -321,6 +372,13 @@ test_that("Expansion factor handling works", {
                             out_units_val = "imperial",
                             results_val = "by_plot"),
                'There are missing expansion factors in the provided dataframe.\nFor plots with no trees, put 0 for the exp_factor.')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b64,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are negative expansion factors in the provided dataframe. All expansion factors must be >= 0.')
 
   expect_error(ValidateNSVB(data_val = nsvb_b23,
                             sp_val = "4letter",
@@ -492,4 +550,135 @@ test_that("Top handling works", {
 
 })
 
+
+test_that("DBH handling works", {
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b41,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are missing DBH values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA dbh.\nTrees with NA DBH will have NA biomass/carbon estimates. Consider investigating these trees.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b42,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'The allometric equations are for trees with DBH >= 2.5cm.\nYou inputted trees with DBH < 2.5cm. These trees will have NA biomass/carbon estimates.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b43,
+                              sp_val = "fia",
+                              in_units_val = "imperial",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'The allometric equations are for trees with DBH >= 1.0in.\nYou inputted trees with DBH < 1.0in. These trees will have NA biomass/carbon estimates.\n')
+
+})
+
+
+test_that("Height handling works", {
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b44,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are missing ht1 values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA ht1.\nTrees with NA ht1 will have NA biomass/carbon estimates.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b45,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are trees without tops, top = "N", with missing ht2 values in the provided dataframe.\nTrees without tops with NA ht2 will have NA biomass/carbon estimates.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b46,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'The allometric equations are for trees with height >= 1.37m.\nYou inputted trees with ht1 < 1.37m. These trees will have NA biomass/carbon estimates.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b47,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'The allometric equations are for trees with height >= 1.37m.\nYou inputted trees with ht2 < 1.37m. These trees will have NA biomass/carbon estimates.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b48,
+                              sp_val = "fia",
+                              in_units_val = "imperial",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'The allometric equations are for trees with height >= 4.5ft.\nYou inputted trees with ht1 < 4.5ft. These trees will have NA biomass/carbon estimates.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b49,
+                              sp_val = "fia",
+                              in_units_val = "imperial",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'The allometric equations are for trees with height >= 4.5ft.\nYou inputted trees with ht2 < 4.5ft. These trees will have NA biomass/carbon estimates.\n')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b50,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are trees with ht2 > ht1. ht1 must be greater than ht2.\n')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b51,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are trees with intact tops, top = "Y", with non-NA ht2 values in the provided dataframe.\nTrees with intact tops should not require ht2 values.\nThese trees will still be treated as if they have intact tops in the biomass/carbon estimations.\nBut you should consider investigating these trees with mismatched top/ht2.\n')
+
+})
+
+
+test_that("Crown ratio handling works", {
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b52,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are live trees with missing live crown ratio values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA crown_ratio.\nLive trees with NA crown_ratio will have mean crown ratios substituted in from table S11. Consider investigating these trees.\n')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b53,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'Crown ratio must be between 0 and 1! You inputted crown ratio values outside of this range.')
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b54,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are dead trees with live crown ratio values in the provided dataframe.\nDead trees should not have live crown ratios. Live crown ratios for dead trees will be overwritten to follow the NSVB framework.\n')
+
+})
+
+
+test_that("Cull handling works", {
+
+  expect_warning(ValidateNSVB(data_val = nsvb_b55,
+                              sp_val = "4letter",
+                              in_units_val = "metric",
+                              out_units_val = "imperial",
+                              results_val = "by_plot"),
+                 'There are trees with missing cull values in the provided dataframe - outside of plots with exp_factor of 0, signifying plots with no trees, which should have NA cull.\nThese trees will be assigned a cull of 0, assuming no cull. Consider investigating these trees.\n')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b56,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'Cull must be between 0 and 100! You inputted cull values outside of this range.')
+
+})
 
