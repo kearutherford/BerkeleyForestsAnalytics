@@ -670,14 +670,3 @@ test_that("Package and hand calculations match", {
 
 })
 
-
-
-
-
-
-
-
-
-
-
-
