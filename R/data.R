@@ -851,6 +851,23 @@ bad_sum <- data.frame(
 # dataframes used for BiomassNSVB function tests
 ######################################################################
 
+gtr_examples <- data.frame(
+  example = c("1", "2", "3", "4"),
+  site = "USDA",
+  plot = "1",
+  exp_factor = 20,
+  species = c("202", "316", "631", "802"),
+  status = c("1", "1", "0", "1"),
+  dbh = c(20, 11.1, 11.3, 18.1),
+  ht1 = c(110, 38, 28, 65),
+  ht2 = c(NA, NA, 21, 59),
+  crown_ratio = c(0.3, 0.3, NA, 0.3),
+  top = c("Y", "Y", "N", "N"),
+  decay_class = as.character(c(NA, NA, 2, NA)),
+  cull = c(0, 3, 10, 2),
+  division = c("240", "M210", "240", "M220")
+)
+
 nsvb_gm4 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
@@ -915,6 +932,38 @@ nsvb_gif <- data.frame(
   crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
   top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
   cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_m_units <- data.frame(
+  site = "SEKI",
+  plot = "1",
+  exp_factor = 50,
+  division = "M260",
+  status = "1",
+  decay_class = as.character(NA),
+  species = "PSME",
+  dbh = 25.4,
+  ht1 = 20,
+  ht2 = 15,
+  crown_ratio = 0.3,
+  top = "N",
+  cull = 0
+)
+
+nsvb_i_units <- data.frame(
+  site = "SEKI",
+  plot = "1",
+  exp_factor = 20.23431,
+  division = "M260",
+  status = "1",
+  decay_class = as.character(NA),
+  species = "PSME",
+  dbh = 10,
+  ht1 = 65.6168,
+  ht2 = 49.2126,
+  crown_ratio = 0.3,
+  top = "N",
+  cull = 0
 )
 
 nsvb_b1 <- data.frame(
@@ -1922,7 +1971,7 @@ nsvb_b63 <- data.frame(
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
   crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
-  top = as.factor(c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA)),
+  top = as.factor(c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA)), # wrong class
   cull = c(0,0,10,0,0,0,5,0,NA)
 )
 

@@ -177,37 +177,37 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
   # Categorical variables --------------------------------------------------------
   if(!is.character(data_val$division)) {
-    stop('"division" must be a categorical variable.\n',
+    stop('"division" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$division))
   }
 
   if(!is.character(data_val$site)) {
-    stop('"site" must be a categorical variable.\n',
+    stop('"site" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$site))
   }
 
   if(!is.character(data_val$plot)) {
-    stop('"plot" must be a categorical variable.\n',
+    stop('"plot" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$plot))
   }
 
   if(!is.character(data_val$status)) {
-    stop('"status" must be a categorical variable.\n',
+    stop('"status" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$status))
   }
 
   if(!is.character(data_val$decay)) {
-    stop('"decay" must be a categorical variable.\n',
+    stop('"decay" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$decay))
   }
 
   if(!is.character(data_val$species)) {
-    stop('"species" must be a categorical variable.\n',
+    stop('"species" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$species))
   }
 
   if(!is.character(data_val$top)) {
-    stop('"top" must be a categorical variable.\n',
+    stop('"top" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$top))
   }
 

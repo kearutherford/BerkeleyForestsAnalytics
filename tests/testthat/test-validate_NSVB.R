@@ -255,49 +255,49 @@ test_that("Wrong column class throws an error", {
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"division" must be a categorical variable.\nYou have input a variable of class: numeric')
+               '"division" must be a character variable.\nYou have input a variable of class: numeric')
 
   expect_error(ValidateNSVB(data_val = nsvb_b58,
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"site" must be a categorical variable.\nYou have input a variable of class: factor')
+               '"site" must be a character variable.\nYou have input a variable of class: factor')
 
   expect_error(ValidateNSVB(data_val = nsvb_b59,
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"plot" must be a categorical variable.\nYou have input a variable of class: numeric')
+               '"plot" must be a character variable.\nYou have input a variable of class: numeric')
 
   expect_error(ValidateNSVB(data_val = nsvb_b60,
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"status" must be a categorical variable.\nYou have input a variable of class: factor')
+               '"status" must be a character variable.\nYou have input a variable of class: factor')
 
   expect_error(ValidateNSVB(data_val = nsvb_b61,
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"decay" must be a categorical variable.\nYou have input a variable of class: numeric')
+               '"decay" must be a character variable.\nYou have input a variable of class: numeric')
 
   expect_error(ValidateNSVB(data_val = nsvb_b62,
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"species" must be a categorical variable.\nYou have input a variable of class: factor')
+               '"species" must be a character variable.\nYou have input a variable of class: factor')
 
   expect_error(ValidateNSVB(data_val = nsvb_b63,
                             sp_val = "4letter",
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"top" must be a categorical variable.\nYou have input a variable of class: factor')
+               '"top" must be a character variable.\nYou have input a variable of class: factor')
 
   # Numeric --------------------------------------------------------------------
   expect_error(ValidateNSVB(data_val = nsvb_b14,

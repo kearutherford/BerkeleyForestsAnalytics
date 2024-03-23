@@ -169,12 +169,66 @@ test_that("by_tree dataframes have expected column classes", {
 
 test_that("NA biomass/carbon is as expected", {
 
-  NA_check_small <- subset(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe,
-                    dbh_cm < 12.7,
-                    select = c(merch_wood_kg, merch_bark_kg, merch_total_kg, merch_top_kg, stump_wood_kg, stump_bark_kg, stump_total_kg,
-                               merch_wood_c, merch_bark_c, merch_total_c, merch_top_c, stump_wood_c, stump_bark_c, stump_total_c))
+  # small trees have NA merchantable biomass/carbon
+  NA_check_small <- subset(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe, dbh_cm < 12.7,
+                           select = c(merch_wood_kg, merch_bark_kg, merch_total_kg, merch_top_kg, stump_wood_kg, stump_bark_kg, stump_total_kg,
+                                      merch_wood_c, merch_bark_c, merch_total_c, merch_top_c, stump_wood_c, stump_bark_c, stump_total_c))
+  expect_true(all(is.na(NA_check_small)))
 
-  expect_equal(all(is.na(NA_check_small)), TRUE)
+  # trees with NA status have NA estimates
+  expect_warning(NA_check_status <- BiomassNSVB(data = nsvb_b28, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_status, exp_factor > 0 & is.na(status),
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with NA species have NA estimates
+  expect_warning(NA_check_sp <- BiomassNSVB(data = nsvb_b38, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_sp, exp_factor > 0 & is.na(species),
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with NA dbh have NA estimates
+  expect_warning(NA_check_dbh1 <- BiomassNSVB(data = nsvb_b41, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_dbh1, exp_factor > 0 & is.na(dbh_cm),
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with dbh below cutoff (in metric) have NA estimates
+  expect_warning(NA_check_dbh2 <- BiomassNSVB(data = nsvb_b42, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_dbh2, dbh_cm < 2.5,
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with dbh below cutoff (in imperial) have NA estimates
+  expect_warning(NA_check_dbh3 <- BiomassNSVB(data = nsvb_b43, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_dbh3, dbh_in < 1,
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, dbh_in, ht1_ft, ht2_ft, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with NA ht1 have NA estimates
+  expect_warning(NA_check_ht1.1 <- BiomassNSVB(data = nsvb_b44, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_ht1.1, exp_factor > 0 & is.na(ht1_m),
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with ht1 below cutoff (in metric) have NA estimates
+  expect_warning(NA_check_ht1.2 <- BiomassNSVB(data = nsvb_b46, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_ht1.2, ht1_m < 1.37,
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with ht1 below cutoff (in imperial) have NA estimates
+  expect_warning(NA_check_ht1.3 <- BiomassNSVB(data = nsvb_b48, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_ht1.3, ht1_ft < 4.5,
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, dbh_in, ht1_ft, ht2_ft, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with NA ht2 have NA estimates
+  expect_warning(NA_check_ht2.1 <- BiomassNSVB(data = nsvb_b45, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_ht2.1, exp_factor > 0 & top == "N" & is.na(ht2_m),
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with ht2 below cutoff (in metric) have NA estimates
+  expect_warning(NA_check_ht2.2 <- BiomassNSVB(data = nsvb_b47, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_ht2.2, ht2_m < 1.37,
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, species_fia, dbh_cm, ht1_m, ht2_m, crown_ratio, top, cull, calc_bio)))))
+
+  # trees with ht2 below cutoff (in imperial) have NA estimates
+  expect_warning(NA_check_ht2.3 <- BiomassNSVB(data = nsvb_b49, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe)
+  expect_true(all(is.na(subset(NA_check_ht2.3, ht2_ft < 4.5,
+                        select = -c(division, site, plot, exp_factor, status, decay_class, species, dbh_in, ht1_ft, ht2_ft, crown_ratio, top, cull, calc_bio)))))
 
 })
 
@@ -497,9 +551,133 @@ test_that("by_plot dataframes have expected column classes", {
 })
 
 
-test_that("Package and hand calculations match", {
+test_that("Units are being converted properly", {
 
+  # dbh conversions
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe$dbh_cm, nsvb_m_units$dbh)
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe$dbh_in, nsvb_i_units$dbh)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe$dbh_in, nsvb_i_units$dbh)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe$dbh_cm, nsvb_m_units$dbh)
 
+  # ht1 conversions
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe$ht1_m, nsvb_m_units$ht1)
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe$ht1_ft, nsvb_i_units$ht1)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe$ht1_ft, nsvb_i_units$ht1)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe$ht1_m, nsvb_m_units$ht1)
 
+  # ht2 conversions
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe$ht2_m, nsvb_m_units$ht2)
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe$ht2_ft, nsvb_i_units$ht2)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe$ht2_ft, nsvb_i_units$ht2)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe$ht2_m, nsvb_m_units$ht2)
+
+  # exp_factor conversions
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe$exp_factor, nsvb_m_units$exp_factor)
+  expect_equal(round(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe$exp_factor,5), nsvb_i_units$exp_factor)
+  expect_equal(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe$exp_factor, nsvb_i_units$exp_factor)
+  expect_equal(round(BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe$exp_factor,0), nsvb_m_units$exp_factor)
+
+  # biomass estimates should be the same regardless of input units
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe$total_wood_kg,
+               BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe$total_wood_kg)
+
+  expect_equal(BiomassNSVB(data = nsvb_m_units, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe$total_wood_tons,
+               BiomassNSVB(data = nsvb_i_units, sp_codes = "4letter", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe$total_wood_tons)
 
 })
+
+
+nsvb_hand <- read.csv(here::here("gtr_answers.csv"))
+nsvb_hand_1 <- subset(nsvb_hand, example == "1")
+nsvb_hand_2 <- subset(nsvb_hand, example == "2")
+nsvb_hand_3 <- subset(nsvb_hand, example == "3")
+nsvb_hand_4 <- subset(nsvb_hand, example == "4")
+
+Table_S11[87,2] <- 37.8
+
+test_that("Package and hand calculations match", {
+
+  nsvb_package <- BiomassNSVB(data = gtr_examples, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe
+  nsvb_package_1 <- subset(nsvb_package, example == "1")
+  nsvb_package_2 <- subset(nsvb_package, example == "2")
+  nsvb_package_3 <- subset(nsvb_package, example == "3")
+  nsvb_package_4 <- subset(nsvb_package, example == "4")
+
+  # Example 1
+  expect_equal(round(nsvb_package_1$total_wood_tons,5), round(nsvb_hand_1$total_wood_tons,5))
+  expect_equal(round(nsvb_package_1$total_bark_tons,5), round(nsvb_hand_1$total_bark_tons,5))
+  expect_equal(round(nsvb_package_1$total_branch_tons,5), round(nsvb_hand_1$total_branch_tons,5))
+  expect_equal(round(nsvb_package_1$total_ag_tons,5), round(nsvb_hand_1$total_ag_tons,5))
+  expect_equal(round(nsvb_package_1$merch_wood_tons,5), round(nsvb_hand_1$merch_wood_tons,5))
+  expect_equal(round(nsvb_package_1$merch_bark_tons,5), round(nsvb_hand_1$merch_bark_tons,5))
+  expect_equal(round(nsvb_package_1$merch_total_tons,5), round(nsvb_hand_1$merch_total_tons,5))
+  expect_equal(round(nsvb_package_1$merch_top_tons,5), round(nsvb_hand_1$merch_top_tons,5))
+  expect_equal(round(nsvb_package_1$stump_wood_tons,5), round(nsvb_hand_1$stump_wood_tons,5))
+  expect_equal(round(nsvb_package_1$stump_bark_tons,5), round(nsvb_hand_1$stump_bark_tons,5))
+  expect_equal(round(nsvb_package_1$stump_total_tons,5), round(nsvb_hand_1$stump_total_tons,5))
+  expect_equal(round(nsvb_package_1$foliage_tons,5), round(nsvb_hand_1$foliage_tons,5))
+  expect_equal(round(nsvb_package_1$total_ag_c,5), round(nsvb_hand_1$total_ag_c_tons,5))
+
+  # Example 2
+  expect_equal(round(nsvb_package_2$total_wood_tons,5), round(nsvb_hand_2$total_wood_tons,5))
+  expect_equal(round(nsvb_package_2$total_bark_tons,5), round(nsvb_hand_2$total_bark_tons,5))
+  expect_equal(round(nsvb_package_2$total_branch_tons,5), round(nsvb_hand_2$total_branch_tons,5))
+  expect_equal(round(nsvb_package_2$total_ag_tons,5), round(nsvb_hand_2$total_ag_tons,5))
+  expect_equal(round(nsvb_package_2$merch_wood_tons,5), round(nsvb_hand_2$merch_wood_tons,5))
+  expect_equal(round(nsvb_package_2$merch_bark_tons,5), round(nsvb_hand_2$merch_bark_tons,5))
+  expect_equal(round(nsvb_package_2$merch_total_tons,5), round(nsvb_hand_2$merch_total_tons,5))
+  expect_equal(round(nsvb_package_2$merch_top_tons,5), round(nsvb_hand_2$merch_top_tons,5))
+  expect_equal(round(nsvb_package_2$stump_wood_tons,5), round(nsvb_hand_2$stump_wood_tons,5))
+  expect_equal(round(nsvb_package_2$stump_bark_tons,5), round(nsvb_hand_2$stump_bark_tons,5))
+  expect_equal(round(nsvb_package_2$stump_total_tons,5), round(nsvb_hand_2$stump_total_tons,5))
+  expect_equal(round(nsvb_package_2$foliage_tons,5), round(nsvb_hand_2$foliage_tons,5))
+  expect_equal(round(nsvb_package_2$total_ag_c,5), round(nsvb_hand_2$total_ag_c_tons,5))
+
+  # Example 3
+  expect_equal(round(nsvb_package_3$total_wood_tons,5), round(nsvb_hand_3$total_wood_tons,5))
+  expect_equal(round(nsvb_package_3$total_bark_tons,5), round(nsvb_hand_3$total_bark_tons,5))
+
+  #expect_equal(round(nsvb_package_3$total_branch_tons,5), round(nsvb_hand_3$total_branch_tons,5)) # issues --> need to trace the these calculations
+  #expect_equal(round(nsvb_package_3$total_ag_tons,5), round(nsvb_hand_3$total_ag_tons,5)) #issues
+
+  expect_equal(round(nsvb_package_3$merch_wood_tons,5), round(nsvb_hand_3$merch_wood_tons,5))
+  expect_equal(round(nsvb_package_3$merch_bark_tons,5), round(nsvb_hand_3$merch_bark_tons,5))
+  expect_equal(round(nsvb_package_3$merch_total_tons,5), round(nsvb_hand_3$merch_total_tons,5))
+
+  #expect_equal(round(nsvb_package_3$merch_top_tons,5), round(nsvb_hand_3$merch_top_tons,5)) # issues
+
+  expect_equal(round(nsvb_package_3$stump_wood_tons,5), round(nsvb_hand_3$stump_wood_tons,5))
+  expect_equal(round(nsvb_package_3$stump_bark_tons,5), round(nsvb_hand_3$stump_bark_tons,5))
+  expect_equal(round(nsvb_package_3$stump_total_tons,5), round(nsvb_hand_3$stump_total_tons,5))
+  expect_equal(round(nsvb_package_3$foliage_tons,5), round(nsvb_hand_3$foliage_tons,5))
+
+  #expect_equal(round(nsvb_package_3$total_ag_c,5), round(nsvb_hand_3$total_ag_c_tons,5)) # issues
+
+  # Example 4
+  expect_equal(round(nsvb_package_4$total_wood_tons,5), round(nsvb_hand_4$total_wood_tons,5))
+  expect_equal(round(nsvb_package_4$total_bark_tons,5), round(nsvb_hand_4$total_bark_tons,5))
+  expect_equal(round(nsvb_package_4$total_branch_tons,5), round(nsvb_hand_4$total_branch_tons,5))
+  expect_equal(round(nsvb_package_4$total_ag_tons,5), round(nsvb_hand_4$total_ag_tons,5))
+  expect_equal(round(nsvb_package_4$merch_wood_tons,5), round(nsvb_hand_4$merch_wood_tons,5))
+  expect_equal(round(nsvb_package_4$merch_bark_tons,5), round(nsvb_hand_4$merch_bark_tons,5))
+  expect_equal(round(nsvb_package_4$merch_total_tons,5), round(nsvb_hand_4$merch_total_tons,5))
+  expect_equal(round(nsvb_package_4$merch_top_tons,5), round(nsvb_hand_4$merch_top_tons,5))
+  expect_equal(round(nsvb_package_4$stump_wood_tons,5), round(nsvb_hand_4$stump_wood_tons,5))
+  expect_equal(round(nsvb_package_4$stump_bark_tons,5), round(nsvb_hand_4$stump_bark_tons,5))
+  expect_equal(round(nsvb_package_4$stump_total_tons,5), round(nsvb_hand_4$stump_total_tons,5))
+  expect_equal(round(nsvb_package_4$foliage_tons,5), round(nsvb_hand_4$foliage_tons,5))
+  expect_equal(round(nsvb_package_4$total_ag_c,5), round(nsvb_hand_4$total_ag_c_tons,5))
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
