@@ -270,6 +270,12 @@ sum_bio_demo3
 
 <br>
 
+# NSVB biomass and carbon estimations 
+
+<img src = "man/figures/province_map.png" />
+
+<br>
+
 # Forest composition and structure compilations  
 
 The forest composition and structure functions (`ForestComp` and `ForestStr`) assist with common plot-level data compilations. These functions help ensure that best practices in data compilation are observed.
