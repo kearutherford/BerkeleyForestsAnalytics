@@ -669,16 +669,16 @@ sp_code_names <- data.frame(
 
 NSVB_sp_code_names1 <- data.frame(
   letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
-             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR", NA),
+             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUSP", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR", NA),
   fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
-          "312", "316", "352", "361", "431", "492", "631", "746", "801", "802", "805", "818", "920", "981", "998", "999", NA)
+          "312", "316", "352", "361", "431", "492", "631", "746", "800", "801", "802", "805", "818", "920", "981", "998", "999", NA)
 )
 
 NSVB_sp_code_names2 <- data.frame(
   letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
-             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR"),
+             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUSP", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR"),
   fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
-          "312", "316", "352", "361", "431", "492", "631", "746", "801", "802", "805", "818", "920", "981", "998", "999")
+          "312", "316", "352", "361", "431", "492", "631", "746", "800", "801", "802", "805", "818", "920", "981", "998", "999")
 )
 
 VanWag_species <- data.frame (
@@ -852,20 +852,20 @@ bad_sum <- data.frame(
 ######################################################################
 
 gtr_examples <- data.frame(
-  example = c("1", "2", "3", "4"),
+  example = c("1", "2", "3", "4", "5"),
   site = "USDA",
   plot = "1",
   exp_factor = 20,
-  species = c("202", "316", "631", "802"),
-  status = c("1", "1", "0", "1"),
-  dbh = c(20, 11.1, 11.3, 18.1),
-  ht1 = c(110, 38, 28, 65),
-  ht2 = c(NA, NA, 21, 59),
-  crown_ratio = c(0.3, 0.3, NA, 0.3),
-  top = c("Y", "Y", "N", "N"),
-  decay_class = as.character(c(NA, NA, 2, NA)),
-  cull = c(0, 3, 10, 2),
-  division = c("240", "M210", "240", "M220")
+  species = c("202", "316", "631", "802", "800"),
+  status = c("1", "1", "0", "1", "0"),
+  dbh = c(20, 11.1, 11.3, 18.1, 16),
+  ht1 = c(110, 38, 28, 65, 50),
+  ht2 = c(NA, NA, 21, 59, NA),
+  crown_ratio = c(0.3, 0.3, NA, 0.3, NA),
+  top = c("Y", "Y", "N", "N", "Y"),
+  decay_class = as.character(c(NA, NA, 2, NA, 3)),
+  cull = c(0, 3, 10, 2, 10),
+  division = c("240", "M210", "240", "M220", "M260")
 )
 
 nsvb_gm4 <- data.frame(

@@ -593,8 +593,6 @@ nsvb_hand_2 <- subset(nsvb_hand, example == "2")
 nsvb_hand_3 <- subset(nsvb_hand, example == "3")
 nsvb_hand_4 <- subset(nsvb_hand, example == "4")
 
-Table_S11[87,2] <- 37.8
-
 test_that("Package and hand calculations match", {
 
   nsvb_package <- BiomassNSVB(data = gtr_examples, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe
@@ -636,22 +634,17 @@ test_that("Package and hand calculations match", {
   # Example 3
   expect_equal(round(nsvb_package_3$total_wood_tons,5), round(nsvb_hand_3$total_wood_tons,5))
   expect_equal(round(nsvb_package_3$total_bark_tons,5), round(nsvb_hand_3$total_bark_tons,5))
-
-  #expect_equal(round(nsvb_package_3$total_branch_tons,5), round(nsvb_hand_3$total_branch_tons,5)) # issues --> need to trace the these calculations
-  #expect_equal(round(nsvb_package_3$total_ag_tons,5), round(nsvb_hand_3$total_ag_tons,5)) #issues
-
+  expect_equal(round(nsvb_package_3$total_branch_tons,5), round(nsvb_hand_3$total_branch_tons,5))
+  expect_equal(round(nsvb_package_3$total_ag_tons,5), round(nsvb_hand_3$total_ag_tons,5))
   expect_equal(round(nsvb_package_3$merch_wood_tons,5), round(nsvb_hand_3$merch_wood_tons,5))
   expect_equal(round(nsvb_package_3$merch_bark_tons,5), round(nsvb_hand_3$merch_bark_tons,5))
   expect_equal(round(nsvb_package_3$merch_total_tons,5), round(nsvb_hand_3$merch_total_tons,5))
-
-  #expect_equal(round(nsvb_package_3$merch_top_tons,5), round(nsvb_hand_3$merch_top_tons,5)) # issues
-
+  expect_equal(round(nsvb_package_3$merch_top_tons,5), round(nsvb_hand_3$merch_top_tons,5))
   expect_equal(round(nsvb_package_3$stump_wood_tons,5), round(nsvb_hand_3$stump_wood_tons,5))
   expect_equal(round(nsvb_package_3$stump_bark_tons,5), round(nsvb_hand_3$stump_bark_tons,5))
   expect_equal(round(nsvb_package_3$stump_total_tons,5), round(nsvb_hand_3$stump_total_tons,5))
   expect_equal(round(nsvb_package_3$foliage_tons,5), round(nsvb_hand_3$foliage_tons,5))
-
-  #expect_equal(round(nsvb_package_3$total_ag_c,5), round(nsvb_hand_3$total_ag_c_tons,5)) # issues
+  expect_equal(round(nsvb_package_3$total_ag_c,5), round(nsvb_hand_3$total_ag_c_tons,5))
 
   # Example 4
   expect_equal(round(nsvb_package_4$total_wood_tons,5), round(nsvb_hand_4$total_wood_tons,5))
