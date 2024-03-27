@@ -27,49 +27,49 @@ test_that("outputs are lists with two components: (1) total run time and (2) dat
 test_that("by_tree dataframes have expected column names", {
 
   expect_named(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
                  "top", "cull", "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", "merch_wood_kg", "merch_bark_kg", "merch_total_kg",
                  "merch_top_kg", "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
                  "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio"))
 
   expect_named(BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                  "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                  "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_wood_c",
                  "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio"))
 
   expect_named(BiomassNSVB(data = nsvb_gmf, sp_codes = "fia", input_units = "metric", output_units = "metric", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
                  "top", "cull", "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", "merch_wood_kg", "merch_bark_kg", "merch_total_kg",
                  "merch_top_kg", "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
                  "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio", "extra1", "extra2"))
 
   expect_named(BiomassNSVB(data = nsvb_gmf, sp_codes = "fia", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                  "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                  "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_wood_c",
                  "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio", "extra1", "extra2"))
 
   expect_named(BiomassNSVB(data = nsvb_gi4, sp_codes = "4letter", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
                  "top", "cull", "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", "merch_wood_kg", "merch_bark_kg", "merch_total_kg",
                  "merch_top_kg", "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
                  "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio"))
 
   expect_named(BiomassNSVB(data = nsvb_gi4, sp_codes = "4letter", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                  "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                  "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_wood_c",
                  "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio"))
 
   expect_named(BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio",
                  "top", "cull", "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg", "merch_wood_kg", "merch_bark_kg", "merch_total_kg",
                  "merch_top_kg", "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
                  "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio"))
 
   expect_named(BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe,
-               c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+               c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                  "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons", "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                  "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons", "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c", "merch_wood_c",
                  "merch_bark_c", "merch_total_c", "merch_top_c", "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio"))
@@ -83,6 +83,7 @@ test_that("by_tree dataframes have expected column classes", {
   by_tree_check1 <- BiomassNSVB(data = nsvb_gm4, sp_codes = "4letter", input_units = "metric", output_units = "imperial", results = "by_tree")$dataframe
 
   expect_equal(class(by_tree_check1$division), "character")
+  expect_equal(class(by_tree_check1$province), "character")
   expect_equal(class(by_tree_check1$site), "character")
   expect_equal(class(by_tree_check1$plot), "character")
   expect_equal(class(by_tree_check1$exp_factor), "numeric")
@@ -126,6 +127,7 @@ test_that("by_tree dataframes have expected column classes", {
   by_tree_check2 <- BiomassNSVB(data = nsvb_gif, sp_codes = "fia", input_units = "imperial", output_units = "metric", results = "by_tree")$dataframe
 
   expect_equal(class(by_tree_check2$division), "character")
+  expect_equal(class(by_tree_check2$province), "character")
   expect_equal(class(by_tree_check2$site), "character")
   expect_equal(class(by_tree_check2$plot), "character")
   expect_equal(class(by_tree_check2$exp_factor), "numeric")

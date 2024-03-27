@@ -122,6 +122,10 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     stop('Input data is missing the necessary "division" column.')
   }
 
+  if(!("province" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "province" column.')
+  }
+
   if(!("site" %in% colnames(data_val))) {
     stop('Input data is missing the necessary "site" column.')
   }
@@ -179,6 +183,11 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   if(!is.character(data_val$division)) {
     stop('"division" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$division))
+  }
+
+  if(!is.character(data_val$province)) {
+    stop('"province" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$province))
   }
 
   if(!is.character(data_val$site)) {
@@ -332,6 +341,74 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     stop('division must be 260, M260, 320, or 340!\n',
          'Unrecognized division codes: ', unrecognized_div)
+  }
+
+
+  ###########################################################
+  # Check that province is as expected
+  ###########################################################
+
+  if ('TRUE' %in% is.na(data_val$province)) {
+    stop('There are missing province codes in the provided dataframe.')
+  }
+
+  # Check for unrecognized province codes --------------------------------------
+  # note, some provinces that are not relevant to CA added to be able to run
+  # the documented examples
+  if(!all(is.element(data_val$province,
+                     c("M261", "M262", "261", "262", "263", "341", "342", "242", "M211", "M242", "M221")))) {
+
+    unrecognized_prov <- sort(paste0(unique(data_val[!is.element(data_val$province,
+                              c("M261", "M262", "261", "262", "263", "341", "342", "242", "M211", "M242", "M221")), "province"]), sep = " "))
+
+    stop('province must be M261, M262, 261, 262, 263, 341, or 342!\n',
+         'Unrecognized province codes: ', unrecognized_prov)
+  }
+
+  # Check for mismatched division/province codes -------------------------------
+  div_M260 <- subset(data_val, data_val$division == "M260")
+  div_260 <- subset(data_val, data_val$division == "260")
+  div_320 <- subset(data_val, data_val$division == "320")
+  div_340 <- subset(data_val, data_val$division == "340")
+
+  # division M260
+  if(!all(is.element(div_M260$province, c("M261", "M262")))) {
+
+    unrec_prov_M260 <- sort(paste0(unique(div_M260[!is.element(div_M260$province,
+                                   c("M261", "M262")), "province"]), sep = " "))
+
+    stop('for division M260, province must be M261 or M262!\n',
+         'Incorrect province codes for division M260: ', unrec_prov_M260)
+  }
+
+  # division 260
+  if(!all(is.element(div_260$province, c("261", "262", "263")))) {
+
+    unrec_prov_260 <- sort(paste0(unique(div_260[!is.element(div_260$province,
+                                  c("261", "262", "263")), "province"]), sep = " "))
+
+    stop('for division 260, province must be 261, 262, or 263!\n',
+         'Incorrect province codes for division 260: ', unrec_prov_260)
+  }
+
+  # division 320
+  if(!all(is.element(div_320$province, c("322")))) {
+
+    unrec_prov_320 <- sort(paste0(unique(div_320[!is.element(div_320$province,
+                                  c("322")), "province"]), sep = " "))
+
+    stop('for division 320, province must be 322!\n',
+         'Incorrect province codes for division 320: ', unrec_prov_320)
+  }
+
+  # division 340
+  if(!all(is.element(div_340$province, c("341", "342")))) {
+
+    unrec_prov_340 <- sort(paste0(unique(div_340[!is.element(div_340$province,
+                                  c("341", "342")), "province"]), sep = " "))
+
+    stop('for division 340, province must be 341 or 342!\n',
+         'Incorrect province codes for division 340: ', unrec_prov_340)
   }
 
 
@@ -756,13 +833,13 @@ DataPrep <- function(data, in_units, out_units, sp) {
   data$path[data$path == "N_0"] <- "4" # dead, with broken top
 
   # fill in crown ratios
-  data$Division <- ifelse(data$division %in% Table_S11$Division, data$division, "UNDEFINED")
+  data$Province <- ifelse(data$province %in% Table_S11$Province, data$province, "UNDEFINED")
   names(Table_S11)[names(Table_S11) == "HWD"] <- "type"
   Table_S11$cr <- Table_S11$Mean.CR/100
-  Table_S11_CR <- subset(Table_S11, select = c(Division, type, cr))
-  data <- merge(data, Table_S11_CR, by = c("Division", "type"), all.x = TRUE, all.y = FALSE)
+  Table_S11_CR <- subset(Table_S11, select = c(Province, type, cr))
+  data <- merge(data, Table_S11_CR, by = c("Province", "type"), all.x = TRUE, all.y = FALSE)
   data$CR <- ifelse(is.na(data$crown_ratio) | data$status == "0", data$cr, data$crown_ratio)
-  data <- subset(data, select = -c(Division, cr))
+  data <- subset(data, select = -c(Province, cr))
 
   # add column for trees that will have NA biomass estimates
   data$calc_bio <- "Y"
@@ -886,7 +963,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   if(out_units == "metric" & sp == "fia") {
 
-    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
+    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
                    "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
                    "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
                    "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
@@ -896,7 +973,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   } else if(out_units == "metric" & sp == "4letter") {
 
-    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia",
+    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia",
                    "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
                    "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
                    "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
@@ -907,7 +984,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   } else if(out_units == "imperial" & sp == "fia") {
 
-    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                    "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
                    "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
@@ -917,7 +994,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   } else if(out_units == "imperial" & sp == "4letter") {
 
-    main_cols <- c("division", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                    "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
                    "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
