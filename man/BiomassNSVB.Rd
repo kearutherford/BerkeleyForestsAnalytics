@@ -13,7 +13,7 @@ BiomassNSVB(
 )
 }
 \arguments{
-\item{data}{A dataframe or tibble with the following columns: site, plot, exp_factor, division, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.}
+\item{data}{A dataframe or tibble with the following columns: division, site, plot, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.}
 
 \item{sp_codes}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".}
 

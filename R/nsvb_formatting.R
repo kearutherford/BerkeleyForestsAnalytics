@@ -333,10 +333,10 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # note, some divisions that are not relevant to CA added to be able to run
   # the documented examples
   if(!all(is.element(data_val$division,
-                     c("260", "M260", "320", "340", "240", "M210", "M220")))) {
+                     c("260", "M260", "320", "340", "240", "M210", "M220", "M240")))) {
 
     unrecognized_div <- sort(paste0(unique(data_val[!is.element(data_val$division,
-                                                                c("260", "M260", "320", "340", "240", "M210", "M220")), "division"]),
+                                                                c("260", "M260", "320", "340", "240", "M210", "M220", "M240")), "division"]),
                                     sep = " "))
 
     stop('division must be 260, M260, 320, or 340!\n',
@@ -356,12 +356,12 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # note, some provinces that are not relevant to CA added to be able to run
   # the documented examples
   if(!all(is.element(data_val$province,
-                     c("M261", "M262", "261", "262", "263", "341", "342", "242", "M211", "M242", "M221")))) {
+                     c("M261", "M262", "261", "262", "263", "322", "341", "342", "242", "M211", "M242", "M221")))) {
 
     unrecognized_prov <- sort(paste0(unique(data_val[!is.element(data_val$province,
-                              c("M261", "M262", "261", "262", "263", "341", "342", "242", "M211", "M242", "M221")), "province"]), sep = " "))
+                              c("M261", "M262", "261", "262", "263", "322", "341", "342", "242", "M211", "M242", "M221")), "province"]), sep = " "))
 
-    stop('province must be M261, M262, 261, 262, 263, 341, or 342!\n',
+    stop('province must be M261, M262, 261, 262, 263, 322, 341, or 342!\n',
          'Unrecognized province codes: ', unrecognized_prov)
   }
 

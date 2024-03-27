@@ -173,6 +173,13 @@ test_that("Missing columns throw an error", {
                             results_val = "by_plot"),
                'Input data is missing the necessary "exp_factor" column.')
 
+  expect_error(ValidateNSVB(data_val = nsvb_b65,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'Input data is missing the necessary "province" column.')
+
   expect_error(ValidateNSVB(data_val = nsvb_b4,
                             sp_val = "4letter",
                             in_units_val = "metric",
@@ -256,6 +263,13 @@ test_that("Wrong column class throws an error", {
                             out_units_val = "imperial",
                             results_val = "by_plot"),
                '"division" must be a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b66,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               '"province" must be a character variable.\nYou have input a variable of class: numeric')
 
   expect_error(ValidateNSVB(data_val = nsvb_b58,
                             sp_val = "4letter",
@@ -412,6 +426,53 @@ test_that("Division handling works", {
                             out_units_val = "imperial",
                             results_val = "by_plot"),
                'division must be 260, M260, 320, or 340!\nUnrecognized division codes:  220 M330 ')
+
+})
+
+
+test_that("Province handling works", {
+
+  expect_error(ValidateNSVB(data_val = nsvb_b67,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'There are missing province codes in the provided dataframe.')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b68,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'province must be M261, M262, 261, 262, 263, 322, 341, or 342!\nUnrecognized province codes: 3222 M2611 ')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b69,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'for division M260, province must be M261 or M262!\nIncorrect province codes for division M260: 261')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b70,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'for division 260, province must be 261, 262, or 263!\nIncorrect province codes for division 260: M261')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b71,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'for division 320, province must be 322!\nIncorrect province codes for division 320: 341')
+
+  expect_error(ValidateNSVB(data_val = nsvb_b72,
+                            sp_val = "4letter",
+                            in_units_val = "metric",
+                            out_units_val = "imperial",
+                            results_val = "by_plot"),
+               'for division 340, province must be 341 or 342!\nIncorrect province codes for division 340: 322')
 
 })
 
