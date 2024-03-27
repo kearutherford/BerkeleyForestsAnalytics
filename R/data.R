@@ -869,6 +869,23 @@ gtr_examples <- data.frame(
   province = c("242", "M211", "M242", "M221", "M261")
 )
 
+nsvb_sum_check <- data.frame(
+  division = "M260",
+  province = "M261",
+  site = c("SEKI","SEKI","SEKI","SEKI","SEKI","SEKI","SEKI","SEKI","SEKI","YOMI","YOMI","YOMI","YOMI","YOMI","YOMI","YOMI","YOMI","YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,2,3,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,0,50,50),
+  status = as.character(c(1,0,1,1,0,1,1,1,0,1,1,1,1,1,1,NA,1,1)),
+  decay_class = as.character(c(NA,2,NA,NA,3,NA,NA,NA,3,NA,NA,NA,NA,NA,NA,NA,NA,NA)),
+  species = c("PSME","ABCO","PSME","PSME","ABCO","ABCO","ABCO","ABCO","ABCO","PSME","PSME","ABCO","PSME","ABCO","PSME",NA,"PSME","PSME"),
+  dbh = c(10.3,44.7,19.1,32.8,13.8,20.2,31.7,13.1,26.3,10.7,40.6,20.1,33.8,12.4,22.2,NA,NA,28.1),
+  ht1 = c(5.1,26.4,8.0,23.3,11.1,8.5,22.3,9.7,15.6,5.5,28.4,7.9,22.3,10.8,9.5,NA,9.9,NA),
+  ht2 = c(NA,NA,6.0,NA,8.2,NA,NA,NA,NA,NA,18.6,NA,NA,NA,NA,NA,NA,NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,NA,0.5,0.4,0.2,NA,0.6,0.4,0.3,0.3,0.5,0.2,NA,0.3,0.3),
+  top = c("Y","Y","N","Y","N","Y","Y","Y","Y","Y","N","Y","Y","Y","Y",NA,"Y","Y"),
+  cull = c(0,0,10,0,0,0,5,0,10,5,0,10,0,0,0,NA,0,0)
+)
+
 nsvb_gm4 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
