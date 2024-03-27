@@ -594,6 +594,7 @@ nsvb_hand_1 <- subset(nsvb_hand, example == "1")
 nsvb_hand_2 <- subset(nsvb_hand, example == "2")
 nsvb_hand_3 <- subset(nsvb_hand, example == "3")
 nsvb_hand_4 <- subset(nsvb_hand, example == "4")
+nsvb_hand_5 <- subset(nsvb_hand, example == "5")
 
 test_that("Package and hand calculations match", {
 
@@ -602,6 +603,7 @@ test_that("Package and hand calculations match", {
   nsvb_package_2 <- subset(nsvb_package, example == "2")
   nsvb_package_3 <- subset(nsvb_package, example == "3")
   nsvb_package_4 <- subset(nsvb_package, example == "4")
+  nsvb_package_5 <- subset(nsvb_package, example == "5")
 
   # Example 1
   expect_equal(round(nsvb_package_1$total_wood_tons,5), round(nsvb_hand_1$total_wood_tons,5))
@@ -662,6 +664,21 @@ test_that("Package and hand calculations match", {
   expect_equal(round(nsvb_package_4$stump_total_tons,5), round(nsvb_hand_4$stump_total_tons,5))
   expect_equal(round(nsvb_package_4$foliage_tons,5), round(nsvb_hand_4$foliage_tons,5))
   expect_equal(round(nsvb_package_4$total_ag_c,5), round(nsvb_hand_4$total_ag_c_tons,5))
+
+  # Example 5
+  expect_equal(round(nsvb_package_5$total_wood_tons,5), round(nsvb_hand_5$total_wood_tons,5))
+  expect_equal(round(nsvb_package_5$total_bark_tons,5), round(nsvb_hand_5$total_bark_tons,5))
+  expect_equal(round(nsvb_package_5$total_branch_tons,5), round(nsvb_hand_5$total_branch_tons,5))
+  expect_equal(round(nsvb_package_5$total_ag_tons,5), round(nsvb_hand_5$total_ag_tons,5))
+  expect_equal(round(nsvb_package_5$merch_wood_tons,5), round(nsvb_hand_5$merch_wood_tons,5))
+  expect_equal(round(nsvb_package_5$merch_bark_tons,5), round(nsvb_hand_5$merch_bark_tons,5))
+  expect_equal(round(nsvb_package_5$merch_total_tons,5), round(nsvb_hand_5$merch_total_tons,5))
+  expect_equal(round(nsvb_package_5$merch_top_tons,5), round(nsvb_hand_5$merch_top_tons,5))
+  expect_equal(round(nsvb_package_5$stump_wood_tons,5), round(nsvb_hand_5$stump_wood_tons,5))
+  expect_equal(round(nsvb_package_5$stump_bark_tons,5), round(nsvb_hand_5$stump_bark_tons,5))
+  expect_equal(round(nsvb_package_5$stump_total_tons,5), round(nsvb_hand_5$stump_total_tons,5))
+  expect_equal(round(nsvb_package_5$foliage_tons,5), round(nsvb_hand_5$foliage_tons,5))
+  expect_equal(round(nsvb_package_5$total_ag_c,5), round(nsvb_hand_5$total_ag_c_tons,5))
 
 })
 
