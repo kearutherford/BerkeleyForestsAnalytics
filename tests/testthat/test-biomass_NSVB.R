@@ -684,8 +684,6 @@ test_that("Package and GTR example calculations match", {
 })
 
 
-by_hand_sp_st <- read.csv(here::here("data_to_internalize/by_hand_sp_st.csv"))
-
 test_that("Package and hand species/status summaries match", {
 
   expect_warning(expect_warning(by_package_sp_st <- BiomassNSVB(data = nsvb_sum_check, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_sp_st")$dataframe))
@@ -727,8 +725,6 @@ test_that("Package and hand species/status summaries match", {
 })
 
 
-by_hand_sp <- read.csv(here::here("data_to_internalize/by_hand_species.csv"))
-
 test_that("Package and hand species summaries match", {
 
   expect_warning(expect_warning(by_package_sp <- BiomassNSVB(data = nsvb_sum_check, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_species")$dataframe))
@@ -755,8 +751,6 @@ test_that("Package and hand species summaries match", {
 
 })
 
-
-by_hand_st <- read.csv(here::here("data_to_internalize/by_hand_status.csv"))
 
 test_that("Package and hand status summaries match", {
 
@@ -798,8 +792,6 @@ test_that("Package and hand status summaries match", {
 
 })
 
-
-by_hand_plot <- read.csv(here::here("data_to_internalize/by_hand_plot.csv"))
 
 test_that("Package and hand plot summaries match", {
 
