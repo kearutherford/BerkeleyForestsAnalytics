@@ -49,7 +49,7 @@ NSVBCalcs <- function(data) {
         Table_S3_Pull <- Table_Pull(Table_S3a, Table_S3b, data[i,])
         Table_S4_Pull <- Table_Pull(Table_S4a, Table_S4b, data[i,])
 
-        EQ_7_hm <- uniroot(EQ_7, c(0,data$ht1[i]), tol = 0.001, maxiter = 100000, d = 4, table_data_1 = Table_S3_Pull, table_data_2 = Table_S4_Pull, tree_data = data[i,])
+        EQ_7_hm <- stats::uniroot(EQ_7, c(0,data$ht1[i]), tol = 0.001, maxiter = 100000, d = 4, table_data_1 = Table_S3_Pull, table_data_2 = Table_S4_Pull, tree_data = data[i,])
         h_m <- EQ_7_hm$root
 
         R_1 <- EQ_6(1, Table_S5_Pull, data[i,])

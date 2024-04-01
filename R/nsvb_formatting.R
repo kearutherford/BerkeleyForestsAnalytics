@@ -25,6 +25,19 @@
 #' \item by_sp_st: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by species as well as by status (reported in megagrams per hectare or US tons per acre).
 #' }
 #'
+#' @examples
+#' BiomassNSVB(data = nsvb_demo,
+#'             sp_codes = "4letter",
+#'             input_units = "metric",
+#'             output_units = "metric",
+#'             results = "by_plot")
+#'
+#' BiomassNSVB(data = nsvb_demo,
+#'             sp_codes = "4letter",
+#'             input_units = "metric",
+#'             output_units = "metric",
+#'             results = "by_status")
+#'
 #' @export
 
 BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_plot") {
@@ -1011,4 +1024,12 @@ CleanDF <- function(data, in_units, out_units, sp) {
   return(data)
 
 }
+
+
+globalVariables(c("CR", "DIVISION", "Decay.code", "DensProp", "JENKINS_SPGRPCD", "Province", "S.H", "SPCD",
+                  "WDSG", "bark_prop", "branch_prop", "carbon_frac", "cr", "crown_ratio", "cull", "decay_class",
+                  "fia", "foliage_bio", "ht1", "ht2", "k", "letter", "merch_bark_bio", "merch_top_bio",
+                  "merch_total_bio", "merch_wood_bio", "path", "stump_bark_bio", "stump_total_bio",
+                  "stump_wood_bio", "top", "total_ag_bio", "total_bark_bio", "total_branch_bio", "total_wood_bio",
+                  "type", "wood_prop"))
 

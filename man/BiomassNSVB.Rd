@@ -13,7 +13,7 @@ BiomassNSVB(
 )
 }
 \arguments{
-\item{data}{A dataframe or tibble with the following columns: division, site, plot, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.}
+\item{data}{A dataframe or tibble with the following columns: division, province, site, plot, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.}
 
 \item{sp_codes}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".}
 
@@ -35,4 +35,18 @@ Depends on the results setting:
 }
 \description{
 Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status. The package is specifically designed for use in California ecosystems, and, therefore, only covers the ecodivisions found in California (260, M260, 320, and 340).
+}
+\examples{
+BiomassNSVB(data = nsvb_demo,
+            sp_codes = "4letter",
+            input_units = "metric",
+            output_units = "metric",
+            results = "by_plot")
+
+BiomassNSVB(data = nsvb_demo,
+            sp_codes = "4letter",
+            input_units = "metric",
+            output_units = "metric",
+            results = "by_status")
+
 }

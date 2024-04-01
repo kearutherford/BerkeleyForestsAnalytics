@@ -589,8 +589,6 @@ test_that("by_plot dataframes have expected column classes", {
 })
 
 
-nsvb_hand <- read.csv(here::here("data_to_internalize/gtr_answers.csv"))
-
 test_that("Package and GTR example calculations match", {
 
   nsvb_package <- BiomassNSVB(data = gtr_examples, sp_codes = "fia", input_units = "imperial", output_units = "imperial", results = "by_tree")$dataframe
