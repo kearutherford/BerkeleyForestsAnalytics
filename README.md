@@ -495,6 +495,8 @@ above-ground wood, bark, branch, merchantable, stump, and foliage tree
 biomass and carbon. The function is specifically designed for California
 forests.
 
+## :eight_spoked_asterisk: `TreeBiomass( )`
+
 ### Inputs
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
@@ -681,6 +683,10 @@ nsvb_demo
     ## 15   NA         0.2    Y    0
     ## 16   NA          NA <NA>   NA
 
+*Notice that site = YOMI, plot = 2 is a plot without trees. For all
+plot-level summaries below, this plot without trees will have 0
+biomass/carbon estimates.*
+
 <br>
 
 **Results by tree:**
@@ -694,7 +700,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.16 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -742,7 +748,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.15 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -780,7 +786,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.16 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -887,7 +893,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
