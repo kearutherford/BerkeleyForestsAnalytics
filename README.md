@@ -79,11 +79,12 @@ framework, covered in the following section.
 ## :eight_spoked_asterisk: `TreeBiomass( )`
 
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA)
-Regional Biomass Equations (pre the new national-scale volume and
+Regional Biomass Equations (prior to the new national-scale volume and
 biomass (NSVB) framework) to estimate above-ground stem, bark, and
 branch tree biomass. It provides the option to adjust biomass estimates
 for the structural decay of standing dead trees. See “Background
-information for tree biomass estimations” below for further details.
+information for tree biomass estimations (prior to NSVB framework)”
+below for further details.
 
 ### Inputs
 
@@ -97,9 +98,9 @@ information for tree biomass estimations” below for further details.
 3.  `species` Must be a variable (column) in the provided dataframe or
     tibble. Specifies the species of the individual tree. Must follow
     four-letter species code or FIA naming conventions (see “Species
-    code tables” section in “Background information for tree biomass
-    estimations” below). The class of this variable will be coerced to
-    character.
+    code tables” section in “General background information for tree
+    biomass estimations” below). The class of this variable will be
+    coerced to character.
 
 4.  `dbh` Must be a **numeric** variable (column) in the provided
     dataframe or tibble. Provides the diameter at breast height (DBH) of
@@ -111,19 +112,21 @@ information for tree biomass estimations” below for further details.
 
 6.  `decay_class` Default is set to “ignore”, indicating that biomass
     estimates for standing dead trees will not be adjusted for
-    structural decay. It can be set to a variable (column) in the
-    provided dataframe or tibble. For standing dead trees, the decay
-    class should be 1, 2, 3, 4, or 5 (see “Structural decay of standing
-    dead trees” section in “Background information for tree biomass
-    estimations” below). For live trees, the decay class should be NA
-    or 0. The class of this variable will be coerced to character.
+    structural decay (see “Structural decay of standing dead trees”
+    section in “Background information for tree biomass estimations
+    (prior to NSVB framework)” below). It can be set to a variable
+    (column) in the provided dataframe or tibble. For standing dead
+    trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay class
+    codes tables” section in “General background information for tree
+    biomass estimations” below). For live trees, the decay class should
+    be NA or 0. The class of this variable will be coerced to character.
 
 7.  `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
     four-letter code or FIA naming convention (see “Species code tables”
-    section in “Background information for tree biomass estimations”
-    below). Must be set to either “4letter” or “fia”. The default is set
-    to “4letter”.
+    section in “General background information for tree biomass
+    estimations” below). Must be set to either “4letter” or “fia”. The
+    default is set to “4letter”.
 
 8.  `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies whether the dbh and ht variables were measured using
@@ -297,16 +300,18 @@ plot as well as species.
     (0). The class of this variable will be coerced to factor.
 
 6.  `decay_class` Must be a variable (column) in the provided dataframe
-    or tibble. For standing dead trees, the decay class should be 1, 2,
-    3, 4, or 5 (see “Structural decay of standing dead trees” section in
-    “Background information for tree biomass estimations” below). For
-    live trees, the decay class should be NA or 0. The class of this
-    variable will be coerced to character.
+    or tibble (see “Structural decay of standing dead trees” section in
+    “Background information for tree biomass estimations (prior to NSVB
+    framework)” below). For standing dead trees, the decay class should
+    be 1, 2, 3, 4, or 5 (see “Decay class codes tables” section in
+    “General background information for tree biomass estimations”
+    below). For live trees, the decay class should be NA or 0. The class
+    of this variable will be coerced to character.
 
 7.  `species` Must be a variable (column) in the provided dataframe or
     tibble. Specifies the species of the individual tree. Must follow
     four-letter species code or FIA naming conventions (see “Species
-    code tables” in “Background information for tree biomass
+    code tables” in “General background information for tree biomass
     estimations” below). The class of this variable will be coerced to
     character.
 
@@ -321,9 +326,9 @@ plot as well as species.
 10. `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
     four-letter code or FIA naming convention (see “Species code tables”
-    section in “Background information for tree biomass estimations”
-    below). Must be set to either “4letter” or “fia”. The default is set
-    to “4letter”.
+    section in “General background information for tree biomass
+    estimations” below). Must be set to either “4letter” or “fia”. The
+    default is set to “4letter”.
 
 11. `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies (1) whether the dbh and ht variables were measured using
@@ -504,13 +509,14 @@ forests.
     exact):
 
     - **division:** Must be a character variable. Describes the
-      ecodivision in which the data were collected (see “BLANK” section
-      in “Background information for tree biomass estimates” below).
+      ecodivision in which the data were collected (see “CA division and
+      provinces” section in “Background information for tree biomass
+      estimates (NSVB framework)” below).
 
     - **province:** Must be a character variable. Describes the province
-      (within the ecodivision) in which the data were collected (see
-      “BLANK” section in “Background information for tree biomass
-      estimates” below).
+      (within the ecodivision) in which the data were collected (see “CA
+      division and provinces” section in “Background information for
+      tree biomass estimates (NSVB framework)” below).
 
     - **site:** Must be a character variable. Describes the broader
       location or forest where the data were collected.
@@ -526,15 +532,15 @@ forests.
       individual tree is alive (1) or dead (0).
 
     - **decay_class:** Must be a character variable. For standing dead
-      trees, the decay class should be 1, 2, 3, 4, or 5 (see “Structural
-      decay of standing dead trees” section in “Background information
-      for tree biomass estimations” below). For live trees, the decay
-      class should be NA or 0.
+      trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay
+      class code tables” section in “General background information for
+      tree biomass estimations” below). For live trees, the decay class
+      should be NA or 0.
 
     - **species:** Must be a character variable. Specifies the species
       of the individual tree. Must follow four-letter species code or
-      FIA naming conventions (see “Species code tables” in “Background
-      information for tree biomass estimations” below).
+      FIA naming conventions (see “Species code tables” in “General
+      background information for tree biomass estimations” below).
 
     - **dbh:** Must be a numeric variable. Provides the diameter at
       breast height (DBH) of the individual tree in either centimeters
@@ -564,9 +570,9 @@ forests.
 2.  `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
     four-letter code or FIA naming convention (see “Species code tables”
-    section in “Background information for tree biomass estimations”
-    below). Must be set to either “4letter” or “fia”. The default is set
-    to “4letter”.
+    section in “General background information for tree biomass
+    estimations” below). Must be set to either “4letter” or “fia”. The
+    default is set to “4letter”.
 
 3.  `input_units` Not a variable (column) in the provided dataframe or
     tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables
@@ -700,7 +706,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.17 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -786,7 +792,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -840,7 +846,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -893,7 +899,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.16 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
