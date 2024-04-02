@@ -495,12 +495,13 @@ sum_bio_demo3
 # Tree biomass and carbon estimates (NSVB framework)
 
 The `BiomassNSVB` function follows the new national-scale volume and
-biomass (NSVB) framework (outlined in the 2023 GTR WO-104) to estimate
-above-ground wood, bark, branch, merchantable, stump, and foliage tree
-biomass and carbon. The function is specifically designed for California
-forests.
+biomass (NSVB) framework to estimate above-ground wood, bark, branch,
+merchantable, stump, and foliage tree biomass and carbon. The function
+is specifically designed for California forests. See “Background
+information for tree biomass estimations (NSVB framework)” below for
+further details.
 
-## :eight_spoked_asterisk: `TreeBiomass( )`
+## :eight_spoked_asterisk: `BiomassNSVB( )`
 
 ### Inputs
 
@@ -706,7 +707,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.16 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -792,7 +793,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.16 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -846,7 +847,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.15 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
