@@ -773,18 +773,18 @@ SG_table <- data.frame(
 ######################################################################
 
 good_trees_metric <- data.frame(
-  Plot = c(1,1,1,2,2),
-  Live = c(1, 0, 1, 1, 0),
-  Decay = c(NA, 3, NA, NA, 2),
+  Plot = as.character(c(1,1,1,2,2)),
+  Live = as.character(c(1, 0, 1, 1, 0)),
+  Decay = as.character(c(NA, 3, NA, NA, 2)),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8),
   HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1)
 )
 
 good_trees_imperial <- data.frame(
-  Plot = c(1,1,1,2,2),
-  Live = c(1, 0, 1, 1, 0),
-  Decay = c(NA, 3, NA, NA, 2),
+  Plot = as.character(c(1,1,1,2,2)),
+  Live = as.character(c(1, 0, 1, 1, 0)),
+  Decay = as.character(c(NA, 3, NA, NA, 2)),
   SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
   DBH_IN = c(4.1, 17.6, 7.5, 12.9, 5.4),
   HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4)
@@ -792,10 +792,11 @@ good_trees_imperial <- data.frame(
 
 bad_trees <- data.frame(
 
-  Live_v1 = c(1, 0, 1, 1, 0),
-  Live_v2 = c(0, 0, 1, 1, 0),
-  Live_NA = c(1, 0, NA, 1, 0), # NA value
+  Live_v1 = as.character(c(1, 0, 1, 1, 0)),
+  Live_v2 = as.character(c(0, 0, 1, 1, 0)),
+  Live_NA = as.character(c(1, 0, NA, 1, 0)), # NA value
   Live_bad1 = c("L", "D", "L", "L", "D"), # not following 0/1
+  Live_bad2 = c(1, 0, 1, 1, 0), # wrong class
 
   SPP4 = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
   SPP4_NA = c("CADE", NA, "QUKE", "ABCO", "PSME"), # NA value
@@ -803,11 +804,13 @@ bad_trees <- data.frame(
   SPP4_bad2 = c("CADD", "PIPP", "QUKK", "ABCC", "PSMM"), # all wrong
   SPP_fia_bad1 = c("81", "1222", "818", "15", "202"), # one wrong
   SPP_fia_bad2 = c("8111", "1222", "8188", "1555", "2022"), # all wrong
+  SPP_fia_bad3 = c(81, 122, 818, 15, 202), # wrong class
 
-  Decay = c(NA, 3, NA, NA, 2),
-  Decay_bad1 = c(NA, 8, NA, NA, 2), # one wrong
-  Decay_bad2 = c(NA, 3, 4, NA, 2), # L tree w a D code
-  Decay_bad3 = c(NA, 0, NA, NA, 2), # D tree w a L code
+  Decay = as.character(c(NA, 3, NA, NA, 2)),
+  Decay_bad1 = as.character(c(NA, 8, NA, NA, 2)), # one wrong
+  Decay_bad2 = as.character(c(NA, 3, 4, NA, 2)), # L tree w a D code
+  Decay_bad3 = as.character(c(NA, 0, NA, NA, 2)), # D tree w a L code
+  Decay_bad4 = c(NA, 3, NA, NA, 2), # wrong class
 
   DBH_CM = c(15.3, 44.7, 19.1, 32.8, 13.8),
   DBH_IN = c(6.0, 17.6, 7.5, 12.9, 5.4),
@@ -857,9 +860,11 @@ bad_sum <- data.frame(
 
   Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   Forest_NA = c("SEKI", NA, "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+  Forest_bad1 = c(1,1,1,1,2,2,2,2,2), # wrong class
 
   Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
   Plot_id_NA = as.character(c(1,NA,2,2,1,1,2,2,2)), # NA value
+  Plot_id_bad1 = c(1,1,2,2,1,1,2,2,2), # wrong class
   Plot_id_bad2 = as.character(c(1,1,2,2,1,1,2,2,3)), # misuse of 0 ef
 
   SPH = c(50,50,50,50,50,50,50,50,50),

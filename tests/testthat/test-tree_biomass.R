@@ -45,9 +45,11 @@ test_that("Final column classes are as expected", {
                               sp_codes = "4letter",
                               units = "metric")
 
-  expect_equal(class(trial_metric$Live), "factor")
+  expect_equal(class(trial_metric$Live), "character")
   expect_equal(class(trial_metric$Decay), "character")
   expect_equal(class(trial_metric$SPP), "character")
+  expect_equal(class(trial_metric$DBH_CM), "numeric")
+  expect_equal(class(trial_metric$HT_M), "numeric")
   expect_equal(class(trial_metric$stem_bio_kg), "numeric")
   expect_equal(class(trial_metric$bark_bio_kg), "numeric")
   expect_equal(class(trial_metric$branch_bio_kg), "numeric")
@@ -62,9 +64,11 @@ test_that("Final column classes are as expected", {
                                 sp_codes = "4letter",
                                 units = "imperial")
 
-  expect_equal(class(trial_metric$Live), "factor")
-  expect_equal(class(trial_metric$Decay), "character")
-  expect_equal(class(trial_metric$SPP), "character")
+  expect_equal(class(trial_imperial$Live), "character")
+  expect_equal(class(trial_imperial$Decay), "character")
+  expect_equal(class(trial_imperial$SPP), "character")
+  expect_equal(class(trial_imperial$DBH_IN), "numeric")
+  expect_equal(class(trial_imperial$HT_FT), "numeric")
   expect_equal(class(trial_imperial$stem_bio_tons), "numeric")
   expect_equal(class(trial_imperial$bark_bio_tons), "numeric")
   expect_equal(class(trial_imperial$branch_bio_tons), "numeric")

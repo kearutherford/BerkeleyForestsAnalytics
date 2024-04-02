@@ -11,11 +11,11 @@
 #' Uses Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The package uses the California equation set and should not be used for data from other regions.
 #'
 #' @param data A dataframe or tibble. Each row must be an observation of an individual tree.
-#' @param status Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
-#' @param species Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.
+#' @param status Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).
+#' @param species Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail).
 #' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 #' @param ht Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
-#' @param decay_class Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+#' @param decay_class Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a character variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0.
 #' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
 #' @param units Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #'
@@ -152,6 +152,29 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, deca
   # Check that column classes are as expected
   ###########################################################
 
+  # Categorical variables ------------------------------------------------------
+  if(!is.character(data_val[[status_val]])) {
+    stop('The parameter status requires a character variable.\n',
+         'You have input a variable of class: ', class(data_val[[status_val]]))
+  }
+
+  if(!is.character(data_val[[sp_val]])) {
+    stop('The parameter species requires a character variable.\n',
+         'You have input a variable of class: ', class(data_val[[sp_val]]))
+  }
+
+  if(decay_val == "ignore") {
+    # do nothing
+  } else {
+
+    if(!is.character(data_val[[decay_val]])) {
+      stop('The parameter decay_class requires a character variable.\n',
+           'You have input a variable of class: ', class(data_val[[decay_val]]))
+    }
+
+  }
+
+  # Numeric variables ----------------------------------------------------------
   if(!is.numeric(data_val[[dbh_val]])) {
     stop('The parameter dbh requires a numerical variable.\n',
          'You have input a variable of class: ', class(data_val[[dbh_val]]))
@@ -184,8 +207,6 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, deca
   # Check that status is as expected
   ###########################################################
 
-  data_val[[status_val]] <- as.factor(data_val[[status_val]]) # coerce status_val into factor
-
   # Check for unrecognized status codes ----------------------------------------
   if(!all(is.element(data_val[[status_val]],
                      c("0","1", NA)))) {
@@ -212,8 +233,6 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, deca
   ###########################################################
 
   if(decay_val != "ignore") {
-
-    data_val[[decay_val]] <- as.character(data_val[[decay_val]]) # coerce decay_val into character
 
     # Check for unrecognized decay codes -----------------------------------------
     if(!all(is.element(data_val[[decay_val]],
@@ -257,8 +276,6 @@ ValidateTreeData <- function(data_val, status_val, sp_val, dbh_val, ht_val, deca
   ###########################################################
   # Check that species codes are as expected
   ###########################################################
-
-  data_val[[sp_val]] <- as.character(data_val[[sp_val]]) # coerce sp_val into character
 
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(data_val[[sp_val]])) {

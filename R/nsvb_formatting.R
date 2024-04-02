@@ -192,7 +192,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   # Check that column classes are as expected
   ###########################################################
 
-  # Categorical variables --------------------------------------------------------
+  # Categorical variables ------------------------------------------------------
   if(!is.character(data_val$division)) {
     stop('"division" must be a character variable.\n',
          'You have input a variable of class: ', class(data_val$division))
