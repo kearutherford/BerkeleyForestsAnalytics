@@ -71,10 +71,10 @@ vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest
 Inventory and Analysis (FIA) Regional Biomass Equations (prior to the
 new national-scale volume and biomass (NSVB) framework) to estimate
-above-ground stem, bark, and branch tree biomass. Many groups still use
-these older equations (e.g., California Air Resources Board). However,
-we also offer the new national-scale volume and biomass (NSVB)
-framework, covered in the following section.
+above-ground stem, bark, and branch tree biomass.
+`BerkeleyForestsAnalytics` also offers the new national-scale volume and
+biomass (NSVB) framework (see “Tree biomass and carbon estimates (NSVB
+framework)” section below).
 
 ## :eight_spoked_asterisk: `TreeBiomass( )`
 
@@ -117,7 +117,7 @@ below for further details.
     (prior to NSVB framework)” below). It can be set to a variable
     (column) in the provided dataframe or tibble. For standing dead
     trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay class
-    codes tables” section in “General background information for tree
+    code table” section in “General background information for tree
     biomass estimations” below). For live trees, the decay class should
     be NA or 0. The class of this variable will be coerced to character.
 
@@ -303,7 +303,7 @@ plot as well as species.
     or tibble (see “Structural decay of standing dead trees” section in
     “Background information for tree biomass estimations (prior to NSVB
     framework)” below). For standing dead trees, the decay class should
-    be 1, 2, 3, 4, or 5 (see “Decay class codes tables” section in
+    be 1, 2, 3, 4, or 5 (see “Decay class code table” section in
     “General background information for tree biomass estimations”
     below). For live trees, the decay class should be NA or 0. The class
     of this variable will be coerced to character.
@@ -496,10 +496,9 @@ sum_bio_demo3
 
 The `BiomassNSVB` function follows the new national-scale volume and
 biomass (NSVB) framework to estimate above-ground wood, bark, branch,
-merchantable, stump, and foliage tree biomass and carbon. The function
-is specifically designed for California forests. See “Background
-information for tree biomass estimations (NSVB framework)” below for
-further details.
+merchantable, stump, and foliage tree biomass and carbon. See
+“Background information for tree biomass estimations (NSVB framework)”
+below for further details.
 
 ## :eight_spoked_asterisk: `BiomassNSVB( )`
 
@@ -534,7 +533,7 @@ further details.
 
     - **decay_class:** Must be a character variable. For standing dead
       trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay
-      class code tables” section in “General background information for
+      class code table” section in “General background information for
       tree biomass estimations” below). For live trees, the decay class
       should be NA or 0.
 
@@ -707,7 +706,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.18 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -785,7 +784,7 @@ nsvb_demo2
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
 nsvb_demo3 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_species")
 
@@ -793,7 +792,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.17 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -839,7 +838,7 @@ nsvb_demo3
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
 nsvb_demo4 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_status")
 
@@ -892,7 +891,7 @@ nsvb_demo4
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
 nsvb_demo5 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_sp_st")
 
@@ -900,7 +899,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.17 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2864,7 +2863,7 @@ Rutherford. We are open to building out the species list over time.
 *Note: Four-letter species codes are the first two letters of the genus
 followed by the first two letters of the species.*
 
-## Decay class code tables
+## Decay class code table
 
 | decay class | limbs and branches          | top           | % bark remaining | sapwood presence and condition                                | heartwood condition                                                                                        |
 |:------------|:----------------------------|:--------------|:-----------------|:--------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------|
@@ -2889,7 +2888,7 @@ The `TreeBiomass()` and `SummaryBiomass()` functions calculate biomass
 using the Forest Inventory and Analysis (FIA) Regional Biomass Equations
 (prior to the new national-scale volume and biomass (NSVB) framework).
 Specifically, we use the equation set for the California (CA) region.
-Our suite of biomass functions should not be used for data collected in
+This suite of biomass functions should not be used for data collected in
 a different region.
 
 **Stem biomass**
@@ -3055,37 +3054,27 @@ California forests (i.e., only divisions, provinces, and tree species
 relevant to California are incorporated into our function). The full
 NSVB framework is detailed in Westfall *et al.* (2023).
 
-**Reference:**
-
-- Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J.,
-  Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R.,
-  Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S,P.,
-  Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A
-  national-scale tree volume, biomass, and carbon modeling system for
-  the United States.* General Technical Report WO-104. USDA Forest
-  Service, Northern Research Station, Washington, DC.
-  <https://doi.org/10.2737/WO-GTR-104>
+**Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D.,
+Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck,
+D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley,
+S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A
+national-scale tree volume, biomass, and carbon modeling system for the
+United States.* General Technical Report WO-104. USDA Forest Service,
+Northern Research Station, Washington, DC.
+<https://doi.org/10.2737/WO-GTR-104>
 
 ## CA divisions and provinces
 
-The NSVB framework uses ecodivisions (which they also refer to simply as
-divisions). Divisions are further broken down into provinces. We created
-the map below to help guide users in assigning a division/province to
-their study site(s). However, if your study site is on the border and
-you are not sure which division/province your study site falls in, you
-can download the provinces layer yourself (ECOMAP Team 2017).
+The NSVB framework uses ecodivisions (i.e., divisions). Divisions are
+further broken down into provinces. We created the map below to help
+guide users in assigning a division/province to their study site(s). If
+you are not sure which division/province your site falls in based on the
+map, you can download the provinces layer (S_USA.EcoMapProvinces) from
+[here](https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=ecomap).
 
 <br>
 
 <img src = "man/figures/province_map.png" />
-
-<br>
-
-**Reference:**
-
-ECOMAP Team. (2017). S_USA.EcoMapProvinces. General Technical Report
-WO-76. USDA Forest Service, Washington, DC.
-<https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=ecomap>
 
 <br>
 

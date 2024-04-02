@@ -32,13 +32,11 @@ devtools::install_github('kearutherford/BerkeleyForestsAnalytics', build_vignett
 library(BerkeleyForestsAnalytics)
 ```
 
-
 ## Citation instructions 
 
 ```{r}
 citation("BerkeleyForestsAnalytics")
 ```
-
 
 ## Vignette
 
@@ -54,7 +52,7 @@ vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 
 # Tree biomass estimates (prior to NSVB framework) 
 
-These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework) to estimate above-ground stem, bark, and branch tree biomass. Many groups still use these older equations (e.g., California Air Resources Board). However, we also offer the new national-scale volume and biomass (NSVB) framework, covered in the following section. 
+These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework) to estimate above-ground stem, bark, and branch tree biomass. `BerkeleyForestsAnalytics` also offers the new national-scale volume and biomass (NSVB) framework (see "Tree biomass and carbon estimates (NSVB framework)" section below). 
 
 ## :eight_spoked_asterisk: `TreeBiomass( )`
 
@@ -72,7 +70,7 @@ The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional
 
 5. `ht` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
 
-6. `decay_class` Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations (prior to NSVB framework)" below). It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class codes tables" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+6. `decay_class` Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations (prior to NSVB framework)" below). It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code table" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
 
 7. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see "Species code tables" section in "General background information for tree biomass estimations" below). Must be set to either "4letter" or "fia". The default is set to "4letter".
 
@@ -164,7 +162,7 @@ The `SummaryBiomass` function calls on the `TreeBiomass` function described abov
 
 5. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
 
-6. `decay_class` Must be a variable (column) in the provided dataframe or tibble (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations (prior to NSVB framework)" below). For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class codes tables" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+6. `decay_class` Must be a variable (column) in the provided dataframe or tibble (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations (prior to NSVB framework)" below). For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code table" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
 
 7. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" in "General background information for tree biomass estimations" below). The class of this variable will be coerced to character.
 
@@ -269,7 +267,7 @@ sum_bio_demo3
 
 # Tree biomass and carbon estimates (NSVB framework) 
 
-The `BiomassNSVB` function follows the new national-scale volume and biomass (NSVB) framework to estimate above-ground wood, bark, branch, merchantable, stump, and foliage tree biomass and carbon. The function is specifically designed for California forests. See “Background information for tree biomass estimations (NSVB framework)” below for further details.
+The `BiomassNSVB` function follows the new national-scale volume and biomass (NSVB) framework to estimate above-ground wood, bark, branch, merchantable, stump, and foliage tree biomass and carbon. See “Background information for tree biomass estimations (NSVB framework)” below for further details.
 
 ## :eight_spoked_asterisk: `BiomassNSVB( )`
 
@@ -289,7 +287,7 @@ The `BiomassNSVB` function follows the new national-scale volume and biomass (NS
 
     * **status:** Must be a character variable. Specifies whether the individual tree is alive (1) or dead (0).
 
-    * **decay_class:** Must be a character variable. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code tables" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0.
+    * **decay_class:** Must be a character variable. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code table" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0.
 
     * **species:** Must be a character variable. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" in "General background information for tree biomass estimations" below).
 
@@ -389,7 +387,7 @@ nsvb_demo2
 **Results summarized by plot as well as by species:**
 ```{r}
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
 nsvb_demo3 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_species")
 
@@ -401,7 +399,7 @@ nsvb_demo3
 **Results summarized by plot as well as by status:**
 ```{r}
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
 nsvb_demo4 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_status")
 
@@ -413,7 +411,7 @@ nsvb_demo4
 **Results summarized by plot as well as by species and status:**
 ```{r}
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
 nsvb_demo5 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_sp_st")
 
@@ -425,7 +423,6 @@ nsvb_demo5
 # Forest composition and structure compilations  
 
 The forest composition and structure functions (`ForestComp` and `ForestStr`) assist with common plot-level data compilations. These functions help ensure that best practices in data compilation are observed.
-
 
 ## :eight_spoked_asterisk: `ForestComp( )`
 
@@ -634,7 +631,6 @@ The three functions (`FineFuels`, `CoarseFuels` and `LitterDuff`) estimate surfa
 This set of functions evolved from Rfuels, a package developed by Danny Foster ([See Rfuels GitHub](https://github.com/danfosterfire/Rfuels)). 
 Although these functions are formatted differently than Rfuels, they follow the same general equations. The goal of this set of functions is to take the workflow outlined in Rfuels and make it more flexible and user-friendly. Rfuels will remain operational as the legacy program. 
 
-
 ## :eight_spoked_asterisk: `FineFuels( )`
 
 The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is defined as 1-hour (0-0.64cm or 0-0.25in), 10-hour (0.64-2.54cm or 0.25-1.0in), and 100-hour (2.54-7.62cm or 1-3in) fuels. Assumptions for FWD data collection: 
@@ -698,7 +694,6 @@ A dataframe with the following columns:
 
 10. `sc_length_100h`: slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
-
 ### Demonstration
 
 ```{r}
@@ -730,7 +725,6 @@ The `CoarseFuels` function estimates coarse woody debris (CWD) loads. CWD is def
 
 * Each plot has one or more fuel transects (the number of transects per plot is variable)
 * For a pre-defined distance along each transect, every 1000-hour fuel particle that intersects the transect is individually recorded (diameter and decay status)
-
 
 ### Inputs
 
@@ -787,7 +781,6 @@ A dataframe with the following columns:
 7. `sc_length_1000s`: slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for sound 1000-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
 8. `sc_length_1000r`: slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for rotten 1000-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
-
 
 ### Demonstrations
 
@@ -847,7 +840,6 @@ The `LitterDuff` function estimates duff and litter loads. Assumptions for duff/
 * Each plot has one or more fuel transects (the number of transects per plot is variable)
 * Duff and litter depths (or combined duff/litter depth) are sampled at fixed locations along each transect (the number of samples per transect are variable) 
 
-
 ### Inputs
 
 1. `tree_data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
@@ -902,7 +894,6 @@ A dataframe with the following columns:
     *If duff and litter were measured together:*
 
     * `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and duff load in megagrams per hectare (or US tons per acre)
-
 
 ### Demonstrations
 
@@ -1279,7 +1270,7 @@ strs_surface_demo2
 
 # General background information for tree biomass estimations
 
-## Species code tables
+## Species code tables 
 
 All hardwood and softwood species currently included/recognized in the `TreeBiomass()`, `SummaryBiomass()` and `BiomassNSVB()` functions are listed in the tables below. If you need an additional species included, please contact the maintainer of `BerkeleyForestAnalytics`, Kea Rutherford. We are open to building out the species list over time. 
 
@@ -1333,7 +1324,7 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 *Note: Four-letter species codes are the first two letters of the genus followed by the first two letters of the species.*
 
 
-## Decay class code tables 
+## Decay class code table 
 
 |decay class|limbs and branches|top|% bark remaining|sapwood presence and condition|heartwood condition|
 |:---|:---|:---|:---|:---|:---|
@@ -1351,7 +1342,7 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 
 ## Allometric equations
 
-The `TreeBiomass()` and `SummaryBiomass()` functions calculate biomass using the Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework). Specifically, we use the equation set for the California (CA) region. Our suite of biomass functions should not be used for data collected in a different region.
+The `TreeBiomass()` and `SummaryBiomass()` functions calculate biomass using the Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework). Specifically, we use the equation set for the California (CA) region. This suite of biomass functions should not be used for data collected in a different region.
 
 **Stem biomass**
 
@@ -1464,25 +1455,16 @@ The adjusted biomass of standing dead trees can be calculated using the followin
 
 The `BiomassNSVB()` function follows the new national-scale volume and biomass (NSVB) framework. The function is specifically designed for California forests (i.e., only divisions, provinces, and tree species relevant to California are incorporated into our function). The full NSVB framework is detailed in Westfall *et al.* (2023). 
 
-**Reference:**
-
-* Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S,P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A national-scale tree volume, biomass, and carbon modeling system for the United States.* General Technical Report WO-104. USDA Forest Service, Northern Research Station, Washington, DC. https://doi.org/10.2737/WO-GTR-104
+**Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A national-scale tree volume, biomass, and carbon modeling system for the United States.* General Technical Report WO-104. USDA Forest Service, Northern Research Station, Washington, DC. https://doi.org/10.2737/WO-GTR-104
 
 
 ## CA divisions and provinces 
 
-The NSVB framework uses ecodivisions (which they also refer to simply as divisions). Divisions are further broken down into provinces. We created the map below to help guide users in assigning a division/province to their study site(s). However, if your study site is on the border and you are not sure which division/province your study site falls in, you can download the provinces layer yourself (ECOMAP Team 2017). 
+The NSVB framework uses ecodivisions (i.e., divisions). Divisions are further broken down into provinces. We created the map below to help guide users in assigning a division/province to their study site(s). If you are not sure which division/province your site falls in based on the map, you can download the provinces layer (S_USA.EcoMapProvinces) from [here](https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=ecomap).
 
 <br>
 
 <img src = "man/figures/province_map.png" />
-
-<br>
-
-**Reference:**
-
-ECOMAP Team. (2017). S_USA.EcoMapProvinces. General Technical Report WO-76. USDA Forest Service, Washington, DC. https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=ecomap
-
 
 <br> 
 
