@@ -3389,7 +3389,7 @@ g_strs <- data.frame(
 g_strs_sp <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  stratum = c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2), # intentionally numeric
+  stratum = as.character(c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2)),
   plot = as.character(c(1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2,1,1,2,2,3,3,1,1,2,2,1,1,2,2,1,1,2,2)),
   species =  c("ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME","ABCO","PSME"),
   bio = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25,15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
@@ -3509,6 +3509,15 @@ b_strs_10 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
   stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
   plot = as.character(c(1,1,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)), # repeat time:site:stratum:plot
+  ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
+  dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
+)
+
+b_strs_11 <- data.frame(
+  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  stratum = c("1", "1", "1", "2", "2", "1", "1", "2", "2", "1", "1", "1", "2", "2", "1", "1", "2", "2"),
+  plot = as.character(c(1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2,1,2)),
   ba = c(31,42,50,34,37,38,46,34,40,15,30,21,24,28,18,19,23,25),
   dbh = c(15,24,27,23,28,19,25,21,17,17,26,29,25,30,21,27,23,19)
 )

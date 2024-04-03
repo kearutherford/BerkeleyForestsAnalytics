@@ -259,7 +259,23 @@ test_that("Missing columns and missing id information throws an error", {
 })
 
 
-test_that("Wrong column class throws an error", {
+test_that("Wrong column class throws an error (for character variables)", {
+
+  # STRS -----------------------------------------------
+
+
+
+  # SRS -------------------------------------------------
+
+
+
+  # FFS -------------------------------------------------
+
+
+})
+
+
+test_that("Wrong column class throws an error (for numeric variables)", {
 
   # STRS -----------------------------------------------
   expect_error(ValidatePlotData(data_check = b_strs_9,

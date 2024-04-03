@@ -377,24 +377,23 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
   # check that all necessary columns are present and are formatted as expected
   ValidateColumns(fwd_data_val = fwd_data_check, cwd_data_val = cwd_data_check, design_val = design_check, type_val = type_check, unit_val = unit_check)
 
-  # check that each observation is a unique plot, coerce ID columns to be character, and rename columns
+  # check that each observation is a unique plot and rename columns
   # functions defined in compilation_general.R
   if(type_check == "type1" || type_check == "type3") {
 
     ValidateObs(data_val = fwd_data_check, design_val = design_check, data_name = "fwd_data")
-    return_fwd <- ValidateColClass(data_val = fwd_data_check, design_val = design_check)
 
     if(unit_check == "metric") {
 
-      colnames(return_fwd)[which(names(return_fwd) == colnames(return_fwd["load_1h_Mg_ha"]))] <- "load_1h"
-      colnames(return_fwd)[which(names(return_fwd) == colnames(return_fwd["load_10h_Mg_ha"]))] <- "load_10h"
-      colnames(return_fwd)[which(names(return_fwd) == colnames(return_fwd["load_100h_Mg_ha"]))] <- "load_100h"
+      colnames(fwd_data_check)[which(names(fwd_data_check) == colnames(fwd_data_check["load_1h_Mg_ha"]))] <- "load_1h"
+      colnames(fwd_data_check)[which(names(fwd_data_check) == colnames(fwd_data_check["load_10h_Mg_ha"]))] <- "load_10h"
+      colnames(fwd_data_check)[which(names(fwd_data_check) == colnames(fwd_data_check["load_100h_Mg_ha"]))] <- "load_100h"
 
     } else if (unit_check == "imperial") {
 
-      colnames(return_fwd)[which(names(return_fwd) == colnames(return_fwd["load_1h_ton_ac"]))] <- "load_1h"
-      colnames(return_fwd)[which(names(return_fwd) == colnames(return_fwd["load_10h_ton_ac"]))] <- "load_10h"
-      colnames(return_fwd)[which(names(return_fwd) == colnames(return_fwd["load_100h_ton_ac"]))] <- "load_100h"
+      colnames(fwd_data_check)[which(names(fwd_data_check) == colnames(fwd_data_check["load_1h_ton_ac"]))] <- "load_1h"
+      colnames(fwd_data_check)[which(names(fwd_data_check) == colnames(fwd_data_check["load_10h_ton_ac"]))] <- "load_10h"
+      colnames(fwd_data_check)[which(names(fwd_data_check) == colnames(fwd_data_check["load_100h_ton_ac"]))] <- "load_100h"
 
     }
 
@@ -403,16 +402,15 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
   if(type_check == "type2" || type_check == "type3") {
 
     ValidateObs(data_val = cwd_data_check, design_val = design_check, data_name = "cwd_data")
-    return_cwd <- ValidateColClass(data_val = cwd_data_check, design_val = design_check)
-    return_cwd$sc_length_1000h <- return_cwd$sc_length_1000s + return_cwd$sc_length_1000r
+    cwd_data_check$sc_length_1000h <- cwd_data_check$sc_length_1000s + cwd_data_check$sc_length_1000r
 
     if(unit_check == "metric") {
 
-      colnames(return_cwd)[which(names(return_cwd) == colnames(return_cwd["load_cwd_Mg_ha"]))] <- "load_1000h"
+      colnames(cwd_data_check)[which(names(cwd_data_check) == colnames(cwd_data_check["load_cwd_Mg_ha"]))] <- "load_1000h"
 
     } else if (unit_check == "imperial") {
 
-      colnames(return_cwd)[which(names(return_cwd) == colnames(return_cwd["load_cwd_ton_ac"]))] <- "load_1000h"
+      colnames(cwd_data_check)[which(names(cwd_data_check) == colnames(cwd_data_check["load_cwd_ton_ac"]))] <- "load_1000h"
 
     }
 
@@ -420,15 +418,15 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
 
   # merge fwd and cwd dataframes
   if(type_check == "type3") {
-    return_merge <- MergeDfs(fwd_df = return_fwd, cwd_df = return_cwd, design_type = design_check)
+    return_merge <- MergeDfs(fwd_df = fwd_data_check, cwd_df = cwd_data_check, design_type = design_check)
   }
 
   # check weights dataframe
   # function defined in compilation_general.R
   if(design_check == "STRS" && type_check == "type1") {
-    ValidateWeights(data_val = return_fwd, wt_data_val = wt_data_check, data_name = "fwd_data")
+    ValidateWeights(data_val = fwd_data_check, wt_data_val = wt_data_check, data_name = "fwd_data")
   } else if(design_check == "STRS" && type_check == "type2") {
-    ValidateWeights(data_val = return_cwd, wt_data_val = wt_data_check, data_name = "cwd_data")
+    ValidateWeights(data_val = cwd_data_check, wt_data_val = wt_data_check, data_name = "cwd_data")
   } else if(design_check == "STRS" && type_check == "type3") {
     ValidateWeights(data_val = return_merge, wt_data_val = wt_data_check, data_name = "combined fwd_cwd_data")
   }
@@ -438,9 +436,9 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
   if(all(fpc_data_check != "not_needed", na.rm = TRUE)) {
 
     if(type_check == "type1") {
-      ValidateFPC(data_val = return_fwd, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "fwd_data")
+      ValidateFPC(data_val = fwd_data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "fwd_data")
     } else if (type_check == "type2") {
-      ValidateFPC(data_val = return_cwd, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "cwd_data")
+      ValidateFPC(data_val = cwd_data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "cwd_data")
     } else if (type_check == "type3") {
       ValidateFPC(data_val = return_merge, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "combined fwd_cwd_data")
     }
@@ -449,9 +447,9 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
 
   # return appropriate dataframe
   if(type_check == "type1") {
-    return(return_fwd)
+    return(fwd_data_check)
   } else if (type_check == "type2") {
-    return(return_cwd)
+    return(cwd_data_check)
   } else if (type_check == "type3") {
     return(return_merge)
   }
@@ -576,6 +574,31 @@ ValidateColumns <- function(fwd_data_val, cwd_data_val, design_val, type_val, un
     }
 
     # check column classes
+    if(!is.character(fwd_data_val$time)) {
+      stop('For fwd_data, time must be a character variable.\n',
+           'The time column is currently class: ', class(fwd_data_val$time))
+    }
+
+    if(!is.character(fwd_data_val$site)) {
+      stop('For fwd_data, site must be a character variable.\n',
+           'The site column is currently class: ', class(fwd_data_val$site))
+    }
+
+    if(!is.character(fwd_data_val$plot)) {
+      stop('For fwd_data, plot must be a character variable.\n',
+           'The plot column is currently class: ', class(fwd_data_val$plot))
+    }
+
+    if(design_val == "STRS" && !is.character(fwd_data_val$stratum)) {
+      stop('For fwd_data, stratum must be a character variable.\n',
+           'The stratum column is currently class: ', class(fwd_data_val$stratum))
+    }
+
+    if(design_val == "FFS" && !is.character(fwd_data_val$trt_type)) {
+      stop('For fwd_data, trt_type must be a character variable.\n',
+           'The trt_type column is currently class: ', class(fwd_data_val$trt_type))
+    }
+
     if(unit_val == "metric") {
 
       if(!is.numeric(fwd_data_val$load_1h_Mg_ha)) {
@@ -741,6 +764,31 @@ ValidateColumns <- function(fwd_data_val, cwd_data_val, design_val, type_val, un
     }
 
     # check column classes
+    if(!is.character(cwd_data_val$time)) {
+      stop('For cwd_data, time must be a character variable.\n',
+           'The time column is currently class: ', class(cwd_data_val$time))
+    }
+
+    if(!is.character(cwd_data_val$site)) {
+      stop('For cwd_data, site must be a character variable.\n',
+           'The site column is currently class: ', class(cwd_data_val$site))
+    }
+
+    if(!is.character(cwd_data_val$plot)) {
+      stop('For cwd_data, plot must be a character variable.\n',
+           'The plot column is currently class: ', class(cwd_data_val$plot))
+    }
+
+    if(design_val == "STRS" && !is.character(cwd_data_val$stratum)) {
+      stop('For cwd_data, stratum must be a character variable.\n',
+           'The stratum column is currently class: ', class(cwd_data_val$stratum))
+    }
+
+    if(design_val == "FFS" && !is.character(cwd_data_val$trt_type)) {
+      stop('For cwd_data, trt_type must be a character variable.\n',
+           'The trt_type column is currently class: ', class(cwd_data_val$trt_type))
+    }
+
     if(unit_val == "metric") {
 
       if(!is.numeric(cwd_data_val$load_1000s_Mg_ha)) {
