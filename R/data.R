@@ -3091,6 +3091,60 @@ bad_cwd_20 <- data.frame(
   slope = c(10,2,2,0,0,5,5)
 )
 
+bad_cwd_21 <- data.frame(
+  time = c(2019, 2019, 2019, 2020, 2020, 2020, 2020), # wrong class
+  site = c("SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "90", "90", "90", "90", "90", "90"),
+  diameter = c(12,15,9,10,20,31,16),
+  status = c("R","S","R","R","S","S","S"),
+  length_1000h = c(15,15,15,15,15,15,15),
+  slope = c(10,2,2,0,0,5,5)
+)
+
+bad_cwd_22 <- data.frame(
+  time = c("2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = 1, # wrong class
+  plot = c("1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "90", "90", "90", "90", "90", "90"),
+  diameter = c(12,15,9,10,20,31,16),
+  status = c("R","S","R","R","S","S","S"),
+  length_1000h = c(15,15,15,15,15,15,15),
+  slope = c(10,2,2,0,0,5,5)
+)
+
+bad_cwd_23 <- data.frame(
+  time = c("2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c(1, 2, 2, 1, 1, 2, 2), # wrong class
+  transect = c("90", "90", "90", "90", "90", "90", "90"),
+  diameter = c(12,15,9,10,20,31,16),
+  status = c("R","S","R","R","S","S","S"),
+  length_1000h = c(15,15,15,15,15,15,15),
+  slope = c(10,2,2,0,0,5,5)
+)
+
+bad_cwd_24 <- data.frame(
+  time = c("2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "2", "2", "1", "1", "2", "2"),
+  transect = 90, # wrong class
+  diameter = c(12,15,9,10,20,31,16),
+  status = c("R","S","R","R","S","S","S"),
+  length_1000h = c(15,15,15,15,15,15,15),
+  slope = c(10,2,2,0,0,5,5))
+
+bad_cwd_25 <- data.frame(
+  time = c("2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "90", "90", "90", "90", "90", "90"),
+  diameter = c(12,15,9,10,20,31,16),
+  status = as.factor(c("R","S","R","R","S","S","S")), # wrong class
+  length_1000h = c(15,15,15,15,15,15,15),
+  slope = c(10,2,2,0,0,5,5)
+)
+
 bad_cwd_sum2 <- data.frame(
   time = c("2019", "2019", "2020", "2020"),
   site = c("SEKI", "SEKI","SEKI", "SEKI"),
@@ -3271,6 +3325,46 @@ bad_duff_8 <- data.frame(
   litter_depth = c(2,NA,6,7,5,5,3,6), # missing depth
   duff_depth = c(5,1,3,2,4,4,2,1),
   lit_duff_depth = c(7,NA,9,9,9,9,5,7) # missing depth
+)
+
+bad_duff_9 <- data.frame(
+  time = c(2019, 2019, 2019, 2019, 2020, 2020, 2020, 2020), # wrong class
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "180", "90", "180", "90", "180", "90", "180"),
+  litter_depth = c(2,3,6,7,5,5,3,6),
+  duff_depth = c(5,1,3,2,4,4,2,1),
+  lit_duff_depth = c(7,4,9,9,9,9,5,7)
+)
+
+bad_duff_10 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = 1, # wrong class
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "180", "90", "180", "90", "180", "90", "180"),
+  litter_depth = c(2,3,6,7,5,5,3,6),
+  duff_depth = c(5,1,3,2,4,4,2,1),
+  lit_duff_depth = c(7,4,9,9,9,9,5,7)
+)
+
+bad_duff_11 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c(1, 1, 2, 2, 1, 1, 2, 2), # wrong class
+  transect = c("90", "180", "90", "180", "90", "180", "90", "180"),
+  litter_depth = c(2,3,6,7,5,5,3,6),
+  duff_depth = c(5,1,3,2,4,4,2,1),
+  lit_duff_depth = c(7,4,9,9,9,9,5,7)
+)
+
+bad_duff_12 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c(90, 180, 90, 180, 90, 180, 90, 180), # wrong class
+  litter_depth = c(2,3,6,7,5,5,3,6),
+  duff_depth = c(5,1,3,2,4,4,2,1),
+  lit_duff_depth = c(7,4,9,9,9,9,5,7)
 )
 
 
