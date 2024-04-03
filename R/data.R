@@ -2276,10 +2276,12 @@ good_comp_imperial <- data.frame(
 bad_comp <- data.frame(
   Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   Forest_NA = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+  Forest_bad = c(1,1,1,2,2,2,2,2,2), # wrong class
 
   Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
   Plot_id_NA = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
   Plot_id_NT = as.character(c(1,1,1,1,1,2,2,2,3)), # no tree plot
+  Plot_id_bad = c(1,1,1,1,1,2,2,2,2), # wrong class
 
   SPH = c(50,50,50,50,50,50,50,50,50),
   SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
@@ -2290,10 +2292,12 @@ bad_comp <- data.frame(
   Live_NA = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
   Live_bad = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
   Live_NT = c("1", "0", "1", "1", "1", "1", "1", "1", NA), # no tree plot
+  Live_bad2 = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
 
   SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
   SPP_NA = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
   SPP_NT = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA), # no tree plot
+  SPP_bad = 15, # wrong class
 
   DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
   DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
@@ -2469,6 +2473,41 @@ bad_sf_trees_15 <- data.frame(
   dbh = c(13.5, 10.3, 19.1, 32.8, 13.8, 20.2, 31.7, 10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7)
 )
 
+bad_sf_trees_16 <- data.frame(
+  time = c(2019, 2019, 2019, 2019, 2019, 2019, 2019, 2020, 2020, 2020, 2020, 2020, 2020, 2020), # wrong class
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = as.character(c(1,1,1,2,2,2,2,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,50,50,50,50,50),
+  species = c("ABCO", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE"),
+  dbh = c(13.5, 10.3, 19.1, 32.8, 13.8, 20.2, 31.7, 10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7)
+)
+
+bad_sf_trees_17 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020", "2020", "2020", "2020"),
+  site = 1, # wrong class
+  plot = as.character(c(1,1,1,2,2,2,2,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,50,50,50,50,50),
+  species = c("ABCO", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE"),
+  dbh = c(13.5, 10.3, 19.1, 32.8, 13.8, 20.2, 31.7, 10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7)
+)
+
+bad_sf_trees_18 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c(1,1,1,2,2,2,2,1,1,1,2,2,2,2), # wrong class
+  exp_factor = c(50,50,50,50,50,50,50,50,50,50,50,50,50,50),
+  species = c("ABCO", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE"),
+  dbh = c(13.5, 10.3, 19.1, 32.8, 13.8, 20.2, 31.7, 10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7)
+)
+
+bad_sf_trees_19 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = as.character(c(1,1,1,2,2,2,2,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,50,50,50,50,50),
+  species = 15, # wrong class
+  dbh = c(13.5, 10.3, 19.1, 32.8, 13.8, 20.2, 31.7, 10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7)
+)
 
 
 #---------------------------------------------------------------------
@@ -2718,6 +2757,62 @@ bad_fwd_16 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
   plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
   transect = c("90", "90", "90", "180", "90", "180", "90", "90"), # repeat time:site:plot:transect
+  count_1h = c(12,30,10,2,5,14,9,6),
+  count_10h = c(4,8,3,2,9,4,3,3),
+  count_100h = c(5,7,10,11,6,3,13,9),
+  length_1h = c(2,2,2,2,2,2,2,2),
+  length_10h = c(4,4,4,4,4,4,4,4),
+  length_100h = c(6,6,6,6,6,6,6,6),
+  slope = c(10,20,15,5,10,20,15,5)
+)
+
+bad_fwd_17 <- data.frame(
+  time = c(1,1,1,1,2,2,2,2), # wrong class
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "180", "90", "180", "90", "180", "90", "180"),
+  count_1h = c(12,30,10,2,5,14,9,6),
+  count_10h = c(4,8,3,2,9,4,3,3),
+  count_100h = c(5,7,10,11,6,3,13,9),
+  length_1h = c(2,2,2,2,2,2,2,2),
+  length_10h = c(4,4,4,4,4,4,4,4),
+  length_100h = c(6,6,6,6,6,6,6,6),
+  slope = c(10,20,15,5,10,20,15,5)
+)
+
+bad_fwd_18 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = 1, # wrong class
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c("90", "180", "90", "180", "90", "180", "90", "180"),
+  count_1h = c(12,30,10,2,5,14,9,6),
+  count_10h = c(4,8,3,2,9,4,3,3),
+  count_100h = c(5,7,10,11,6,3,13,9),
+  length_1h = c(2,2,2,2,2,2,2,2),
+  length_10h = c(4,4,4,4,4,4,4,4),
+  length_100h = c(6,6,6,6,6,6,6,6),
+  slope = c(10,20,15,5,10,20,15,5)
+)
+
+bad_fwd_19 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c(1, 1, 2, 2, 1, 1, 2, 2), # wrong class
+  transect = c("90", "180", "90", "180", "90", "180", "90", "180"),
+  count_1h = c(12,30,10,2,5,14,9,6),
+  count_10h = c(4,8,3,2,9,4,3,3),
+  count_100h = c(5,7,10,11,6,3,13,9),
+  length_1h = c(2,2,2,2,2,2,2,2),
+  length_10h = c(4,4,4,4,4,4,4,4),
+  length_100h = c(6,6,6,6,6,6,6,6),
+  slope = c(10,20,15,5,10,20,15,5)
+)
+
+bad_fwd_20 <- data.frame(
+  time = c("2019", "2019", "2019", "2019", "2020", "2020", "2020", "2020"),
+  site = c("SEKI", "SEKI", "SEKI","SEKI", "SEKI", "SEKI", "SEKI", "SEKI"),
+  plot = c("1", "1", "2", "2", "1", "1", "2", "2"),
+  transect = c(90, 180, 90, 180, 90, 180, 90, 180), # wrong class
   count_1h = c(12,30,10,2,5,14,9,6),
   count_10h = c(4,8,3,2,9,4,3,3),
   count_100h = c(5,7,10,11,6,3,13,9),

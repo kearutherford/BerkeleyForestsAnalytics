@@ -66,8 +66,28 @@ test_that("Missing id information throws an error", {
 })
 
 
-test_that("Repeat time:site:plot:transect observations throw an error", {
+test_that("time/site/plot/transect column class handling works", {
 
+  expect_error(ValidateFWD(fuel_data_val = bad_fwd_17,
+                           units_val = "metric"),
+               'For fuel_data, the parameter time requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateFWD(fuel_data_val = bad_fwd_18,
+                           units_val = "metric"),
+               'For fuel_data, the parameter site requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateFWD(fuel_data_val = bad_fwd_19,
+                           units_val = "metric"),
+               'For fuel_data, the parameter plot requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateFWD(fuel_data_val = bad_fwd_20,
+                           units_val = "metric"),
+               'For fuel_data, the parameter transect requires a character variable.\nYou have input a variable of class: numeric')
+
+})
+
+
+test_that("Repeat time:site:plot:transect observations throw an error", {
 
   expect_error(ValidateFWD(fuel_data_val = bad_fwd_16,
                            units_val = "metric"),

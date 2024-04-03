@@ -150,6 +150,52 @@ test_that("Invalid settings throw an error", {
 
 test_that("Column class handling works", {
 
+  # Categorical ----------------------------------------------------------------
+  expect_error(ValidateCompData(data_val = bad_comp,
+                                site_val = "Forest_bad", # intentional error here
+                                plot_val = "Plot_id",
+                                ef_val = "SPH",
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                rel_val = "BA",
+                                units_val = "metric"),
+               'The parameter site requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateCompData(data_val = bad_comp,
+                                site_val = "Forest",
+                                plot_val = "Plot_id_bad", # intentional error here
+                                ef_val = "SPH",
+                                status_val = "Live",
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                rel_val = "BA",
+                                units_val = "metric"),
+               'The parameter plot requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateCompData(data_val = bad_comp,
+                                site_val = "Forest",
+                                plot_val = "Plot_id",
+                                ef_val = "SPH",
+                                status_val = "Live_bad2", # intentional error here
+                                sp_val = "SPP",
+                                dbh_val = "DBH_CM",
+                                rel_val = "BA",
+                                units_val = "metric"),
+               'The parameter status requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateCompData(data_val = bad_comp,
+                                site_val = "Forest",
+                                plot_val = "Plot_id",
+                                ef_val = "SPH",
+                                status_val = "Live",
+                                sp_val = "SPP_bad", # intentional error here
+                                dbh_val = "DBH_CM",
+                                rel_val = "BA",
+                                units_val = "metric"),
+               'The parameter species requires a character variable.\nYou have input a variable of class: numeric')
+
+  # Numeric --------------------------------------------------------------------
   expect_error(ValidateCompData(data_val = bad_comp,
                                 site_val = "Forest",
                                 plot_val = "Plot_id",
