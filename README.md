@@ -704,7 +704,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.87 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -752,7 +752,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.14 secs
+    ## Time difference of 0.68 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -790,7 +790,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.71 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -844,7 +844,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.63 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -897,7 +897,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.48 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2177,8 +2177,7 @@ summarization” below for further details.
         thin, thin + burn (does not need to follow these exact names).
         The class of this variable must be character.
       - **site:** Describes the compartment where the data were
-        collected. The class of this variable will be coerced to
-        character.
+        collected. The class of this variable must be character.
       - **plot:** Identifies the plot within compartment. The class of
         this variable must be character.
       - **species:** As described above.
@@ -2488,7 +2487,7 @@ line transect length.
     least one dataframe/tibble - fwd_data and/or cwd_data). Required
     columns depend on the sampling design:
 
-    - All sampling designs:
+    - All sampling designs (all of these variables must be numeric):
       - **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels
         in megagrams per hectare (or US tons per acre)
       - **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour
@@ -2504,7 +2503,8 @@ line transect length.
       - **sc_length_100h:** Slope-corrected transect length (i.e.,
         horizontal transect length) for 100-hour fuels in either meters
         or feet
-    - If sampling design is simple random:
+    - If sampling design is simple random (all of these variables must
+      characters):
       - **time:** Depending on the project, the time identifier could be
         the year of measurement, the month of measurement, etc. For
         example, if plots are remeasured every summer for five years,
@@ -2514,29 +2514,24 @@ line transect length.
         measured once in the same summer), the time identifier might be
         set to all the same year. Time identifier is very flexible, and
         should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
+        study.
       - **site:** Describes the broader location or forest where the
-        data were collected. The class of this variable will be coerced
-        to character.
+        data were collected.
       - **plot:** Identifies the plot in which the data were collected.
-        The class of this variable will be coerced to character.
-    - If sampling design is stratified random:
+    - If sampling design is stratified random (all of these variables
+      must characters):
       - **time:** As described above.
       - **site:** As described above.
-      - **stratum:** Identifies the stratum within site. The class of
-        this variable will be coerced to character.
-      - **plot:** Identifies the plot within stratum. The class of this
-        variable will be coerced to character.
-    - If sampling design is Fire and Fire Surrogate:
+      - **stratum:** Identifies the stratum within site.
+      - **plot:** Identifies the plot within stratum.
+    - If sampling design is Fire and Fire Surrogate (all of these
+      variables must characters):
       - **time:** As desribed above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
-        The class of this variable will be coerced to character.
       - **site:** Describes the compartment where the data were
-        collected. The class of this variable will be coerced to
-        character.
-      - **plot:** Identifies the plot within compartment. The class of
-        this variable will be coerced to character.
+        collected.
+      - **plot:** Identifies the plot within compartment.
 
 2.  `cwd_data` A dataframe or tibble. Each row must be an observation of
     an individual plot. Default is set to “none”, indicating that no
@@ -2544,7 +2539,7 @@ line transect length.
     least one dataframe/tibble - fwd_data and/or cwd_data). Required
     columns depend on the sampling design:
 
-    - All sampling designs:
+    - All sampling designs (all of these variables must be numeric):
       - **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound
         1000-hour fuels in megagrams per hectare (or US tons per acre)
       - **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten
@@ -2558,7 +2553,8 @@ line transect length.
       - **sc_length_1000r:** Slope-corrected transect length (i.e.,
         horizontal transect length) for rotten 1000-hour fuels in either
         meters or feet
-    - If sampling design is simple random:
+    - If sampling design is simple random (all of these variables must
+      characters):
       - **time:** Depending on the project, the time identifier could be
         the year of measurement, the month of measurement, etc. For
         example, if plots are remeasured every summer for five years,
@@ -2568,29 +2564,24 @@ line transect length.
         measured once in the same summer), the time identifier might be
         set to all the same year. Time identifier is very flexible, and
         should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
+        study.
       - **site:** Describes the broader location or forest where the
-        data were collected. The class of this variable will be coerced
-        to character.
+        data were collected.
       - **plot:** Identifies the plot in which the data were collected.
-        The class of this variable will be coerced to character.
-    - If sampling design is stratified random:
+    - If sampling design is stratified random (all of these variables
+      must characters):
       - **time:** As described above.
       - **site:** As described above.
-      - **stratum:** Identifies the stratum within site. The class of
-        this variable will be coerced to character.
-      - **plot:** Identifies the plot within stratum. The class of this
-        variable will be coerced to character.
-    - If sampling design is Fire and Fire Surrogate:
+      - **stratum:** Identifies the stratum within site.
+      - **plot:** Identifies the plot within stratum.
+    - If sampling design is Fire and Fire Surrogate (all of these
+      variables must characters):
       - **time:** As described above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
-        The class of this variable will be coerced to character.
       - **site:** Describes the compartment where the data were
-        collected. The class of this variable will be coerced to
-        character.
-      - **plot:** Identifies the plot within compartment. The class of
-        this variable will be coerced to character.
+        collected.
+      - **plot:** Identifies the plot within compartment.
 
 3.  `design` Specifies the sampling design. Must be set to “SRS” (simple
     random sample), “STRS” (stratified random sample), or “FFS” (Fire
