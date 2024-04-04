@@ -704,7 +704,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.24 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -752,7 +752,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.14 secs
+    ## Time difference of 0.2 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -790,7 +790,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.22 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -844,7 +844,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.22 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -897,7 +897,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.23 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2504,7 +2504,7 @@ line transect length.
         horizontal transect length) for 100-hour fuels in either meters
         or feet
     - If sampling design is simple random (all of these variables must
-      characters):
+      be characters):
       - **time:** Depending on the project, the time identifier could be
         the year of measurement, the month of measurement, etc. For
         example, if plots are remeasured every summer for five years,
@@ -2554,7 +2554,7 @@ line transect length.
         horizontal transect length) for rotten 1000-hour fuels in either
         meters or feet
     - If sampling design is simple random (all of these variables must
-      characters):
+      be characters):
       - **time:** Depending on the project, the time identifier could be
         the year of measurement, the month of measurement, etc. For
         example, if plots are remeasured every summer for five years,

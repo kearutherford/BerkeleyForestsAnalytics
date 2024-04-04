@@ -1138,7 +1138,7 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
         * **sc_length_10h:** Slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet
         * **sc_length_100h:** Slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet
 
-    * If sampling design is simple random (all of these variables must characters): 
+    * If sampling design is simple random (all of these variables must be characters): 
         * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study.
         * **site:** Describes the broader location or forest where the data were collected. 
         * **plot:**  Identifies the plot in which the data were collected.
@@ -1164,7 +1164,7 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
         * **sc_length_1000s:** Slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet
         * **sc_length_1000r:** Slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet
 
-    * If sampling design is simple random (all of these variables must characters): 
+    * If sampling design is simple random (all of these variables must be characters): 
         * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study.
         * **site:** Describes the broader location or forest where the data were collected.
         * **plot:** Identifies the plot in which the data were collected.
