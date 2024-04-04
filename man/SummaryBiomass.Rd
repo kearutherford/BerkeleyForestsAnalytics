@@ -22,17 +22,17 @@ SummaryBiomass(
 \arguments{
 \item{data}{A dataframe or tibble. Each row must be an observation of an individual tree.}
 
-\item{site}{Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.}
+\item{site}{Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.}
 
-\item{plot}{Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.}
+\item{plot}{Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.}
 
 \item{exp_factor}{Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.}
 
-\item{status}{Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.}
+\item{status}{Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).}
 
-\item{decay_class}{Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.}
+\item{decay_class}{Must be a character variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0.}
 
-\item{species}{Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.}
+\item{species}{Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail).}
 
 \item{dbh}{Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.}
 
