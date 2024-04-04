@@ -162,7 +162,8 @@ ValidateOptions <- function(design_val, wt_data_val) {
 }
 
 ###################################################################
-# function to check that all columns are in the provided dataframe
+# function to check that all necessary columns are in the provided
+# dataframe and are formatted as expected
 ###################################################################
 
 ValidateIDColumns <- function(data_val, design_val) {
@@ -209,7 +210,7 @@ ValidateIDColumns <- function(data_val, design_val) {
     stop('For data, there are missing values in the trt_type column.')
   }
 
-  # check column class
+  # check column classes
   if(!is.character(data_val$time)) {
     stop('For data, time must be a character variable.\n',
          'The time column is currently class: ', class(data_val$time))

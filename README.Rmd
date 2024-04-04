@@ -955,31 +955,31 @@ The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize data beyo
 1. `data` A dataframe or tibble. Each row must be an observation of an individual plot. Required columns depend on the sampling design: 
 
     * If sampling design is simple random: 
-        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
-        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. 
+        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+        * **plot:** Identifies the plot in which the data were collected. The class of this variable must be character.
+        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. The class of this variable must be character.
         * **other columns:** Any numeric variables of interest. Can have any column names. 
     
     * If sampling design is stratified random: 
         * **time:** As described above. 
         * **site:** As desicribed above. 
-        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site. The class of this variable must be character.
+        * **plot:** Identifies the plot within stratum. The class of this variable must be character.
         * **species:** As described above. 
         * **other columns:** As desicribed above. 
         
     * If sampling design is Fire and Fire Surrogate: 
         * **time:** As described above. 
-        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable must be character.
         * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **plot:** Identifies the plot within compartment. The class of this variable must be character.
         * **species:** As described above. 
         * **other columns:** As described above. 
 
 2. `design` Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 
-3. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
+3. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional; character), site (character), stratum (character), and wh (stratum weight; numeric). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
 
 4. `fpc_data` An optional dataframe or tibble. Incorporates the finite population correction factor (FPC; see "Background information for further data summarization: Finite population correction factor" below for further details on the definition of the FPC and when the FPC is applicable). The default is set to "not_needed". Required columns depend on the sampling design:
     
@@ -1130,7 +1130,7 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
 
 1. `fwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no fine woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
 
-    * All sampling designs: 
+    * All sampling designs (all of these variables must be numeric): 
         * **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
@@ -1138,48 +1138,48 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
         * **sc_length_10h:** Slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet
         * **sc_length_100h:** Slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet
 
-    * If sampling design is simple random: 
-        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+    * If sampling design is simple random (all of these variables must characters): 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study.
+        * **site:** Describes the broader location or forest where the data were collected. 
+        * **plot:**  Identifies the plot in which the data were collected.
     
-    * If sampling design is stratified random: 
+    * If sampling design is stratified random (all of these variables must characters): 
         * **time:** As described above. 
         * **site:** As described above. 
-        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site.
+        * **plot:**  Identifies the plot within stratum.
         
-    * If sampling design is Fire and Fire Surrogate: 
+    * If sampling design is Fire and Fire Surrogate (all of these variables must characters): 
         * **time:** As desribed above. 
-        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
-        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names).
+        * **site:** Describes the compartment where the data were collected.
+        * **plot:**  Identifies the plot within compartment.
         
 2. `cwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no coarse woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
 
-    * All sampling designs:
+    * All sampling designs (all of these variables must be numeric): 
         * **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
         * **sc_length_1000s:** Slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet
         * **sc_length_1000r:** Slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet
 
-    * If sampling design is simple random: 
-        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+    * If sampling design is simple random (all of these variables must characters): 
+        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study.
+        * **site:** Describes the broader location or forest where the data were collected.
+        * **plot:** Identifies the plot in which the data were collected.
     
-    * If sampling design is stratified random: 
+    * If sampling design is stratified random (all of these variables must characters): 
         * **time:** As described above. 
         * **site:** As described above. 
-        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site.
+        * **plot:**  Identifies the plot within stratum.
         
-    * If sampling design is Fire and Fire Surrogate: 
+    * If sampling design is Fire and Fire Surrogate (all of these variables must characters): 
         * **time:** As described above. 
-        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
-        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). 
+        * **site:** Describes the compartment where the data were collected. 
+        * **plot:** Identifies the plot within compartment. 
 
 3. `design` Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 

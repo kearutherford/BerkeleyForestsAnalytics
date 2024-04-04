@@ -374,7 +374,7 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
         stop('The "units" parameter must be set to "metric" or "imperial".')
       }
 
-  # check that all necessary columns are present and are formatted as expected
+  # check that all necessary columns are present and formatted as expected
   ValidateColumns(fwd_data_val = fwd_data_check, cwd_data_val = cwd_data_check, design_val = design_check, type_val = type_check, unit_val = unit_check)
 
   # check that each observation is a unique plot and rename columns
@@ -458,6 +458,7 @@ ValidateSurfaceData <- function(fwd_data_check, cwd_data_check, design_check, wt
 
 ###################################################################
 # function to check that all columns are in the provided dataframe
+# and are formatted as expected
 ###################################################################
 
 ValidateColumns <- function(fwd_data_val, cwd_data_val, design_val, type_val, unit_val) {

@@ -91,35 +91,34 @@ below for further details.
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
 
-2.  `status` Must be a variable (column) in the provided dataframe or
-    tibble. Specifies whether the individual tree is alive (1) or dead
-    (0). The class of this variable will be coerced to factor.
+2.  `status` Must be a character variable (column) in the provided
+    dataframe or tibble. Specifies whether the individual tree is
+    alive (1) or dead (0).
 
-3.  `species` Must be a variable (column) in the provided dataframe or
-    tibble. Specifies the species of the individual tree. Must follow
-    four-letter species code or FIA naming conventions (see “Species
-    code tables” section in “General background information for tree
-    biomass estimations” below). The class of this variable will be
-    coerced to character.
+3.  `species` Must be a character variable (column) in the provided
+    dataframe or tibble. Specifies the species of the individual tree.
+    Must follow four-letter species code or FIA naming conventions (see
+    “Species code tables” section in “General background information for
+    tree biomass estimations” below).
 
-4.  `dbh` Must be a **numeric** variable (column) in the provided
-    dataframe or tibble. Provides the diameter at breast height (DBH) of
-    the individual tree in either centimeters or inches.
+4.  `dbh` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the diameter at breast height (DBH) of the
+    individual tree in either centimeters or inches.
 
-5.  `ht` Must be a **numeric** variable (column) in the provided
-    dataframe or tibble. Provides the height of the individual tree in
-    either meters or feet.
+5.  `ht` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the height of the individual tree in either
+    meters or feet.
 
 6.  `decay_class` Default is set to “ignore”, indicating that biomass
     estimates for standing dead trees will not be adjusted for
     structural decay (see “Structural decay of standing dead trees”
     section in “Background information for tree biomass estimations
-    (prior to NSVB framework)” below). It can be set to a variable
-    (column) in the provided dataframe or tibble. For standing dead
-    trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay class
-    code table” section in “General background information for tree
-    biomass estimations” below). For live trees, the decay class should
-    be NA or 0. The class of this variable will be coerced to character.
+    (prior to NSVB framework)” below). It can be set to a character
+    variable (column) in the provided dataframe or tibble. For standing
+    dead trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay
+    class code table” section in “General background information for
+    tree biomass estimations” below). For live trees, the decay class
+    should be NA or 0.
 
 7.  `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
@@ -283,45 +282,44 @@ plot as well as species.
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
 
-2.  `site` Must be a variable (column) in the provided dataframe or
-    tibble. Describes the broader location or forest where the data were
-    collected. The class of this variable will be coerced to character.
+2.  `site` Must be a character variable (column) in the provided
+    dataframe or tibble. Describes the broader location or forest where
+    the data were collected.
 
-3.  `plot` Must be a variable (column) in the provided dataframe or
-    tibble. Identifies the plot in which the individual tree was
-    measured. The class of this variable will be coerced to character.
+3.  `plot` Must be a character variable (column) in the provided
+    dataframe or tibble. Identifies the plot in which the individual
+    tree was measured.
 
 4.  `exp_factor` Must be a numeric variable (column) in the provided
     dataframe or tibble. The expansion factor specifies the number of
     trees per hectare (or per acre) that a given plot tree represents.
 
-5.  `status` Must be a variable (column) in the provided dataframe or
-    tibble. Specifies whether the individual tree is alive (1) or dead
-    (0). The class of this variable will be coerced to factor.
+5.  `status` Must be a character variable (column) in the provided
+    dataframe or tibble. Specifies whether the individual tree is
+    alive (1) or dead (0).
 
-6.  `decay_class` Must be a variable (column) in the provided dataframe
-    or tibble (see “Structural decay of standing dead trees” section in
-    “Background information for tree biomass estimations (prior to NSVB
-    framework)” below). For standing dead trees, the decay class should
-    be 1, 2, 3, 4, or 5 (see “Decay class code table” section in
-    “General background information for tree biomass estimations”
-    below). For live trees, the decay class should be NA or 0. The class
-    of this variable will be coerced to character.
+6.  `decay_class` Must be a character variable (column) in the provided
+    dataframe or tibble (see “Structural decay of standing dead trees”
+    section in “Background information for tree biomass estimations
+    (prior to NSVB framework)” below). For standing dead trees, the
+    decay class should be 1, 2, 3, 4, or 5 (see “Decay class code table”
+    section in “General background information for tree biomass
+    estimations” below). For live trees, the decay class should be NA or
+    0.
 
-7.  `species` Must be a variable (column) in the provided dataframe or
-    tibble. Specifies the species of the individual tree. Must follow
-    four-letter species code or FIA naming conventions (see “Species
-    code tables” in “General background information for tree biomass
-    estimations” below). The class of this variable will be coerced to
-    character.
+7.  `species` Must be a character variable (column) in the provided
+    dataframe or tibble. Specifies the species of the individual tree.
+    Must follow four-letter species code or FIA naming conventions (see
+    “Species code tables” in “General background information for tree
+    biomass estimations” below).
 
-8.  `dbh` Must be a **numeric** variable (column) in the provided
-    dataframe or tibble. Provides the diameter at breast height (DBH) of
-    the individual tree in either centimeters or inches.
+8.  `dbh` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the diameter at breast height (DBH) of the
+    individual tree in either centimeters or inches.
 
-9.  `ht` Must be a **numeric** variable (column) in the provided
-    dataframe or tibble. Provides the height of the individual tree in
-    either meters or feet.
+9.  `ht` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the height of the individual tree in either
+    meters or feet.
 
 10. `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
@@ -706,7 +704,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.16 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -754,7 +752,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.15 secs
+    ## Time difference of 0.14 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -792,7 +790,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -846,7 +844,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.15 secs
+    ## Time difference of 0.16 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -982,29 +980,28 @@ observed.
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
 
-2.  `site` Must be a variable (column) in the provided dataframe or
-    tibble. Describes the broader location or forest where the data were
-    collected. The class of this variable will be coerced to character.
+2.  `site` Must be a character variable (column) in the provided
+    dataframe or tibble. Describes the broader location or forest where
+    the data were collected.
 
-3.  `plot` Must be a variable (column) in the provided dataframe or
-    tibble. Identifies the plot in which the individual tree was
-    measured. The class of this variable will be coerced to character.
+3.  `plot` Must be a character variable (column) in the provided
+    dataframe or tibble. Identifies the plot in which the individual
+    tree was measured.
 
-4.  `exp_factor` Must be a **numeric** variable (column) in the provided
+4.  `exp_factor` Must be a numeric variable (column) in the provided
     dataframe or tibble. The expansion factor specifies the number of
     trees per hectare (or per acre) that a given plot tree represents.
 
-5.  `status` Must be a variable (column) in the provided dataframe or
-    tibble. Specifies whether the individual tree is alive (1) or dead
-    (0). The class of this variable will be coerced to factor.
+5.  `status` Must be a character variable (column) in the provided
+    dataframe or tibble. Specifies whether the individual tree is
+    alive (1) or dead (0).
 
-6.  `species` Must be a variable (column) in the provided dataframe or
-    tibble. Specifies the species of the individual tree. The class of
-    this variable will be coerced to character.
+6.  `species` Must be a character variable (column) in the provided
+    dataframe or tibble. Specifies the species of the individual tree.
 
-7.  `dbh` Must be a **numeric** variable (column) in the provided
-    dataframe or tibble. Provides the diameter at breast height (DBH) of
-    the individual tree in either centimeters or inches.
+7.  `dbh` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the diameter at breast height (DBH) of the
+    individual tree in either centimeters or inches.
 
 8.  `relative` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether forest composition should be measured as
@@ -1177,27 +1174,26 @@ comp_demo3
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
 
-2.  `site` Must be a variable (column) in the provided dataframe or
-    tibble. Describes the broader location or forest where the data were
-    collected. The class of this variable will be coerced to character.
+2.  `site` Must be a character variable (column) in the provided
+    dataframe or tibble. Describes the broader location or forest where
+    the data were collected.
 
-3.  `plot` Must be a variable (column) in the provided dataframe or
-    tibble. Identifies the plot in which the individual tree was
-    measured. The class of this variable will be coerced to character.
+3.  `plot` Must be a character variable (column) in the provided
+    dataframe or tibble. Identifies the plot in which the individual
+    tree was measured.
 
-4.  `exp_factor` Must be a **numeric** variable (column) in the provided
+4.  `exp_factor` Must be a numeric variable (column) in the provided
     dataframe or tibble. The expansion factor specifies the number of
     trees per hectare (or per acre) that a given plot tree represents.
 
-5.  `dbh` Must be a **numeric** variable (column) in the provided
-    dataframe or tibble. Provides the diameter at breast height (DBH) of
-    the individual tree in either centimeters or inches.
+5.  `dbh` Must be a numeric variable (column) in the provided dataframe
+    or tibble. Provides the diameter at breast height (DBH) of the
+    individual tree in either centimeters or inches.
 
 6.  `ht` Default is set to “ignore”, which indicates that tree heights
-    were not taken. If heights were taken, it can be set to a
-    **numeric** variable (column) in the provided dataframe or tibble,
-    providing the height of the individual tree in either meters or
-    feet.
+    were not taken. If heights were taken, it can be set to a numeric
+    variable (column) in the provided dataframe or tibble, providing the
+    height of the individual tree in either meters or feet.
 
 7.  `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies (1) whether the dbh and ht variables were measured using
@@ -1223,7 +1219,7 @@ A dataframe with the following columns:
 5.  `qmd_cm` (or `qmd_in`): quadratic mean diameter in centimeters (or
     inches). Weighted by the expansion factor.
 
-6.  `dbh_cm` (or `dbh_in`): average diameter at breast hegiht in
+6.  `dbh_cm` (or `dbh_in`): average diameter at breast height in
     centimeters (or inches). Weighted by the expansion factor.
 
 7.  `ht_m` (or `ht_ft`): average height in meters (or feet) if ht
@@ -1380,20 +1376,19 @@ FWD data collection:
       once in the same summer), the time identifier might be set to all
       the same year. Time identifier is very flexible, and should be
       used as appropriate depending on the design of the study. The
-      class of this variable will be coerced to character.
+      class of this variable must be character.
     - **site:** Describes the broader location or forest where the data
-      were collected. The class of this variable will be coerced to
-      character.
+      were collected. The class of this variable must be character.
     - **plot:** Identifies the plot in which the individual tree was
-      measured. The class of this variable will be coerced to character.
+      measured. The class of this variable must be character.
     - **exp_factor:** The expansion factor specifies the number of trees
       per hectare (or per acre) that a given plot tree represents. The
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
       “Species code tables” section in “Background information for tree
-      biomass estimations” below). The class of this variable will be
-      coerced to character.
+      biomass estimations” below). The class of this variable must be
+      character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1411,17 +1406,15 @@ FWD data collection:
       once in the same summer), the time identifier might be set to all
       the same year. Time identifier is very flexible, and should be
       used as appropriate depending on the design of the study. The
-      class of this variable will be coerced to character.
+      class of this variable must be character.
     - **site:** Describes the broader location or forest where the data
-      were collected. The class of this variable will be coerced to
-      character.
+      were collected. The class of this variable must be character.
     - **plot:** Identifies the plot in which the individual fuel
-      transect was measured. The class of this variable will be coerced
-      to character.
+      transect was measured. The class of this variable must be
+      character.
     - **transect:** Identifies the transect on which the specific fuel
       tallies were collected. The transect ID Will often be an azimuth
-      from plot center. The class of this variable will be coerced to
-      character.
+      from plot center. The class of this variable must be character.
     - **count_1h:** Transect counts of the number of intersections for
       1-hour fuels. Must be an integer greater than or equal to 0.
     - **count_10h:** Transect counts of the number of intersections for
@@ -1429,14 +1422,14 @@ FWD data collection:
     - **count_100h:** Transect counts of the number of intersections for
       100-hour fuels. Must be an integer greater than or equal to 0.
     - **length_1h:** The length of the sampling transect for 1-hour
-      fuels in either meters or feet. The class of this variables must
-      be numeric.
+      fuels in either meters or feet. The class of this variable must be
+      numeric.
     - **length_10h:** The length of the sampling transect for 10-hour
-      fuels in either meters or feet. The class of this variables must
-      be numeric.
+      fuels in either meters or feet. The class of this variable must be
+      numeric.
     - **length_100h:** The length of the sampling transect for 100-hour
-      fuels in either meters or feet. The class of this variables must
-      be numeric.
+      fuels in either meters or feet. The class of this variable must be
+      numeric.
     - **slope:** The slope of the transect in percent (not the slope of
       the plot). This column is OPTIONAL. However, it is important to
       correct for the slope effect on the horizontal length of
@@ -1611,12 +1604,11 @@ data collection:
       once in the same summer), the time identifier might be set to all
       the same year. Time identifier is very flexible, and should be
       used as appropriate depending on the design of the study. The
-      class of this variable will be coerced to character.
+      class of this variable must be character.
     - **site:** Describes the broader location or forest where the data
-      were collected. The class of this variable will be coerced to
-      character.
+      were collected. The class of this variable must be character.
     - **plot:** Identifies the plot in which the individual tree was
-      measured. The class of this variable will be coerced to character.
+      measured. The class of this variable must be character.
     - **exp_factor:** The expansion factor specifies the number of trees
       per hectare (or per acre) that a given plot tree represents. The
       class of this variable must be numeric.
@@ -1624,7 +1616,7 @@ data collection:
       follow four-letter species code or FIA naming conventions (see
       “Species code tables” section in “Background information for
       surface and ground fuel load calculations” below). The class of
-      this variable will be coerced to character.
+      this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1641,20 +1633,18 @@ data collection:
       once in the same summer), the time identifier might be set to all
       the same year. Time identifier is very flexible, and should be
       used as appropriate depending on the design of the study. The
-      class of this variable will be coerced to character.
+      class of this variable must be character.
 
     - **site:** Describes the broader location or forest where the data
-      were collected. The class of this variable will be coerced to
-      character.
+      were collected. The class of this variable must be character.
 
     - **plot:** Identifies the plot in which the individual fuel
-      transect was measured. The class of this variable will be coerced
-      to character.
+      transect was measured. The class of this variable must be
+      character.
 
     - **transect:** Identifies the transect on which the specific fuel
       tallies were collected. The transect ID Will often be an azimuth
-      from plot center. The class of this variable will be coerced to
-      character.
+      from plot center. The class of this variable must be character.
 
     - **length_1000h:** The length of the sampling transect for
       1000-hour fuels in either meters or feet. The class of this
@@ -1688,7 +1678,7 @@ data collection:
         be numeric.
       - **status:** Decay status of the individual 1000-hour fuel
         particle. Must be either “R” (rotten) or “S” (sound). The class
-        of this variable will be coerced to character.
+        of this variable must be character.
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
     the four-letter code or FIA naming convention (see “Species code
@@ -1901,20 +1891,19 @@ for duff/litter data collection:
       once in the same summer), the time identifier might be set to all
       the same year. Time identifier is very flexible, and should be
       used as appropriate depending on the design of the study. The
-      class of this variable will be coerced to character.
+      class of this variable must be character.
     - **site:** Describes the broader location or forest where the data
-      were collected. The class of this variable will be coerced to
-      character.
+      were collected. The class of this variable must be character.
     - **plot:** Identifies the plot in which the individual tree was
-      measured. The class of this variable will be coerced to character.
+      measured. The class of this variable must be character.
     - **exp_factor:** The expansion factor specifies the number of trees
       per hectare (or per acre) that a given plot tree represents. The
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
       “Species code tables” section in “Background information for tree
-      biomass estimations” below). The class of this variable will be
-      coerced to character.
+      biomass estimations” below). The class of this variable must be
+      character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1931,20 +1920,18 @@ for duff/litter data collection:
       once in the same summer), the time identifier might be set to all
       the same year. Time identifier is very flexible, and should be
       used as appropriate depending on the design of the study. The
-      class of this variable will be coerced to character.
+      class of this variable must be character.
 
     - **site:** Describes the broader location or forest where the data
-      were collected. The class of this variable will be coerced to
-      character.
+      were collected. The class of this variable must be character.
 
     - **plot:** Identifies the plot in which the individual fuel
-      transect was measured. The class of this variable will be coerced
-      to character.
+      transect was measured. The class of this variable must be
+      character.
 
     - **transect:** Identifies the transect on which the specific fuel
       tallies were collected. The transect ID Will often be an azimuth
-      from plot center. The class of this variable will be coerced to
-      character.
+      from plot center. The class of this variable must be character.
 
     - If duff and litter depth are measured separately, the dataframe
       must also have the following two columns:
@@ -2164,36 +2151,36 @@ summarization” below for further details.
         measured once in the same summer), the time identifier might be
         set to all the same year. Time identifier is very flexible, and
         should be used as appropriate depending on the design of the
-        study. The class of this variable will be coerced to character.
+        study. The class of this variable must be character.
       - **site:** Describes the broader location or forest where the
-        data were collected. The class of this variable will be coerced
-        to character.
+        data were collected. The class of this variable must be
+        character.
       - **plot:** Identifies the plot in which the data were collected.
-        The class of this variable will be coerced to character.
+        The class of this variable must be character.
       - **species:** Optional column. If a species column is included in
         the input dataframe/tibble, the results will be summarized by
-        species.
+        species. The class of this variable must be character.
       - **other columns:** Any numeric variables of interest. Can have
         any column names.
     - If sampling design is stratified random:
       - **time:** As described above.
       - **site:** As desicribed above.
       - **stratum:** Identifies the stratum within site. The class of
-        this variable will be coerced to character.
+        this variable must be character.
       - **plot:** Identifies the plot within stratum. The class of this
-        variable will be coerced to character.
+        variable must be character.
       - **species:** As described above.
       - **other columns:** As desicribed above.
     - If sampling design is Fire and Fire Surrogate:
       - **time:** As described above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
-        The class of this variable will be coerced to character.
+        The class of this variable must be character.
       - **site:** Describes the compartment where the data were
         collected. The class of this variable will be coerced to
         character.
       - **plot:** Identifies the plot within compartment. The class of
-        this variable will be coerced to character.
+        this variable must be character.
       - **species:** As described above.
       - **other columns:** As described above.
 
@@ -2202,10 +2189,10 @@ summarization” below for further details.
     and Fire Surrogate). There is no default.
 
 3.  `wt_data` Only required for stratified random sampling designs. A
-    dataframe or tibble with the following columns: time (optional),
-    site, stratum, and wh (stratum weight). The default is set to
-    “not_needed”, and should be left as such for design = “SRS” or
-    design = “FFS”.
+    dataframe or tibble with the following columns: time (optional;
+    character), site (character), stratum (character), and wh (stratum
+    weight; numeric). The default is set to “not_needed”, and should be
+    left as such for design = “SRS” or design = “FFS”.
 
 4.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
     population correction factor (FPC; see “Background information for

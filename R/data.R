@@ -4450,19 +4450,6 @@ g_srs_fwd_m <- data.frame(
   sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
 )
 
-g_srs_fwd_m_class <- data.frame(
-  time = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-  site = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
-  plot = c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4),
-  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
-  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
-  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
-  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
-  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
-  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
-  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
-)
-
 g_srs_fwd_i <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
@@ -4657,17 +4644,6 @@ g_srs_cwd_m <- data.frame(
   sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
 )
 
-g_srs_cwd_m_class <- data.frame(
-  time = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-  site = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
-  plot = as.character(c(1,2,3,4,5,1,2,3,4,1,2,3,4,5,1,2,3,4)),
-  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
-  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
-  load_cwd_Mg_ha = c(9,9,13,17,9,5,17,13,5,13,9,9,5,17,13,13,9,13),
-  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
-  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
-)
-
 g_srs_cwd_i <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "SEKI", "SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI"),
@@ -4817,20 +4793,6 @@ g_ffs_fwd_m <- data.frame(
   sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
 )
 
-g_ffs_fwd_m_class <- data.frame(
-  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
-  trt_type = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
-  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
-  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
-  load_1h_Mg_ha = c(1,1,2,3,1,0,3,2,2,0,2,1,1,0,3,2,1,2),
-  load_10h_Mg_ha = c(2,2,3,4,2,1,4,3,3,1,3,2,2,1,4,3,2,3),
-  load_100h_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
-  load_fwd_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
-  sc_length_1h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
-  sc_length_10h = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
-  sc_length_100h = c(9,9,8,7,9,9,9,8,8,9,9,8,7,9,9,9,8,8)
-)
-
 g_ffs_fwd_i <- data.frame(
   time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
   trt_type = c("burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech", "burn", "burn", "burn", "burn", "burn", "mech", "mech", "mech", "mech"),
@@ -4938,18 +4900,6 @@ g_ffs_cwd_m <- data.frame(
   load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
   load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
   load_cwd_Mg_ha = c(9,9,13,17,9,5,17,13,5,13,9,9,5,17,13,13,9,13),
-  sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
-  sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
-)
-
-g_ffs_cwd_m_class <- data.frame(
-  time = c("pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "pre", "post", "post", "post", "post", "post", "post", "post", "post", "post"),
-  trt_type = c(1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2),
-  site = as.character(c(360, 360, 220, 220, 220, 460, 460, 530, 530, 360, 360, 220, 220, 220, 460, 460, 530, 530)),
-  plot = as.character(c(1,2,1,2,3,1,2,1,2,1,2,1,2,3,1,2,1,2)),
-  load_1000s_Mg_ha = c(3,3,4,5,3,2,5,4,4,2,4,3,3,2,5,4,3,4),
-  load_1000r_Mg_ha = c(6,6,9,12,6,3,12,9,9,3,9,6,6,3,12,9,6,9),
-  load_cwd_Mg_ha = c(9,9,13,17,9,5,1713,13,5,13,9,9,5,17,13,13,9,13),
   sc_length_1000s = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6),
   sc_length_1000r = c(6,6,5,5,6,4,6,6,6,6,6,5,5,6,4,6,6,6)
 )
