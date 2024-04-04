@@ -566,14 +566,14 @@ ValidateFPC <- function(data_val, fpc_data_val, design_val, data_name) {
   }
 
   # check column classes
-  if(!is.character(fpc_data_val$site)) {
-    stop('For fpc_data, site must be a character variable.\n',
-         'The site column is currently class: ', class(fpc_data_val$site))
-  }
-
   if(("time" %in% colnames(fpc_data_val)) && !is.character(fpc_data_val$time)) {
     stop('For fpc_data, time must be a character variable.\n',
          'The time column is currently class: ', class(fpc_data_val$time))
+  }
+
+  if(!is.character(fpc_data_val$site)) {
+    stop('For fpc_data, site must be a character variable.\n',
+         'The site column is currently class: ', class(fpc_data_val$site))
   }
 
   if(design_val == "STRS" && !is.character(fpc_data_val$stratum)) {

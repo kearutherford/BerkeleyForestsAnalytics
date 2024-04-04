@@ -727,6 +727,7 @@ test_that("Missing values throw an error", {
 test_that("Wrong column class throws an error", {
 
   # FWD ---------------------------------------------------------
+  # numeric -----------
   expect_error(ValidateSurfaceData(fwd_data_check = b_srs_fwd_m_2,
                                    cwd_data_check = "none",
                                    design_check = "SRS",
@@ -808,7 +809,54 @@ test_that("Wrong column class throws an error", {
                                    type_check = "type3"),
                'For fwd_data, the load_100h_ton_ac column must be numeric.\nCurrently, the column is class: character')
 
+  # character -----------
+  expect_error(ValidateSurfaceData(fwd_data_check = b_strs_fwd_m_8,
+                                   cwd_data_check = "none",
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type1"),
+               'For fwd_data, time must be a character variable.\nThe time column is currently class: factor')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = b_strs_fwd_m_9,
+                                   cwd_data_check = "none",
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type1"),
+               'For fwd_data, site must be a character variable.\nThe site column is currently class: numeric')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = b_strs_fwd_m_10,
+                                   cwd_data_check = "none",
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type1"),
+               'For fwd_data, stratum must be a character variable.\nThe stratum column is currently class: numeric')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = b_strs_fwd_m_11,
+                                   cwd_data_check = "none",
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type1"),
+               'For fwd_data, plot must be a character variable.\nThe plot column is currently class: numeric')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = b_ffs_fwd_m_5,
+                                   cwd_data_check = "none",
+                                   design_check = "FFS",
+                                   wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type1"),
+               'For fwd_data, trt_type must be a character variable.\nThe trt_type column is currently class: factor')
+
   # CWD ------------------------------------------------------------
+  # numeric -----------
   expect_error(ValidateSurfaceData(fwd_data_check = "none",
                                    cwd_data_check = b_srs_cwd_m_2,
                                    design_check = "SRS",
@@ -880,6 +928,52 @@ test_that("Wrong column class throws an error", {
                                    unit_check = "imperial",
                                    type_check = "type3"),
                'For cwd_data, the load_cwd_ton_ac column must be numeric.\nCurrently, the column is class: character')
+
+  # character -----------
+  expect_error(ValidateSurfaceData(fwd_data_check = "none",
+                                   cwd_data_check = b_strs_cwd_m_7,
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type2"),
+               'For cwd_data, time must be a character variable.\nThe time column is currently class: factor')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = "none",
+                                   cwd_data_check = b_strs_cwd_m_8,
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type2"),
+               'For cwd_data, site must be a character variable.\nThe site column is currently class: factor')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = "none",
+                                   cwd_data_check = b_strs_cwd_m_9,
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type2"),
+               'For cwd_data, stratum must be a character variable.\nThe stratum column is currently class: numeric')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = "none",
+                                   cwd_data_check = b_strs_cwd_m_10,
+                                   design_check = "STRS",
+                                   wt_data_check = g_strs_wh_1,
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type2"),
+               'For cwd_data, plot must be a character variable.\nThe plot column is currently class: numeric')
+
+  expect_error(ValidateSurfaceData(fwd_data_check = "none",
+                                   cwd_data_check = b_ffs_cwd_m_4,
+                                   design_check = "FFS",
+                                   wt_data_check = "not_needed",
+                                   fpc_data_check = "not_needed",
+                                   unit_check = "metric",
+                                   type_check = "type2"),
+               'For cwd_data, trt_type must be a character variable.\nThe trt_type column is currently class: factor')
 
 })
 
