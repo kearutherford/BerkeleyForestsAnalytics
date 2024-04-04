@@ -704,7 +704,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.87 secs
+    ## Time difference of 0.19 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -752,7 +752,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.68 secs
+    ## Time difference of 0.14 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -790,7 +790,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.71 secs
+    ## Time difference of 0.16 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -844,7 +844,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.63 secs
+    ## Time difference of 0.16 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -897,7 +897,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.48 secs
+    ## Time difference of 0.17 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2519,13 +2519,13 @@ line transect length.
         data were collected.
       - **plot:** Identifies the plot in which the data were collected.
     - If sampling design is stratified random (all of these variables
-      must characters):
+      must be characters):
       - **time:** As described above.
       - **site:** As described above.
       - **stratum:** Identifies the stratum within site.
       - **plot:** Identifies the plot within stratum.
     - If sampling design is Fire and Fire Surrogate (all of these
-      variables must characters):
+      variables must be characters):
       - **time:** As desribed above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).
@@ -2569,13 +2569,13 @@ line transect length.
         data were collected.
       - **plot:** Identifies the plot in which the data were collected.
     - If sampling design is stratified random (all of these variables
-      must characters):
+      must be characters):
       - **time:** As described above.
       - **site:** As described above.
       - **stratum:** Identifies the stratum within site.
       - **plot:** Identifies the plot within stratum.
     - If sampling design is Fire and Fire Surrogate (all of these
-      variables must characters):
+      variables must be characters):
       - **time:** As described above.
       - **trt_type:** Desicribes the treatment type - control, burn,
         thin, thin + burn (does not need to follow these exact names).

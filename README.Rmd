@@ -1143,13 +1143,13 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
         * **site:** Describes the broader location or forest where the data were collected. 
         * **plot:**  Identifies the plot in which the data were collected.
     
-    * If sampling design is stratified random (all of these variables must characters): 
+    * If sampling design is stratified random (all of these variables must be characters): 
         * **time:** As described above. 
         * **site:** As described above. 
         * **stratum:** Identifies the stratum within site.
         * **plot:**  Identifies the plot within stratum.
         
-    * If sampling design is Fire and Fire Surrogate (all of these variables must characters): 
+    * If sampling design is Fire and Fire Surrogate (all of these variables must be characters): 
         * **time:** As desribed above. 
         * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names).
         * **site:** Describes the compartment where the data were collected.
@@ -1169,13 +1169,13 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
         * **site:** Describes the broader location or forest where the data were collected.
         * **plot:** Identifies the plot in which the data were collected.
     
-    * If sampling design is stratified random (all of these variables must characters): 
+    * If sampling design is stratified random (all of these variables must be characters): 
         * **time:** As described above. 
         * **site:** As described above. 
         * **stratum:** Identifies the stratum within site.
         * **plot:**  Identifies the plot within stratum.
         
-    * If sampling design is Fire and Fire Surrogate (all of these variables must characters): 
+    * If sampling design is Fire and Fire Surrogate (all of these variables must be characters): 
         * **time:** As described above. 
         * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). 
         * **site:** Describes the compartment where the data were collected. 
