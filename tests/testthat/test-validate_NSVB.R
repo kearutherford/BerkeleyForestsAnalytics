@@ -539,20 +539,6 @@ test_that("Species code handling works", {
                             results_val = "by_plot"),
                'Not all species codes were recognized!\nUnrecognized codes: 155')
 
-  expect_error(ValidateNSVB(data_val = nsvb_b33,
-                            sp_val = "fia",
-                            in_units_val = "metric",
-                            out_units_val = "imperial",
-                            results_val = "by_plot"),
-               'There are live trees with a species code of 998.\n998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown live or dead trees.')
-
-  expect_error(ValidateNSVB(data_val = nsvb_b34,
-                            sp_val = "fia",
-                            in_units_val = "metric",
-                            out_units_val = "imperial",
-                            results_val = "by_plot"),
-               'There are live trees with a species code of 299.\n299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown live or dead trees.')
-
   # 4-letter -------------------------------------------------------------------
   expect_error(ValidateNSVB(data_val = nsvb_gm4,
                             sp_val = "fia", # set to fia but 4letter used
@@ -567,20 +553,6 @@ test_that("Species code handling works", {
                             out_units_val = "imperial",
                             results_val = "by_plot"),
                'Not all species codes were recognized!\nUnrecognized codes: ABCOO')
-
-  expect_error(ValidateNSVB(data_val = nsvb_b36,
-                            sp_val = "4letter",
-                            in_units_val = "metric",
-                            out_units_val = "imperial",
-                            results_val = "by_plot"),
-               'There are live trees with a species code of "UNHA".\n"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown live or dead trees.')
-
-  expect_error(ValidateNSVB(data_val = nsvb_b37,
-                            sp_val = "4letter",
-                            in_units_val = "metric",
-                            out_units_val = "imperial",
-                            results_val = "by_plot"),
-               'There are live trees with a species code of "UNCO".\n"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown live or dead trees.')
 
   # General --------------------------------------------------------------------
   expect_warning(ValidateNSVB(data_val = nsvb_b38,

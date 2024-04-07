@@ -500,6 +500,8 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   ###########################################################
 
   # Check for unrecognized species codes ---------------------------------------
+  NSVB_sp_code_names2 <- stats::na.omit(NSVB_sp_code_names)
+
   if (sp_val == "4letter") {
 
     if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names2$letter))) {
@@ -509,36 +511,16 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     }
 
     if(!all(is.element(data_val$species,
-                       NSVB_sp_code_names1$letter))) {
+                       NSVB_sp_code_names$letter))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names1$letter), "species"]),
+                                                                 NSVB_sp_code_names$letter), "species"]),
                                      sep = " "))
 
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
     }
 
-    # Check that unknown species codes are correctly applied ---------------------
-    UNHA_trees <- subset(data_val, !is.na(species) & species == "UNHA" & !is.na(status) & status == "1")
-
-    if (nrow(UNHA_trees) > 0) {
-
-      stop('There are live trees with a species code of "UNHA".\n',
-           '"UNHA" is for unknown DEAD hardwoods. Consider using the species code "UNTR", which is for unknown live or dead trees.')
-
-    }
-
-    UNCO_trees <- subset(data_val, !is.na(species) & species == "UNCO" & !is.na(status) & status == "1")
-
-    if (nrow(UNCO_trees) > 0) {
-
-      stop('There are live trees with a species code of "UNCO".\n',
-           '"UNCO" is for unknown DEAD conifers. Consider using the species code "UNTR", which is for unknown live or dead trees.')
-
-    }
-
-    # Check for unrecognized species codes ---------------------------------------
   } else if (sp_val == "fia") {
 
     if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names2$fia))) {
@@ -548,33 +530,14 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
     }
 
     if(!all(is.element(data_val$species,
-                       NSVB_sp_code_names1$fia))) {
+                       NSVB_sp_code_names$fia))) {
 
       unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names1$fia), "species"]),
+                                                                 NSVB_sp_code_names$fia), "species"]),
                                      sep = " "))
 
       stop('Not all species codes were recognized!\n',
            'Unrecognized codes: ', unrecognized_sp)
-    }
-
-    # Check that unknown species codes are correctly applied ---------------------
-    UNHA_trees <- subset(data_val, !is.na(species) & species == "998" & !is.na(status) & status == "1")
-
-    if (nrow(UNHA_trees) > 0) {
-
-      stop('There are live trees with a species code of 998.\n',
-           '998 is for unknown DEAD hardwoods. Consider using the species code 999, which is for unknown live or dead trees.')
-
-    }
-
-    UNCO_trees <- subset(data_val, !is.na(species) & species == "299" & !is.na(status) & status == "1")
-
-    if (nrow(UNCO_trees) > 0) {
-
-      stop('There are live trees with a species code of 299.\n',
-           '299 is for unknown DEAD conifers. Consider using the species code 999, which is for unknown live or dead trees.')
-
     }
 
   }
@@ -823,7 +786,7 @@ DataPrep <- function(data, in_units, out_units, sp) {
     data$letter <- data$species
 
     # create column with FIA species codes
-    data <- merge(data, NSVB_sp_code_names1, by = "letter", all.x = TRUE, all.y = FALSE)
+    data <- merge(data, NSVB_sp_code_names, by = "letter", all.x = TRUE, all.y = FALSE)
     data$species <- data$fia
     data <- subset(data, select = -fia)
 

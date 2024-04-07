@@ -8,7 +8,8 @@ StemBiomass <- function(tree_data) {
 
   for (i in 1:n) {
 
-    # Trees with NA species codes or status codes will have NA biomass estimates
+    # Trees with NA species codes, status codes, DBH and/or height
+    # will have NA biomass estimates
     if(is.na(tree_data$species[i]) | is.na(tree_data$status[i]) |
        is.na(tree_data$dbh_in[i]) | is.na(tree_data$ht_ft[i])) {
 
@@ -74,7 +75,7 @@ StemBiomass <- function(tree_data) {
           tree_data$eq_group[i] = "G1"
 
         } else if (tree_data$species[i] == "UNCO" | tree_data$species[i] == "TSME" |
-                   tree_data$species[i] == "298" | tree_data$species[i] == "264") {
+                   tree_data$species[i] == "299" | tree_data$species[i] == "264") {
 
           tree_data$vol_eq[i] = "E17"
           tree_data$eq_group[i] = "G2"
@@ -206,14 +207,8 @@ StemBiomass <- function(tree_data) {
           tree_data$density[i] = 37.44
         } else if (tree_data$species[i] == "PICO" | tree_data$species[i] == "108") {
           tree_data$density[i] = 23.71
-        } else if (tree_data$species[i] == "UNCO" | tree_data$species[i] == "298") {
-
-            if(tree_data$status[i] == 0) {
-              tree_data$density[i] = 25.58
-            } else {
-              tree_data$density[i] = 32.45
-            }
-
+        } else if (tree_data$species[i] == "UNCO" | tree_data$species[i] == "299") {
+          tree_data$density[i] = 25.58
         } else if (tree_data$species[i] == "ABMA" | tree_data$species[i] == "20") {
           tree_data$density[i] = 22.46
         } else if (tree_data$species[i] == "CADE" | tree_data$species[i] == "81") {

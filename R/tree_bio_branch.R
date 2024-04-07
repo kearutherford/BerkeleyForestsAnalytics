@@ -11,7 +11,8 @@ BranchBiomass <- function(tree_data) {
     # Part I: assign biomass equation numbers
     ############################################################################
 
-    # Trees with NA species codes or status codes will have NA biomass estimates
+    # Trees with NA species codes, status codes, DBH and/or height
+    # will have NA biomass estimates
     if(is.na(tree_data$species[i]) | is.na(tree_data$status[i]) |
        is.na(tree_data$dbh_in[i]) | is.na(tree_data$ht_ft[i])) {
 
@@ -87,7 +88,7 @@ BranchBiomass <- function(tree_data) {
           tree_data$branch_eq[i] = "E13"
 
         } else if (tree_data$species[i] == "UNCO" | tree_data$species[i] == "TSME" |
-                   tree_data$species[i] == "298" | tree_data$species[i] == "264") {
+                   tree_data$species[i] == "299" | tree_data$species[i] == "264") {
 
           tree_data$branch_eq[i] = "E17"
 
