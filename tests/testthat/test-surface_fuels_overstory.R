@@ -106,8 +106,27 @@ test_that("Species code handling works", {
 
 })
 
+
 test_that("Column class handling works", {
 
+  # Categorical ----------------------------------------------------------------
+  expect_error(ValidateOverstory(tree_data_val = bad_sf_trees_16,
+                                 sp_codes_val = "4letter"),
+               'For tree_data, the parameter time requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateOverstory(tree_data_val = bad_sf_trees_17,
+                                 sp_codes_val = "4letter"),
+               'For tree_data, the parameter site requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateOverstory(tree_data_val = bad_sf_trees_18,
+                                 sp_codes_val = "4letter"),
+               'For tree_data, the parameter plot requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateOverstory(tree_data_val = bad_sf_trees_19,
+                                 sp_codes_val = "fia"),
+               'For tree_data, the parameter species requires a character variable.\nYou have input a variable of class: numeric')
+
+  # Numeric --------------------------------------------------------------------
   expect_error(ValidateOverstory(tree_data_val = bad_sf_trees_14,
                                  sp_codes_val = "4letter"),
                'For tree_data, the parameter dbh requires a numerical variable.\nYou have input a variable of class: character')

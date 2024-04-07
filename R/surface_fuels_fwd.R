@@ -131,14 +131,34 @@ ValidateFWD <- function(fuel_data_val, units_val) {
   }
 
 
+  ############################################################
+  # Check that time/site/plot/transect classes are as expected
+  ############################################################
+
+  if(!is.character(fuel_data_val$time)) {
+    stop('For fuel_data, the parameter time requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$time))
+  }
+
+  if(!is.character(fuel_data_val$site)) {
+    stop('For fuel_data, the parameter site requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$site))
+  }
+
+  if(!is.character(fuel_data_val$plot)) {
+    stop('For fuel_data, the parameter plot requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$plot))
+  }
+
+  if(!is.character(fuel_data_val$transect)) {
+    stop('For fuel_data, the parameter transect requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$transect))
+  }
+
+
   ###########################################################
   # check for only one time:site:plot:transect obs.
   ###########################################################
-
-  fuel_data_val$time <- as.character(fuel_data_val$time)
-  fuel_data_val$site <- as.character(fuel_data_val$site)
-  fuel_data_val$plot <- as.character(fuel_data_val$plot)
-  fuel_data_val$transect <- as.character(fuel_data_val$transect)
 
   fuel_data_val$count <- 1
   fuel_sub <- subset(fuel_data_val, select = c(time, site, plot, transect, count))

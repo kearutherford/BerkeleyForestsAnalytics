@@ -18,15 +18,15 @@ TreeBiomass(
 \arguments{
 \item{data}{A dataframe or tibble. Each row must be an observation of an individual tree.}
 
-\item{status}{Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.}
+\item{status}{Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).}
 
-\item{species}{Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail). The class of this variable will be coerced to character.}
+\item{species}{Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see README file for more detail).}
 
 \item{dbh}{Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.}
 
 \item{ht}{Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.}
 
-\item{decay_class}{Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.}
+\item{decay_class}{Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a character variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see README file for more detail). For live trees, the decay class should be NA or 0.}
 
 \item{sp_codes}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".}
 

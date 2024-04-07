@@ -88,7 +88,7 @@ BarkBiomass <- function(tree_data) {
           tree_data$bark_eq[i] = "E16"
 
         } else if (tree_data$species[i] == "UNCO" | tree_data$species[i] == "TSME" |
-                   tree_data$species[i] == "298" | tree_data$species[i] == "264") {
+                   tree_data$species[i] == "299" | tree_data$species[i] == "264") {
 
           tree_data$bark_eq[i] = "E21"
 

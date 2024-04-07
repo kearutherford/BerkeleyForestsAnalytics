@@ -48,7 +48,7 @@
 CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_needed") {
 
   # coerce tibble inputs into data.frame
-  data <- as.data.frame(data)
+  step1 <- as.data.frame(data)
 
   if(all(wt_data != "not_needed", na.rm = TRUE)) {
     wt_data <- as.data.frame(wt_data)
@@ -58,11 +58,11 @@ CompilePlots <- function(data, design, wt_data = "not_needed", fpc_data = "not_n
     fpc_data <- as.data.frame(fpc_data)
   }
 
-  # check and prep input data
-  step1 <- ValidatePlotData(data_check = data,
-                            design_check = design,
-                            wt_data_check = wt_data,
-                            fpc_data_check = fpc_data)
+  # check input data
+  ValidatePlotData(data_check = step1,
+                   design_check = design,
+                   wt_data_check = wt_data,
+                   fpc_data_check = fpc_data)
 
   # get finite population correction factor data prepped
   if(all(fpc_data != "not_needed")) {
@@ -106,7 +106,7 @@ ValidatePlotData <- function(data_check, design_check, wt_data_check, fpc_data_c
   # check that options are set appropriately
   ValidateOptions(design_val = design_check, wt_data_val = wt_data_check)
 
-  # check that all necessary ID columns are present
+  # check that all necessary ID columns are present and formatted correctly
   ValidateIDColumns(data_val = data_check, design_val = design_check)
 
   # check that all non-ID columns are numeric
@@ -129,11 +129,6 @@ ValidatePlotData <- function(data_check, design_check, wt_data_check, fpc_data_c
   if(all(fpc_data_check != "not_needed", na.rm = TRUE)) {
     ValidateFPC(data_val = data_check, fpc_data_val = fpc_data_check, design_val = design_check, data_name = "data")
   }
-
-  # coerce ID columns to be character
-  return_df <- ValidateColClass(data_val = data_check, design_val = design_check)
-
-  return(return_df)
 
 }
 
@@ -167,7 +162,8 @@ ValidateOptions <- function(design_val, wt_data_val) {
 }
 
 ###################################################################
-# function to check that all columns are in the provided dataframe
+# function to check that all necessary columns are in the provided
+# dataframe and are formatted as expected
 ###################################################################
 
 ValidateIDColumns <- function(data_val, design_val) {
@@ -193,7 +189,7 @@ ValidateIDColumns <- function(data_val, design_val) {
     stop('The data input is missing the required "trt_type" column.')
   }
 
-  # Check for missing values
+  # check for missing values
   if('TRUE' %in% is.na(data_val$time)) {
     stop('For data, there are missing values in the time column.')
   }
@@ -214,10 +210,41 @@ ValidateIDColumns <- function(data_val, design_val) {
     stop('For data, there are missing values in the trt_type column.')
   }
 
+  # check column classes
+  if(!is.character(data_val$time)) {
+    stop('For data, time must be a character variable.\n',
+         'The time column is currently class: ', class(data_val$time))
+  }
+
+  if(!is.character(data_val$site)) {
+    stop('For data, site must be a character variable.\n',
+         'The site column is currently class: ', class(data_val$site))
+  }
+
+  if(!is.character(data_val$plot)) {
+    stop('For data, plot must be a character variable.\n',
+         'The plot column is currently class: ', class(data_val$plot))
+  }
+
+  if(design_val == "STRS" && !is.character(data_val$stratum)) {
+    stop('For data, stratum must be a character variable.\n',
+         'The stratum column is currently class: ', class(data_val$stratum))
+  }
+
+  if(design_val == "FFS" && !is.character(data_val$trt_type)) {
+    stop('For data, trt_type must be a character variable.\n',
+         'The trt_type column is currently class: ', class(data_val$trt_type))
+  }
+
+  if(("species" %in% colnames(data_val)) && !is.character(data_val$species)) {
+    stop('For data, species must be a character variable.\n',
+         'The species column is currently class: ', class(data_val$species))
+  }
+
 }
 
 ###################################################################
-# function to check column class
+# function to check numeric column class
 ###################################################################
 
 ValidateNumeric <- function(data_val, design_val) {
@@ -384,7 +411,26 @@ ValidateWeights <- function(data_val, wt_data_val, data_name) {
     stop('The wt_data input is missing the required "wh" column.')
   }
 
-  # check wh column class
+  # check column classes
+  if("time" %in% colnames(wt_data_val)) {
+
+    if(!is.character(wt_data_val$time)) {
+      stop('For wt_data, time must be a character variable.\n',
+           'The time column is currently class: ', class(wt_data_val$time))
+    }
+
+  }
+
+  if(!is.character(wt_data_val$site)) {
+    stop('For wt_data, site must be a character variable.\n',
+         'The site column is currently class: ', class(wt_data_val$site))
+  }
+
+  if(!is.character(wt_data_val$stratum)) {
+    stop('For wt_data, stratum must be a character variable.\n',
+         'The stratum column is currently class: ', class(wt_data_val$stratum))
+  }
+
   if(!is.numeric(wt_data_val$wh)) {
     stop('For wt_data, the wh column must be numeric.\n',
          'The wh column is currently class: ', class(wt_data_val$wh))
@@ -521,6 +567,26 @@ ValidateFPC <- function(data_val, fpc_data_val, design_val, data_name) {
   }
 
   # check column classes
+  if(("time" %in% colnames(fpc_data_val)) && !is.character(fpc_data_val$time)) {
+    stop('For fpc_data, time must be a character variable.\n',
+         'The time column is currently class: ', class(fpc_data_val$time))
+  }
+
+  if(!is.character(fpc_data_val$site)) {
+    stop('For fpc_data, site must be a character variable.\n',
+         'The site column is currently class: ', class(fpc_data_val$site))
+  }
+
+  if(design_val == "STRS" && !is.character(fpc_data_val$stratum)) {
+    stop('For fpc_data, stratum must be a character variable.\n',
+         'The stratum column is currently class: ', class(fpc_data_val$stratum))
+  }
+
+  if(design_val == "FFS" && !is.character(fpc_data_val$trt_type)) {
+    stop('For fpc_data, trt_type must be a character variable.\n',
+         'The trt_type column is currently class: ', class(fpc_data_val$trt_type))
+  }
+
   if(!is.numeric(fpc_data_val$N)) {
     stop('For fpc_data, the N column must be numeric.\n',
          'The N column is currently class: ', class(fpc_data_val$N))
@@ -669,32 +735,6 @@ ValidateFPC <- function(data_val, fpc_data_val, design_val, data_name) {
          'N must be >= n.')
 
   }
-
-}
-
-###################################################################
-# function to coerce column class
-###################################################################
-
-ValidateColClass <- function(data_val, design_val) {
-
-  data_val$time <- as.character(data_val$time)
-  data_val$site <- as.character(data_val$site)
-  data_val$plot <- as.character(data_val$plot)
-
-  if(design_val == "STRS") {
-    data_val$stratum <- as.character(data_val$stratum)
-  }
-
-  if(design_val == "FFS") {
-    data_val$trt_type <- as.character(data_val$trt_type)
-  }
-
-  if("species" %in% colnames(data_val)) {
-    data_val$species <- as.character(data_val$species)
-  }
-
-  return(data_val)
 
 }
 

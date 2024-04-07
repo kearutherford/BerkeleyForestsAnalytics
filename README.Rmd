@@ -32,51 +32,47 @@ devtools::install_github('kearutherford/BerkeleyForestsAnalytics', build_vignett
 library(BerkeleyForestsAnalytics)
 ```
 
-
 ## Citation instructions 
 
 ```{r}
 citation("BerkeleyForestsAnalytics")
 ```
 
-
 ## Vignette
 
 To access the Vignette for `BerkeleyForestsAnalytics`: 
 
 ```r
-# Option 1:
-vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
-
-# Option 2: 
+# Option 1: 
 browseVignettes("BerkeleyForestsAnalytics")
+
+# Option 2:
+vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 ```
 
+# Tree biomass estimates (prior to NSVB framework) 
 
-# Tree biomass estimations 
-
-The biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. The functions use the California equation set and should not be used for data from other regions. 
-
+These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework) to estimate above-ground stem, bark, and branch tree biomass. `BerkeleyForestsAnalytics` also offers the new national-scale volume and biomass (NSVB) framework (see "Tree biomass and carbon estimates (NSVB framework)" section below). 
 
 ## :eight_spoked_asterisk: `TreeBiomass( )`
 
-The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations to estimate above-ground stem, bark, and branch tree biomass. It provides the option to adjust biomass estimates for the structural decay of standing dead trees. See "Background information for tree biomass estimations" below for further details.  
+The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework) to estimate above-ground stem, bark, and branch tree biomass. It provides the option to adjust biomass estimates for the structural decay of standing dead trees. See "Background information for tree biomass estimations (prior to NSVB framework)" below for further details.  
 
 ### Inputs
 
 1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
 
-2. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
+2. `status` Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).
 
-3. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for tree biomass estimations" below). The class of this variable will be coerced to character.
+3. `species` Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "General background information for tree biomass estimations" below).
 
-4. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
+4. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
 
-5. `ht` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
+5. `ht` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
 
-6. `decay_class` Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay. It can be set to a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+6. `decay_class` Default is set to "ignore", indicating that biomass estimates for standing dead trees will not be adjusted for structural decay (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations (prior to NSVB framework)" below). It can be set to a character variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code table" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0.
 
-7. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see "Species code tables" section in "Background information for tree biomass estimations" below). Must be set to either "4letter" or "fia". The default is set to "4letter".
+7. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see "Species code tables" section in "General background information for tree biomass estimations" below). Must be set to either "4letter" or "fia". The default is set to "4letter".
 
 8. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
@@ -158,27 +154,27 @@ The `SummaryBiomass` function calls on the `TreeBiomass` function described abov
 
 1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
 
-2. `site` Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+2. `site` Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
 
-3. `plot` Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+3. `plot` Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
 
 4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
-5. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
+5. `status` Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).
 
-6. `decay_class` Must be a variable (column) in the provided dataframe or tibble. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0. The class of this variable will be coerced to character.
+6. `decay_class` Must be a character variable (column) in the provided dataframe or tibble (see "Structural decay of standing dead trees" section in "Background information for tree biomass estimations (prior to NSVB framework)" below). For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code table" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0.
 
-6. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" in "Background information for tree biomass estimations" below). The class of this variable will be coerced to character.
+7. `species` Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" in "General background information for tree biomass estimations" below).
 
-7. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
+8. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
 
-8. `ht` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
+9. `ht` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the height of the individual tree in either meters or feet.
 
-9. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see "Species code tables" section in "Background information for tree biomass estimations" below). Must be set to either "4letter" or "fia". The default is set to "4letter".
+10. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see "Species code tables" section in "General background information for tree biomass estimations" below). Must be set to either "4letter" or "fia". The default is set to "4letter".
 
-10. `units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric (megagrams per hectare) or imperial (US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+11. `units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric (megagrams per hectare) or imperial (US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
-11. `results` Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by plot or by plot as well as species. Must be set to either "by_plot" or "by_species." The default is set to "by_plot".
+12. `results` Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by plot or by plot as well as species. Must be set to either "by_plot" or "by_species." The default is set to "by_plot".
 
 ### Outputs
 
@@ -241,7 +237,6 @@ sum_bio_demo2 <- SummaryBiomass(data = bio_demo_data,
 sum_bio_demo2
 ```
 
-
 <br>
 
 **If there are plots without trees:**
@@ -270,10 +265,164 @@ sum_bio_demo3
 
 <br>
 
+# Tree biomass and carbon estimates (NSVB framework) 
+
+The `BiomassNSVB` function follows the new national-scale volume and biomass (NSVB) framework to estimate above-ground wood, bark, branch, merchantable, stump, and foliage tree biomass and carbon. See “Background information for tree biomass estimations (NSVB framework)” below for further details.
+
+## :eight_spoked_asterisk: `BiomassNSVB( )`
+
+### Inputs
+
+1. `data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
+
+    * **division:** Must be a character variable. Describes the ecodivision in which the data were collected (see "CA division and provinces" section in "Background information for tree biomass estimates (NSVB framework)" below).
+    
+    * **province:** Must be a character variable. Describes the province (within the ecodivision) in which the data were collected (see "CA division and provinces" section in "Background information for tree biomass estimates (NSVB framework)" below).
+
+    * **site:** Must be a character variable. Describes the broader location or forest where the data were collected.
+
+    * **plot:** Must be a character variable. Identifies the plot in which the individual tree was measured.
+
+    * **exp_factor:** Must be a numeric variable. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+
+    * **status:** Must be a character variable. Specifies whether the individual tree is alive (1) or dead (0).
+
+    * **decay_class:** Must be a character variable. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see "Decay class code table" section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0.
+
+    * **species:** Must be a character variable. Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" in "General background information for tree biomass estimations" below).
+
+    * **dbh:** Must be a numeric variable. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
+
+    * **ht1:** Must be a numeric variable. Required for trees with or without tops. For trees with tops (top = Y), ht1 is the measured height of the individual tree in either meters or feet. For trees without tops (top = N), ht1 is the estimated height of the tree with its top in either meters or feet (in this case, ht1 would likely be estimated using regional allometric equations). 
+    
+    * **ht2:** Must be a numeric variable. Only required for trees without tops (top = N). For trees without tops, ht2 is the "actual height" (i.e., measured height) of the individual tree in either meters or feet.
+    
+    * **crown_ratio:** Must be a numeric variable. Provides the live crown ratio of the individual tree (between 0 and 1). 
+        
+    * **top:** Must be a character variable. Specifies whether the individual tree has its top, yes (Y) or no (N).
+            
+    * **cull:** Must be a numeric variable. Provides the percent wood cull of the individual tree (between 0 and 100). 
+
+2. `sp_codes` Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see "Species code tables" section in "General background information for tree biomass estimations" below). Must be set to either "4letter" or "fia". The default is set to "4letter".
+
+3. `input_units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+
+4. `output_units` Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (kilograms or megagrams per hectare) or imperial (US tons or US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+
+5. `results` Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by tree, by plot, by plot as well as species, by plot as well as status (live/dead), or by plot as well as species and status. Must be set to either "by_tree", "by_plot", "by_species", "by_status", or "by_sp_st". The default is set to "by_plot".
+
+### Outputs
+
+Depends on the results setting: 
+
+* by_tree: a list with two components: (1) total run time for the function and (2) a dataframe with tree-level biomass and carbon estimates.
+
+* by_plot: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates.
+
+* by_species: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by species. 
+
+* by_status: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by status.
+
+* by_sp_st: a list with two components: (1) total run time for the function and (2) a dataframe with plot-level biomass and carbon estimates, further summarized by species as well as by status.
+
+<br>
+
+How to interpret column names of the output dataframe: 
+
+* **total_wood:** total inside-bark stem wood biomass (or carbon)
+* **total_bark:** total stem bark biomass (or carbon)
+* **total_branch:** total branch biomass (or carbon)
+* **total_ag:** total above-ground biomass (or carbon), total_wood + total_bark + total_branch 
+* **merch_wood:** merchantable inside-bark stem wood biomass (or carbon)
+* **merch_bark:** merchantable stem bark biomass (or carbon)
+* **merch_total:** merchantable outside-bark stem biomass (or carbon), merch_wood + merch_bark
+* **merch_top:** biomass (or carbon) in the top and branches of the tree (i.e., the sum of the branches and the non-merchantable top)
+* **stump_wood:** stump inside-bark stem wood biomass (or carbon)
+* **stump_bark:** stump stem bark biomass (or carbon)
+* **stump_total:** stump outside-bark stem biomass (or carbon), stump_wood + stump_bark
+* **foliage:** foliage biomass (or carbon)
+* **L:** live 
+* **D:** dead 
+* **C:** carbon (will be in same units as biomass)
+* **kg:** kilograms 
+* **Mg_ha:** megagrams per hectare 
+* **tons:** US tons 
+* **t_ac:** US tons per acre 
+
+### Demonstrations
+
+```{r}
+# investigate input dataframe
+nsvb_demo
+```
+
+*Notice that site = YOMI, plot = 2 is a plot without trees. For all plot-level summaries below, this plot without trees will have 0 biomass/carbon estimates.*
+
+<br>
+
+**Results by tree:**
+```{r}
+# call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
+                          results = "by_tree")
+
+nsvb_demo1$run_time
+head(nsvb_demo1$dataframe, 3)
+```
+
+<br>
+
+**Results summarized by plot:**
+```{r}
+# call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
+# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+nsvb_demo2 <- BiomassNSVB(data = nsvb_demo)
+
+nsvb_demo2
+```
+
+<br>
+
+**Results summarized by plot as well as by species:**
+```{r}
+# call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+nsvb_demo3 <- BiomassNSVB(data = nsvb_demo,
+                          results = "by_species")
+
+nsvb_demo3
+```
+
+<br>
+
+**Results summarized by plot as well as by status:**
+```{r}
+# call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+nsvb_demo4 <- BiomassNSVB(data = nsvb_demo,
+                          results = "by_status")
+
+nsvb_demo4
+```
+
+<br>
+
+**Results summarized by plot as well as by species and status:**
+```{r}
+# call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
+# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+nsvb_demo5 <- BiomassNSVB(data = nsvb_demo,
+                          results = "by_sp_st")
+
+nsvb_demo5
+```
+
+<br>
+
 # Forest composition and structure compilations  
 
 The forest composition and structure functions (`ForestComp` and `ForestStr`) assist with common plot-level data compilations. These functions help ensure that best practices in data compilation are observed.
-
 
 ## :eight_spoked_asterisk: `ForestComp( )`
 
@@ -281,17 +430,17 @@ The forest composition and structure functions (`ForestComp` and `ForestStr`) as
 
 1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
 
-2. `site` Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+2. `site` Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
 
-3. `plot` Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+3. `plot` Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
 
-4. `exp_factor` Must be a **numeric** variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
-5. `status` Must be a variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0). The class of this variable will be coerced to factor.
+5. `status` Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).
 
-6. `species` Must be a variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree. The class of this variable will be coerced to character.
+6. `species` Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree.
 
-7. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+7. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 
 8. `relative` Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".
 
@@ -382,15 +531,15 @@ comp_demo3
 
 1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
 
-2. `site` Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
+2. `site` Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
 
-3. `plot` Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+3. `plot` Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
 
-4. `exp_factor` Must be a **numeric** variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
-5. `dbh` Must be a **numeric** variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+5. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 
-6. `ht` Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a **numeric** variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
+6. `ht` Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a numeric variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
 
 7. `units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric or imperial units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
@@ -408,7 +557,7 @@ A dataframe with the following columns:
 
 5. `qmd_cm` (or `qmd_in`): quadratic mean diameter in centimeters (or inches). Weighted by the expansion factor.
 
-6. `dbh_cm` (or `dbh_in`): average diameter at breast hegiht in centimeters (or inches). Weighted by the expansion factor.
+6. `dbh_cm` (or `dbh_in`): average diameter at breast height in centimeters (or inches). Weighted by the expansion factor.
 
 7. `ht_m` (or `ht_ft`): average height in meters (or feet) if ht argument was set. Weighted by the expansion factor.
 
@@ -482,7 +631,6 @@ The three functions (`FineFuels`, `CoarseFuels` and `LitterDuff`) estimate surfa
 This set of functions evolved from Rfuels, a package developed by Danny Foster ([See Rfuels GitHub](https://github.com/danfosterfire/Rfuels)). 
 Although these functions are formatted differently than Rfuels, they follow the same general equations. The goal of this set of functions is to take the workflow outlined in Rfuels and make it more flexible and user-friendly. Rfuels will remain operational as the legacy program. 
 
-
 ## :eight_spoked_asterisk: `FineFuels( )`
 
 The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is defined as 1-hour (0-0.64cm or 0-0.25in), 10-hour (0.64-2.54cm or 0.25-1.0in), and 100-hour (2.54-7.62cm or 1-3in) fuels. Assumptions for FWD data collection: 
@@ -495,25 +643,25 @@ The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is defined
 
 1. `tree_data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
 
-    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-    * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-    * **plot:** Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+    * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+    * **plot:** Identifies the plot in which the individual tree was measured. The class of this variable must be character.
     * **exp_factor:** The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents. The class of this variable must be numeric. 
-    * **species:** Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for tree biomass estimations" below). The class of this variable will be coerced to character. 
+    * **species:** Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for tree biomass estimations" below). The class of this variable must be character. 
     * **dbh:** Provides diameter at breast height of the individual tree in either centimeters or inches. The class of this variable must be numeric.
 
 2. `fuel_data` A dataframe or tibble. Each row must be an observation of an individual transect at a specific time/site/plot. Must have at least these columns (column names exact):
 
-    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-    * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-    * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable will be coerced to character.
-    * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable will be coerced to character.
+    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+    * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+    * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable must be character.
+    * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable must be character.
     * **count_1h:** Transect counts of the number of intersections for 1-hour fuels. Must be an integer greater than or equal to 0. 
     * **count_10h:** Transect counts of the number of intersections for 10-hour fuels. Must be an integer greater than or equal to 0.
     * **count_100h:** Transect counts of the number of intersections for 100-hour fuels. Must be an integer greater than or equal to 0.
-    * **length_1h:** The length of the sampling transect for 1-hour fuels in either meters or feet. The class of this variables must be numeric. 
-    * **length_10h:** The length of the sampling transect for 10-hour fuels in either meters or feet. The class of this variables must be numeric. 
-    * **length_100h:** The length of the sampling transect for 100-hour fuels in either meters or feet. The class of this variables must be numeric. 
+    * **length_1h:** The length of the sampling transect for 1-hour fuels in either meters or feet. The class of this variable must be numeric. 
+    * **length_10h:** The length of the sampling transect for 10-hour fuels in either meters or feet. The class of this variable must be numeric. 
+    * **length_100h:** The length of the sampling transect for 100-hour fuels in either meters or feet. The class of this variable must be numeric. 
     * **slope:** The slope of the transect in percent (not the slope of the plot). This column is OPTIONAL. However, it is important to correct for the slope effect on the horizontal length of transects. If slope is not supplied, the slope will be taken to be 0 (no slope). 
 
 3. `sp_codes` Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention (see "Species code tables" section in "Background information for tree biomass estimations" below). Must be set to either “4letter” or “fia”. The default is set to “4letter”.
@@ -545,7 +693,6 @@ A dataframe with the following columns:
 9. `sc_length_10h`: slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 10-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
 10. `sc_length_100h`: slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
-
 
 ### Demonstration
 
@@ -579,24 +726,23 @@ The `CoarseFuels` function estimates coarse woody debris (CWD) loads. CWD is def
 * Each plot has one or more fuel transects (the number of transects per plot is variable)
 * For a pre-defined distance along each transect, every 1000-hour fuel particle that intersects the transect is individually recorded (diameter and decay status)
 
-
 ### Inputs
 
 1. `tree_data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
 
-    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-    * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-    * **plot:** Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+    * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+    * **plot:** Identifies the plot in which the individual tree was measured. The class of this variable must be character.
     * **exp_factor:** The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents. The class of this variable must be numeric. 
-    * **species:** Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for surface and ground fuel load calculations" below). The class of this variable will be coerced to character. 
+    * **species:** Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for surface and ground fuel load calculations" below). The class of this variable must be character. 
     * **dbh:** Provides diameter at breast height of the individual tree in either centimeters or inches. The class of this variable must be numeric.
 
 2. `fuel_data` A dataframe or tibble with at least these columns (column names exact):
 
-    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-    * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-    * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable will be coerced to character.
-    * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable will be coerced to character.
+    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+    * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+    * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable must be character.
+    * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable must be character.
     * **length_1000h:** The length of the sampling transect for 1000-hour fuels in either meters or feet. The class of this variable must be numeric. 
     * **slope:** The slope of the transect in percent (not the slope of the plot). This column is OPTIONAL. However, it is important to correct for the slope effect on the horizontal length of transects. If slope is not supplied, the slope will be taken to be 0 (no slope). 
     
@@ -606,7 +752,7 @@ The `CoarseFuels` function estimates coarse woody debris (CWD) loads. CWD is def
     
     * If sum-of-squared-diameters for sound and rotten 1000-hour fuels has NOT already been calculated by the user, the dataframe must also have the following two columns. In this case, each row is an observation of an individual 1000-hour fuel particle recorded at a specific time/site/plot/transect. 
         * **diameter:** Diameter of the individual 1000-hour fuel particle in either centimeters or inches.The class of this variable must be numeric. 
-        * **status:** Decay status of the individual 1000-hour fuel particle. Must be either "R" (rotten) or "S" (sound). The class of this variable will be coerced to character.
+        * **status:** Decay status of the individual 1000-hour fuel particle. Must be either "R" (rotten) or "S" (sound). The class of this variable must be character.
 
 3. `sp_codes` Specifies whether the species column in tree_data follows the four-letter code or FIA naming convention (see "Species code tables" section in "Background information for tree biomass estimations" below). Must be set to either “4letter” or “fia”. The default is set to “4letter”.
 
@@ -635,7 +781,6 @@ A dataframe with the following columns:
 7. `sc_length_1000s`: slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for sound 1000-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
 8. `sc_length_1000r`: slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for rotten 1000-hour fuels at the specific time:site:plot. See "Slope-corrected transect length" section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
-
 
 ### Demonstrations
 
@@ -695,24 +840,23 @@ The `LitterDuff` function estimates duff and litter loads. Assumptions for duff/
 * Each plot has one or more fuel transects (the number of transects per plot is variable)
 * Duff and litter depths (or combined duff/litter depth) are sampled at fixed locations along each transect (the number of samples per transect are variable) 
 
-
 ### Inputs
 
 1. `tree_data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
 
-    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-    * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-    * **plot:** Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+    * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+    * **plot:** Identifies the plot in which the individual tree was measured. The class of this variable must be character.
     * **exp_factor:** The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents. The class of this variable must be numeric. 
-    * **species:** Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for tree biomass estimations" below). The class of this variable will be coerced to character. 
+    * **species:** Specifies the species of the individual tree. Must follow four-letter species code or FIA naming conventions (see "Species code tables" section in "Background information for tree biomass estimations" below). The class of this variable must be character. 
     * **dbh:** Provides diameter at breast height of the individual tree in either centimeters or inches. The class of this variable must be numeric.
 
 2. `fuel_data` A dataframe or tibble with at least these columns (column names exact):
 
-    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-    * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-    * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable will be coerced to character.
-    * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable will be coerced to character.
+    * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be "pre" or "post". If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+    * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+    * **plot:** Identifies the plot in which the individual fuel transect was measured. The class of this variable must be character.
+    * **transect:** Identifies the transect on which the specific fuel tallies were collected. The transect ID Will often be an azimuth from plot center. The class of this variable must be character.
         
     * If duff and litter depth are measured separately, the dataframe must also have the following two columns:
         * **litter_depth:** Litter depth in centimeters or inches. May be an individual depth measurement or the average depth on the transect (see note directly below). The class of this variable must be numeric.
@@ -750,7 +894,6 @@ A dataframe with the following columns:
     *If duff and litter were measured together:*
 
     * `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and duff load in megagrams per hectare (or US tons per acre)
-
 
 ### Demonstrations
 
@@ -812,31 +955,31 @@ The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize data beyo
 1. `data` A dataframe or tibble. Each row must be an observation of an individual plot. Required columns depend on the sampling design: 
 
     * If sampling design is simple random: 
-        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
-        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. 
+        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable must be character.
+        * **site:** Describes the broader location or forest where the data were collected. The class of this variable must be character.
+        * **plot:** Identifies the plot in which the data were collected. The class of this variable must be character.
+        * **species:** Optional column. If a species column is included in the input dataframe/tibble, the results will be summarized by species. The class of this variable must be character.
         * **other columns:** Any numeric variables of interest. Can have any column names. 
     
     * If sampling design is stratified random: 
         * **time:** As described above. 
         * **site:** As desicribed above. 
-        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site. The class of this variable must be character.
+        * **plot:** Identifies the plot within stratum. The class of this variable must be character.
         * **species:** As described above. 
         * **other columns:** As desicribed above. 
         
     * If sampling design is Fire and Fire Surrogate: 
         * **time:** As described above. 
-        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
-        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable must be character.
+        * **site:** Describes the compartment where the data were collected. The class of this variable must be character.
+        * **plot:** Identifies the plot within compartment. The class of this variable must be character.
         * **species:** As described above. 
         * **other columns:** As described above. 
 
 2. `design` Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 
-3. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
+3. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional; character), site (character), stratum (character), and wh (stratum weight; numeric). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
 
 4. `fpc_data` An optional dataframe or tibble. Incorporates the finite population correction factor (FPC; see "Background information for further data summarization: Finite population correction factor" below for further details on the definition of the FPC and when the FPC is applicable). The default is set to "not_needed". Required columns depend on the sampling design:
     
@@ -987,7 +1130,7 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
 
 1. `fwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no fine woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
 
-    * All sampling designs: 
+    * All sampling designs (all of these variables must be numeric): 
         * **load_1h_Mg_ha (or load_1h_ton_ac):** Fuel load of 1-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_10h_Mg_ha (or load_10h_ton_ac):** Fuel load of 10-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_100h_Mg_ha (or load_100h_ton_ac):** Fuel load of 100-hour fuels in megagrams per hectare (or US tons per acre)
@@ -995,48 +1138,48 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
         * **sc_length_10h:** Slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet
         * **sc_length_100h:** Slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet
 
-    * If sampling design is simple random: 
-        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+    * If sampling design is simple random (all of these variables must be characters): 
+        * **time:**  Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study.
+        * **site:** Describes the broader location or forest where the data were collected. 
+        * **plot:**  Identifies the plot in which the data were collected.
     
-    * If sampling design is stratified random: 
+    * If sampling design is stratified random (all of these variables must be characters): 
         * **time:** As described above. 
         * **site:** As described above. 
-        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site.
+        * **plot:**  Identifies the plot within stratum.
         
-    * If sampling design is Fire and Fire Surrogate: 
+    * If sampling design is Fire and Fire Surrogate (all of these variables must be characters): 
         * **time:** As desribed above. 
-        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
-        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names).
+        * **site:** Describes the compartment where the data were collected.
+        * **plot:**  Identifies the plot within compartment.
         
 2. `cwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no coarse woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
 
-    * All sampling designs:
+    * All sampling designs (all of these variables must be numeric): 
         * **load_1000s_Mg_ha (or load_1000s_ton_ac):** Fuel load of sound 1000-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_1000r_Mg_ha (or load_1000r_ton_ac):** Fuel load of rotten 1000-hour fuels in megagrams per hectare (or US tons per acre)
         * **load_cwd_Mg_ha (or load_cwd_ton_ac):** Total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
         * **sc_length_1000s:** Slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet
         * **sc_length_1000r:** Slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet
 
-    * If sampling design is simple random: 
-        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study. The class of this variable will be coerced to character.
-        * **site:** Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot in which the data were collected. The class of this variable will be coerced to character.
+    * If sampling design is simple random (all of these variables must be characters): 
+        * **time:** Depending on the project, the time identifier could be the year of measurement, the month of measurement, etc. For example, if plots are remeasured every summer for five years, the time identifier might be the year of measurement. If plots were measured pre- and post-burn, the time identifier might be “pre” or “post”. If time is not important (e.g., all plots were measured once in the same summer), the time identifier might be set to all the same year. Time identifier is very flexible, and should be used as appropriate depending on the design of the study.
+        * **site:** Describes the broader location or forest where the data were collected.
+        * **plot:** Identifies the plot in which the data were collected.
     
-    * If sampling design is stratified random: 
+    * If sampling design is stratified random (all of these variables must be characters): 
         * **time:** As described above. 
         * **site:** As described above. 
-        * **stratum:** Identifies the stratum within site. The class of this variable will be coerced to character.
-        * **plot:**  Identifies the plot within stratum. The class of this variable will be coerced to character.
+        * **stratum:** Identifies the stratum within site.
+        * **plot:**  Identifies the plot within stratum.
         
-    * If sampling design is Fire and Fire Surrogate: 
+    * If sampling design is Fire and Fire Surrogate (all of these variables must be characters): 
         * **time:** As described above. 
-        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). The class of this variable will be coerced to character.
-        * **site:** Describes the compartment where the data were collected. The class of this variable will be coerced to character.
-        * **plot:** Identifies the plot within compartment. The class of this variable will be coerced to character.
+        * **trt_type:** Desicribes the treatment type - control, burn, thin, thin + burn (does not need to follow these exact names). 
+        * **site:** Describes the compartment where the data were collected. 
+        * **plot:** Identifies the plot within compartment. 
 
 3. `design` Specifies the sampling design. Must be set to "SRS" (simple random sample), "STRS" (stratified random sample), or "FFS" (Fire and Fire Surrogate). There is no default.
 
@@ -1125,11 +1268,81 @@ strs_surface_demo2
 
 <br>
 
-# Background information for tree biomass estimations 
+# General background information for tree biomass estimations
+
+## Species code tables 
+
+All hardwood and softwood species currently included/recognized in the `TreeBiomass()`, `SummaryBiomass()` and `BiomassNSVB()` functions are listed in the tables below. If you need an additional species included, please contact the maintainer of `BerkeleyForestAnalytics`, Kea Rutherford. We are open to building out the species list over time. 
+
+**Softwoods**
+
+|common name|scientific name|4-letter code|FIA code|
+|:---|:---|:---|:---|
+|White fir|Abies concolor|ABCO|15|
+|Grand fir|Abies grandis|ABGR|17|
+|California red fir|Abies magnifica|ABMA|20|
+|Noble fir|Abies procera|ABPR|22|
+|Western juniper|Juniperus occidentalis|JUOC|64|
+|Incense cedar|Calocedrus decurrens|CADE|81|
+|Lodgepole pine|Pinus contorta|PICO|108|
+|Jeffrey pine|Pinus jeffreyi|PIJE|116|
+|Sugar pine|Pinus lambertinana|PILA|117|
+|Western white pine|Pinus monticola|PIMO|119|
+|Ponderosa pine|Pinus ponderosa|PIPO|122|
+|Foothill pine|Pinus sabiniana|PISA|127|
+|Douglas-fir|Pseudotsuga menziesii|PSME|202|
+|Redwood|Sequoioideae sempervirens|SESE|211|
+|Giant sequoia|Sequoiadendron giganteum|SEGI|212|
+|Pacific yew|Taxus brevifolia|TABR|231|
+|California nutmeg|Torreya californica|TOCA|251|
+|Western hemlock|Tsuga heterophylla|TSHE|263|
+|Mountain hemlock|Tsuga mertensiana|TSME|264|
+|Unknown conifer|NA|UNCO|299|
+
+<br>
+
+**Hardwoods** 
+
+|common name|scientific name|4-letter code|FIA code|Notes|
+|:---|:---|:---|:---|:---|
+|Bigleaf maple|Acer macrophyllum|ACMA|312| |
+|White alder|Alnus rhombifolia|ALRH|352| |
+|Pacific madrone|Arbutus menziesii|ARME|361| |
+|Golden chinkapin|Chrysolepis chrysophylla|CHCH|431| |
+|Pacific dogwood|Cornus nuttallii|CONU|492| |
+|Tanoak|Notholithocarpus densiflorus|NODE|631| |
+|Quaking aspen|Populus tremuloides|POTR|746| |
+|Oak spp.|Quercus spp.|QUSP|800|only available for BiomassNSVB function|
+|California live oak|Quercus agrifolia|QUAG|801| |
+|Canyon live oak|Quercus chrysolepis|QUCH|805| |
+|California black oak|Quercus kelloggii|QUKE|818| |
+|Willow species|Salix spp.|SASP|920| |
+|California-laurel|Umbellularia californica|UMCA|981| |
+|Unknown hardwood|NA|UNHA|998| |
+|Unknown tree|NA|UNTR|999| |
+
+*Note: Four-letter species codes are the first two letters of the genus followed by the first two letters of the species.*
+
+
+## Decay class code table 
+
+|decay class|limbs and branches|top|% bark remaining|sapwood presence and condition|heartwood condition|
+|:---|:---|:---|:---|:---|:---|
+|1|All present|Pointed|100|Intact; sound, incipient decay, hard, original color|Sound, hard, original color|
+|2|Few limbs, no fine branches|May be broken|Variable|Sloughing; advanced decay, fibrous, firm to soft, light brown|Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown|
+|3|Limb studs only|Broken|Variable|Sloughing; fibrous, soft, light to reddish brown|Incipient decay at base, advanced decay throughout upper bole, fibrous, hard to firm, reddish brown|
+|4|Few or no studs|Broken|Variable|Sloughing; cubical, soft, reddish to dark crown|Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown|
+|5|None|Broken|Less than 20|Gone|Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell|
+
+**Reference:** USDA Forest Service. (2019). *Forest Inventory and Analysis national core field guide, volume I: Field data collection procedures for phase 2 plots.* Version 9.0. https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php
+
+<br>
+
+# Background information for tree biomass estimations (prior to NSVB framework)
 
 ## Allometric equations
 
-`BerkeleyForestAnalytics` calculates biomass using the Forest Inventory and Analysis (FIA) Regional Biomass Equations. Specifically, we use the equation set for the California (CA) region. Our suite of biomass functions should not be used for data collected in a different region.
+The `TreeBiomass()` and `SummaryBiomass()` functions calculate biomass using the Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework). Specifically, we use the equation set for the California (CA) region. This suite of biomass functions should not be used for data collected in a different region.
 
 **Stem biomass**
 
@@ -1163,76 +1376,7 @@ A note on units: the equations provided by USDA Forest Service (2014a,b) require
 * USDA Forest Service. (2014b). *Regional Biomass Equations used by FIA to estimate bole, bark, and branches.* https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf 
 
 
-## Species code tables
-
-All hardwood and softwood species currently included/recognized in the `TreeBiomass()` function are listed in the tables below. If you need an additional species included, please contact the maintainer of `BerkeleyForestAnalytics`, Kea Rutherford. We are open to building out the species list over time. 
-
-**Softwoods**
-
-|common name|scientific name|4-letter code|FIA code|
-|:---|:---|:---|:---|
-|White fir|Abies concolor|ABCO|15|
-|Grand fir|Abies grandis|ABGR|17|
-|California red fir|Abies magnifica|ABMA|20|
-|Noble fir|Abies procera|ABPR|22|
-|Western juniper|Juniperus occidentalis|JUOC|64|
-|Incense cedar|Calocedrus decurrens|CADE|81|
-|Lodgepole pine|Pinus contorta|PICO|108|
-|Jeffrey pine|Pinus jeffreyi|PIJE|116|
-|Sugar pine|Pinus lambertinana|PILA|117|
-|Western white pine|Pinus monticola|PIMO|119|
-|Ponderosa pine|Pinus ponderosa|PIPO|122|
-|Foothill pine|Pinus sabiniana|PISA|127|
-|Douglas-fir|Pseudotsuga menziesii|PSME|202|
-|Redwood|Sequoioideae sempervirens|SESE|211|
-|Giant sequoia|Sequoiadendron giganteum|SEGI|212|
-|Pacific yew|Taxus brevifolia|TABR|231|
-|California nutmeg|Torreya californica|TOCA|251|
-|Western hemlock|Tsuga heterophylla|TSHE|263|
-|Mountain hemlock|Tsuga mertensiana|TSME|264|
-|Unknown conifer|NA|UNCO|298|
-
-<br>
-
-**Hardwoods** 
-
-|common name|scientific name|4-letter code|FIA code|
-|:---|:---|:---|:---|
-|Bigleaf maple|Acer macrophyllum|ACMA|312|
-|White alder|Alnus rhombifolia|ALRH|352|
-|Pacific madrone|Arbutus menziesii|ARME|361|
-|Golden chinkapin|Chrysolepis chrysophylla|CHCH|431|
-|Pacific dogwood|Cornus nuttallii|CONU|492|
-|Tanoak|Notholithocarpus densiflorus|NODE|631|
-|Quaking aspen|Populus tremuloides|POTR|746|
-|California live oak|Quercus agrifolia|QUAG|801|
-|Canyon live oak|Quercus chrysolepis|QUCH|805|
-|California black oak|Quercus kelloggii|QUKE|818|
-|Willow species|Salix spp.|SASP|920|
-|California-laurel|Umbellularia californica|UMCA|981|
-|Unknown hardwood|NA|UNHA|998|
-|Unknown tree|NA|UNTR|999|
-
-*Note: Four-letter species codes are the first two letters of the genus followed by the first two letters of the species.*
-
-
 ## Structural decay of standing dead trees
-
-**FIA standing dead tree decay class descriptions**
-
-|decay class|limbs and branches|top|% bark remaining|sapwood presence and condition|heartwood condition|
-|:---|:---|:---|:---|:---|:---|
-|1|All present|Pointed|100|Intact; sound, incipient decay, hard, original color|Sound, hard, original color|
-|2|Few limbs, no fine branches|May be broken|Variable|Sloughing; advanced decay, fibrous, firm to soft, light brown|Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown|
-|3|Limb studs only|Broken|Variable|Sloughing; fibrous, soft, light to reddish brown|Incipient decay at base, advanced decay throughout upper bole, fibrous, hard to firm, reddish brown|
-|4|Few or no studs|Broken|Variable|Sloughing; cubical, soft, reddish to dark crown|Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown|
-|5|None|Broken|Less than 20|Gone|Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell|
-
-**Reference:** USDA Forest Service. (2019). *Forest Inventory and Analysis national core field guide, volume I: Field data collection procedures for phase 2 plots.* Version 9.0. https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php
-
-<br>
-
-**Adjusting biomass estimates of standing dead trees for structural decay**
 
 Standing dead trees (often called snags) lose mass in two ways:
 
@@ -1269,7 +1413,7 @@ Harmon *et al.* (2011) developed density reduction factors for standing dead tre
 |California nutmeg|Torreya californica|TOCA|251|0.994|0.951|0.902|0.902|0.605|
 |Western hemlock|Tsuga heterophylla|TSHE|263|0.9|0.83|0.661|0.661|0.38|
 |Mountain hemlock|Tsuga mertensiana|TSME|264|0.953|0.882|0.906|0.906|0.604|
-|Unknown conifer|NA|UNCO|298|0.97|1.0|0.92|0.92|0.55|
+|Unknown conifer|NA|UNCO|299|0.97|1.0|0.92|0.92|0.55|
 |Bigleaf maple|Acer macrophyllum|ACMA|312|0.979|0.766|0.565|0.565|0.45|
 |White alder|Alnus rhombifolia|ALRH|352|1.03|0.903|0.535|0.535|0.393|
 |Pacific madrone|Arbutus menziesii|ARME|361|0.982|0.793|0.618|0.618|0.525|
@@ -1302,6 +1446,25 @@ The adjusted biomass of standing dead trees can be calculated using the followin
 <br>
 
 **Reference:** Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., & Yatkov, M. (2011). *Differences between standing and downed dead tree wood density reduction factors: A comparison across decay classes and tree species*. Research Paper NRS-15. USDA Forest Service, Northern Research Station, Newtown Square, PA. https://doi.org/10.2737/NRS-RP-15
+
+<br> 
+
+# Background information for tree biomass and carbon estimations (NSVB framework)
+
+## NSVB framework 
+
+The `BiomassNSVB()` function follows the new national-scale volume and biomass (NSVB) framework. The function is specifically designed for California forests (i.e., only divisions, provinces, and tree species relevant to California are incorporated into our function). The full NSVB framework is detailed in Westfall *et al.* (2023). 
+
+**Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A national-scale tree volume, biomass, and carbon modeling system for the United States.* General Technical Report WO-104. USDA Forest Service, Northern Research Station, Washington, DC. https://doi.org/10.2737/WO-GTR-104
+
+
+## CA divisions and provinces 
+
+The NSVB framework uses ecodivisions (i.e., divisions). Divisions are further broken down into provinces. We created the map below to help guide users in assigning a division/province to their study site(s). If you are not sure which division/province your site falls in based on the map, you can download the provinces layer (S_USA.EcoMapProvinces) from [here](https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=ecomap).
+
+<br>
+
+<img src = "man/figures/province_map.png" />
 
 <br> 
 
@@ -1339,7 +1502,7 @@ Duff and litter (or combined duff/litter) are measured as depths at specific poi
 |Douglas-fir|Pseudotsuga menziesii|PSME|202|0.864|1.319|1.295|
 |Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.990|1.648|1.632|
 |Mountain hemlock|Tsuga mertensiana|TSME|264|1.102|1.876|1.848|
-|Unknown conifer|NA|UNCO|298|0.363|1.75|1.624|
+|Unknown conifer|NA|UNCO|299|0.363|1.75|1.624|
 |Unknown hardwood|NA|UNHA|998|0.363|1.75|1.624|
 |Unknown tree|NA|UNTR|999|0.363|1.75|1.624|
 
@@ -1456,7 +1619,7 @@ The process is the same for \(SEC_{c,p}\) and \(SG_{c,p}\).
 |Douglas-fir|Pseudotsuga menziesii|PSME|202|0.06|1.37|12.04|
 |Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.14|1.28|17.06|
 |Mountain hemlock|Tsuga mertensiana|TSME|264|0.05|1.46|13.61|
-|Unknown conifer|NA|UNCO|298|0.12|1.28|14.52|
+|Unknown conifer|NA|UNCO|299|0.12|1.28|14.52|
 |Unknown hardwood|NA|UNHA|998|0.12|1.28|14.52|
 |Unknown tree|NA|UNTR|999|0.12|1.28|14.52|
 
@@ -1485,7 +1648,7 @@ The process is the same for \(SEC_{c,p}\) and \(SG_{c,p}\).
 |Douglas-fir|Pseudotsuga menziesii|PSME|202|1.03|1.02|1.03|1.04|
 |Giant sequoia|Sequoiadendron giganteum|SEGI|212|1.02|1.02|1.02|1.01|
 |Mountain hemlock|Tsuga mertensiana|TSME|264|1.04|1.02|1.02|1.00|
-|Unknown conifer|NA|UNCO|298|1.03|1.02|1.02|1.02|
+|Unknown conifer|NA|UNCO|299|1.03|1.02|1.02|1.02|
 |Unknown hardwood|NA|UNHA|998|1.03|1.02|1.02|1.02|
 |Unknown tree|NA|UNTR|999|1.03|1.02|1.02|1.02|
 
@@ -1514,7 +1677,7 @@ The process is the same for \(SEC_{c,p}\) and \(SG_{c,p}\).
 |Douglas-fir|Pseudotsuga menziesii|PSME|202| 0.60|0.61|0.59|0.35|0.36|
 |Giant sequoia|Sequoiadendron giganteum|SEGI|212|0.57|0.57|0.56|0.54|0.36|
 |Mountain hemlock|Tsuga mertensiana|TSME|264|0.67|0.65|0.62|0.66|0.36|
-|Unknown conifer|NA|UNCO|298|0.58|0.57|0.53|0.47|0.36|
+|Unknown conifer|NA|UNCO|299|0.58|0.57|0.53|0.47|0.36|
 |Unknown hardwood|NA|UNHA|998|0.58|0.57|0.53|0.47|0.36|
 |Unknown tree|NA|UNTR|999|0.58|0.57|0.53|0.47|0.36|
 

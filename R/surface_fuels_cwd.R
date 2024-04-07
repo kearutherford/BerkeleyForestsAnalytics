@@ -157,11 +157,30 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
     stop('For fuel_data, there are missing values in the transect column.')
   }
 
-  # coerce to character
-  fuel_data_val$time <- as.character(fuel_data_val$time)
-  fuel_data_val$site <- as.character(fuel_data_val$site)
-  fuel_data_val$plot <- as.character(fuel_data_val$plot)
-  fuel_data_val$transect <- as.character(fuel_data_val$transect)
+
+  ############################################################
+  # Check that time/site/plot/transect classes are as expected
+  ############################################################
+
+  if(!is.character(fuel_data_val$time)) {
+    stop('For fuel_data, the parameter time requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$time))
+  }
+
+  if(!is.character(fuel_data_val$site)) {
+    stop('For fuel_data, the parameter site requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$site))
+  }
+
+  if(!is.character(fuel_data_val$plot)) {
+    stop('For fuel_data, the parameter plot requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$plot))
+  }
+
+  if(!is.character(fuel_data_val$transect)) {
+    stop('For fuel_data, the parameter transect requires a character variable.\n',
+         'You have input a variable of class: ', class(fuel_data_val$transect))
+  }
 
 
   ###########################################################
@@ -259,7 +278,12 @@ ValidateCWD <- function(fuel_data_val, units_val, sum_val) {
     # --------------------------------------------------------------------------
     # check that status is as expected
     # --------------------------------------------------------------------------
-    fuel_data_val$status <- as.character(fuel_data_val$status)
+
+    # check for character
+    if(!is.character(fuel_data_val$status)) {
+      stop('For fuel_data, the parameter status requires a character variable.\n',
+           'You have input a variable of class: ', class(fuel_data_val$status))
+    }
 
     # Check for unrecognized status codes
     if(!all(is.element(fuel_data_val$status,

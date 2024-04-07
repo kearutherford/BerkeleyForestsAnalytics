@@ -33,15 +33,15 @@ test_that("Final message is as expected", {
 
 test_that("NA species code handling works", {
 
-  expect_message(ForestComp(data = bad_comp,
-                            site = "Forest",
-                            plot = "Plot_id",
-                            exp_factor = "SPH",
-                            status = "Live",
-                            species = "SPP_NA",
-                            dbh = "DBH_CM",
-                            relative = "BA",
-                            units = "metric"),
+  expect_message(expect_warning(ForestComp(data = bad_comp,
+                                           site = "Forest",
+                                           plot = "Plot_id",
+                                           exp_factor = "SPH",
+                                           status = "Live",
+                                           species = "SPP_NA",
+                                           dbh = "DBH_CM",
+                                           relative = "BA",
+                                           units = "metric")),
                  'The following species were present: ABCO CADE PSME UNTR')
 
 })

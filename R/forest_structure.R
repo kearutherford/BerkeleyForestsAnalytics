@@ -11,8 +11,8 @@
 #' Compiles forest structure at the plot level.
 #'
 #' @param data A dataframe or tibble. Each row must be an observation of an individual tree.
-#' @param site Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.
-#' @param plot Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.
+#' @param site Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
+#' @param plot Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
 #' @param exp_factor Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 #' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 #' @param ht Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a numeric variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
@@ -107,6 +107,18 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
   # Check that column classes are as expected
   ###########################################################
 
+  # Categorical variables ------------------------------------------------------
+  if(!is.character(data_val[[site_val]])) {
+    stop('The parameter site requires a character variable.\n',
+         'You have input a variable of class: ', class(data_val[[site_val]]))
+  }
+
+  if(!is.character(data_val[[plot_val]])) {
+    stop('The parameter plot requires a character variable.\n',
+         'You have input a variable of class: ', class(data_val[[plot_val]]))
+  }
+
+  # Numeric variables ----------------------------------------------------------
   if(!is.numeric(data_val[[ef_val]])) {
     stop('The parameter exp_factor requires a numerical variable.\n',
          'You have input a variable of class: ', class(data_val[[ef_val]]))
@@ -143,9 +155,6 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
   ###########################################################
   # Check that site and plot are as expected
   ###########################################################
-
-  data_val[[site_val]] <- as.character(data_val[[site_val]]) # coerce into character
-  data_val[[plot_val]] <- as.character(data_val[[plot_val]]) # coerce into character
 
   if ('TRUE' %in% is.na(data_val[[site_val]])) {
 

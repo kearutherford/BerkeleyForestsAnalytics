@@ -76,14 +76,6 @@ First, we'll use the `SummaryBiomass()` function to get above-ground stem, bark,
 
 Let's investigate the input dataframe:
 
-```{r, include = FALSE}
-vign_trees_1 <- vign_trees_1 %>%
-  mutate(site = as.character(site),
-         plot = as.character(plot),
-         status = as.factor(status),
-         decay = as.character(decay))
-```
-
 ```{r}
 # Note that the example data used in this vignette is included with the package
 # which is why we do not have to read in the data

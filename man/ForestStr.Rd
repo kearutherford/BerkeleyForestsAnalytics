@@ -9,9 +9,9 @@ ForestStr(data, site, plot, exp_factor, dbh, ht = "ignore", units = "metric")
 \arguments{
 \item{data}{A dataframe or tibble. Each row must be an observation of an individual tree.}
 
-\item{site}{Must be a variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected. The class of this variable will be coerced to character.}
+\item{site}{Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.}
 
-\item{plot}{Must be a variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured. The class of this variable will be coerced to character.}
+\item{plot}{Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.}
 
 \item{exp_factor}{Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.}
 

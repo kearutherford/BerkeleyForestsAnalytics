@@ -117,6 +117,26 @@ test_that("Invalid settings throw an error", {
 
 test_that("Column class handling works", {
 
+  # Categorical ----------------------------------------------------------------
+  expect_error(ValidateStrData(data_val = bad_comp,
+                               site_val = "Forest_bad", # intentional error here
+                               plot_val = "Plot_id",
+                               ef_val = "SPH",
+                               dbh_val = "DBH_CM",
+                               ht_val = "HT_M",
+                               units_val = "metric"),
+               'The parameter site requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateStrData(data_val = bad_comp,
+                               site_val = "Forest",
+                               plot_val = "Plot_id_bad", # intentional error here
+                               ef_val = "SPH",
+                               dbh_val = "DBH_CM",
+                               ht_val = "HT_M",
+                               units_val = "metric"),
+               'The parameter plot requires a character variable.\nYou have input a variable of class: numeric')
+
+  # Numeric --------------------------------------------------------------------
   expect_error(ValidateStrData(data_val = bad_comp,
                                site_val = "Forest",
                                plot_val = "Plot_id",

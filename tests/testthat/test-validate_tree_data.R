@@ -123,10 +123,42 @@ test_that("Unrecognized column names throw an error", {
 
 test_that("Column class handling works", {
 
+  # Categorical ----------------------------------------------------------------
+  expect_error(ValidateTreeData(data_val = bad_trees,
+                                status_val = "Live_bad2",
+                                sp_val = "SPP4",
+                                dbh_val = "DBH_CM",
+                                ht_val = "HT_M",
+                                decay_val = "ignore",
+                                sp_codes_val = "4letter",
+                                units = "metric"),
+               'The parameter status requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateTreeData(data_val = bad_trees,
+                                status_val = "Live_v1",
+                                sp_val = "SPP_fia_bad3",
+                                dbh_val = "DBH_CM",
+                                ht_val = "HT_M",
+                                decay_val = "ignore",
+                                sp_codes_val = "fia",
+                                units = "metric"),
+               'The parameter species requires a character variable.\nYou have input a variable of class: numeric')
+
   expect_error(ValidateTreeData(data_val = bad_trees,
                                 status_val = "Live_v1",
                                 sp_val = "SPP4",
-                                dbh_val = "DBH_CM_bad1", # intentional error here
+                                dbh_val = "DBH_CM",
+                                ht_val = "HT_M",
+                                decay_val = "Decay_bad4",
+                                sp_codes_val = "4letter",
+                                units = "metric"),
+               'The parameter decay_class requires a character variable.\nYou have input a variable of class: numeric')
+
+  # Numeric --------------------------------------------------------------------
+  expect_error(ValidateTreeData(data_val = bad_trees,
+                                status_val = "Live_v1",
+                                sp_val = "SPP4",
+                                dbh_val = "DBH_CM_bad1",
                                 ht_val = "HT_M",
                                 decay_val = "ignore",
                                 sp_codes_val = "4letter",
@@ -137,7 +169,7 @@ test_that("Column class handling works", {
                                 status_val = "Live_v1",
                                 sp_val = "SPP4",
                                 dbh_val = "DBH_CM",
-                                ht_val = "HT_M_bad1", # intentional error here
+                                ht_val = "HT_M_bad1",
                                 decay_val = "ignore",
                                 sp_codes_val = "4letter",
                                 units = "metric"),

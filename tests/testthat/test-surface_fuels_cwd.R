@@ -91,6 +91,31 @@ test_that("Missing id information throws an error", {
 })
 
 
+test_that("time/site/plot/transect column class handling works", {
+
+  expect_error(ValidateCWD(fuel_data_val = bad_cwd_21,
+                           units_val = "metric",
+                           sum_val = "no"),
+               'For fuel_data, the parameter time requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateCWD(fuel_data_val = bad_cwd_22,
+                           units_val = "metric",
+                           sum_val = "no"),
+               'For fuel_data, the parameter site requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateCWD(fuel_data_val = bad_cwd_23,
+                           units_val = "metric",
+                           sum_val = "no"),
+               'For fuel_data, the parameter plot requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateCWD(fuel_data_val = bad_cwd_24,
+                           units_val = "metric",
+                           sum_val = "no"),
+               'For fuel_data, the parameter transect requires a character variable.\nYou have input a variable of class: numeric')
+
+})
+
+
 test_that("Repeat time:site:plot:transect observations throw an error", {
 
 
@@ -161,6 +186,11 @@ test_that("Summed NO process works", {
                  'For fuel_data, there are missing values in the diameter column.\nConsider investigating these missing diameters.\n')
 
   # Status -----------------------------------------------------
+  expect_error(ValidateCWD(fuel_data_val = bad_cwd_25,
+                           units_val = "metric",
+                           sum_val = "no"),
+               'For fuel_data, the parameter status requires a character variable.\nYou have input a variable of class: factor')
+
   expect_error(ValidateCWD(fuel_data_val = bad_cwd_16,
                            units_val = "metric",
                            sum_val = "no"),

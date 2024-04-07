@@ -86,6 +86,31 @@ test_that("Missing id information throws an error", {
 })
 
 
+test_that("time/site/plot/transect column class handling works", {
+
+  expect_error(ValidateLitDuff(fuel_data_val = bad_duff_9,
+                               units_val = "metric",
+                               meas_val = "separate"),
+               'For fuel_data, the parameter time requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateLitDuff(fuel_data_val = bad_duff_10,
+                               units_val = "metric",
+                               meas_val = "separate"),
+               'For fuel_data, the parameter site requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateLitDuff(fuel_data_val = bad_duff_11,
+                               units_val = "metric",
+                               meas_val = "separate"),
+               'For fuel_data, the parameter plot requires a character variable.\nYou have input a variable of class: numeric')
+
+  expect_error(ValidateLitDuff(fuel_data_val = bad_duff_12,
+                               units_val = "metric",
+                               meas_val = "separate"),
+               'For fuel_data, the parameter transect requires a character variable.\nYou have input a variable of class: numeric')
+
+})
+
+
 test_that("Depth handling works", {
 
   expect_error(ValidateLitDuff(fuel_data_val = bad_duff_6,

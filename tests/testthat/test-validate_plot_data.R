@@ -259,7 +259,48 @@ test_that("Missing columns and missing id information throws an error", {
 })
 
 
-test_that("Wrong column class throws an error", {
+test_that("Wrong column class throws an error (for character variables)", {
+
+  expect_error(ValidatePlotData(data_check = b_srs_sp_4,
+                                design_check = "SRS",
+                                wt_data_check = "not_needed",
+                                fpc_data_check = "not_needed"),
+               'For data, time must be a character variable.\nThe time column is currently class: factor')
+
+  expect_error(ValidatePlotData(data_check = b_srs_sp_5,
+                                design_check = "SRS",
+                                wt_data_check = "not_needed",
+                                fpc_data_check = "not_needed"),
+               'For data, site must be a character variable.\nThe site column is currently class: factor')
+
+  expect_error(ValidatePlotData(data_check = b_srs_sp_6,
+                                design_check = "SRS",
+                                wt_data_check = "not_needed",
+                                fpc_data_check = "not_needed"),
+               'For data, plot must be a character variable.\nThe plot column is currently class: numeric')
+
+  expect_error(ValidatePlotData(data_check = b_srs_sp_7,
+                                design_check = "SRS",
+                                wt_data_check = "not_needed",
+                                fpc_data_check = "not_needed"),
+               'For data, species must be a character variable.\nThe species column is currently class: numeric')
+
+  expect_error(ValidatePlotData(data_check = b_strs_11,
+                                design_check = "STRS",
+                                wt_data_check = g_strs_wh_1,
+                                fpc_data_check = "not_needed"),
+               'For data, stratum must be a character variable.\nThe stratum column is currently class: numeric')
+
+  expect_error(ValidatePlotData(data_check = b_ffs_5,
+                                design_check = "FFS",
+                                wt_data_check = "not_needed",
+                                fpc_data_check = "not_needed"),
+               'For data, trt_type must be a character variable.\nThe trt_type column is currently class: factor')
+
+})
+
+
+test_that("Wrong column class throws an error (for numeric variables)", {
 
   # STRS -----------------------------------------------
   expect_error(ValidatePlotData(data_check = b_strs_9,
@@ -395,6 +436,24 @@ test_that("Weights dataframe handling works", {
 
   expect_error(ValidatePlotData(data_check = g_strs,
                                 design_check = "STRS",
+                                wt_data_check = b_strs_wh_14,
+                                fpc_data_check = "not_needed"),
+               'For wt_data, time must be a character variable.\nThe time column is currently class: factor')
+
+  expect_error(ValidatePlotData(data_check = g_strs,
+                                design_check = "STRS",
+                                wt_data_check = b_strs_wh_15,
+                                fpc_data_check = "not_needed"),
+               'For wt_data, site must be a character variable.\nThe site column is currently class: numeric')
+
+  expect_error(ValidatePlotData(data_check = g_strs,
+                                design_check = "STRS",
+                                wt_data_check = b_strs_wh_16,
+                                fpc_data_check = "not_needed"),
+               'For wt_data, stratum must be a character variable.\nThe stratum column is currently class: numeric')
+
+  expect_error(ValidatePlotData(data_check = g_strs,
+                                design_check = "STRS",
                                 wt_data_check = b_strs_wh_4,
                                 fpc_data_check = "not_needed"),
                'For wt_data, the wh column must be numeric.\nThe wh column is currently class: character')
@@ -487,6 +546,30 @@ test_that("FPC dataframe handling works", {
                                 wt_data_check = "not_needed",
                                 fpc_data_check = b_ffs_fpc_1),
                'The fpc_data input is missing the required "trt_type" column.\nThis column is required when you have a "FFS" design.')
+
+  expect_error(ValidatePlotData(data_check = g_strs,
+                                design_check = "STRS",
+                                wt_data_check = g_strs_wh_1,
+                                fpc_data_check = b_strs_fpc_17),
+               'For fpc_data, time must be a character variable.\nThe time column is currently class: factor')
+
+  expect_error(ValidatePlotData(data_check = g_strs,
+                                design_check = "STRS",
+                                wt_data_check = g_strs_wh_1,
+                                fpc_data_check = b_strs_fpc_18),
+               'For fpc_data, site must be a character variable.\nThe site column is currently class: factor')
+
+  expect_error(ValidatePlotData(data_check = g_strs,
+                                design_check = "STRS",
+                                wt_data_check = g_strs_wh_1,
+                                fpc_data_check = b_strs_fpc_19),
+               'For fpc_data, stratum must be a character variable.\nThe stratum column is currently class: numeric')
+
+  expect_error(ValidatePlotData(data_check = g_ffs,
+                                design_check = "FFS",
+                                wt_data_check = "not_needed",
+                                fpc_data_check = b_ffs_fpc_7),
+               'For fpc_data, trt_type must be a character variable.\nThe trt_type column is currently class: numeric')
 
   expect_error(ValidatePlotData(data_check = g_strs,
                                 design_check = "STRS",
@@ -616,34 +699,3 @@ test_that("FPC dataframe handling works", {
 
 })
 
-
-test_that("Final column classes are as expected", {
-
-  # STRS ------------------------------------------------
-  strs_trial <- ValidatePlotData(data_check = g_strs_sp,
-                                 design_check = "STRS",
-                                 wt_data_check = g_strs_wh_1,
-                                 fpc_data_check = "not_needed")
-
-  expect_equal(class(strs_trial$stratum), "character")
-
-  # SRS -------------------------------------------------
-  srs_trial <- ValidatePlotData(data_check = g_srs_sp_class,
-                                design_check = "SRS",
-                                wt_data_check = "not_needed",
-                                fpc_data_check = "not_needed")
-
-  expect_equal(class(srs_trial$time), "character")
-  expect_equal(class(srs_trial$site), "character")
-  expect_equal(class(srs_trial$plot), "character")
-  expect_equal(class(srs_trial$species), "character")
-
-  # FFS -------------------------------------------------
-  ffs_trial <- ValidatePlotData(data_check = g_ffs_sp,
-                                design_check = "FFS",
-                                wt_data_check = "not_needed",
-                                fpc_data_check = "not_needed")
-
-  expect_equal(class(ffs_trial$trt_type), "character")
-
-})

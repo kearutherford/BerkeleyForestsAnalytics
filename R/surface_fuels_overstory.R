@@ -29,6 +29,28 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
   # Check that column classes are as expected
   ###########################################################
 
+  # Categorical variables ------------------------------------------------------
+  if(!is.character(tree_data_val$time)) {
+    stop('For tree_data, the parameter time requires a character variable.\n',
+         'You have input a variable of class: ', class(tree_data_val$time))
+  }
+
+  if(!is.character(tree_data_val$site)) {
+    stop('For tree_data, the parameter site requires a character variable.\n',
+         'You have input a variable of class: ', class(tree_data_val$site))
+  }
+
+  if(!is.character(tree_data_val$plot)) {
+    stop('For tree_data, the parameter plot requires a character variable.\n',
+         'You have input a variable of class: ', class(tree_data_val$plot))
+  }
+
+  if(!is.character(tree_data_val$species)) {
+    stop('For tree_data, the parameter species requires a character variable.\n',
+         'You have input a variable of class: ', class(tree_data_val$species))
+  }
+
+  # Numeric variables ----------------------------------------------------------
   if(!is.numeric(tree_data_val$dbh)) {
     stop('For tree_data, the parameter dbh requires a numerical variable.\n',
          'You have input a variable of class: ', class(tree_data_val$dbh))
@@ -160,9 +182,6 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
   # Check that species codes are as expected
   ###########################################################
 
-  tree_data_val$species <- as.character(tree_data_val$species) # coerce species into character
-  plots_w_trees$species <- as.character(plots_w_trees$species)
-
   # Check for NA ---------------------------------------------------------------
   if ('TRUE' %in% is.na(plots_w_trees$species)) {
 
@@ -217,10 +236,6 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
   ###########################################################
   # Final dataframe prep
   ###########################################################
-
-  tree_data_val$time <- as.character(tree_data_val$time)
-  tree_data_val$site <- as.character(tree_data_val$site)
-  tree_data_val$plot <- as.character(tree_data_val$plot)
 
   yes_trees <- subset(tree_data_val, tree_data_val$exp_factor > 0 & !is.na(tree_data_val$dbh),
                       select = c(time, site, plot, exp_factor, species, dbh))
