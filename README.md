@@ -704,7 +704,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.16 secs
+    ## Time difference of 0.19 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -844,7 +844,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.15 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -897,7 +897,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.17 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
