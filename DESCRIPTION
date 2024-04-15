@@ -1,7 +1,7 @@
 Package: BerkeleyForestsAnalytics
 Title: Produce Standard Metrics for Forest Management and Ecology from
     Field Inventory Data
-Version: 1.0.0
+Version: 2.0.1
 Authors@R: c(
     person("Kea", "Rutherford", , "krutherford@berkeley.edu", role = c("aut", "cre")),
     person("John", "Battles", role = "aut"),

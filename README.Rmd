@@ -3,7 +3,7 @@ output:
   github_document
 ---
 
-# Berkeley Forests Analystics 
+# Berkeley Forests Analytics 
 
 The `BerkeleyForestsAnalytics` package is a suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data. 
 
@@ -246,7 +246,7 @@ bio_NT_demo
 ```
 
 ```{r}
-# call the SummaryBiomass() function in the BerkeleyForestsAnalystics package
+# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
 sum_bio_demo3 <- SummaryBiomass(data = bio_NT_demo,
                                 site = "Forest",
                                 plot = "Plot_id",
@@ -469,7 +469,7 @@ for_demo_data
 
 **Composition measured as relative basal area:**
 ```{r}
-# call the ForestComp() function in the BerkeleyForestsAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalytics package
 # keep default relative (= "BA") and units (= "metric")
 comp_demo1 <- ForestComp(data = for_demo_data,
                          site = "Forest",
@@ -486,7 +486,7 @@ comp_demo1
 
 **Composition measured as relative density:**
 ```{r}
-# call the ForestComp() function in the BerkeleyForestsAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalytics package
 comp_demo2 <- ForestComp(data = for_demo_data,
                          site = "Forest",
                          plot = "Plot_id",
@@ -509,7 +509,7 @@ for_NT_demo
 ```
 
 ```{r}
-# call the ForestComp() function in the BerkeleyForestsAnalystics package
+# call the ForestComp() function in the BerkeleyForestsAnalytics package
 comp_demo3 <- ForestComp(data = for_NT_demo,
                          site = "Forest",
                          plot = "Plot_id",
@@ -572,7 +572,7 @@ for_demo_data
 
 **If tree heights were not measured:**
 ```{r}
-# call the ForestStr() function in the BerkeleyForestsAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalytics package
 # keep default ht (= "ignore") and units (= "metric")
 str_demo1 <- ForestStr(data = for_demo_data,
                        site = "Forest",
@@ -587,7 +587,7 @@ str_demo1
 
 **If tree heights were measured:**
 ```{r}
-# call the ForestStr() function in the BerkeleyForestsAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalytics package
 str_demo2 <- ForestStr(data = for_demo_data,
                        site = "Forest",
                        plot = "Plot_id",
@@ -608,7 +608,7 @@ for_NT_demo
 ```
 
 ```{r}
-# call the ForestStr() function in the BerkeleyForestsAnalystics package
+# call the ForestStr() function in the BerkeleyForestsAnalytics package
 str_demo3 <- ForestStr(data = for_NT_demo,
                        site = "Forest",
                        plot = "Plot_id",
@@ -709,7 +709,7 @@ fwd_demo
 <br>
 
 ```{r}
-# call the FineFuels() function in the BerkeleyForestsAnalystics package
+# call the FineFuels() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter") and units (= "metric")
 fine_demo <- FineFuels(tree_data = overstory_demo,
                        fuel_data = fwd_demo)
@@ -800,7 +800,7 @@ cwd_YS_demo
 <br>
 
 ```{r}
-# call the CoarseFuels() function in the BerkeleyForestsAnalystics package
+# call the CoarseFuels() function in the BerkeleyForestsAnalytics package
 coarse_demo1 <- CoarseFuels(tree_data = overstory_demo,
                             fuel_data = cwd_YS_demo,
                             sp_codes = "4letter",
@@ -823,7 +823,7 @@ cwd_NS_demo
 <br>
 
 ```{r}
-# call the CoarseFuels() function in the BerkeleyForestsAnalystics package
+# call the CoarseFuels() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and summed (= "no")
 coarse_demo2 <- CoarseFuels(tree_data = overstory_demo,
                             fuel_data = cwd_NS_demo)
@@ -913,7 +913,7 @@ lit_duff_demo
 <br>
 
 ```{r}
-# call the LitterDuff() function in the BerkeleyForestsAnalystics package
+# call the LitterDuff() function in the BerkeleyForestsAnalytics package
 # keep default sp_codes (= "4letter"), units (= "metric"), and measurement (= "separate")
 duff_demo1 <- LitterDuff(tree_data = overstory_demo,
                          fuel_data = lit_duff_demo)
@@ -932,7 +932,7 @@ lit_duff_avg_demo
 <br>
 
 ```{r}
-# call the LitterDuff() function in the BerkeleyForestsAnalystics package
+# call the LitterDuff() function in the BerkeleyForestsAnalytics package
 duff_demo2 <- LitterDuff(tree_data = overstory_demo,
                          fuel_data = lit_duff_avg_demo,
                          sp_codes = "4letter",
@@ -1024,7 +1024,7 @@ compilation_srs_demo
 <br>
 
 ```{r}
-# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# call the CompilePlots() function in the BerkeleyForestsAnalytics package
 # keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 srs_demo1 <- CompilePlots(data = compilation_srs_demo,
                           design = "SRS")
@@ -1043,7 +1043,7 @@ compilation_srs_sp_demo
 <br>
 
 ```{r}
-# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# call the CompilePlots() function in the BerkeleyForestsAnalytics package
 # keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 srs_demo2 <- CompilePlots(data = compilation_srs_sp_demo,
                           design = "SRS")
@@ -1067,7 +1067,7 @@ compilation_fpc_demo
 <br> 
 
 ```{r}
-# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# call the CompilePlots() function in the BerkeleyForestsAnalytics package
 # keep default wt_data (= "not_needed")
 srs_demo3 <- CompilePlots(data = compilation_srs_demo,
                           design = "SRS",
@@ -1092,7 +1092,7 @@ compilation_wt_demo
 <br>
 
 ```{r}
-# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# call the CompilePlots() function in the BerkeleyForestsAnalytics package
 # keep default fpc_data (= "not_needed)
 strs_demo <- CompilePlots(data = compilation_strs_demo,
                           design = "STRS",
@@ -1112,7 +1112,7 @@ compilation_ffs_demo
 <br>
 
 ```{r}
-# call the CompilePlots() function in the BerkeleyForestsAnalystics package
+# call the CompilePlots() function in the BerkeleyForestsAnalytics package
 # keep default wt_data (= "not_needed") and fpc_data (= "not_needed)
 ffs_demo <- CompilePlots(data = compilation_ffs_demo,
                          design = "FFS")
@@ -1240,7 +1240,7 @@ compilation_wt_demo
 
 **Stratified random sampling design, with both fwd and cwd data supplied:**
 ```{r}
-# call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
+# call the CompileSurfaceFuels() function in the BerkeleyForestsAnalytics package
 # keep default fpc_data (= "not_needed)
 strs_surface_demo1 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                                           cwd_data = compilation_cwd_demo,
@@ -1255,7 +1255,7 @@ strs_surface_demo1
 
 **Stratified random sampling design, with only fwd data supplied:**
 ```{r}
-# call the CompileSurfaceFuels() function in the BerkeleyForestsAnalystics package
+# call the CompileSurfaceFuels() function in the BerkeleyForestsAnalytics package
 # keep default fpc_data (= "not_needed)
 strs_surface_demo2 <- CompileSurfaceFuels(fwd_data = compilation_fwd_demo,
                                           cwd_data = "none",
