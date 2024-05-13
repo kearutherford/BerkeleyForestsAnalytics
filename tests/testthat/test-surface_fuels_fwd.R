@@ -142,7 +142,7 @@ test_that("Count handling works", {
 
   expect_warning(ValidateFWD(fuel_data_val = bad_fwd_14,
                              units_val = "metric"),
-                 'For fuel_data, there are missing values in the count_1h column.\nFor tansects with NA 1h counts, 1h fuel load estimates will be NA.')
+               'For fuel_data, there are missing values in the count_1h column.\nFor transects with NA 1h counts, 1h fuel load estimates will be NA.')
 
 })
 

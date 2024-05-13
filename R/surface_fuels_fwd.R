@@ -303,19 +303,19 @@ ValidateFWD <- function(fuel_data_val, units_val) {
   # check for NAs --------------------------------------------------------------
   if ('TRUE' %in% is.na(fuel_data_val$count_1h)) {
     warning('For fuel_data, there are missing values in the count_1h column.\n',
-            'For tansects with NA 1h counts, 1h fuel load estimates will be NA.\n',
+            'For transects with NA 1h counts, 1h fuel load estimates will be NA.\n',
             ' \n')
   }
 
   if ('TRUE' %in% is.na(fuel_data_val$count_10h)) {
     warning('For fuel_data, there are missing values in the count_10h column.\n',
-            'For tansects with NA 10h counts, 10h fuel load estimates will be NA.\n',
+            'For transects with NA 10h counts, 10h fuel load estimates will be NA.\n',
             ' \n')
   }
 
   if ('TRUE' %in% is.na(fuel_data_val$count_100h)) {
     warning('For fuel_data, there are missing values in the count_100h column.\n',
-            'For tansects with NA 100h counts, 100h fuel load estimates will be NA.\n',
+            'For transects with NA 100h counts, 100h fuel load estimates will be NA.\n',
             ' \n')
   }
 
