@@ -181,3 +181,17 @@ test_that("Final column classes are as expected", {
 
 })
 
+
+test_that("Rfuels and BFA outputs match", {
+
+  expect_warning(fwd_package <- FineFuels(tree_data = rfuels_trees, fuel_data = rfuels_fuels))
+  fwd_package <- fwd_package[order(fwd_package$site, fwd_package$time, fwd_package$plot),]
+  rfuels_loads <- rfuels_loads[order(rfuels_loads$site, rfuels_loads$time, rfuels_loads$plot),]
+
+  expect_equal(rfuels_loads$rf_1h, fwd_package$load_1h_Mg_ha)
+  expect_equal(rfuels_loads$rf_10h, fwd_package$load_10h_Mg_ha)
+  expect_equal(rfuels_loads$rf_100h, fwd_package$load_100h_Mg_ha)
+  expect_equal(rfuels_loads$rf_fwd, fwd_package$load_fwd_Mg_ha)
+
+})
+

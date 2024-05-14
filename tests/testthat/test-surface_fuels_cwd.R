@@ -285,3 +285,16 @@ test_that("Final column classes are as expected", {
 
 })
 
+
+test_that("Rfuels and BFA outputs match", {
+
+  expect_warning(cwd_package <- CoarseFuels(tree_data = rfuels_trees, fuel_data = rfuels_fuels, summed = "yes"))
+  cwd_package <- cwd_package[order(cwd_package$site, cwd_package$time, cwd_package$plot),]
+  rfuels_loads <- rfuels_loads[order(rfuels_loads$site, rfuels_loads$time, rfuels_loads$plot),]
+
+  expect_equal(rfuels_loads$rf_1000s, cwd_package$load_1000s_Mg_ha)
+  expect_equal(rfuels_loads$rf_1000r, cwd_package$load_1000r_Mg_ha)
+  expect_equal(rfuels_loads$rf_cwd, cwd_package$load_cwd_Mg_ha)
+
+})
+

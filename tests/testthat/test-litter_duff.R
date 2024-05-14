@@ -188,3 +188,16 @@ test_that("Final column classes are as expected", {
   expect_equal(class(duff_trial2$lit_duff_Mg_ha), "numeric")
 
 })
+
+
+test_that("Rfuels and BFA outputs match", {
+
+  expect_warning(litduff_package <- LitterDuff(tree_data = rfuels_trees, fuel_data = rfuels_fuels))
+  litduff_package <- litduff_package[order(litduff_package$site, litduff_package$time, litduff_package$plot),]
+  rfuels_loads <- rfuels_loads[order(rfuels_loads$site, rfuels_loads$time, rfuels_loads$plot),]
+
+  expect_equal(rfuels_loads$rf_litter, litduff_package$litter_Mg_ha)
+  expect_equal(rfuels_loads$rf_duff, litduff_package$duff_Mg_ha)
+
+})
+
