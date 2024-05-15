@@ -65,3 +65,23 @@ test_that("Final column classes are as expected", {
   expect_equal(class(comp_trial$dominance), "numeric")
 
 })
+
+
+test_that("Package and hand calculations match", {
+
+  # relative density
+  expect_message(comp_den_package <- ForestComp(comp_str_trees_m, site = "site", plot = "plot", exp_factor = "exp_factor", status = "status", species = "species", dbh = "dbh", relative = "density", units = "metric"))
+  comp_den_package <- comp_den_package[order(comp_den_package$site, comp_den_package$plot, comp_den_package$species),]
+  comp_den_hand <- comp_den_hand[order(comp_den_hand$site, comp_den_hand$plot, comp_den_hand$species),]
+
+  expect_equal(comp_den_hand$dominance, comp_den_package$dominance)
+
+  # relative BA
+  expect_message(comp_ba_package <- ForestComp(comp_str_trees_m, site = "site", plot = "plot", exp_factor = "exp_factor", status = "status", species = "species", dbh = "dbh", relative = "BA", units = "metric"))
+  comp_ba_package <- comp_ba_package[order(comp_ba_package$site, comp_ba_package$plot, comp_ba_package$species),]
+  comp_ba_hand <- comp_ba_hand[order(comp_ba_hand$site, comp_ba_hand$plot, comp_ba_hand$species),]
+
+  expect_equal(comp_ba_hand$dominance, comp_ba_package$dominance)
+
+})
+
