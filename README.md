@@ -750,7 +750,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.21 secs
+    ## Time difference of 0.17 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -798,7 +798,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.14 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -836,7 +836,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.17 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -890,7 +890,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -943,7 +943,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.2 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -3882,11 +3882,9 @@ Definitions:
 
 Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to
 reach out (1) if you find a bug or (2) need a tree species added to the
-`TreeBiomass()` function. Please note that tree species cannot be added
-for the surface and ground fuel load functions; we currently only have
-values for the 19 Sierra Nevada conifer species included in van
-Wagtendonk *et al.* (1996, 1998).
+`TreeBiomass()` function or the `BiomassNSVB()` function. Please note
+that tree species cannot be added for the surface and ground fuel load
+functions; we currently only have values for the 19 Sierra Nevada
+conifer species included in van Wagtendonk *et al.* (1996, 1998).
 
 **Contact email:** <krutherford@berkeley.edu>
-
-**Pronouns:** they/she

@@ -3336,8 +3336,8 @@ g_strs_wh_2 <- data.frame(
 g_strs_fpc_1 <- data.frame(
   site = c("SEKI", "SEKI", "YOMI", "YOMI"),
   stratum = as.character(c(1,2,1,2)),
-  N = c(300,400,500,600),
-  n = c(5,10,20,40)
+  N = c(20,15,18,22),
+  n = c(3,2,2,2)
 )
 
 g_strs_fpc_2 <- data.frame(
@@ -3734,8 +3734,8 @@ g_srs_sp <- data.frame(
 
 g_srs_fpc_1 <- data.frame(
   site = c("SEKI", "YOMI"),
-  N = c(700,1000),
-  n = c(15,60)
+  N = c(60,20),
+  n = c(5,4)
 )
 
 g_srs_fpc_2 <- data.frame(
@@ -3865,8 +3865,8 @@ g_ffs_sp <- data.frame(
 g_ffs_fpc_1 <- data.frame(
   trt_type = c("burn", "burn", "mech", "mech"),
   site = c("360", "220", "460", "530"),
-  N = c(300,400,500,600),
-  n = c(5,10,20,40)
+  N = c(20,15,18,22),
+  n = c(2,3,2,2)
 )
 
 g_ffs_fpc_2 <- data.frame(
@@ -3875,6 +3875,13 @@ g_ffs_fpc_2 <- data.frame(
   site = c("360", "220", "460", "530", "360", "220", "460", "530"),
   N = c(300,400,500,600,300,400,500,600),
   n = c(5,10,20,40,5,9,18,37)
+)
+
+g_ffs_fpc_3 <- data.frame(
+  trt_type = c("1", "1", "2", "2"),
+  site = c("360", "220", "460", "530"),
+  N = c(20,15,18,22),
+  n = c(2,3,2,2)
 )
 
 b_ffs_1 <- data.frame(

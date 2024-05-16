@@ -173,6 +173,65 @@ test_that("STRS outputs have expected column names and classes", {
 })
 
 
+test_that("STRS package and hand calculations match", {
+
+  # STRS
+  strs_fuels_package_1 <- CompileSurfaceFuels(fwd_data = g_strs_fwd_m, cwd_data = g_strs_cwd_m, design = "STRS", wt_data = g_strs_wh_1)$stratum
+  strs_fuels_package_1 <- strs_fuels_package_1[order(strs_fuels_package_1$time, strs_fuels_package_1$site, strs_fuels_package_1$stratum),]
+  strs_fuels_hand_1 <- strs_fuels_hand_1[order(strs_fuels_hand_1$time, strs_fuels_hand_1$site, strs_fuels_hand_1$stratum),]
+
+  expect_equal(strs_fuels_hand_1$avg_1h, strs_fuels_package_1$avg_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$se_1h, strs_fuels_package_1$se_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$avg_10h, strs_fuels_package_1$avg_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$se_10h, strs_fuels_package_1$se_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$avg_100h, strs_fuels_package_1$avg_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$se_100h, strs_fuels_package_1$se_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$avg_1000h, strs_fuels_package_1$avg_1000h_Mg_ha)
+  expect_equal(strs_fuels_hand_1$se_1000h, strs_fuels_package_1$se_1000h_Mg_ha)
+
+  strs_fuels_package_2 <- CompileSurfaceFuels(fwd_data = g_strs_fwd_m, cwd_data = g_strs_cwd_m, design = "STRS", wt_data = g_strs_wh_1)$site
+  strs_fuels_package_2 <- strs_fuels_package_2[order(strs_fuels_package_2$time, strs_fuels_package_2$site),]
+  strs_fuels_hand_2 <- strs_fuels_hand_2[order(strs_fuels_hand_2$time, strs_fuels_hand_2$site),]
+
+  expect_equal(strs_fuels_hand_2$avg_1h, strs_fuels_package_2$avg_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$se_1h, strs_fuels_package_2$se_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$avg_10h, strs_fuels_package_2$avg_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$se_10h, strs_fuels_package_2$se_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$avg_100h, strs_fuels_package_2$avg_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$se_100h, strs_fuels_package_2$se_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$avg_1000h, strs_fuels_package_2$avg_1000h_Mg_ha)
+  expect_equal(strs_fuels_hand_2$se_1000h, strs_fuels_package_2$se_1000h_Mg_ha)
+
+  # STRS, with FPC
+  strs_fuels_package_fpc_1 <- CompileSurfaceFuels(fwd_data = g_strs_fwd_m, cwd_data = g_strs_cwd_m, design = "STRS", wt_data = g_strs_wh_1, fpc_data = g_strs_fpc_1)$stratum
+  strs_fuels_package_fpc_1 <- strs_fuels_package_fpc_1[order(strs_fuels_package_fpc_1$time, strs_fuels_package_fpc_1$site, strs_fuels_package_fpc_1$stratum),]
+  strs_fuels_hand_fpc_1 <- strs_fuels_hand_fpc_1[order(strs_fuels_hand_fpc_1$time, strs_fuels_hand_fpc_1$site, strs_fuels_hand_fpc_1$stratum),]
+
+  expect_equal(strs_fuels_hand_fpc_1$avg_1h, strs_fuels_package_fpc_1$avg_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$se_1h, strs_fuels_package_fpc_1$se_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$avg_10h, strs_fuels_package_fpc_1$avg_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$se_10h, strs_fuels_package_fpc_1$se_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$avg_100h, strs_fuels_package_fpc_1$avg_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$se_100h, strs_fuels_package_fpc_1$se_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$avg_1000h, strs_fuels_package_fpc_1$avg_1000h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_1$se_1000h, strs_fuels_package_fpc_1$se_1000h_Mg_ha)
+
+  strs_fuels_package_fpc_2 <- CompileSurfaceFuels(fwd_data = g_strs_fwd_m, cwd_data = g_strs_cwd_m, design = "STRS", wt_data = g_strs_wh_1, fpc_data = g_strs_fpc_1)$site
+  strs_fuels_package_fpc_2 <- strs_fuels_package_fpc_2[order(strs_fuels_package_fpc_2$time, strs_fuels_package_fpc_2$site),]
+  strs_fuels_hand_fpc_2 <- strs_fuels_hand_fpc_2[order(strs_fuels_hand_fpc_2$time, strs_fuels_hand_fpc_2$site),]
+
+  expect_equal(strs_fuels_hand_fpc_2$avg_1h, strs_fuels_package_fpc_2$avg_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$se_1h, strs_fuels_package_fpc_2$se_1h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$avg_10h, strs_fuels_package_fpc_2$avg_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$se_10h, strs_fuels_package_fpc_2$se_10h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$avg_100h, strs_fuels_package_fpc_2$avg_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$se_100h, strs_fuels_package_fpc_2$se_100h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$avg_1000h, strs_fuels_package_fpc_2$avg_1000h_Mg_ha)
+  expect_equal(strs_fuels_hand_fpc_2$se_1000h, strs_fuels_package_fpc_2$se_1000h_Mg_ha)
+
+})
+
+
 test_that("SRS outputs have expected column names and classes", {
 
   # type 1, metric
@@ -272,6 +331,39 @@ test_that("SRS outputs have expected column names and classes", {
   expect_equal(class(srs_3i$se_100h_ton_ac), "numeric")
   expect_equal(class(srs_3i$avg_1000h_ton_ac), "numeric")
   expect_equal(class(srs_3i$se_1000h_ton_ac), "numeric")
+
+})
+
+
+test_that("SRS package and hand calculations match", {
+
+  # SRS
+  srs_fuels_package <- CompileSurfaceFuels(fwd_data = g_srs_fwd_m, cwd_data = g_srs_cwd_m, design = "SRS")
+  srs_fuels_package <- srs_fuels_package[order(srs_fuels_package$time, srs_fuels_package$site),]
+  srs_fuels_hand <- srs_fuels_hand[order(srs_fuels_hand$time, srs_fuels_hand$site),]
+
+  expect_equal(srs_fuels_hand$avg_1h, srs_fuels_package$avg_1h_Mg_ha)
+  expect_equal(srs_fuels_hand$se_1h, srs_fuels_package$se_1h_Mg_ha)
+  expect_equal(srs_fuels_hand$avg_10h, srs_fuels_package$avg_10h_Mg_ha)
+  expect_equal(srs_fuels_hand$se_10h, srs_fuels_package$se_10h_Mg_ha)
+  expect_equal(srs_fuels_hand$avg_100h, srs_fuels_package$avg_100h_Mg_ha)
+  expect_equal(srs_fuels_hand$se_100h, srs_fuels_package$se_100h_Mg_ha)
+  expect_equal(srs_fuels_hand$avg_1000h, srs_fuels_package$avg_1000h_Mg_ha)
+  expect_equal(srs_fuels_hand$se_1000h, srs_fuels_package$se_1000h_Mg_ha)
+
+  # SRS, with FPC
+  srs_fuels_package_fpc <- CompileSurfaceFuels(fwd_data = g_srs_fwd_m, cwd_data = g_srs_cwd_m, design = "SRS", fpc_data = g_srs_fpc_1)
+  srs_fuels_package_fpc <- srs_fuels_package_fpc[order(srs_fuels_package_fpc$time, srs_fuels_package_fpc$site),]
+  srs_fuels_hand_fpc <- srs_fuels_hand_fpc[order(srs_fuels_hand_fpc$time, srs_fuels_hand_fpc$site),]
+
+  expect_equal(srs_fuels_hand_fpc$avg_1h, srs_fuels_package_fpc$avg_1h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$se_1h, srs_fuels_package_fpc$se_1h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$avg_10h, srs_fuels_package_fpc$avg_10h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$se_10h, srs_fuels_package_fpc$se_10h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$avg_100h, srs_fuels_package_fpc$avg_100h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$se_100h, srs_fuels_package_fpc$se_100h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$avg_1000h, srs_fuels_package_fpc$avg_1000h_Mg_ha)
+  expect_equal(srs_fuels_hand_fpc$se_1000h, srs_fuels_package_fpc$se_1000h_Mg_ha)
 
 })
 
@@ -439,3 +531,63 @@ test_that("FFS outputs have expected column names and classes", {
   expect_equal(class(ffs_3i$trt_type$se_1000h_ton_ac), "numeric")
 
 })
+
+
+test_that("FFS package and hand calculations match", {
+
+  # FFS
+  ffs_fuels_package_1 <- CompileSurfaceFuels(fwd_data = g_ffs_fwd_m, cwd_data = g_ffs_cwd_m, design = "FFS")$site
+  ffs_fuels_package_1 <- ffs_fuels_package_1[order(ffs_fuels_package_1$time, ffs_fuels_package_1$trt_type, ffs_fuels_package_1$site),]
+  ffs_fuels_hand_1 <- ffs_fuels_hand_1[order(ffs_fuels_hand_1$time, ffs_fuels_hand_1$trt_type, ffs_fuels_hand_1$site),]
+
+  expect_equal(ffs_fuels_hand_1$avg_1h, ffs_fuels_package_1$avg_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$se_1h, ffs_fuels_package_1$se_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$avg_10h, ffs_fuels_package_1$avg_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$se_10h, ffs_fuels_package_1$se_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$avg_100h, ffs_fuels_package_1$avg_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$se_100h, ffs_fuels_package_1$se_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$avg_1000h, ffs_fuels_package_1$avg_1000h_Mg_ha)
+  expect_equal(ffs_fuels_hand_1$se_1000h, ffs_fuels_package_1$se_1000h_Mg_ha)
+
+  ffs_fuels_package_2 <- CompileSurfaceFuels(fwd_data = g_ffs_fwd_m, cwd_data = g_ffs_cwd_m, design = "FFS")$trt_type
+  ffs_fuels_package_2 <- ffs_fuels_package_2[order(ffs_fuels_package_2$time, ffs_fuels_package_2$trt_type),]
+  ffs_fuels_hand_2 <- ffs_fuels_hand_2[order(ffs_fuels_hand_2$time, ffs_fuels_hand_2$trt_type),]
+
+  expect_equal(ffs_fuels_hand_2$avg_1h, ffs_fuels_package_2$avg_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$se_1h, ffs_fuels_package_2$se_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$avg_10h, ffs_fuels_package_2$avg_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$se_10h, ffs_fuels_package_2$se_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$avg_100h, ffs_fuels_package_2$avg_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$se_100h, ffs_fuels_package_2$se_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$avg_1000h, ffs_fuels_package_2$avg_1000h_Mg_ha)
+  expect_equal(ffs_fuels_hand_2$se_1000h, ffs_fuels_package_2$se_1000h_Mg_ha)
+
+  # FFS, with FPC
+  ffs_fuels_package_fpc_1 <- CompileSurfaceFuels(fwd_data = g_ffs_fwd_m, cwd_data = g_ffs_cwd_m, design = "FFS", fpc_data = g_ffs_fpc_1)$site
+  ffs_fuels_package_fpc_1 <- ffs_fuels_package_fpc_1[order(ffs_fuels_package_fpc_1$time, ffs_fuels_package_fpc_1$trt_type, ffs_fuels_package_fpc_1$site),]
+  ffs_fuels_hand_fpc_1 <- ffs_fuels_hand_fpc_1[order(ffs_fuels_hand_fpc_1$time, ffs_fuels_hand_fpc_1$trt_type, ffs_fuels_hand_fpc_1$site),]
+
+  expect_equal(ffs_fuels_hand_fpc_1$avg_1h, ffs_fuels_package_fpc_1$avg_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$se_1h, ffs_fuels_package_fpc_1$se_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$avg_10h, ffs_fuels_package_fpc_1$avg_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$se_10h, ffs_fuels_package_fpc_1$se_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$avg_100h, ffs_fuels_package_fpc_1$avg_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$se_100h, ffs_fuels_package_fpc_1$se_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$avg_1000h, ffs_fuels_package_fpc_1$avg_1000h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_1$se_1000h, ffs_fuels_package_fpc_1$se_1000h_Mg_ha)
+
+  ffs_fuels_package_fpc_2 <- CompileSurfaceFuels(fwd_data = g_ffs_fwd_m, cwd_data = g_ffs_cwd_m, design = "FFS", fpc_data = g_ffs_fpc_1)$trt_type
+  ffs_fuels_package_fpc_2 <- ffs_fuels_package_fpc_2[order(ffs_fuels_package_fpc_2$time, ffs_fuels_package_fpc_2$trt_type),]
+  ffs_fuels_hand_fpc_2 <- ffs_fuels_hand_fpc_2[order(ffs_fuels_hand_fpc_2$time, ffs_fuels_hand_fpc_2$trt_type),]
+
+  expect_equal(ffs_fuels_hand_fpc_2$avg_1h, ffs_fuels_package_fpc_2$avg_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$se_1h, ffs_fuels_package_fpc_2$se_1h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$avg_10h, ffs_fuels_package_fpc_2$avg_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$se_10h, ffs_fuels_package_fpc_2$se_10h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$avg_100h, ffs_fuels_package_fpc_2$avg_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$se_100h, ffs_fuels_package_fpc_2$se_100h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$avg_1000h, ffs_fuels_package_fpc_2$avg_1000h_Mg_ha)
+  expect_equal(ffs_fuels_hand_fpc_2$se_1000h, ffs_fuels_package_fpc_2$se_1000h_Mg_ha)
+
+})
+

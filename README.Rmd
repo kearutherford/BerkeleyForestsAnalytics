@@ -2086,8 +2086,6 @@ Definitions:
 
 # Contact information 
 
-Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to reach out (1) if you find a bug or (2) need a tree species added to the `TreeBiomass()` function. Please note that tree species cannot be added for the surface and ground fuel load functions; we currently only have values for the 19 Sierra Nevada conifer species included in van Wagtendonk *et al.* (1996, 1998). 
+Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to reach out (1) if you find a bug or (2) need a tree species added to the `TreeBiomass()` function or the `BiomassNSVB()` function. Please note that tree species cannot be added for the surface and ground fuel load functions; we currently only have values for the 19 Sierra Nevada conifer species included in van Wagtendonk *et al.* (1996, 1998). 
 
 **Contact email:** krutherford@berkeley.edu
-
-**Pronouns:** they/she
