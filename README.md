@@ -86,14 +86,14 @@ citation("BerkeleyForestsAnalytics")
     ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
     ##   Kea Rutherford, Danny Foster, John Battles (2024).
-    ##   _BerkeleyForestsAnalytics, version 2.0.1_. Battles Lab: Forest
+    ##   _BerkeleyForestsAnalytics, version 2.0.2_. Battles Lab: Forest
     ##   Ecology and Ecosystem Dynamics, University of California, Berkeley.
     ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
-    ##     title = {BerkeleyForestsAnalytics, version 2.0.1},
+    ##     title = {BerkeleyForestsAnalytics, version 2.0.2},
     ##     author = {{Kea Rutherford} and {Danny Foster} and {John Battles}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
     ##     year = {2024},
@@ -750,7 +750,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.22 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -798,7 +798,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.14 secs
+    ## Time difference of 0.19 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -836,7 +836,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.2 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -890,7 +890,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.2 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -943,7 +943,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.22 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
