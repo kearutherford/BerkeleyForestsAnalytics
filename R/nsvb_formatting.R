@@ -218,9 +218,9 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
          'You have input a variable of class: ', class(data_val$status))
   }
 
-  if(!is.character(data_val$decay)) {
-    stop('"decay" must be a character variable.\n',
-         'You have input a variable of class: ', class(data_val$decay))
+  if(!is.character(data_val$decay_class)) {
+    stop('"decay_class" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$decay_class))
   }
 
   if(!is.character(data_val$species)) {

@@ -297,7 +297,7 @@ test_that("Wrong column class throws an error", {
                             in_units_val = "metric",
                             out_units_val = "imperial",
                             results_val = "by_plot"),
-               '"decay" must be a character variable.\nYou have input a variable of class: numeric')
+               '"decay_class" must be a character variable.\nYou have input a variable of class: numeric')
 
   expect_error(ValidateNSVB(data_val = nsvb_b62,
                             sp_val = "4letter",
