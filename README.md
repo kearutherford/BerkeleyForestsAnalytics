@@ -752,7 +752,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.24 secs
+    ## Time difference of 0.19 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -838,7 +838,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -892,7 +892,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.24 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -945,7 +945,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.22 secs
+    ## Time difference of 0.23 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2855,6 +2855,7 @@ Rutherford. We are open to building out the species list over time.
 | Western white pine | Pinus monticola           | PIMO          | 119      |
 | Ponderosa pine     | Pinus ponderosa           | PIPO          | 122      |
 | Foothill pine      | Pinus sabiniana           | PISA          | 127      |
+| White pine         | Pinus strobus             | PIST          | 129      |
 | Douglas-fir        | Pseudotsuga menziesii     | PSME          | 202      |
 | Redwood            | Sequoioideae sempervirens | SESE          | 211      |
 | Giant sequoia      | Sequoiadendron giganteum  | SEGI          | 212      |
@@ -2877,8 +2878,10 @@ Rutherford. We are open to building out the species list over time.
 | Pacific madrone        | Arbutus menziesii            | ARME          | 361      |                                         |
 | Gray birch             | Betula populifolia           | BEPO          | 379      | only available for BiomassNSVB function |
 | Golden chinkapin       | Chrysolepis chrysophylla     | CHCH          | 431      |                                         |
+| Dogwood species        | Cornus spp.                  | COSP          | 490      | only available for BiomassNSVB function |
 | Pacific dogwood        | Cornus nuttallii             | CONU          | 492      |                                         |
 | Tanoak                 | Notholithocarpus densiflorus | NODE          | 631      |                                         |
+| Eastern hophornbeam    | Ostrya virginiana            | OSVI          | 701      | only available for BiomassNSVB function |
 | Quaking aspen          | Populus tremuloides          | POTR          | 746      |                                         |
 | Black cherry           | Prunus serotina              | PRSE          | 762      | only available for BiomassNSVB function |
 | Chokecherry            | Prunus virginiana            | PRVI          | 763      | only available for BiomassNSVB function |
@@ -2886,8 +2889,10 @@ Rutherford. We are open to building out the species list over time.
 | California live oak    | Quercus agrifolia            | QUAG          | 801      |                                         |
 | Canyon live oak        | Quercus chrysolepis          | QUCH          | 805      |                                         |
 | California black oak   | Quercus kelloggii            | QUKE          | 818      |                                         |
+| Red oak                | Quercus rubra                | QURU          | 833      | only available for BiomassNSVB function |
 | Willow species         | Salix spp.                   | SASP          | 920      |                                         |
 | American mountain-ash  | Sorbus americana             | SOAM          | 935      | only available for BiomassNSVB function |
+| Basswood               | Tilia americana              | TIAM          | 951      | only available for BiomassNSVB function |
 | California-laurel      | Umbellularia californica     | UMCA          | 981      |                                         |
 | Unknown hardwood       | NA                           | UNHA          | 998      |                                         |
 | Unknown tree           | NA                           | UNTR          | 999      |                                         |

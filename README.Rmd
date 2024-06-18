@@ -1304,6 +1304,7 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 |Western white pine|Pinus monticola|PIMO|119|
 |Ponderosa pine|Pinus ponderosa|PIPO|122|
 |Foothill pine|Pinus sabiniana|PISA|127|
+|White pine|Pinus strobus|PIST|129|
 |Douglas-fir|Pseudotsuga menziesii|PSME|202|
 |Redwood|Sequoioideae sempervirens|SESE|211|
 |Giant sequoia|Sequoiadendron giganteum|SEGI|212|
@@ -1326,8 +1327,10 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 |Pacific madrone|Arbutus menziesii|ARME|361| |
 |Gray birch|Betula populifolia|BEPO|379|only available for BiomassNSVB function|
 |Golden chinkapin|Chrysolepis chrysophylla|CHCH|431| |
+|Dogwood species|Cornus spp.|COSP|490|only available for BiomassNSVB function|
 |Pacific dogwood|Cornus nuttallii|CONU|492| |
 |Tanoak|Notholithocarpus densiflorus|NODE|631| |
+|Eastern hophornbeam|Ostrya virginiana|OSVI|701|only available for BiomassNSVB function|
 |Quaking aspen|Populus tremuloides|POTR|746| |
 |Black cherry|Prunus serotina|PRSE|762|only available for BiomassNSVB function|
 |Chokecherry|Prunus virginiana|PRVI|763|only available for BiomassNSVB function|
@@ -1335,8 +1338,10 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 |California live oak|Quercus agrifolia|QUAG|801| |
 |Canyon live oak|Quercus chrysolepis|QUCH|805| |
 |California black oak|Quercus kelloggii|QUKE|818| |
+|Red oak|Quercus rubra|QURU|833|only available for BiomassNSVB function|
 |Willow species|Salix spp.|SASP|920| |
 |American mountain-ash|Sorbus americana|SOAM|935|only available for BiomassNSVB function|
+|Basswood|Tilia americana|TIAM|951|only available for BiomassNSVB function|
 |California-laurel|Umbellularia californica|UMCA|981| |
 |Unknown hardwood|NA|UNHA|998| |
 |Unknown tree|NA|UNTR|999| |
