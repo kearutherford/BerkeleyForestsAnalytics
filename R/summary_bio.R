@@ -426,9 +426,9 @@ ValidateSumData <- function(data_val, site_val, plot_val, ef_val, status_val, de
 
     if(nrow(live_trees) > 0) {
 
-      if (min(live_trees[[dbh_val]], na.rm = TRUE) < 2.5) {
-        warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\n',
-                'You inputted live trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n',
+      if (min(live_trees[[dbh_val]], na.rm = TRUE) < 2.54) {
+        warning('The allometric equations are for live trees with DBH >= 2.54cm and dead trees with DBH >= 12.7cm.\n',
+                'You inputted live trees with DBH < 2.54cm. These trees will have NA biomass estimates.\n',
                 ' \n')
       }
     }
@@ -436,7 +436,7 @@ ValidateSumData <- function(data_val, site_val, plot_val, ef_val, status_val, de
     if(nrow(dead_trees) > 0) {
 
       if (min(dead_trees[[dbh_val]], na.rm = TRUE) < 12.7) {
-        warning('The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\n',
+        warning('The allometric equations are for live trees with DBH >= 2.54cm and dead trees with DBH >= 12.7cm.\n',
                 'You inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n',
                 ' \n')
       }
