@@ -610,9 +610,9 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 
     if (!all(is.na(data_val$dbh))) {
 
-      if (min(data_val$dbh, na.rm = TRUE) < 2.5) {
-        warning('The allometric equations are for trees with DBH >= 2.5cm.\n',
-                'You inputted trees with DBH < 2.5cm. These trees will have NA biomass/carbon estimates.\n',
+      if (min(data_val$dbh, na.rm = TRUE) < 2.54) {
+        warning('The allometric equations are for trees with DBH >= 2.54cm.\n',
+                'You inputted trees with DBH < 2.54cm. These trees will have NA biomass/carbon estimates.\n',
                 ' \n')
       }
 

@@ -210,7 +210,7 @@ tree_bio <- SummaryBiomass(data = vign_trees_5,
 head(tree_bio)
 ```
 
-There's only one warning message left. The Forest Inventory and Analysis (FIA) Regional Biomass Equations are for live trees with a DBH >= 2.5 cm (1 in) and dead trees with a DBH >= 12.7 cm (5 in). It is not appropriate to use these equations to estimate biomass for trees with DBH below the specified cutoffs. We could filter these trees out of the dataset to avoid the warning message; however, that isn't necessary. In this example, we'll leave the small trees in and make note of the warning. If you need to calculate biomass for the smaller trees in your dataset, you will need to explore other options. 
+There's only one warning message left. The Forest Inventory and Analysis (FIA) Regional Biomass Equations are for live trees with a DBH >= 2.54 cm (1 in) and dead trees with a DBH >= 12.7 cm (5 in). It is not appropriate to use these equations to estimate biomass for trees with DBH below the specified cutoffs. We could filter these trees out of the dataset to avoid the warning message; however, that isn't necessary. In this example, we'll leave the small trees in and make note of the warning. If you need to calculate biomass for the smaller trees in your dataset, you will need to explore other options. 
 
 
 ## Forest composition and structure 

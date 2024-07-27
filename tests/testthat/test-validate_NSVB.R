@@ -598,7 +598,7 @@ test_that("DBH handling works", {
                               in_units_val = "metric",
                               out_units_val = "imperial",
                               results_val = "by_plot"),
-                 'The allometric equations are for trees with DBH >= 2.5cm.\nYou inputted trees with DBH < 2.5cm. These trees will have NA biomass/carbon estimates.\n')
+                 'The allometric equations are for trees with DBH >= 2.54cm.\nYou inputted trees with DBH < 2.54cm. These trees will have NA biomass/carbon estimates.\n')
 
   expect_warning(ValidateNSVB(data_val = nsvb_b43,
                               sp_val = "fia",

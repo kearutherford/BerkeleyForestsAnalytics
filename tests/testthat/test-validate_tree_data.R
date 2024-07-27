@@ -309,7 +309,7 @@ test_that("DBH range handling works", {
                                   decay_val = "ignore",
                                   sp_codes_val = "4letter",
                                   units = "metric"),
-                 'The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\nYou inputted live trees with DBH < 2.5cm. These trees will have NA biomass estimates.\n')
+                 'The allometric equations are for live trees with DBH >= 2.54cm and dead trees with DBH >= 12.7cm.\nYou inputted live trees with DBH < 2.54cm. These trees will have NA biomass estimates.\n')
 
   expect_warning(ValidateTreeData(data_val = bad_trees,
                                   status_val = "Live_v1",
@@ -330,7 +330,7 @@ test_that("DBH range handling works", {
                                   decay_val = "ignore",
                                   sp_codes_val = "4letter",
                                   units = "metric"),
-                 'The allometric equations are for live trees with DBH >= 2.5cm and dead trees with DBH >= 12.7cm.\nYou inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n')
+                 'The allometric equations are for live trees with DBH >= 2.54cm and dead trees with DBH >= 12.7cm.\nYou inputted dead trees with DBH < 12.7cm. These trees will have NA biomass estimates.\n')
 
   expect_warning(ValidateTreeData(data_val = bad_trees,
                                   status_val = "Live_v2",
