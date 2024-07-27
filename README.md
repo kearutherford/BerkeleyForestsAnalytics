@@ -752,7 +752,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.3 secs
+    ## Time difference of 0.31 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -838,7 +838,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.25 secs
+    ## Time difference of 0.2 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -892,7 +892,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.2 secs
+    ## Time difference of 0.19 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -945,7 +945,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.23 secs
+    ## Time difference of 0.21 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -3097,7 +3097,7 @@ framework is detailed in Westfall *et al.* (2023).
 **Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D.,
 Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck,
 D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley,
-S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A
+S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2024). *A
 national-scale tree volume, biomass, and carbon modeling system for the
 United States.* General Technical Report WO-104. USDA Forest Service,
 Northern Research Station, Washington, DC.

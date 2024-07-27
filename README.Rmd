@@ -1481,7 +1481,7 @@ The adjusted biomass of standing dead trees can be calculated using the followin
 
 The `BiomassNSVB()` function follows the new national-scale volume and biomass (NSVB) framework. As with other functions in the package, this function is generally designed for California forests (i.e., divisions, provinces, and tree species relevant to California are incorporated into our function). However, this particular function is also designed for the Hubbard Brook Experimental Forest in New Hampshire. The full NSVB framework is detailed in Westfall *et al.* (2023). 
 
-**Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2023). *A national-scale tree volume, biomass, and carbon modeling system for the United States.* General Technical Report WO-104. USDA Forest Service, Northern Research Station, Washington, DC. https://doi.org/10.2737/WO-GTR-104
+**Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2024). *A national-scale tree volume, biomass, and carbon modeling system for the United States.* General Technical Report WO-104. USDA Forest Service, Northern Research Station, Washington, DC. https://doi.org/10.2737/WO-GTR-104
 
 
 ## CA divisions and provinces 
