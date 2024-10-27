@@ -75,14 +75,14 @@ citation("BerkeleyForestsAnalytics")
     ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
     ##   Kea Rutherford, Danny Foster, John Battles (2024).
-    ##   _BerkeleyForestsAnalytics, version 2.0.3_. Battles Lab: Forest
+    ##   _BerkeleyForestsAnalytics, version 2.0.4_. Battles Lab: Forest
     ##   Ecology and Ecosystem Dynamics, University of California, Berkeley.
     ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
-    ##     title = {BerkeleyForestsAnalytics, version 2.0.3},
+    ##     title = {BerkeleyForestsAnalytics, version 2.0.4},
     ##     author = {{Kea Rutherford} and {Danny Foster} and {John Battles}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
     ##     year = {2024},
@@ -752,7 +752,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.31 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -800,7 +800,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -838,7 +838,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.2 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -892,7 +892,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -945,7 +945,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.21 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2841,29 +2841,32 @@ Rutherford. We are open to building out the species list over time.
 
 **Softwoods**
 
-| common name        | scientific name           | 4-letter code | FIA code |
-|:-------------------|:--------------------------|:--------------|:---------|
-| White fir          | Abies concolor            | ABCO          | 15       |
-| Grand fir          | Abies grandis             | ABGR          | 17       |
-| California red fir | Abies magnifica           | ABMA          | 20       |
-| Noble fir          | Abies procera             | ABPR          | 22       |
-| Western juniper    | Juniperus occidentalis    | JUOC          | 64       |
-| Incense cedar      | Calocedrus decurrens      | CADE          | 81       |
-| Lodgepole pine     | Pinus contorta            | PICO          | 108      |
-| Jeffrey pine       | Pinus jeffreyi            | PIJE          | 116      |
-| Sugar pine         | Pinus lambertinana        | PILA          | 117      |
-| Western white pine | Pinus monticola           | PIMO          | 119      |
-| Ponderosa pine     | Pinus ponderosa           | PIPO          | 122      |
-| Foothill pine      | Pinus sabiniana           | PISA          | 127      |
-| White pine         | Pinus strobus             | PIST          | 129      |
-| Douglas-fir        | Pseudotsuga menziesii     | PSME          | 202      |
-| Redwood            | Sequoioideae sempervirens | SESE          | 211      |
-| Giant sequoia      | Sequoiadendron giganteum  | SEGI          | 212      |
-| Pacific yew        | Taxus brevifolia          | TABR          | 231      |
-| California nutmeg  | Torreya californica       | TOCA          | 251      |
-| Western hemlock    | Tsuga heterophylla        | TSHE          | 263      |
-| Mountain hemlock   | Tsuga mertensiana         | TSME          | 264      |
-| Unknown conifer    | NA                        | UNCO          | 299      |
+| common name        | scientific name           | 4-letter code | FIA code | Notes                                   |
+|:-------------------|:--------------------------|:--------------|:---------|:----------------------------------------|
+| Balsam fir         | Abies balsamea            | ABBA          | 12       | only available for BiomassNSVB function |
+| White fir          | Abies concolor            | ABCO          | 15       |                                         |
+| Grand fir          | Abies grandis             | ABGR          | 17       |                                         |
+| California red fir | Abies magnifica           | ABMA          | 20       |                                         |
+| Noble fir          | Abies procera             | ABPR          | 22       |                                         |
+| Western juniper    | Juniperus occidentalis    | JUOC          | 64       |                                         |
+| Incense cedar      | Calocedrus decurrens      | CADE          | 81       |                                         |
+| Red spruce         | Picea rubens              | PIRU          | 97       | only available for BiomassNSVB function |
+| Lodgepole pine     | Pinus contorta            | PICO          | 108      |                                         |
+| Jeffrey pine       | Pinus jeffreyi            | PIJE          | 116      |                                         |
+| Sugar pine         | Pinus lambertinana        | PILA          | 117      |                                         |
+| Western white pine | Pinus monticola           | PIMO          | 119      |                                         |
+| Ponderosa pine     | Pinus ponderosa           | PIPO          | 122      |                                         |
+| Foothill pine      | Pinus sabiniana           | PISA          | 127      |                                         |
+| White pine         | Pinus strobus             | PIST          | 129      |                                         |
+| Douglas-fir        | Pseudotsuga menziesii     | PSME          | 202      |                                         |
+| Redwood            | Sequoioideae sempervirens | SESE          | 211      |                                         |
+| Giant sequoia      | Sequoiadendron giganteum  | SEGI          | 212      |                                         |
+| Pacific yew        | Taxus brevifolia          | TABR          | 231      |                                         |
+| California nutmeg  | Torreya californica       | TOCA          | 251      |                                         |
+| Eastern hemlock    | Tsuga canadensis          | TSCA          | 261      | only available for BiomassNSVB function |
+| Western hemlock    | Tsuga heterophylla        | TSHE          | 263      |                                         |
+| Mountain hemlock   | Tsuga mertensiana         | TSME          | 264      |                                         |
+| Unknown conifer    | NA                        | UNCO          | 299      |                                         |
 
 <br>
 
@@ -2872,17 +2875,27 @@ Rutherford. We are open to building out the species list over time.
 | common name            | scientific name              | 4-letter code | FIA code | Notes                                   |
 |:-----------------------|:-----------------------------|:--------------|:---------|:----------------------------------------|
 | Bigleaf maple          | Acer macrophyllum            | ACMA          | 312      |                                         |
+| Striped maple          | Acer pensylvanicum           | ACPE          | 315      | only available for BiomassNSVB function |
+| Red maple              | Acer rubrum                  | ACRU          | 316      | only available for BiomassNSVB function |
+| Sugar maple            | Acer saccharum               | ACSA          | 318      | only available for BiomassNSVB function |
 | Mountain maple         | Acer spicatum                | ACSP          | 319      | only available for BiomassNSVB function |
 | White alder            | Alnus rhombifolia            | ALRH          | 352      |                                         |
 | Juneberry/Serviceberry | Amelanchier spp.             | AMSP          | 356      | only available for BiomassNSVB function |
 | Pacific madrone        | Arbutus menziesii            | ARME          | 361      |                                         |
+| Yellow birch           | Betula alleghaniensis        | BEAL          | 371      | only available for BiomassNSVB function |
+| Paper birch            | Betula papyrifera            | BEPA          | 375      | only available for BiomassNSVB function |
 | Gray birch             | Betula populifolia           | BEPO          | 379      | only available for BiomassNSVB function |
 | Golden chinkapin       | Chrysolepis chrysophylla     | CHCH          | 431      |                                         |
 | Dogwood species        | Cornus spp.                  | COSP          | 490      | only available for BiomassNSVB function |
 | Pacific dogwood        | Cornus nuttallii             | CONU          | 492      |                                         |
+| American beech         | Fagus grandifolia            | FAGR          | 531      | only available for BiomassNSVB function |
+| White ash              | Fraxinus americana           | FRAM          | 541      | only available for BiomassNSVB function |
+| Black ash              | Fraxinus nigra               | FRNI          | 543      | only available for BiomassNSVB function |
 | Tanoak                 | Notholithocarpus densiflorus | NODE          | 631      |                                         |
 | Eastern hophornbeam    | Ostrya virginiana            | OSVI          | 701      | only available for BiomassNSVB function |
+| Bigtooth aspen         | Populus grandidentata        | POGR          | 743      | only available for BiomassNSVB function |
 | Quaking aspen          | Populus tremuloides          | POTR          | 746      |                                         |
+| Pin cherry             | Prunus pensylvanica          | PRPE          | 761      | only available for BiomassNSVB function |
 | Black cherry           | Prunus serotina              | PRSE          | 762      | only available for BiomassNSVB function |
 | Chokecherry            | Prunus virginiana            | PRVI          | 763      | only available for BiomassNSVB function |
 | Oak spp.               | Quercus spp.                 | QUSP          | 800      | only available for BiomassNSVB function |

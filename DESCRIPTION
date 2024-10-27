@@ -1,7 +1,7 @@
 Package: BerkeleyForestsAnalytics
 Title: Produce Standard Metrics for Forest Management and Ecology from
     Field Inventory Data
-Version: 2.0.3
+Version: 2.0.4
 Authors@R: c(
     person("Kea", "Rutherford", , "krutherford@berkeley.edu", role = c("aut", "cre")),
     person("John", "Battles", role = "aut"),
@@ -28,4 +28,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

@@ -698,10 +698,12 @@ sp_code_names <- data.frame(
 NSVB_sp_code_names <- data.frame(
   letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
              "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUSP", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR",
-             "PRSE", "BEPO", "AMSP", "SOAM", "ACSP", "SAPU", "PRVI", "COSP", "TIAM", "QURU", "PIST", "OSVI", NA),
+             "PRSE", "BEPO", "AMSP", "SOAM", "ACSP", "SAPU", "PRVI", "COSP", "TIAM", "QURU", "PIST", "OSVI",
+             "FAGR", "POGR", "ABBA", "FRNI", "TSCA", "BEPA", "PRPE", "PIRU", "ACSA", "ACPE", "FRAM", "BEAL", NA),
   fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
           "312", "316", "352", "361", "431", "492", "631", "746", "800", "801", "802", "805", "818", "920", "981", "998", "999",
-          "762", "379", "356", "935", "319", "6991", "763", "490", "951", "833", "129", "701", NA)
+          "762", "379", "356", "935", "319", "6991", "763", "490", "951", "833", "129", "701",
+          "531", "743", "12", "543", "261", "375", "761", "97", "318", "315", "541", "371", NA)
 )
 
 VanWag_species <- data.frame (
