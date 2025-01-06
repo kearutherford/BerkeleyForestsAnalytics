@@ -1373,7 +1373,7 @@ All hardwood and softwood species currently included/recognized in the `TreeBiom
 |4|Few or no studs|Broken|Variable|Sloughing; cubical, soft, reddish to dark crown|Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown|
 |5|None|Broken|Less than 20|Gone|Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell|
 
-**Reference:** USDA Forest Service. (2019). *Forest Inventory and Analysis national core field guide, volume I: Field data collection procedures for phase 2 plots.* Version 9.0. https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php
+**Reference:** USDA Forest Service. (2019). *Forest Inventory and Analysis national core field guide, volume I: Field data collection procedures for phase 2 plots.* Version 9.0.
 
 <br>
 
@@ -1835,13 +1835,13 @@ We can calculate \(SlopeDeg_t\) using the following equation:
 
 **References:**
 
-  * Brown, J.K. (1974). *Handbook for inventorying downed woody material.* General Technical Report INT-16. USDA Forest Service, Intermountain Forest and Range Experiment Station, Ogden, UT. https://www.fs.usda.gov/treesearch/pubs/28647
+  * Brown, J.K. (1974). *Handbook for inventorying downed woody material.* General Technical Report INT-16. USDA Forest Service, Intermountain Forest and Range Experiment Station, Ogden, UT. https://research.fs.usda.gov/treesearch/28647
   
   * Marshall, P.L., Davis, G., & LeMay, V.M. (2000). *Using line intersect sampling for coarse woody debris.* Forest Research Technical Report TR-003. British Columbia Ministry of Forests, Vancouver Forest Region, Nanaimo, BC.  
 
   * Stephens, S.L. (2001). Fire history differences in adjacent Jeffrey pine and upper montane forests in the eastern Sierra Nevada. *International Journal of Wildland Fire*, 10(2), 161–167. https://doi.org/10.1071/WF01008
   
-  * Van Wagner, C.E. (1982). *Practical aspects of the line intersect method.* Information Report PI-X-12. Petawawa National Forestry Institute, Canadian Forestry Service, Chalk River, Ontario. https://cfs.nrcan.gc.ca/publications?id=6862
+  * Van Wagner, C.E. (1982). *Practical aspects of the line intersect method.* Information Report PI-X-12. Petawawa National Forestry Institute, Canadian Forestry Service, Chalk River, Ontario. https://ostrnrcan-dostrncan.canada.ca/entities/publication/d1289126-5f22-421f-9805-519a326d83ca
   
   * van Wagtendonk, J.W., Benedict, J.M., & Sydoriak, W.M. (1996). Physical properties of woody fuel particles of Sierra Nevada conifers. *International Journal of Wildland Fire*, 6(3), 117–123. https://doi.org/10.1071/WF9960117
   
@@ -2120,3 +2120,9 @@ Definitions:
 Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to reach out (1) if you find a bug or (2) need a tree species added to the `TreeBiomass()` function or the `BiomassNSVB()` function. Please note that tree species cannot be added for the surface and ground fuel load functions; we currently only have values for the 19 Sierra Nevada conifer species included in van Wagtendonk *et al.* (1996, 1998). 
 
 **Contact email:** krutherford@berkeley.edu
+
+<br>
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/kearutherford/BerkeleyForestsAnalytics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kearutherford/BerkeleyForestsAnalytics/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->

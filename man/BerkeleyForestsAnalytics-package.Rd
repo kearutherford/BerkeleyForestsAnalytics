@@ -20,7 +20,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item John Battles
+  \item John Battles [copyright holder]
   \item Danny Foster
 }
 

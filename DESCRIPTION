@@ -4,7 +4,7 @@ Title: Produce Standard Metrics for Forest Management and Ecology from
 Version: 2.0.4
 Authors@R: c(
     person("Kea", "Rutherford", , "krutherford@berkeley.edu", role = c("aut", "cre")),
-    person("John", "Battles", role = "aut"),
+    person("John", "Battles", role = c("aut", "cph")),
     person("Danny", "Foster", role = "aut")
   )
 Description: A suite of open-source R functions designed to produce

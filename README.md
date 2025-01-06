@@ -752,7 +752,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.12 secs
+    ## Time difference of 0.11 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -2841,93 +2841,92 @@ Rutherford. We are open to building out the species list over time.
 
 **Softwoods**
 
-| common name        | scientific name           | 4-letter code | FIA code | Notes                                   |
-|:-------------------|:--------------------------|:--------------|:---------|:----------------------------------------|
-| Balsam fir         | Abies balsamea            | ABBA          | 12       | only available for BiomassNSVB function |
-| White fir          | Abies concolor            | ABCO          | 15       |                                         |
-| Grand fir          | Abies grandis             | ABGR          | 17       |                                         |
-| California red fir | Abies magnifica           | ABMA          | 20       |                                         |
-| Noble fir          | Abies procera             | ABPR          | 22       |                                         |
-| Western juniper    | Juniperus occidentalis    | JUOC          | 64       |                                         |
-| Incense cedar      | Calocedrus decurrens      | CADE          | 81       |                                         |
-| Red spruce         | Picea rubens              | PIRU          | 97       | only available for BiomassNSVB function |
-| Lodgepole pine     | Pinus contorta            | PICO          | 108      |                                         |
-| Jeffrey pine       | Pinus jeffreyi            | PIJE          | 116      |                                         |
-| Sugar pine         | Pinus lambertinana        | PILA          | 117      |                                         |
-| Western white pine | Pinus monticola           | PIMO          | 119      |                                         |
-| Ponderosa pine     | Pinus ponderosa           | PIPO          | 122      |                                         |
-| Foothill pine      | Pinus sabiniana           | PISA          | 127      |                                         |
-| White pine         | Pinus strobus             | PIST          | 129      |                                         |
-| Douglas-fir        | Pseudotsuga menziesii     | PSME          | 202      |                                         |
-| Redwood            | Sequoioideae sempervirens | SESE          | 211      |                                         |
-| Giant sequoia      | Sequoiadendron giganteum  | SEGI          | 212      |                                         |
-| Pacific yew        | Taxus brevifolia          | TABR          | 231      |                                         |
-| California nutmeg  | Torreya californica       | TOCA          | 251      |                                         |
-| Eastern hemlock    | Tsuga canadensis          | TSCA          | 261      | only available for BiomassNSVB function |
-| Western hemlock    | Tsuga heterophylla        | TSHE          | 263      |                                         |
-| Mountain hemlock   | Tsuga mertensiana         | TSME          | 264      |                                         |
-| Unknown conifer    | NA                        | UNCO          | 299      |                                         |
+| common name | scientific name | 4-letter code | FIA code | Notes |
+|:---|:---|:---|:---|:---|
+| Balsam fir | Abies balsamea | ABBA | 12 | only available for BiomassNSVB function |
+| White fir | Abies concolor | ABCO | 15 |  |
+| Grand fir | Abies grandis | ABGR | 17 |  |
+| California red fir | Abies magnifica | ABMA | 20 |  |
+| Noble fir | Abies procera | ABPR | 22 |  |
+| Western juniper | Juniperus occidentalis | JUOC | 64 |  |
+| Incense cedar | Calocedrus decurrens | CADE | 81 |  |
+| Red spruce | Picea rubens | PIRU | 97 | only available for BiomassNSVB function |
+| Lodgepole pine | Pinus contorta | PICO | 108 |  |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 |  |
+| Sugar pine | Pinus lambertinana | PILA | 117 |  |
+| Western white pine | Pinus monticola | PIMO | 119 |  |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 |  |
+| Foothill pine | Pinus sabiniana | PISA | 127 |  |
+| White pine | Pinus strobus | PIST | 129 |  |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 |  |
+| Redwood | Sequoioideae sempervirens | SESE | 211 |  |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 |  |
+| Pacific yew | Taxus brevifolia | TABR | 231 |  |
+| California nutmeg | Torreya californica | TOCA | 251 |  |
+| Eastern hemlock | Tsuga canadensis | TSCA | 261 | only available for BiomassNSVB function |
+| Western hemlock | Tsuga heterophylla | TSHE | 263 |  |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 |  |
+| Unknown conifer | NA | UNCO | 299 |  |
 
 <br>
 
 **Hardwoods**
 
-| common name            | scientific name              | 4-letter code | FIA code | Notes                                   |
-|:-----------------------|:-----------------------------|:--------------|:---------|:----------------------------------------|
-| Bigleaf maple          | Acer macrophyllum            | ACMA          | 312      |                                         |
-| Striped maple          | Acer pensylvanicum           | ACPE          | 315      | only available for BiomassNSVB function |
-| Red maple              | Acer rubrum                  | ACRU          | 316      | only available for BiomassNSVB function |
-| Sugar maple            | Acer saccharum               | ACSA          | 318      | only available for BiomassNSVB function |
-| Mountain maple         | Acer spicatum                | ACSP          | 319      | only available for BiomassNSVB function |
-| White alder            | Alnus rhombifolia            | ALRH          | 352      |                                         |
-| Juneberry/Serviceberry | Amelanchier spp.             | AMSP          | 356      | only available for BiomassNSVB function |
-| Pacific madrone        | Arbutus menziesii            | ARME          | 361      |                                         |
-| Yellow birch           | Betula alleghaniensis        | BEAL          | 371      | only available for BiomassNSVB function |
-| Paper birch            | Betula papyrifera            | BEPA          | 375      | only available for BiomassNSVB function |
-| Gray birch             | Betula populifolia           | BEPO          | 379      | only available for BiomassNSVB function |
-| Golden chinkapin       | Chrysolepis chrysophylla     | CHCH          | 431      |                                         |
-| Dogwood species        | Cornus spp.                  | COSP          | 490      | only available for BiomassNSVB function |
-| Pacific dogwood        | Cornus nuttallii             | CONU          | 492      |                                         |
-| American beech         | Fagus grandifolia            | FAGR          | 531      | only available for BiomassNSVB function |
-| White ash              | Fraxinus americana           | FRAM          | 541      | only available for BiomassNSVB function |
-| Black ash              | Fraxinus nigra               | FRNI          | 543      | only available for BiomassNSVB function |
-| Tanoak                 | Notholithocarpus densiflorus | NODE          | 631      |                                         |
-| Eastern hophornbeam    | Ostrya virginiana            | OSVI          | 701      | only available for BiomassNSVB function |
-| Bigtooth aspen         | Populus grandidentata        | POGR          | 743      | only available for BiomassNSVB function |
-| Quaking aspen          | Populus tremuloides          | POTR          | 746      |                                         |
-| Pin cherry             | Prunus pensylvanica          | PRPE          | 761      | only available for BiomassNSVB function |
-| Black cherry           | Prunus serotina              | PRSE          | 762      | only available for BiomassNSVB function |
-| Chokecherry            | Prunus virginiana            | PRVI          | 763      | only available for BiomassNSVB function |
-| Oak spp.               | Quercus spp.                 | QUSP          | 800      | only available for BiomassNSVB function |
-| California live oak    | Quercus agrifolia            | QUAG          | 801      |                                         |
-| Canyon live oak        | Quercus chrysolepis          | QUCH          | 805      |                                         |
-| California black oak   | Quercus kelloggii            | QUKE          | 818      |                                         |
-| Red oak                | Quercus rubra                | QURU          | 833      | only available for BiomassNSVB function |
-| Willow species         | Salix spp.                   | SASP          | 920      |                                         |
-| American mountain-ash  | Sorbus americana             | SOAM          | 935      | only available for BiomassNSVB function |
-| Basswood               | Tilia americana              | TIAM          | 951      | only available for BiomassNSVB function |
-| California-laurel      | Umbellularia californica     | UMCA          | 981      |                                         |
-| Unknown hardwood       | NA                           | UNHA          | 998      |                                         |
-| Unknown tree           | NA                           | UNTR          | 999      |                                         |
-| Red elderberry         | Sambucus racemosa            | SAPU          | 6991     | only available for BiomassNSVB function |
+| common name | scientific name | 4-letter code | FIA code | Notes |
+|:---|:---|:---|:---|:---|
+| Bigleaf maple | Acer macrophyllum | ACMA | 312 |  |
+| Striped maple | Acer pensylvanicum | ACPE | 315 | only available for BiomassNSVB function |
+| Red maple | Acer rubrum | ACRU | 316 | only available for BiomassNSVB function |
+| Sugar maple | Acer saccharum | ACSA | 318 | only available for BiomassNSVB function |
+| Mountain maple | Acer spicatum | ACSP | 319 | only available for BiomassNSVB function |
+| White alder | Alnus rhombifolia | ALRH | 352 |  |
+| Juneberry/Serviceberry | Amelanchier spp. | AMSP | 356 | only available for BiomassNSVB function |
+| Pacific madrone | Arbutus menziesii | ARME | 361 |  |
+| Yellow birch | Betula alleghaniensis | BEAL | 371 | only available for BiomassNSVB function |
+| Paper birch | Betula papyrifera | BEPA | 375 | only available for BiomassNSVB function |
+| Gray birch | Betula populifolia | BEPO | 379 | only available for BiomassNSVB function |
+| Golden chinkapin | Chrysolepis chrysophylla | CHCH | 431 |  |
+| Dogwood species | Cornus spp. | COSP | 490 | only available for BiomassNSVB function |
+| Pacific dogwood | Cornus nuttallii | CONU | 492 |  |
+| American beech | Fagus grandifolia | FAGR | 531 | only available for BiomassNSVB function |
+| White ash | Fraxinus americana | FRAM | 541 | only available for BiomassNSVB function |
+| Black ash | Fraxinus nigra | FRNI | 543 | only available for BiomassNSVB function |
+| Tanoak | Notholithocarpus densiflorus | NODE | 631 |  |
+| Eastern hophornbeam | Ostrya virginiana | OSVI | 701 | only available for BiomassNSVB function |
+| Bigtooth aspen | Populus grandidentata | POGR | 743 | only available for BiomassNSVB function |
+| Quaking aspen | Populus tremuloides | POTR | 746 |  |
+| Pin cherry | Prunus pensylvanica | PRPE | 761 | only available for BiomassNSVB function |
+| Black cherry | Prunus serotina | PRSE | 762 | only available for BiomassNSVB function |
+| Chokecherry | Prunus virginiana | PRVI | 763 | only available for BiomassNSVB function |
+| Oak spp. | Quercus spp. | QUSP | 800 | only available for BiomassNSVB function |
+| California live oak | Quercus agrifolia | QUAG | 801 |  |
+| Canyon live oak | Quercus chrysolepis | QUCH | 805 |  |
+| California black oak | Quercus kelloggii | QUKE | 818 |  |
+| Red oak | Quercus rubra | QURU | 833 | only available for BiomassNSVB function |
+| Willow species | Salix spp. | SASP | 920 |  |
+| American mountain-ash | Sorbus americana | SOAM | 935 | only available for BiomassNSVB function |
+| Basswood | Tilia americana | TIAM | 951 | only available for BiomassNSVB function |
+| California-laurel | Umbellularia californica | UMCA | 981 |  |
+| Unknown hardwood | NA | UNHA | 998 |  |
+| Unknown tree | NA | UNTR | 999 |  |
+| Red elderberry | Sambucus racemosa | SAPU | 6991 | only available for BiomassNSVB function |
 
 *Note: Four-letter species codes are generally the first two letters of
 the genus followed by the first two letters of the species.*
 
 ## Decay class code table
 
-| decay class | limbs and branches          | top           | % bark remaining | sapwood presence and condition                                | heartwood condition                                                                                        |
-|:------------|:----------------------------|:--------------|:-----------------|:--------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------|
-| 1           | All present                 | Pointed       | 100              | Intact; sound, incipient decay, hard, original color          | Sound, hard, original color                                                                                |
-| 2           | Few limbs, no fine branches | May be broken | Variable         | Sloughing; advanced decay, fibrous, firm to soft, light brown | Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown                   |
-| 3           | Limb studs only             | Broken        | Variable         | Sloughing; fibrous, soft, light to reddish brown              | Incipient decay at base, advanced decay throughout upper bole, fibrous, hard to firm, reddish brown        |
-| 4           | Few or no studs             | Broken        | Variable         | Sloughing; cubical, soft, reddish to dark crown               | Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown            |
-| 5           | None                        | Broken        | Less than 20     | Gone                                                          | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
+| decay class | limbs and branches | top | % bark remaining | sapwood presence and condition | heartwood condition |
+|:---|:---|:---|:---|:---|:---|
+| 1 | All present | Pointed | 100 | Intact; sound, incipient decay, hard, original color | Sound, hard, original color |
+| 2 | Few limbs, no fine branches | May be broken | Variable | Sloughing; advanced decay, fibrous, firm to soft, light brown | Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown |
+| 3 | Limb studs only | Broken | Variable | Sloughing; fibrous, soft, light to reddish brown | Incipient decay at base, advanced decay throughout upper bole, fibrous, hard to firm, reddish brown |
+| 4 | Few or no studs | Broken | Variable | Sloughing; cubical, soft, reddish to dark crown | Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown |
+| 5 | None | Broken | Less than 20 | Gone | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
 
 **Reference:** USDA Forest Service. (2019). *Forest Inventory and
 Analysis national core field guide, volume I: Field data collection
 procedures for phase 2 plots.* Version 9.0.
-<https://www.fia.fs.usda.gov/library/field-guides-methods-proc/index.php>
 
 <br>
 
@@ -3029,42 +3028,42 @@ of Harmon *et al* 2011). UNCO and UNHA are assigned the average density
 reduction factor for standing dead trees by hardwood/softwood and decay
 class (see Table 6 of Harmon *et al.* 2011).
 
-| common name          | scientific name              | 4-letter code | FIA code | DRF 1 | DRF 2 | DRF 3 | DRF 4 | DRF 5 |
-|:---------------------|:-----------------------------|:--------------|:---------|:------|:------|:------|:------|:------|
-| White fir            | Abies concolor               | ABCO          | 15       | 0.996 | 0.873 | 0.625 | 0.625 | 0.541 |
-| Grand fir            | Abies grandis                | ABGR          | 17       | 1.013 | 0.966 | 0.855 | 0.855 | 0.574 |
-| California red fir   | Abies magnifica              | ABMA          | 20       | 1.04  | 1.08  | 0.626 | 0.626 | 0.467 |
-| Noble fir            | Abies procera                | ABPR          | 22       | 1.035 | 0.836 | 0.845 | 0.845 | 0.575 |
-| Western juniper      | Juniperus occidentalis       | JUOC          | 64       | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Incense cedar        | Calocedrus decurrens         | CADE          | 81       | 0.936 | 0.94  | 0.668 | 0.668 | 0.525 |
-| Lodgepole pine       | Pinus contorta               | PICO          | 108      | 0.98  | 1.04  | 1.02  | 1.02  | 0.727 |
-| Jeffrey pine         | Pinus jeffreyi               | PIJE          | 116      | 0.904 | 0.96  | 0.883 | 0.883 | 0.645 |
-| Sugar pine           | Pinus lambertinana           | PILA          | 117      | 1.04  | 0.906 | 0.735 | 0.735 | 0.517 |
-| Western white pine   | Pinus monticola              | PIMO          | 119      | 0.953 | 0.95  | 0.927 | 0.927 | 0.598 |
-| Ponderosa pine       | Pinus ponderosa              | PIPO          | 122      | 0.925 | 1.007 | 1.154 | 1.154 | 0.481 |
-| Foothill pine        | Pinus sabiniana              | PISA          | 127      | 0.953 | 0.95  | 0.927 | 0.927 | 0.598 |
-| Douglas-fir          | Pseudotsuga menziesii        | PSME          | 202      | 0.892 | 0.831 | 0.591 | 0.591 | 0.433 |
-| Redwood              | Sequoioideae sempervirens    | SESE          | 211      | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Giant sequoia        | Sequoiadendron giganteum     | SEGI          | 212      | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Pacific yew          | Taxus brevifolia             | TABR          | 231      | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| California nutmeg    | Torreya californica          | TOCA          | 251      | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Western hemlock      | Tsuga heterophylla           | TSHE          | 263      | 0.9   | 0.83  | 0.661 | 0.661 | 0.38  |
-| Mountain hemlock     | Tsuga mertensiana            | TSME          | 264      | 0.953 | 0.882 | 0.906 | 0.906 | 0.604 |
-| Unknown conifer      | NA                           | UNCO          | 299      | 0.97  | 1.0   | 0.92  | 0.92  | 0.55  |
-| Bigleaf maple        | Acer macrophyllum            | ACMA          | 312      | 0.979 | 0.766 | 0.565 | 0.565 | 0.45  |
-| White alder          | Alnus rhombifolia            | ALRH          | 352      | 1.03  | 0.903 | 0.535 | 0.535 | 0.393 |
-| Pacific madrone      | Arbutus menziesii            | ARME          | 361      | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Golden chinkapin     | Chrysolepis chrysophylla     | CHCH          | 431      | 0.99  | 0.8   | 0.54  | 0.54  | 0.43  |
-| Pacific dogwood      | Cornus nuttallii             | CONU          | 492      | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Tanoak               | Notholithocarpus densiflorus | NODE          | 631      | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Quaking aspen        | Populus tremuloides          | POTR          | 746      | 0.97  | 0.75  | 0.54  | 0.54  | 0.613 |
-| California live oak  | Quercus agrifolia            | QUAG          | 801      | 1.02  | 0.841 | 0.705 | 0.705 | 0.591 |
-| Canyon live oak      | Quercus chrysolepis          | QUCH          | 805      | 1.02  | 0.841 | 0.705 | 0.705 | 0.591 |
-| California black oak | Quercus kelloggii            | QUKE          | 818      | 1.02  | 0.841 | 0.705 | 0.705 | 0.591 |
-| Willow species       | Salix spp.                   | SASP          | 920      | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| California-laurel    | Umbellularia californica     | UMCA          | 981      | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Unknown hardwood     | NA                           | UNHA          | 998      | 0.99  | 0.8   | 0.54  | 0.54  | 0.43  |
-| Unknown tree         | NA                           | UNTR          | 999      | 0.97  | 0.97  | 0.86  | 0.86  | 0.53  |
+| common name | scientific name | 4-letter code | FIA code | DRF 1 | DRF 2 | DRF 3 | DRF 4 | DRF 5 |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| White fir | Abies concolor | ABCO | 15 | 0.996 | 0.873 | 0.625 | 0.625 | 0.541 |
+| Grand fir | Abies grandis | ABGR | 17 | 1.013 | 0.966 | 0.855 | 0.855 | 0.574 |
+| California red fir | Abies magnifica | ABMA | 20 | 1.04 | 1.08 | 0.626 | 0.626 | 0.467 |
+| Noble fir | Abies procera | ABPR | 22 | 1.035 | 0.836 | 0.845 | 0.845 | 0.575 |
+| Western juniper | Juniperus occidentalis | JUOC | 64 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
+| Incense cedar | Calocedrus decurrens | CADE | 81 | 0.936 | 0.94 | 0.668 | 0.668 | 0.525 |
+| Lodgepole pine | Pinus contorta | PICO | 108 | 0.98 | 1.04 | 1.02 | 1.02 | 0.727 |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 | 0.904 | 0.96 | 0.883 | 0.883 | 0.645 |
+| Sugar pine | Pinus lambertinana | PILA | 117 | 1.04 | 0.906 | 0.735 | 0.735 | 0.517 |
+| Western white pine | Pinus monticola | PIMO | 119 | 0.953 | 0.95 | 0.927 | 0.927 | 0.598 |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 | 0.925 | 1.007 | 1.154 | 1.154 | 0.481 |
+| Foothill pine | Pinus sabiniana | PISA | 127 | 0.953 | 0.95 | 0.927 | 0.927 | 0.598 |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 | 0.892 | 0.831 | 0.591 | 0.591 | 0.433 |
+| Redwood | Sequoioideae sempervirens | SESE | 211 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
+| Pacific yew | Taxus brevifolia | TABR | 231 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
+| California nutmeg | Torreya californica | TOCA | 251 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
+| Western hemlock | Tsuga heterophylla | TSHE | 263 | 0.9 | 0.83 | 0.661 | 0.661 | 0.38 |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 | 0.953 | 0.882 | 0.906 | 0.906 | 0.604 |
+| Unknown conifer | NA | UNCO | 299 | 0.97 | 1.0 | 0.92 | 0.92 | 0.55 |
+| Bigleaf maple | Acer macrophyllum | ACMA | 312 | 0.979 | 0.766 | 0.565 | 0.565 | 0.45 |
+| White alder | Alnus rhombifolia | ALRH | 352 | 1.03 | 0.903 | 0.535 | 0.535 | 0.393 |
+| Pacific madrone | Arbutus menziesii | ARME | 361 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
+| Golden chinkapin | Chrysolepis chrysophylla | CHCH | 431 | 0.99 | 0.8 | 0.54 | 0.54 | 0.43 |
+| Pacific dogwood | Cornus nuttallii | CONU | 492 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
+| Tanoak | Notholithocarpus densiflorus | NODE | 631 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
+| Quaking aspen | Populus tremuloides | POTR | 746 | 0.97 | 0.75 | 0.54 | 0.54 | 0.613 |
+| California live oak | Quercus agrifolia | QUAG | 801 | 1.02 | 0.841 | 0.705 | 0.705 | 0.591 |
+| Canyon live oak | Quercus chrysolepis | QUCH | 805 | 1.02 | 0.841 | 0.705 | 0.705 | 0.591 |
+| California black oak | Quercus kelloggii | QUKE | 818 | 1.02 | 0.841 | 0.705 | 0.705 | 0.591 |
+| Willow species | Salix spp. | SASP | 920 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
+| California-laurel | Umbellularia californica | UMCA | 981 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
+| Unknown hardwood | NA | UNHA | 998 | 0.99 | 0.8 | 0.54 | 0.54 | 0.43 |
+| Unknown tree | NA | UNTR | 999 | 0.97 | 0.97 | 0.86 | 0.86 | 0.53 |
 
 *Note: DRF 1 = density reduction factor for decay class 1, etc.*
 
@@ -3161,30 +3160,30 @@ specific points along a sampling transect. Van Wagtendonk *et al.*
 loadings as a function of depth for 19 different Sierra Nevada conifer
 species:
 
-| common name        | scientific name                 | 4-letter code | FIA code | litter coefficient | duff coefficient | litter/duff coefficient |
-|:-------------------|:--------------------------------|:--------------|:---------|:-------------------|:-----------------|:------------------------|
-| White fir          | Abies concolor                  | ABCO          | 15       | 1.050              | 1.518            | 1.572                   |
-| California red fir | Abies grandis                   | ABMA          | 20       | 0.530              | 1.727            | 1.722                   |
-| Incense cedar      | Calocedrus decurrens            | CADE          | 81       | 1.276              | 1.675            | 1.664                   |
-| Western juniper    | Juniperus occidentalis          | JUOC          | 64       | 0.832              | 1.798            | 1.763                   |
-| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      | 0.540              | 1.895            | 1.802                   |
-| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      | 0.336              | 1.646            | 1.274                   |
-| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      | 0.886              | 1.220            | 2.360                   |
-| Lodgepole pine     | Pinus contorta                  | PICO          | 108      | 0.951              | 1.671            | 1.612                   |
-| Limber pine        | Pinus flexilis                  | PIFL          | 113      | 0.889              | 2.337            | 2.255                   |
-| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      | 0.358              | 1.707            | 1.496                   |
-| Sugar pine         | Pinus lambertinana              | PILA          | 117      | 0.304              | 1.396            | 1.189                   |
-| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      | 0.906              | 2.592            | 2.478                   |
-| Western white pine | Pinus monticola                 | PIMO2         | 119      | 0.542              | 1.422            | 1.485                   |
-| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      | 0.276              | 1.402            | 1.233                   |
-| Foothill pine      | Pinus sabiniana                 | PISA          | 127      | 0.111              | 1.448            | 2.504                   |
-| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      | 0.600              | 1.870            | 1.719                   |
-| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      | 0.864              | 1.319            | 1.295                   |
-| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      | 0.990              | 1.648            | 1.632                   |
-| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      | 1.102              | 1.876            | 1.848                   |
-| Unknown conifer    | NA                              | UNCO          | 299      | 0.363              | 1.75             | 1.624                   |
-| Unknown hardwood   | NA                              | UNHA          | 998      | 0.363              | 1.75             | 1.624                   |
-| Unknown tree       | NA                              | UNTR          | 999      | 0.363              | 1.75             | 1.624                   |
+| common name | scientific name | 4-letter code | FIA code | litter coefficient | duff coefficient | litter/duff coefficient |
+|:---|:---|:---|:---|:---|:---|:---|
+| White fir | Abies concolor | ABCO | 15 | 1.050 | 1.518 | 1.572 |
+| California red fir | Abies grandis | ABMA | 20 | 0.530 | 1.727 | 1.722 |
+| Incense cedar | Calocedrus decurrens | CADE | 81 | 1.276 | 1.675 | 1.664 |
+| Western juniper | Juniperus occidentalis | JUOC | 64 | 0.832 | 1.798 | 1.763 |
+| Whitebark pine | Pinus albicaulis | PIAL | 101 | 0.540 | 1.895 | 1.802 |
+| Knobcone pine | Pinus attenuata | PIAT | 103 | 0.336 | 1.646 | 1.274 |
+| Foxtail pine | Pinus balfourianae | PIBA | 104 | 0.886 | 1.220 | 2.360 |
+| Lodgepole pine | Pinus contorta | PICO | 108 | 0.951 | 1.671 | 1.612 |
+| Limber pine | Pinus flexilis | PIFL | 113 | 0.889 | 2.337 | 2.255 |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 | 0.358 | 1.707 | 1.496 |
+| Sugar pine | Pinus lambertinana | PILA | 117 | 0.304 | 1.396 | 1.189 |
+| Singleleaf pinyon | Pinus monophylla | PIMO1 | 133 | 0.906 | 2.592 | 2.478 |
+| Western white pine | Pinus monticola | PIMO2 | 119 | 0.542 | 1.422 | 1.485 |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 | 0.276 | 1.402 | 1.233 |
+| Foothill pine | Pinus sabiniana | PISA | 127 | 0.111 | 1.448 | 2.504 |
+| Washoe pine | Pinus ponderosa var. washoensis | PIWA | 137 | 0.600 | 1.870 | 1.719 |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 | 0.864 | 1.319 | 1.295 |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 | 0.990 | 1.648 | 1.632 |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 | 1.102 | 1.876 | 1.848 |
+| Unknown conifer | NA | UNCO | 299 | 0.363 | 1.75 | 1.624 |
+| Unknown hardwood | NA | UNHA | 998 | 0.363 | 1.75 | 1.624 |
+| Unknown tree | NA | UNTR | 999 | 0.363 | 1.75 | 1.624 |
 
 *Note: UNCO, UNHA, UNTR, and any other species not listed in the table
 are assigned the “All Species” values provided by van Wagtendonk et
@@ -3305,89 +3304,89 @@ The process is the same for $SEC_{c,p}$ and $SG_{c,p}$.
 
 **Averaged squared quadratic mean diameter by fuel size class**
 
-| common name        | scientific name                 | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour |
-|:-------------------|:--------------------------------|:--------------|:---------|:-------|:--------|:---------|
-| White fir          | Abies concolor                  | ABCO          | 15       | 0.08   | 1.32    | 11.56    |
-| California red fir | Abies grandis                   | ABMA          | 20       | 0.10   | 1.32    | 16.24    |
-| Incense cedar      | Calocedrus decurrens            | CADE          | 81       | 0.09   | 1.23    | 20.79    |
-| Western juniper    | Juniperus occidentalis          | JUOC          | 64       | 0.08   | 1.61    | 13.92    |
-| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      | 0.13   | 1.21    | 14.75    |
-| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      | 0.10   | 1.25    | 9.68     |
-| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      | 0.12   | 0.92    | 12.82    |
-| Lodgepole pine     | Pinus contorta                  | PICO          | 108      | 0.10   | 1.44    | 13.39    |
-| Limber pine        | Pinus flexilis                  | PIFL          | 113      | 0.21   | 1.28    | 17.72    |
-| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      | 0.15   | 1.25    | 17.31    |
-| Sugar pine         | Pinus lambertinana              | PILA          | 117      | 0.12   | 1.46    | 13.61    |
-| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      | 0.09   | 1.41    | 11.56    |
-| Western white pine | Pinus monticola                 | PIMO2         | 119      | 0.08   | 0.79    | 9.92     |
-| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      | 0.23   | 1.56    | 19.36    |
-| Foothill pine      | Pinus sabiniana                 | PISA          | 127      | 0.14   | 0.94    | 12.91    |
-| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      | 0.22   | 1.37    | 13.47    |
-| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      | 0.06   | 1.37    | 12.04    |
-| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      | 0.14   | 1.28    | 17.06    |
-| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      | 0.05   | 1.46    | 13.61    |
-| Unknown conifer    | NA                              | UNCO          | 299      | 0.12   | 1.28    | 14.52    |
-| Unknown hardwood   | NA                              | UNHA          | 998      | 0.12   | 1.28    | 14.52    |
-| Unknown tree       | NA                              | UNTR          | 999      | 0.12   | 1.28    | 14.52    |
+| common name | scientific name | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour |
+|:---|:---|:---|:---|:---|:---|:---|
+| White fir | Abies concolor | ABCO | 15 | 0.08 | 1.32 | 11.56 |
+| California red fir | Abies grandis | ABMA | 20 | 0.10 | 1.32 | 16.24 |
+| Incense cedar | Calocedrus decurrens | CADE | 81 | 0.09 | 1.23 | 20.79 |
+| Western juniper | Juniperus occidentalis | JUOC | 64 | 0.08 | 1.61 | 13.92 |
+| Whitebark pine | Pinus albicaulis | PIAL | 101 | 0.13 | 1.21 | 14.75 |
+| Knobcone pine | Pinus attenuata | PIAT | 103 | 0.10 | 1.25 | 9.68 |
+| Foxtail pine | Pinus balfourianae | PIBA | 104 | 0.12 | 0.92 | 12.82 |
+| Lodgepole pine | Pinus contorta | PICO | 108 | 0.10 | 1.44 | 13.39 |
+| Limber pine | Pinus flexilis | PIFL | 113 | 0.21 | 1.28 | 17.72 |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 | 0.15 | 1.25 | 17.31 |
+| Sugar pine | Pinus lambertinana | PILA | 117 | 0.12 | 1.46 | 13.61 |
+| Singleleaf pinyon | Pinus monophylla | PIMO1 | 133 | 0.09 | 1.41 | 11.56 |
+| Western white pine | Pinus monticola | PIMO2 | 119 | 0.08 | 0.79 | 9.92 |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 | 0.23 | 1.56 | 19.36 |
+| Foothill pine | Pinus sabiniana | PISA | 127 | 0.14 | 0.94 | 12.91 |
+| Washoe pine | Pinus ponderosa var. washoensis | PIWA | 137 | 0.22 | 1.37 | 13.47 |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 | 0.06 | 1.37 | 12.04 |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 | 0.14 | 1.28 | 17.06 |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 | 0.05 | 1.46 | 13.61 |
+| Unknown conifer | NA | UNCO | 299 | 0.12 | 1.28 | 14.52 |
+| Unknown hardwood | NA | UNHA | 998 | 0.12 | 1.28 | 14.52 |
+| Unknown tree | NA | UNTR | 999 | 0.12 | 1.28 | 14.52 |
 
 <br>
 
 **Average secant of acute angles of inclinations of nonhorizontal
 particles by fuel size class**
 
-| common name        | scientific name                 | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour | 1000-hour |
-|:-------------------|:--------------------------------|:--------------|:---------|:-------|:--------|:---------|:----------|
-| White fir          | Abies concolor                  | ABCO          | 15       | 1.03   | 1.02    | 1.02     | 1.01      |
-| California red fir | Abies grandis                   | ABMA          | 20       | 1.03   | 1.02    | 1.01     | 1.00      |
-| Incense cedar      | Calocedrus decurrens            | CADE          | 81       | 1.02   | 1.02    | 1.03     | 1.06      |
-| Western juniper    | Juniperus occidentalis          | JUOC          | 64       | 1.03   | 1.04    | 1.04     | 1.04      |
-| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      | 1.02   | 1.02    | 1.02     | 1.02      |
-| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      | 1.03   | 1.02    | 1.00     | 1.02      |
-| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      | 1.02   | 1.02    | 1.01     | 1.02      |
-| Lodgepole pine     | Pinus contorta                  | PICO          | 108      | 1.02   | 1.02    | 1.01     | 1.05      |
-| Limber pine        | Pinus flexilis                  | PIFL          | 113      | 1.02   | 1.02    | 1.01     | 1.01      |
-| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      | 1.03   | 1.03    | 1.04     | 1.05      |
-| Sugar pine         | Pinus lambertinana              | PILA          | 117      | 1.04   | 1.04    | 1.03     | 1.03      |
-| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      | 1.02   | 1.01    | 1.01     | 1.05      |
-| Western white pine | Pinus monticola                 | PIMO2         | 119      | 1.03   | 1.02    | 1.06     | 1.02      |
-| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      | 1.02   | 1.03    | 1.02     | 1.01      |
-| Foothill pine      | Pinus sabiniana                 | PISA          | 127      | 1.05   | 1.03    | 1.02     | 1.02      |
-| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      | 1.02   | 1.02    | 1.01     | 1.05      |
-| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      | 1.03   | 1.02    | 1.03     | 1.04      |
-| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      | 1.02   | 1.02    | 1.02     | 1.01      |
-| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      | 1.04   | 1.02    | 1.02     | 1.00      |
-| Unknown conifer    | NA                              | UNCO          | 299      | 1.03   | 1.02    | 1.02     | 1.02      |
-| Unknown hardwood   | NA                              | UNHA          | 998      | 1.03   | 1.02    | 1.02     | 1.02      |
-| Unknown tree       | NA                              | UNTR          | 999      | 1.03   | 1.02    | 1.02     | 1.02      |
+| common name | scientific name | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour | 1000-hour |
+|:---|:---|:---|:---|:---|:---|:---|:---|
+| White fir | Abies concolor | ABCO | 15 | 1.03 | 1.02 | 1.02 | 1.01 |
+| California red fir | Abies grandis | ABMA | 20 | 1.03 | 1.02 | 1.01 | 1.00 |
+| Incense cedar | Calocedrus decurrens | CADE | 81 | 1.02 | 1.02 | 1.03 | 1.06 |
+| Western juniper | Juniperus occidentalis | JUOC | 64 | 1.03 | 1.04 | 1.04 | 1.04 |
+| Whitebark pine | Pinus albicaulis | PIAL | 101 | 1.02 | 1.02 | 1.02 | 1.02 |
+| Knobcone pine | Pinus attenuata | PIAT | 103 | 1.03 | 1.02 | 1.00 | 1.02 |
+| Foxtail pine | Pinus balfourianae | PIBA | 104 | 1.02 | 1.02 | 1.01 | 1.02 |
+| Lodgepole pine | Pinus contorta | PICO | 108 | 1.02 | 1.02 | 1.01 | 1.05 |
+| Limber pine | Pinus flexilis | PIFL | 113 | 1.02 | 1.02 | 1.01 | 1.01 |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 | 1.03 | 1.03 | 1.04 | 1.05 |
+| Sugar pine | Pinus lambertinana | PILA | 117 | 1.04 | 1.04 | 1.03 | 1.03 |
+| Singleleaf pinyon | Pinus monophylla | PIMO1 | 133 | 1.02 | 1.01 | 1.01 | 1.05 |
+| Western white pine | Pinus monticola | PIMO2 | 119 | 1.03 | 1.02 | 1.06 | 1.02 |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 | 1.02 | 1.03 | 1.02 | 1.01 |
+| Foothill pine | Pinus sabiniana | PISA | 127 | 1.05 | 1.03 | 1.02 | 1.02 |
+| Washoe pine | Pinus ponderosa var. washoensis | PIWA | 137 | 1.02 | 1.02 | 1.01 | 1.05 |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 | 1.03 | 1.02 | 1.03 | 1.04 |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 | 1.02 | 1.02 | 1.02 | 1.01 |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 | 1.04 | 1.02 | 1.02 | 1.00 |
+| Unknown conifer | NA | UNCO | 299 | 1.03 | 1.02 | 1.02 | 1.02 |
+| Unknown hardwood | NA | UNHA | 998 | 1.03 | 1.02 | 1.02 | 1.02 |
+| Unknown tree | NA | UNTR | 999 | 1.03 | 1.02 | 1.02 | 1.02 |
 
 <br>
 
 **Average specific gravity by fuel size class**
 
-| common name        | scientific name                 | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour | 1000-hour sound | 1000-hour rotten |
-|:-------------------|:--------------------------------|:--------------|:---------|:-------|:--------|:---------|:----------------|:-----------------|
-| White fir          | Abies concolor                  | ABCO          | 15       | 0.53   | 0.54    | 0.57     | 0.32            | 0.36             |
-| California red fir | Abies grandis                   | ABMA          | 20       | 0.57   | 0.56    | 0.47     | 0.38            | 0.36             |
-| Incense cedar      | Calocedrus decurrens            | CADE          | 81       | 0.59   | 0.54    | 0.55     | 0.41            | 0.36             |
-| Western juniper    | Juniperus occidentalis          | JUOC          | 64       | 0.67   | 0.65    | 0.62     | 0.47            | 0.36             |
-| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      | 0.55   | 0.49    | 0.48     | 0.42            | 0.36             |
-| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      | 0.59   | 0.55    | 0.39     | 0.47            | 0.36             |
-| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      | 0.59   | 0.61    | 0.53     | 0.47            | 0.36             |
-| Lodgepole pine     | Pinus contorta                  | PICO          | 108      | 0.53   | 0.48    | 0.54     | 0.58            | 0.36             |
-| Limber pine        | Pinus flexilis                  | PIFL          | 113      | 0.57   | 0.57    | 0.54     | 0.63            | 0.36             |
-| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      | 0.53   | 0.55    | 0.55     | 0.47            | 0.36             |
-| Sugar pine         | Pinus lambertinana              | PILA          | 117      | 0.59   | 0.59    | 0.52     | 0.43            | 0.36             |
-| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      | 0.65   | 0.64    | 0.53     | 0.47            | 0.36             |
-| Western white pine | Pinus monticola                 | PIMO2         | 119      | 0.56   | 0.56    | 0.49     | 0.47            | 0.36             |
-| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      | 0.55   | 0.56    | 0.48     | 0.40            | 0.36             |
-| Foothill pine      | Pinus sabiniana                 | PISA          | 127      | 0.64   | 0.61    | 0.43     | 0.47            | 0.36             |
-| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      | 0.53   | 0.52    | 0.44     | 0.35            | 0.36             |
-| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      | 0.60   | 0.61    | 0.59     | 0.35            | 0.36             |
-| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      | 0.57   | 0.57    | 0.56     | 0.54            | 0.36             |
-| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      | 0.67   | 0.65    | 0.62     | 0.66            | 0.36             |
-| Unknown conifer    | NA                              | UNCO          | 299      | 0.58   | 0.57    | 0.53     | 0.47            | 0.36             |
-| Unknown hardwood   | NA                              | UNHA          | 998      | 0.58   | 0.57    | 0.53     | 0.47            | 0.36             |
-| Unknown tree       | NA                              | UNTR          | 999      | 0.58   | 0.57    | 0.53     | 0.47            | 0.36             |
+| common name | scientific name | 4-letter code | FIA code | 1-hour | 10-hour | 100-hour | 1000-hour sound | 1000-hour rotten |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| White fir | Abies concolor | ABCO | 15 | 0.53 | 0.54 | 0.57 | 0.32 | 0.36 |
+| California red fir | Abies grandis | ABMA | 20 | 0.57 | 0.56 | 0.47 | 0.38 | 0.36 |
+| Incense cedar | Calocedrus decurrens | CADE | 81 | 0.59 | 0.54 | 0.55 | 0.41 | 0.36 |
+| Western juniper | Juniperus occidentalis | JUOC | 64 | 0.67 | 0.65 | 0.62 | 0.47 | 0.36 |
+| Whitebark pine | Pinus albicaulis | PIAL | 101 | 0.55 | 0.49 | 0.48 | 0.42 | 0.36 |
+| Knobcone pine | Pinus attenuata | PIAT | 103 | 0.59 | 0.55 | 0.39 | 0.47 | 0.36 |
+| Foxtail pine | Pinus balfourianae | PIBA | 104 | 0.59 | 0.61 | 0.53 | 0.47 | 0.36 |
+| Lodgepole pine | Pinus contorta | PICO | 108 | 0.53 | 0.48 | 0.54 | 0.58 | 0.36 |
+| Limber pine | Pinus flexilis | PIFL | 113 | 0.57 | 0.57 | 0.54 | 0.63 | 0.36 |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 | 0.53 | 0.55 | 0.55 | 0.47 | 0.36 |
+| Sugar pine | Pinus lambertinana | PILA | 117 | 0.59 | 0.59 | 0.52 | 0.43 | 0.36 |
+| Singleleaf pinyon | Pinus monophylla | PIMO1 | 133 | 0.65 | 0.64 | 0.53 | 0.47 | 0.36 |
+| Western white pine | Pinus monticola | PIMO2 | 119 | 0.56 | 0.56 | 0.49 | 0.47 | 0.36 |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 | 0.55 | 0.56 | 0.48 | 0.40 | 0.36 |
+| Foothill pine | Pinus sabiniana | PISA | 127 | 0.64 | 0.61 | 0.43 | 0.47 | 0.36 |
+| Washoe pine | Pinus ponderosa var. washoensis | PIWA | 137 | 0.53 | 0.52 | 0.44 | 0.35 | 0.36 |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 | 0.60 | 0.61 | 0.59 | 0.35 | 0.36 |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 | 0.57 | 0.57 | 0.56 | 0.54 | 0.36 |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 | 0.67 | 0.65 | 0.62 | 0.66 | 0.36 |
+| Unknown conifer | NA | UNCO | 299 | 0.58 | 0.57 | 0.53 | 0.47 | 0.36 |
+| Unknown hardwood | NA | UNHA | 998 | 0.58 | 0.57 | 0.53 | 0.47 | 0.36 |
+| Unknown tree | NA | UNTR | 999 | 0.58 | 0.57 | 0.53 | 0.47 | 0.36 |
 
 <br>
 
@@ -3558,7 +3557,7 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 - Brown, J.K. (1974). *Handbook for inventorying downed woody material.*
   General Technical Report INT-16. USDA Forest Service, Intermountain
   Forest and Range Experiment Station, Ogden, UT.
-  <https://www.fs.usda.gov/treesearch/pubs/28647>
+  <https://research.fs.usda.gov/treesearch/28647>
 
 - Marshall, P.L., Davis, G., & LeMay, V.M. (2000). *Using line intersect
   sampling for coarse woody debris.* Forest Research Technical Report
@@ -3573,7 +3572,7 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 - Van Wagner, C.E. (1982). *Practical aspects of the line intersect
   method.* Information Report PI-X-12. Petawawa National Forestry
   Institute, Canadian Forestry Service, Chalk River, Ontario.
-  <https://cfs.nrcan.gc.ca/publications?id=6862>
+  <https://ostrnrcan-dostrncan.canada.ca/entities/publication/d1289126-5f22-421f-9805-519a326d83ca>
 
 - van Wagtendonk, J.W., Benedict, J.M., & Sydoriak, W.M. (1996).
   Physical properties of woody fuel particles of Sierra Nevada conifers.
@@ -3917,3 +3916,10 @@ functions; we currently only have values for the 19 Sierra Nevada
 conifer species included in van Wagtendonk *et al.* (1996, 1998).
 
 **Contact email:** <krutherford@berkeley.edu>
+
+<br>
+
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/kearutherford/BerkeleyForestsAnalytics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kearutherford/BerkeleyForestsAnalytics/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
