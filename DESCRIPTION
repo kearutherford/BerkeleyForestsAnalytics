@@ -10,7 +10,7 @@ Authors@R: c(
 Description: A suite of open-source R functions designed to produce
     standard metrics for forest management and ecology from field
     inventory data.
-License: MIT + file LICENSE
+License: file LICENSE
 URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
 Depends: 
     R (>= 2.10)
