@@ -33,24 +33,10 @@ encounter unexpected inputs or formats.
 
 ## Installation instructions
 
-To install the `BerkeleyForestsAnalytics` package from GitHub:
+`BerkeleyForestsAnalytics` is now available for installation from CRAN:
 
 ``` r
-# install and load devtools
-install.packages("devtools")
-library(devtools)
-```
-
-``` r
-# install and load BerkeleyForestsAnalytics 
-devtools::install_github('kearutherford/BerkeleyForestsAnalytics')
-library(BerkeleyForestsAnalytics)
-```
-
-``` r
-# install and load BerkeleyForestsAnalytics 
-# and request vignettes
-devtools::install_github('kearutherford/BerkeleyForestsAnalytics', build_vignettes = TRUE)
+install.packages("BerkeleyForestsAnalytics")
 library(BerkeleyForestsAnalytics)
 ```
 
@@ -796,7 +782,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.06 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -834,7 +820,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -941,7 +927,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
