@@ -1,15 +1,18 @@
 Package: BerkeleyForestsAnalytics
-Title: Produce Standard Metrics for Forest Management and Ecology from
-    Field Inventory Data
+Title: Compute and Summarize Core Forest Metrics from Field Data
 Version: 2.0.4
 Authors@R: c(
     person("Kea", "Rutherford", , "krutherford@berkeley.edu", role = c("aut", "cre")),
-    person("John", "Battles", role = c("aut", "cph")),
-    person("Danny", "Foster", role = "aut")
+    person("John", "Battles", role = "aut"),
+    person("Danny", "Foster", role = "aut"),
+    person("The Regents of the University of California (Regents)", role = "cph")
   )
-Description: A suite of open-source R functions designed to produce
-    standard metrics for forest management and ecology from field
-    inventory data.
+Description: A suite of open-source R functions designed to produce standard 
+    metrics for forest management and ecology from forest inventory data. The 
+    overarching goal is to minimize potential inconsistencies introduced by the 
+    algorithms used to compute and summarize core forest metrics. Learn more 
+    about the purpose of the package and the specific algorithms used in the 
+    package at <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
 License: file LICENSE
 URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
 Depends: 

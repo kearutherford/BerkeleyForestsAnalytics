@@ -4,9 +4,9 @@
 \name{BerkeleyForestsAnalytics-package}
 \alias{BerkeleyForestsAnalytics}
 \alias{BerkeleyForestsAnalytics-package}
-\title{BerkeleyForestsAnalytics: Produce Standard Metrics for Forest Management and Ecology from Field Inventory Data}
+\title{BerkeleyForestsAnalytics: Compute and Summarize Core Forest Metrics from Field Data}
 \description{
-A suite of open-source R functions designed to produce standard metrics for forest management and ecology from field inventory data.
+A suite of open-source R functions designed to produce standard metrics for forest management and ecology from forest inventory data. The overarching goal is to minimize potential inconsistencies introduced by the algorithms used to compute and summarize core forest metrics. Learn more about the purpose of the package and the specific algorithms used in the package at \url{https://github.com/kearutherford/BerkeleyForestsAnalytics}.
 }
 \seealso{
 Useful links:
@@ -20,8 +20,13 @@ Useful links:
 
 Authors:
 \itemize{
-  \item John Battles [copyright holder]
+  \item John Battles
   \item Danny Foster
+}
+
+Other contributors:
+\itemize{
+  \item The Regents of the University of California (Regents) [copyright holder]
 }
 
 }

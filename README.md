@@ -91,8 +91,6 @@ citation("BerkeleyForestsAnalytics")
 
 ## Copyright notice
 
-UC Berkeley’s Standard Copyright and Disclaimer Notice:
-
 Copyright ©2024. The Regents of the University of California (Regents).
 All Rights Reserved. Permission to use, copy, modify, and distribute
 this software and its documentation for educational, research, and
@@ -111,8 +109,6 @@ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
 PARTICULAR PURPOSE. THE SOFTWARE AND ACCOMPANYING DOCUMENTATION, IF ANY,
 PROVIDED HEREUNDER IS PROVIDED “AS IS”. REGENTS HAS NO OBLIGATION TO
 PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
-
-First published: June 1, 2024
 
 # Tree biomass estimates (prior to NSVB framework)
 
@@ -838,7 +834,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha

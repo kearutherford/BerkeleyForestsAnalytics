@@ -1,9 +1,16 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Reduced the length of the title to less than 65 characters
+
+* Updated the description field to include more details
+
+* Updated LICENSE file 
+
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* New submission
 
-## Comments on License
-
-* Dr. John Battles is a professor at the University of California, Berkeley. Kea Rutherford is a PhD student at UC Berkeley. Danny Foster was a former PhD student at UC Berkeley. Therefore, we have used UC Berkeley's Standard Copyright and Disclaimer Notice, which is still a permissive license. 
+* Non-FOSS package license (file LICENSE)
