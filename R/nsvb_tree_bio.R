@@ -368,6 +368,12 @@ Table_Pull <- function(table_data_a, table_data_b, tree_data) {
 
     table_pull <- subset(table_data_a, SPCD == tree_data$species[1])
 
+    if(table_pull$SPCD[1] == "111" | table_pull$SPCD[1] == "131") {
+
+      table_pull <- subset(table_pull, STDORGCD == tree_data$stand_org[1])
+
+    }
+
     if(tree_data$division[1] %in% table_pull$DIVISION) {
 
       return_table <- subset(table_pull, DIVISION == tree_data$division[1])

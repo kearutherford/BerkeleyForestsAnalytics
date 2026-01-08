@@ -1,0 +1,21 @@
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+ref <- read_csv("REF_SPECIES.csv", col_types = cols(
+  species = col_character(),
+  JENKINS_SPGRPCD = col_character(),
+  WDSG = col_double(),
+  type = col_character()
+))
+
+ref <- ref %>%
+  mutate(JENKINS_SPGRPCD = case_when(JENKINS_SPGRPCD == "10" & type == "H" ~ "8",
+                                     JENKINS_SPGRPCD == "10" & type == "S" ~ "4",
+                                     JENKINS_SPGRPCD != "10" ~ JENKINS_SPGRPCD),
+         k = case_when(type == "H" ~ 11, type == "S" ~ 9),
+         DensProp = case_when(type == "H" ~ 0.54, type == "S" ~ 0.92)) %>%
+  select(species, type, JENKINS_SPGRPCD, WDSG, k, DensProp)
+```
