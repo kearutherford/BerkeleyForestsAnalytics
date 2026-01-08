@@ -16,7 +16,7 @@ Description: A suite of open-source R functions designed to produce standard
 License: file LICENSE
 URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 Imports: 
     utils
 Suggests: 
