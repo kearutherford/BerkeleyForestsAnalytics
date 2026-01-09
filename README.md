@@ -28,9 +28,6 @@ management) or metric units (typical for forest science). We also
 provide a plethora of custom warnings when our error checking routines
 encounter unexpected inputs or formats.
 
-> :bulb: **Tip:** you can navigate this README file using the table of
-> contents below.
-
 <a id="toc"></a>
 <details open>
 
@@ -39,15 +36,16 @@ encounter unexpected inputs or formats.
 <strong>Table of contents</strong>
 </summary>
 
-- [Installation instructions](#install-instructions)
-- [Vignette](#vign)
-- [Citation instructions](#cite-instructions)
-- [Copyright notice](#copyright)
-- [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
-  - [TreeBiomass()](#tree-bio)
-    - [Inputs](#tree-bio-input)
-    - [Outputs](#tree-bio-output)
-    - [Demonstrations](#tree-bio-demo)
+> - [Installation instructions](#install-instructions)
+> - [Vignette](#vign)
+> - [Citation instructions](#cite-instructions)
+> - [Copyright notice](#copyright)
+> - [Tree biomass estimates (prior to NSVB
+>   workflow)](#tree-bio-overview)
+>   - [TreeBiomass()](#tree-bio)
+>     - [Inputs](#tree-bio-input)
+>     - [Outputs](#tree-bio-output)
+>     - [Demonstrations](#tree-bio-demo)
 
 </details>
 
@@ -319,9 +317,7 @@ tree_bio_demo2
     adjusted for structural decay.
   - For the live trees, the biomass estimates remain the same.
 
-[Back to TOC](#toc)
-
-<br>
+[Back to table of contents](#toc)
 
 ## :eight_spoked_asterisk: `SummaryBiomass( )`
 
@@ -757,7 +753,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.12 secs
+    ## Time difference of 0.11 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -805,7 +801,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.06 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -950,7 +946,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha

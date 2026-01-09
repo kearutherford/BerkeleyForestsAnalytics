@@ -9,21 +9,19 @@ The `BerkeleyForestsAnalytics` package (BFA) is a suite of open-source R functio
 
 BFA’s overarching goal is to minimize potential inconsistencies introduced by the algorithms used to compute and summarize core forest metrics. It was explicitly designed to address common analytical issues including: 1) Unit conversion errors; 2) Missing zeros; 3) Undocumented NA handling; 4) Imprecise scaling; and 5) Ad hoc application of allometric equations. In short, our objective is to obtain consistent results from the same data. We developed BFA using Base R code to help reduce the frequency of minor code maintenance. All applications can accommodate data recorded using imperial units (typical for forest management) or metric units (typical for forest science). We also provide a plethora of custom warnings when our error checking routines encounter unexpected inputs or formats. 
 
-> :bulb: **Tip:** you can navigate this README file using the table of contents below.
-
 <a id="toc"></a>
 <details open>
 <summary><strong>Table of contents</strong></summary>
 
-- [Installation instructions](#install-instructions)
-- [Vignette](#vign)
-- [Citation instructions](#cite-instructions)
-- [Copyright notice](#copyright)
-- [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
-  - [TreeBiomass()](#tree-bio)
-    - [Inputs](#tree-bio-input)
-    - [Outputs](#tree-bio-output)
-    - [Demonstrations](#tree-bio-demo)
+> - [Installation instructions](#install-instructions)
+> - [Vignette](#vign)
+> - [Citation instructions](#cite-instructions)
+> - [Copyright notice](#copyright)
+> - [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
+>   - [TreeBiomass()](#tree-bio)
+>     - [Inputs](#tree-bio-input)
+>     - [Outputs](#tree-bio-output)
+>     - [Demonstrations](#tree-bio-demo)
 
 </details>
 
@@ -156,9 +154,7 @@ tree_bio_demo2
     * For the three standing dead trees, the biomass estimates are adjusted for structural decay. 
     * For the live trees, the biomass estimates remain the same. 
     
-[Back to TOC](#toc)
-
-<br>
+[Back to table of contents](#toc)
 
 ## :eight_spoked_asterisk: `SummaryBiomass( )`
 
