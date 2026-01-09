@@ -29,7 +29,7 @@ provide a plethora of custom warnings when our error checking routines
 encounter unexpected inputs or formats.
 
 <a id="toc"></a>
-<details open>
+<details>
 
 <summary>
 
@@ -820,7 +820,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.12 secs
+    ## Time difference of 0.11 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -960,7 +960,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
