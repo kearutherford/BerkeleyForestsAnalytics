@@ -7,8 +7,8 @@ output:
 <summary><strong>Table of contents</strong></summary>
 
 <div style="
-  max-height: 75vh;
-  overflow-y: auto;
+  max-height: 120px;
+  overflow: auto;
   border-left: 3px solid #d0d7de;
   padding-left: 1em;
   margin-top: 0.5em;
@@ -26,6 +26,7 @@ output:
 
 </div>
 </details>
+
 
 # Berkeley Forests Analytics 
 

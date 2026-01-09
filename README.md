@@ -7,8 +7,8 @@
 </summary>
 
 <div style="
-  max-height: 75vh;
-  overflow-y: auto;
+  max-height: 120px;
+  overflow: auto;
   border-left: 3px solid #d0d7de;
   padding-left: 1em;
   margin-top: 0.5em;
@@ -761,7 +761,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.11 secs
+    ## Time difference of 0.17 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -809,7 +809,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.1 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -847,7 +847,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.11 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -901,7 +901,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -954,7 +954,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
