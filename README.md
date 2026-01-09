@@ -1,97 +1,4 @@
 
-- [Berkeley Forests Analytics](#berkeley-forests-analytics)
-  - [Installation instructions](#installation-instructions)
-  - [Vignette](#vignette)
-  - [Citation instructions](#citation-instructions)
-  - [Copyright notice](#copyright-notice)
-- [Tree biomass estimates (prior to NSVB
-  framework)](#tree-biomass-estimates-prior-to-nsvb-framework)
-  - [:eight_spoked_asterisk:
-    `TreeBiomass( )`](#eight_spoked_asterisk-treebiomass-)
-    - [Inputs](#inputs)
-    - [Outputs](#outputs)
-    - [Demonstrations](#demonstrations)
-  - [:eight_spoked_asterisk:
-    `SummaryBiomass( )`](#eight_spoked_asterisk-summarybiomass-)
-    - [Inputs](#inputs-1)
-    - [Outputs](#outputs-1)
-    - [Demonstrations](#demonstrations-1)
-- [Tree biomass and carbon estimates (NSVB
-  framework)](#tree-biomass-and-carbon-estimates-nsvb-framework)
-  - [:eight_spoked_asterisk:
-    `BiomassNSVB( )`](#eight_spoked_asterisk-biomassnsvb-)
-    - [Inputs](#inputs-2)
-    - [Outputs](#outputs-2)
-    - [Demonstrations](#demonstrations-2)
-- [Forest composition and structure
-  compilations](#forest-composition-and-structure-compilations)
-  - [:eight_spoked_asterisk:
-    `ForestComp( )`](#eight_spoked_asterisk-forestcomp-)
-    - [Inputs](#inputs-3)
-    - [Outputs](#outputs-3)
-    - [Demonstrations](#demonstrations-3)
-  - [:eight_spoked_asterisk:
-    `ForestStr( )`](#eight_spoked_asterisk-foreststr-)
-    - [Inputs](#inputs-4)
-    - [Outputs](#outputs-4)
-    - [Demonstrations](#demonstrations-4)
-- [Surface and ground fuel load
-  estimations](#surface-and-ground-fuel-load-estimations)
-  - [:eight_spoked_asterisk:
-    `FineFuels( )`](#eight_spoked_asterisk-finefuels-)
-    - [Inputs](#inputs-5)
-    - [Outputs](#outputs-5)
-    - [Demonstration](#demonstration)
-  - [:eight_spoked_asterisk:
-    `CoarseFuels( )`](#eight_spoked_asterisk-coarsefuels-)
-    - [Inputs](#inputs-6)
-    - [Outputs](#outputs-6)
-    - [Demonstrations](#demonstrations-5)
-  - [:eight_spoked_asterisk:
-    `LitterDuff( )`](#eight_spoked_asterisk-litterduff-)
-    - [Inputs](#inputs-7)
-    - [Outputs](#outputs-7)
-    - [Demonstrations](#demonstrations-6)
-- [Further data summarization](#further-data-summarization)
-  - [:eight_spoked_asterisk:
-    `CompilePlots( )`](#eight_spoked_asterisk-compileplots-)
-    - [Inputs](#inputs-8)
-    - [Outputs](#outputs-8)
-    - [Demonstrations](#demonstrations-7)
-  - [:eight_spoked_asterisk:
-    `CompileSurfaceFuels( )`](#eight_spoked_asterisk-compilesurfacefuels-)
-    - [Inputs](#inputs-9)
-    - [Outputs](#outputs-9)
-    - [Demonstrations](#demonstrations-8)
-- [General background information for tree biomass
-  estimations](#general-background-information-for-tree-biomass-estimations)
-  - [Decay class code table](#decay-class-code-table)
-- [Background information for tree biomass estimations (prior to NSVB
-  framework)](#background-information-for-tree-biomass-estimations-prior-to-nsvb-framework)
-  - [Species code tables](#species-code-tables)
-  - [Allometric equations](#allometric-equations)
-  - [Structural decay of standing dead
-    trees](#structural-decay-of-standing-dead-trees)
-- [Background information for tree biomass and carbon estimations (NSVB
-  framework)](#background-information-for-tree-biomass-and-carbon-estimations-nsvb-framework)
-  - [NSVB framework](#nsvb-framework)
-  - [Divisions and provinces](#divisions-and-provinces)
-- [Background information for surface and ground fuel load
-  calculations](#background-information-for-surface-and-ground-fuel-load-calculations)
-  - [Duff and litter loads](#duff-and-litter-loads)
-  - [Fine fuel loads](#fine-fuel-loads)
-  - [Coarse fuel loads](#coarse-fuel-loads)
-  - [Slope-corrected transect length](#slope-corrected-transect-length)
-- [Background information for further data
-  summarization](#background-information-for-further-data-summarization)
-  - [Finite population correction
-    factor](#finite-population-correction-factor)
-  - [General equations used in CompilePlots
-    function](#general-equations-used-in-compileplots-function)
-  - [Weighted equations used in CompileSurfaceFuels
-    function](#weighted-equations-used-in-compilesurfacefuels-function)
-- [Contact information](#contact-information)
-
 # Berkeley Forests Analytics
 
 The `BerkeleyForestsAnalytics` package (BFA) is a suite of open-source R
@@ -121,7 +28,30 @@ management) or metric units (typical for forest science). We also
 provide a plethora of custom warnings when our error checking routines
 encounter unexpected inputs or formats.
 
-## Installation instructions
+<details open>
+
+<summary>
+
+<strong>Table of contents</strong>
+</summary>
+
+<div style="max-height: 280px; overflow-y: auto;">
+
+- [Installation instructions](#install-instructions)
+- [Vignette](#vign)
+- [Citation instructions](#cite-instructions)
+- [Copyright notice](#copyright)
+- [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
+  - [TreeBiomass()](#tree-bio)
+    - [Inputs](#tree-bio-input)
+    - [Outputs](#tree-bio-output)
+    - [Demonstrations](#tree-bio-demo)
+
+</div>
+
+</details>
+
+## Installation instructions <a name="install-instructions"></a>
 
 `BerkeleyForestsAnalytics` is now available for installation from CRAN:
 
@@ -130,7 +60,7 @@ install.packages("BerkeleyForestsAnalytics")
 library(BerkeleyForestsAnalytics)
 ```
 
-## Vignette
+## Vignette <a name="vign"></a>
 
 To access the Vignette for `BerkeleyForestsAnalytics`:
 
@@ -142,7 +72,7 @@ browseVignettes("BerkeleyForestsAnalytics")
 vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 ```
 
-## Citation instructions
+## Citation instructions <a name="cite-instructions"></a>
 
 ``` r
 citation("BerkeleyForestsAnalytics")
@@ -165,7 +95,7 @@ citation("BerkeleyForestsAnalytics")
     ##     url = {https://github.com/kearutherford/BerkeleyForestsAnalytics},
     ##   }
 
-## Copyright notice
+## Copyright notice <a name="copyright"></a>
 
 Copyright ©2024. The Regents of the University of California (Regents).
 All Rights Reserved. Permission to use, copy, modify, and distribute
@@ -186,7 +116,7 @@ PARTICULAR PURPOSE. THE SOFTWARE AND ACCOMPANYING DOCUMENTATION, IF ANY,
 PROVIDED HEREUNDER IS PROVIDED “AS IS”. REGENTS HAS NO OBLIGATION TO
 PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
-# Tree biomass estimates (prior to NSVB framework)
+# Tree biomass estimates (prior to NSVB framework) <a name="tree-bio-overview"></a>
 
 These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest
 Inventory and Analysis (FIA) Regional Biomass Equations (prior to the
@@ -196,7 +126,7 @@ above-ground stem, bark, and branch tree biomass.
 biomass (NSVB) framework (see “Tree biomass and carbon estimates (NSVB
 framework)” section below).
 
-## :eight_spoked_asterisk: `TreeBiomass( )`
+## :eight_spoked_asterisk: `TreeBiomass( )` <a name="tree-bio"></a>
 
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA)
 Regional Biomass Equations (prior to the new national-scale volume and
@@ -206,7 +136,7 @@ for the structural decay of standing dead trees. See “Background
 information for tree biomass estimations (prior to NSVB framework)”
 below for further details.
 
-### Inputs
+### Inputs <a name="tree-bio-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
@@ -254,7 +184,7 @@ below for further details.
     (kilograms) or imperial (US tons) units. Must be set to either
     “metric” or “imperial”. The default is set to “metric”.
 
-### Outputs
+### Outputs <a name="tree-bio-output"></a>
 
 The original dataframe will be returned, with four new columns. If
 decay_class is provided, the biomass estimates for standing dead trees
@@ -278,7 +208,7 @@ available as separate components of total biomass. `bark_bio` and
 `branch_bio` will appear as `NA` and the `total_bio` will be equivalent
 to the `stem_bio`.*
 
-### Demonstrations
+### Demonstrations <a name="tree-bio-demo"></a>
 
 ``` r
 # investigate input dataframe

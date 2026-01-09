@@ -1,8 +1,6 @@
 ---
 output:
-  github_document:
-    toc: true
-    toc_depth: 3
+  github_document
 ---
 
 # Berkeley Forests Analytics 
@@ -11,7 +9,25 @@ The `BerkeleyForestsAnalytics` package (BFA) is a suite of open-source R functio
 
 BFA’s overarching goal is to minimize potential inconsistencies introduced by the algorithms used to compute and summarize core forest metrics. It was explicitly designed to address common analytical issues including: 1) Unit conversion errors; 2) Missing zeros; 3) Undocumented NA handling; 4) Imprecise scaling; and 5) Ad hoc application of allometric equations. In short, our objective is to obtain consistent results from the same data. We developed BFA using Base R code to help reduce the frequency of minor code maintenance. All applications can accommodate data recorded using imperial units (typical for forest management) or metric units (typical for forest science). We also provide a plethora of custom warnings when our error checking routines encounter unexpected inputs or formats. 
 
-## Installation instructions
+<details open>
+<summary><strong>Table of contents</strong></summary>
+
+<div style="max-height: 280px; overflow-y: auto;">
+
+- [Installation instructions](#install-instructions)
+- [Vignette](#vign)
+- [Citation instructions](#cite-instructions)
+- [Copyright notice](#copyright)
+- [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
+  - [TreeBiomass()](#tree-bio)
+    - [Inputs](#tree-bio-input)
+    - [Outputs](#tree-bio-output)
+    - [Demonstrations](#tree-bio-demo)
+
+</div>
+</details>
+
+## Installation instructions <a name="install-instructions"></a>
 
 `BerkeleyForestsAnalytics` is now available for installation from CRAN:
 
@@ -20,7 +36,7 @@ install.packages("BerkeleyForestsAnalytics")
 library(BerkeleyForestsAnalytics)
 ```
 
-## Vignette
+## Vignette <a name="vign"></a>
 
 To access the Vignette for `BerkeleyForestsAnalytics`: 
 
@@ -32,13 +48,13 @@ browseVignettes("BerkeleyForestsAnalytics")
 vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 ```
 
-## Citation instructions 
+## Citation instructions <a name="cite-instructions"></a>
 
 ```{r}
 citation("BerkeleyForestsAnalytics")
 ```
 
-## Copyright notice
+## Copyright notice <a name="copyright"></a>
 
 Copyright ©2024. The Regents of the University of California (Regents). All Rights Reserved. Permission to use, copy, modify, and distribute this software and its documentation for educational, research, and not-for-profit purposes, without fee and without a signed licensing agreement, is hereby granted, provided that the above copyright notice, this paragraph and the following two paragraphs appear in all copies, modifications, and distributions. 
 
@@ -46,15 +62,15 @@ IN NO EVENT SHALL REGENTS BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, 
 
 REGENTS SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE AND ACCOMPANYING DOCUMENTATION, IF ANY, PROVIDED HEREUNDER IS PROVIDED "AS IS". REGENTS HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
-# Tree biomass estimates (prior to NSVB framework) 
+# Tree biomass estimates (prior to NSVB framework) <a name="tree-bio-overview"></a>
 
 These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework) to estimate above-ground stem, bark, and branch tree biomass. `BerkeleyForestsAnalytics` also offers the new national-scale volume and biomass (NSVB) framework (see "Tree biomass and carbon estimates (NSVB framework)" section below). 
 
-## :eight_spoked_asterisk: `TreeBiomass( )`
+## :eight_spoked_asterisk: `TreeBiomass( )` <a name="tree-bio"></a>
 
 The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional Biomass Equations (prior to the new national-scale volume and biomass (NSVB) framework) to estimate above-ground stem, bark, and branch tree biomass. It provides the option to adjust biomass estimates for the structural decay of standing dead trees. See "Background information for tree biomass estimations (prior to NSVB framework)" below for further details.  
 
-### Inputs
+### Inputs <a name="tree-bio-input"></a>
 
 1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
 
@@ -72,7 +88,7 @@ The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA) Regional
 
 8. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units. Also specifies whether the results will be given in metric (kilograms) or imperial (US tons) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
-### Outputs
+### Outputs <a name="tree-bio-output"></a>
 
 The original dataframe will be returned, with four new columns. If decay_class is provided, the biomass estimates for standing dead trees will be adjusted for structural decay.
 
@@ -86,7 +102,7 @@ The original dataframe will be returned, with four new columns. If decay_class i
 
 *Important note: For some hardwood species, the `stem_bio` includes bark and branch biomass. In these cases, bark and branch biomass are not available as separate components of total biomass. `bark_bio` and `branch_bio` will appear as `NA` and the `total_bio` will be equivalent to the `stem_bio`.*
 
-### Demonstrations
+### Demonstrations <a name="tree-bio-demo"></a>
 
 ```{r, include = FALSE}
 library(BerkeleyForestsAnalytics)
