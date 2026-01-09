@@ -659,9 +659,9 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
          'Check that you are using FIA species codes.')
   }
 
-  if(!all(is.element(data_val$species, NSVB_sp_code_names$fia))) {
+  if(!all(is.element(data_val$species, NSVB_sp_code_names))) {
 
-    unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species, NSVB_sp_code_names$fia), "species"]), sep = " "))
+    unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species, NSVB_sp_code_names), "species"]), sep = " "))
 
     stop('Not all species codes were recognized!\n',
          'Unrecognized codes: ', unrecognized_sp)
@@ -704,11 +704,13 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
 
     # Check for NA -------------------------------------------------------------
     special_sp <- subset(data_val, species == "111" | species == "131")
-    plots_w_special_sp <- subset(data_val, plot %in% species_sp$plot)
+    special_sp$site_plot <- paste(special_sp$site, special_sp$plot, sep="-")
+    data_val$site_plot <- paste(data_val$site, data_val$plot, sep="-")
+    plots_w_special_sp <- subset(data_val, site_plot %in% special_sp$site_plot)
 
     if ('TRUE' %in% is.na(plots_w_special_sp$stand_org)) {
       stop('There are missing stand_org codes in plots with species 111 or 131.\n',
-           'Plots with these species present must have a stand_org code of 0 or 1.')
+           'Plots with these species must have a stand_org code of 0 or 1.')
     }
 
   }

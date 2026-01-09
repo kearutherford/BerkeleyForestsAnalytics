@@ -1,4 +1,97 @@
 
+- [Berkeley Forests Analytics](#berkeley-forests-analytics)
+  - [Installation instructions](#installation-instructions)
+  - [Vignette](#vignette)
+  - [Citation instructions](#citation-instructions)
+  - [Copyright notice](#copyright-notice)
+- [Tree biomass estimates (prior to NSVB
+  framework)](#tree-biomass-estimates-prior-to-nsvb-framework)
+  - [:eight_spoked_asterisk:
+    `TreeBiomass( )`](#eight_spoked_asterisk-treebiomass-)
+    - [Inputs](#inputs)
+    - [Outputs](#outputs)
+    - [Demonstrations](#demonstrations)
+  - [:eight_spoked_asterisk:
+    `SummaryBiomass( )`](#eight_spoked_asterisk-summarybiomass-)
+    - [Inputs](#inputs-1)
+    - [Outputs](#outputs-1)
+    - [Demonstrations](#demonstrations-1)
+- [Tree biomass and carbon estimates (NSVB
+  framework)](#tree-biomass-and-carbon-estimates-nsvb-framework)
+  - [:eight_spoked_asterisk:
+    `BiomassNSVB( )`](#eight_spoked_asterisk-biomassnsvb-)
+    - [Inputs](#inputs-2)
+    - [Outputs](#outputs-2)
+    - [Demonstrations](#demonstrations-2)
+- [Forest composition and structure
+  compilations](#forest-composition-and-structure-compilations)
+  - [:eight_spoked_asterisk:
+    `ForestComp( )`](#eight_spoked_asterisk-forestcomp-)
+    - [Inputs](#inputs-3)
+    - [Outputs](#outputs-3)
+    - [Demonstrations](#demonstrations-3)
+  - [:eight_spoked_asterisk:
+    `ForestStr( )`](#eight_spoked_asterisk-foreststr-)
+    - [Inputs](#inputs-4)
+    - [Outputs](#outputs-4)
+    - [Demonstrations](#demonstrations-4)
+- [Surface and ground fuel load
+  estimations](#surface-and-ground-fuel-load-estimations)
+  - [:eight_spoked_asterisk:
+    `FineFuels( )`](#eight_spoked_asterisk-finefuels-)
+    - [Inputs](#inputs-5)
+    - [Outputs](#outputs-5)
+    - [Demonstration](#demonstration)
+  - [:eight_spoked_asterisk:
+    `CoarseFuels( )`](#eight_spoked_asterisk-coarsefuels-)
+    - [Inputs](#inputs-6)
+    - [Outputs](#outputs-6)
+    - [Demonstrations](#demonstrations-5)
+  - [:eight_spoked_asterisk:
+    `LitterDuff( )`](#eight_spoked_asterisk-litterduff-)
+    - [Inputs](#inputs-7)
+    - [Outputs](#outputs-7)
+    - [Demonstrations](#demonstrations-6)
+- [Further data summarization](#further-data-summarization)
+  - [:eight_spoked_asterisk:
+    `CompilePlots( )`](#eight_spoked_asterisk-compileplots-)
+    - [Inputs](#inputs-8)
+    - [Outputs](#outputs-8)
+    - [Demonstrations](#demonstrations-7)
+  - [:eight_spoked_asterisk:
+    `CompileSurfaceFuels( )`](#eight_spoked_asterisk-compilesurfacefuels-)
+    - [Inputs](#inputs-9)
+    - [Outputs](#outputs-9)
+    - [Demonstrations](#demonstrations-8)
+- [General background information for tree biomass
+  estimations](#general-background-information-for-tree-biomass-estimations)
+  - [Decay class code table](#decay-class-code-table)
+- [Background information for tree biomass estimations (prior to NSVB
+  framework)](#background-information-for-tree-biomass-estimations-prior-to-nsvb-framework)
+  - [Species code tables](#species-code-tables)
+  - [Allometric equations](#allometric-equations)
+  - [Structural decay of standing dead
+    trees](#structural-decay-of-standing-dead-trees)
+- [Background information for tree biomass and carbon estimations (NSVB
+  framework)](#background-information-for-tree-biomass-and-carbon-estimations-nsvb-framework)
+  - [NSVB framework](#nsvb-framework)
+  - [Divisions and provinces](#divisions-and-provinces)
+- [Background information for surface and ground fuel load
+  calculations](#background-information-for-surface-and-ground-fuel-load-calculations)
+  - [Duff and litter loads](#duff-and-litter-loads)
+  - [Fine fuel loads](#fine-fuel-loads)
+  - [Coarse fuel loads](#coarse-fuel-loads)
+  - [Slope-corrected transect length](#slope-corrected-transect-length)
+- [Background information for further data
+  summarization](#background-information-for-further-data-summarization)
+  - [Finite population correction
+    factor](#finite-population-correction-factor)
+  - [General equations used in CompilePlots
+    function](#general-equations-used-in-compileplots-function)
+  - [Weighted equations used in CompileSurfaceFuels
+    function](#weighted-equations-used-in-compilesurfacefuels-function)
+- [Contact information](#contact-information)
+
 # Berkeley Forests Analytics
 
 The `BerkeleyForestsAnalytics` package (BFA) is a suite of open-source R
@@ -27,9 +120,6 @@ accommodate data recorded using imperial units (typical for forest
 management) or metric units (typical for forest science). We also
 provide a plethora of custom warnings when our error checking routines
 encounter unexpected inputs or formats.
-
-> :bulb: **Tip:** you can navigate this README file using the table of
-> contents found in the upper right-hand corner.
 
 ## Installation instructions
 
@@ -537,13 +627,13 @@ below for further details.
     exact):
 
     - **division:** Must be a character variable. Describes the
-      ecodivision in which the data were collected (see “CA division and
+      ecodivision in which the data were collected (see “Division and
       provinces” section in “Background information for tree biomass
       estimates (NSVB framework)” below).
 
     - **province:** Must be a character variable. Describes the province
-      (within the ecodivision) in which the data were collected (see “CA
-      division and provinces” section in “Background information for
+      (within the ecodivision) in which the data were collected (see
+      “Division and provinces” section in “Background information for
       tree biomass estimates (NSVB framework)” below).
 
     - **site:** Must be a character variable. Describes the broader
@@ -551,6 +641,14 @@ below for further details.
 
     - **plot:** Must be a character variable. Identifies the plot in
       which the individual tree was measured.
+
+    - **stand_org:** Must be a character variable. Specifies whether the
+      stand origin is planted (1) or natural (0). Only necessary to
+      include this column if the input data has slash pine (SPCD=111)
+      and/or loblolly pine (SPCD=131). If the column is required, it is
+      only necessary to correctly define the stand origin for the
+      particular plots that include those two speices (you can put 1, 0,
+      or simply NA for the plots without those two species).
 
     - **exp_factor:** Must be a numeric variable. The expansion factor
       specifies the number of trees per hectare (or per acre) that a
@@ -566,9 +664,9 @@ below for further details.
       should be NA or 0.
 
     - **species:** Must be a character variable. Specifies the species
-      of the individual tree. Must follow four-letter species code or
-      FIA naming conventions (see “Species code tables” in “General
-      background information for tree biomass estimations” below).
+      of the individual tree. Must follow FIA naming conventions
+      (download FIADB REF_SPECIES file from
+      [HERE](inst/extdata/REF_SPECIES.csv) for reference).
 
     - **dbh:** Must be a numeric variable. Provides the diameter at
       breast height (DBH) of the individual tree in either centimeters
@@ -595,14 +693,7 @@ below for further details.
     - **cull:** Must be a numeric variable. Provides the percent wood
       cull of the individual tree (between 0 and 100).
 
-2.  `sp_codes` Not a variable (column) in the provided dataframe or
-    tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see “Species code tables”
-    section in “General background information for tree biomass
-    estimations” below). Must be set to either “4letter” or “fia”. The
-    default is set to “4letter”.
-
-3.  `input_units` Not a variable (column) in the provided dataframe or
+2.  `input_units` Not a variable (column) in the provided dataframe or
     tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables
     were measured using metric (centimeters and meters) or imperial
     (inches and feet) units; and (2) whether the input expansion factor
@@ -610,13 +701,13 @@ below for further details.
     Must be set to either “metric” or “imperial”. The default is set to
     “metric”.
 
-4.  `output_units` Not a variable (column) in the provided dataframe or
+3.  `output_units` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether results will be given in metric (kilograms
     or megagrams per hectare) or imperial (US tons or US tons per acre)
     units. Must be set to either “metric” or “imperial”. The default is
     set to “metric”.
 
-5.  `results` Not a variable (column) in the provided dataframe or
+4.  `results` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the results will be summarized by tree, by
     plot, by plot as well as species, by plot as well as status
     (live/dead), or by plot as well as species and status. Must be set
@@ -683,21 +774,21 @@ nsvb_demo
 ```
 
     ##    division province site plot exp_factor status decay_class species  dbh  ht1
-    ## 1      M260     M261 SEKI    1         50      1        <NA>    PSME 10.3  5.1
-    ## 2      M260     M261 SEKI    1         50      0           2    ABCO 44.7 26.4
-    ## 3      M260     M261 SEKI    1         50      1        <NA>    PSME 19.1  8.0
-    ## 4      M260     M261 SEKI    1         50      1        <NA>    PSME 32.8 23.3
-    ## 5      M260     M261 SEKI    1         50      0           3    ABCO 13.8 11.1
-    ## 6      M260     M261 SEKI    2         50      1        <NA>    ABCO 20.2  8.5
-    ## 7      M260     M261 SEKI    2         50      1        <NA>    ABCO 31.7 22.3
-    ## 8      M260     M261 SEKI    2         50      1        <NA>    ABCO 13.1  9.7
-    ## 9      M260     M261 SEKI    2         50      0           3    ABCO 26.3 15.6
-    ## 10     M260     M261 YOMI    1         50      1        <NA>    PSME 10.7  5.5
-    ## 11     M260     M261 YOMI    1         50      1        <NA>    PSME 40.6 28.4
-    ## 12     M260     M261 YOMI    1         50      1        <NA>    ABCO 20.1  7.9
-    ## 13     M260     M261 YOMI    1         50      1        <NA>    PSME 33.8 22.3
-    ## 14     M260     M261 YOMI    1         50      1        <NA>    ABCO 12.4 10.8
-    ## 15     M260     M261 YOMI    1         50      1        <NA>    PSME 22.2  9.5
+    ## 1      M260     M261 SEKI    1         50      1        <NA>     202 10.3  5.1
+    ## 2      M260     M261 SEKI    1         50      0           2      15 44.7 26.4
+    ## 3      M260     M261 SEKI    1         50      1        <NA>     202 19.1  8.0
+    ## 4      M260     M261 SEKI    1         50      1        <NA>     202 32.8 23.3
+    ## 5      M260     M261 SEKI    1         50      0           3      15 13.8 11.1
+    ## 6      M260     M261 SEKI    2         50      1        <NA>      15 20.2  8.5
+    ## 7      M260     M261 SEKI    2         50      1        <NA>      15 31.7 22.3
+    ## 8      M260     M261 SEKI    2         50      1        <NA>      15 13.1  9.7
+    ## 9      M260     M261 SEKI    2         50      0           3      15 26.3 15.6
+    ## 10     M260     M261 YOMI    1         50      1        <NA>     202 10.7  5.5
+    ## 11     M260     M261 YOMI    1         50      1        <NA>     202 40.6 28.4
+    ## 12     M260     M261 YOMI    1         50      1        <NA>      15 20.1  7.9
+    ## 13     M260     M261 YOMI    1         50      1        <NA>     202 33.8 22.3
+    ## 14     M260     M261 YOMI    1         50      1        <NA>      15 12.4 10.8
+    ## 15     M260     M261 YOMI    1         50      1        <NA>     202 22.2  9.5
     ## 16     M260     M261 YOMI    2          0   <NA>        <NA>    <NA>   NA   NA
     ##     ht2 crown_ratio  top cull
     ## 1    NA         0.3    Y    0
@@ -727,39 +818,39 @@ biomass/carbon estimates.*
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+# keep default input_units (= "metric") and output_units (= "metric")
 nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_tree")
 
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.11 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
 ```
 
-    ##   division province site plot exp_factor status decay_class species species_fia
-    ## 1     M260     M261 SEKI    1         50      0           2    ABCO          15
-    ## 2     M260     M261 SEKI    2         50      0           3    ABCO          15
-    ## 3     M260     M261 SEKI    1         50      0           3    ABCO          15
-    ##   dbh_cm ht1_m ht2_m crown_ratio top cull total_wood_kg total_bark_kg
-    ## 1   44.7  26.4    NA          NA   Y    0     642.71380     202.68561
-    ## 2   26.3  15.6    NA          NA   Y   10     121.63963      15.47473
-    ## 3   13.8  11.1   8.2          NA   N    0      24.00841       2.94245
-    ##   total_branch_kg total_ag_kg merch_wood_kg merch_bark_kg merch_total_kg
-    ## 1      78.3319204   923.73133     619.85690    195.477474      815.33437
-    ## 2       2.3823889   139.49675     112.09251     14.260164      126.35268
-    ## 3       0.2660589    27.21692      18.11871      2.220613       20.33932
-    ##   merch_top_kg stump_wood_kg stump_bark_kg stump_total_kg foliage_kg
-    ## 1    82.640481     19.581327     6.1751484      25.756475          0
-    ## 2     6.281994      6.087625     0.7744543       6.862079          0
-    ## 3     4.928299      1.736484     0.2128220       1.949306          0
-    ##   total_wood_c total_bark_c total_branch_c total_ag_c merch_wood_c merch_bark_c
-    ## 1    323.92776   102.153545     39.4792879  465.56059   312.407876    98.520647
-    ## 2     61.54965     7.830212      1.2054888   70.58536    56.718811     7.215643
-    ## 3     12.14826     1.488880      0.1346258   13.77176     9.168065     1.123630
+    ##   division province site plot exp_factor status decay_class species dbh_cm
+    ## 1     M260     M261 SEKI    1         50      0           2      15   44.7
+    ## 2     M260     M261 SEKI    2         50      0           3      15   26.3
+    ## 3     M260     M261 SEKI    1         50      0           3      15   13.8
+    ##   ht1_m ht2_m crown_ratio top cull total_wood_kg total_bark_kg total_branch_kg
+    ## 1  26.4    NA          NA   Y    0     642.71380     202.68561      78.3319204
+    ## 2  15.6    NA          NA   Y   10     121.63963      15.47473       2.3823889
+    ## 3  11.1   8.2          NA   N    0      24.00841       2.94245       0.2660589
+    ##   total_ag_kg merch_wood_kg merch_bark_kg merch_total_kg merch_top_kg
+    ## 1   923.73133     619.85690    195.477474      815.33437    82.640481
+    ## 2   139.49675     112.09251     14.260164      126.35268     6.281994
+    ## 3    27.21692      18.11871      2.220613       20.33932     4.928299
+    ##   stump_wood_kg stump_bark_kg stump_total_kg foliage_kg total_wood_c
+    ## 1     19.581327     6.1751484      25.756475          0    323.92776
+    ## 2      6.087625     0.7744543       6.862079          0     61.54965
+    ## 3      1.736484     0.2128220       1.949306          0     12.14826
+    ##   total_bark_c total_branch_c total_ag_c merch_wood_c merch_bark_c
+    ## 1   102.153545     39.4792879  465.56059   312.407876    98.520647
+    ## 2     7.830212      1.2054888   70.58536    56.718811     7.215643
+    ## 3     1.488880      0.1346258   13.77176     9.168065     1.123630
     ##   merch_total_c merch_top_c stump_wood_c stump_bark_c stump_total_c foliage_c
     ## 1     410.92852   41.650802     9.868989    3.1122748    12.9812636         0
     ## 2      63.93445    3.178689     3.080338    0.3918739     3.4722121         0
@@ -775,14 +866,14 @@ head(nsvb_demo1$dataframe, 3)
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
+# keep default input_units (= "metric"), output_units (= "metric"), and results (= "by_plot")
 nsvb_demo2 <- BiomassNSVB(data = nsvb_demo)
 
 nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.06 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -812,7 +903,7 @@ nsvb_demo2
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+# keep default input_units (= "metric") and output_units (= "metric")
 nsvb_demo3 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_species")
 
@@ -820,18 +911,18 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
-    ## 1 SEKI    1    ABCO         33.33611         10.28140            3.92990
-    ## 2 SEKI    1    PSME         18.61593          3.03641            2.44896
-    ## 3 SEKI    2    ABCO         23.03188          6.76482            4.32321
-    ## 4 SEKI    2    PSME          0.00000          0.00000            0.00000
-    ## 5 YOMI    1    ABCO          2.73763          0.44978            0.42931
-    ## 6 YOMI    1    PSME         49.80797          7.82787            4.58142
-    ## 7 YOMI    2    ABCO          0.00000          0.00000            0.00000
-    ## 8 YOMI    2    PSME          0.00000          0.00000            0.00000
+    ## 1 SEKI    1      15         33.33611         10.28140            3.92990
+    ## 2 SEKI    1     202         18.61593          3.03641            2.44896
+    ## 3 SEKI    2      15         23.03188          6.76482            4.32321
+    ## 4 SEKI    2     202          0.00000          0.00000            0.00000
+    ## 5 YOMI    1      15          2.73763          0.44978            0.42931
+    ## 6 YOMI    1     202         49.80797          7.82787            4.58142
+    ## 7 YOMI    2      15          0.00000          0.00000            0.00000
+    ## 8 YOMI    2     202          0.00000          0.00000            0.00000
     ##   total_ag_Mg_ha merch_total_Mg_ha merch_top_Mg_ha stump_total_Mg_ha
     ## 1       47.54741          41.78368         4.37844           1.38529
     ## 2       24.10131          20.32582         2.66307           0.78905
@@ -866,7 +957,7 @@ nsvb_demo3
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+# keep default input_units (= "metric") and output_units (= "metric")
 nsvb_demo4 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_status")
 
@@ -919,7 +1010,7 @@ nsvb_demo4
 
 ``` r
 # call the BiomassNSVB() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter"), input_units (= "metric"), and output_units (= "metric")
+# keep default input_units (= "metric") and output_units (= "metric")
 nsvb_demo5 <- BiomassNSVB(data = nsvb_demo,
                           results = "by_sp_st")
 
@@ -927,18 +1018,18 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
-    ## 1 SEKI    1    ABCO            0.00000           33.33611            0.00000
-    ## 2 SEKI    1    PSME           18.61593            0.00000            3.03641
-    ## 3 SEKI    2    ABCO           16.94990            6.08198            5.99108
-    ## 4 SEKI    2    PSME            0.00000            0.00000            0.00000
-    ## 5 YOMI    1    ABCO            2.73763            0.00000            0.44978
-    ## 6 YOMI    1    PSME           49.80797            0.00000            7.82787
-    ## 7 YOMI    2    ABCO            0.00000            0.00000            0.00000
-    ## 8 YOMI    2    PSME            0.00000            0.00000            0.00000
+    ## 1 SEKI    1      15            0.00000           33.33611            0.00000
+    ## 2 SEKI    1     202           18.61593            0.00000            3.03641
+    ## 3 SEKI    2      15           16.94990            6.08198            5.99108
+    ## 4 SEKI    2     202            0.00000            0.00000            0.00000
+    ## 5 YOMI    1      15            2.73763            0.00000            0.44978
+    ## 6 YOMI    1     202           49.80797            0.00000            7.82787
+    ## 7 YOMI    2      15            0.00000            0.00000            0.00000
+    ## 8 YOMI    2     202            0.00000            0.00000            0.00000
     ##   total_bark_D_Mg_ha total_branch_L_Mg_ha total_branch_D_Mg_ha total_ag_L_Mg_ha
     ## 1           10.28140              0.00000              3.92990          0.00000
     ## 2            0.00000              2.44896              0.00000         24.10131
@@ -2813,89 +2904,6 @@ strs_surface_demo2
 
 # General background information for tree biomass estimations
 
-## Species code tables
-
-All hardwood and softwood species currently included/recognized in the
-`TreeBiomass()`, `SummaryBiomass()` and `BiomassNSVB()` functions are
-listed in the tables below. If you need an additional species included,
-please contact the maintainer of `BerkeleyForestAnalytics`, Kea
-Rutherford. We are open to building out the species list over time.
-
-**Softwoods**
-
-| common name | scientific name | 4-letter code | FIA code | Notes |
-|:---|:---|:---|:---|:---|
-| Balsam fir | Abies balsamea | ABBA | 12 | only available for BiomassNSVB function |
-| White fir | Abies concolor | ABCO | 15 |  |
-| Grand fir | Abies grandis | ABGR | 17 |  |
-| California red fir | Abies magnifica | ABMA | 20 |  |
-| Noble fir | Abies procera | ABPR | 22 |  |
-| Western juniper | Juniperus occidentalis | JUOC | 64 |  |
-| Incense cedar | Calocedrus decurrens | CADE | 81 |  |
-| Red spruce | Picea rubens | PIRU | 97 | only available for BiomassNSVB function |
-| Lodgepole pine | Pinus contorta | PICO | 108 |  |
-| Jeffrey pine | Pinus jeffreyi | PIJE | 116 |  |
-| Sugar pine | Pinus lambertinana | PILA | 117 |  |
-| Western white pine | Pinus monticola | PIMO | 119 |  |
-| Ponderosa pine | Pinus ponderosa | PIPO | 122 |  |
-| Foothill pine | Pinus sabiniana | PISA | 127 |  |
-| White pine | Pinus strobus | PIST | 129 |  |
-| Douglas-fir | Pseudotsuga menziesii | PSME | 202 |  |
-| Redwood | Sequoioideae sempervirens | SESE | 211 |  |
-| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 |  |
-| Pacific yew | Taxus brevifolia | TABR | 231 |  |
-| California nutmeg | Torreya californica | TOCA | 251 |  |
-| Eastern hemlock | Tsuga canadensis | TSCA | 261 | only available for BiomassNSVB function |
-| Western hemlock | Tsuga heterophylla | TSHE | 263 |  |
-| Mountain hemlock | Tsuga mertensiana | TSME | 264 |  |
-| Unknown conifer | NA | UNCO | 299 |  |
-
-<br>
-
-**Hardwoods**
-
-| common name | scientific name | 4-letter code | FIA code | Notes |
-|:---|:---|:---|:---|:---|
-| Bigleaf maple | Acer macrophyllum | ACMA | 312 |  |
-| Striped maple | Acer pensylvanicum | ACPE | 315 | only available for BiomassNSVB function |
-| Red maple | Acer rubrum | ACRU | 316 | only available for BiomassNSVB function |
-| Sugar maple | Acer saccharum | ACSA | 318 | only available for BiomassNSVB function |
-| Mountain maple | Acer spicatum | ACSP | 319 | only available for BiomassNSVB function |
-| White alder | Alnus rhombifolia | ALRH | 352 |  |
-| Juneberry/Serviceberry | Amelanchier spp. | AMSP | 356 | only available for BiomassNSVB function |
-| Pacific madrone | Arbutus menziesii | ARME | 361 |  |
-| Yellow birch | Betula alleghaniensis | BEAL | 371 | only available for BiomassNSVB function |
-| Paper birch | Betula papyrifera | BEPA | 375 | only available for BiomassNSVB function |
-| Gray birch | Betula populifolia | BEPO | 379 | only available for BiomassNSVB function |
-| Golden chinkapin | Chrysolepis chrysophylla | CHCH | 431 |  |
-| Dogwood species | Cornus spp. | COSP | 490 | only available for BiomassNSVB function |
-| Pacific dogwood | Cornus nuttallii | CONU | 492 |  |
-| American beech | Fagus grandifolia | FAGR | 531 | only available for BiomassNSVB function |
-| White ash | Fraxinus americana | FRAM | 541 | only available for BiomassNSVB function |
-| Black ash | Fraxinus nigra | FRNI | 543 | only available for BiomassNSVB function |
-| Tanoak | Notholithocarpus densiflorus | NODE | 631 |  |
-| Eastern hophornbeam | Ostrya virginiana | OSVI | 701 | only available for BiomassNSVB function |
-| Bigtooth aspen | Populus grandidentata | POGR | 743 | only available for BiomassNSVB function |
-| Quaking aspen | Populus tremuloides | POTR | 746 |  |
-| Pin cherry | Prunus pensylvanica | PRPE | 761 | only available for BiomassNSVB function |
-| Black cherry | Prunus serotina | PRSE | 762 | only available for BiomassNSVB function |
-| Chokecherry | Prunus virginiana | PRVI | 763 | only available for BiomassNSVB function |
-| Oak spp. | Quercus spp. | QUSP | 800 | only available for BiomassNSVB function |
-| California live oak | Quercus agrifolia | QUAG | 801 |  |
-| Canyon live oak | Quercus chrysolepis | QUCH | 805 |  |
-| California black oak | Quercus kelloggii | QUKE | 818 |  |
-| Red oak | Quercus rubra | QURU | 833 | only available for BiomassNSVB function |
-| Willow species | Salix spp. | SASP | 920 |  |
-| American mountain-ash | Sorbus americana | SOAM | 935 | only available for BiomassNSVB function |
-| Basswood | Tilia americana | TIAM | 951 | only available for BiomassNSVB function |
-| California-laurel | Umbellularia californica | UMCA | 981 |  |
-| Unknown hardwood | NA | UNHA | 998 |  |
-| Unknown tree | NA | UNTR | 999 |  |
-| Red elderberry | Sambucus racemosa | SAPU | 6991 | only available for BiomassNSVB function |
-
-*Note: Four-letter species codes are generally the first two letters of
-the genus followed by the first two letters of the species.*
-
 ## Decay class code table
 
 | decay class | limbs and branches | top | % bark remaining | sapwood presence and condition | heartwood condition |
@@ -2913,6 +2921,62 @@ procedures for phase 2 plots.* Version 9.0.
 <br>
 
 # Background information for tree biomass estimations (prior to NSVB framework)
+
+## Species code tables
+
+All hardwood and softwood species currently included/recognized in the
+`TreeBiomass()` and `SummaryBiomass()` functions are listed in the
+tables below.
+
+**Softwoods**
+
+| common name        | scientific name           | 4-letter code | FIA code |
+|:-------------------|:--------------------------|:--------------|:---------|
+| White fir          | Abies concolor            | ABCO          | 15       |
+| Grand fir          | Abies grandis             | ABGR          | 17       |
+| California red fir | Abies magnifica           | ABMA          | 20       |
+| Noble fir          | Abies procera             | ABPR          | 22       |
+| Western juniper    | Juniperus occidentalis    | JUOC          | 64       |
+| Incense cedar      | Calocedrus decurrens      | CADE          | 81       |
+| Lodgepole pine     | Pinus contorta            | PICO          | 108      |
+| Jeffrey pine       | Pinus jeffreyi            | PIJE          | 116      |
+| Sugar pine         | Pinus lambertinana        | PILA          | 117      |
+| Western white pine | Pinus monticola           | PIMO          | 119      |
+| Ponderosa pine     | Pinus ponderosa           | PIPO          | 122      |
+| Foothill pine      | Pinus sabiniana           | PISA          | 127      |
+| White pine         | Pinus strobus             | PIST          | 129      |
+| Douglas-fir        | Pseudotsuga menziesii     | PSME          | 202      |
+| Redwood            | Sequoioideae sempervirens | SESE          | 211      |
+| Giant sequoia      | Sequoiadendron giganteum  | SEGI          | 212      |
+| Pacific yew        | Taxus brevifolia          | TABR          | 231      |
+| California nutmeg  | Torreya californica       | TOCA          | 251      |
+| Western hemlock    | Tsuga heterophylla        | TSHE          | 263      |
+| Mountain hemlock   | Tsuga mertensiana         | TSME          | 264      |
+| Unknown conifer    | NA                        | UNCO          | 299      |
+
+<br>
+
+**Hardwoods**
+
+| common name          | scientific name              | 4-letter code | FIA code |
+|:---------------------|:-----------------------------|:--------------|:---------|
+| Bigleaf maple        | Acer macrophyllum            | ACMA          | 312      |
+| White alder          | Alnus rhombifolia            | ALRH          | 352      |
+| Pacific madrone      | Arbutus menziesii            | ARME          | 361      |
+| Golden chinkapin     | Chrysolepis chrysophylla     | CHCH          | 431      |
+| Pacific dogwood      | Cornus nuttallii             | CONU          | 492      |
+| Tanoak               | Notholithocarpus densiflorus | NODE          | 631      |
+| Quaking aspen        | Populus tremuloides          | POTR          | 746      |
+| California live oak  | Quercus agrifolia            | QUAG          | 801      |
+| Canyon live oak      | Quercus chrysolepis          | QUCH          | 805      |
+| California black oak | Quercus kelloggii            | QUKE          | 818      |
+| Willow species       | Salix spp.                   | SASP          | 920      |
+| California-laurel    | Umbellularia californica     | UMCA          | 981      |
+| Unknown hardwood     | NA                           | UNHA          | 998      |
+| Unknown tree         | NA                           | UNTR          | 999      |
+
+*Note: Four-letter species codes are generally the first two letters of
+the genus followed by the first two letters of the species.*
 
 ## Allometric equations
 
@@ -3081,30 +3145,26 @@ Research Station, Newtown Square, PA.
 ## NSVB framework
 
 The `BiomassNSVB()` function follows the new national-scale volume and
-biomass (NSVB) framework. As with other functions in the package, this
-function is generally designed for California forests (i.e., divisions,
-provinces, and tree species relevant to California are incorporated into
-our function). However, this particular function is also designed for
-the Hubbard Brook Experimental Forest in New Hampshire. The full NSVB
-framework is detailed in Westfall *et al.* (2023).
+biomass (NSVB) framework. The full NSVB framework is detailed in
+Westfall *et al.* (2024):
 
-**Reference:** Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D.,
-Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck,
-D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley,
-S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2024). *A
-national-scale tree volume, biomass, and carbon modeling system for the
-United States.* General Technical Report WO-104. USDA Forest Service,
-Northern Research Station, Washington, DC.
-<https://doi.org/10.2737/WO-GTR-104>
+Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J.,
+Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao,
+D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S.P., Wang, Y.,
+Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2024). *A national-scale
+tree volume, biomass, and carbon modeling system for the United States.*
+General Technical Report WO-104. USDA Forest Service, Northern Research
+Station, Washington, DC. <https://doi.org/10.2737/WO-GTR-104>
 
-## CA divisions and provinces
+## Divisions and provinces
 
 The NSVB framework uses ecodivisions (i.e., divisions). Divisions are
-further broken down into provinces. We created the map below to help
-guide users in assigning a division/province to their study site(s). If
-you are not sure which division/province your site falls in based on the
-map, you can download the provinces layer (S_USA.EcoMapProvinces) from
-[here](https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=ecomap).
+further broken down into provinces. You can download the shapefile from
+[HERE](inst/extdata/Ecosys_EcoMapProvinces_2007.zip) to determine the
+division(s) and province(s) your study site(s) fall into.
+
+We also created the map below as a quick help guide for California
+users.
 
 <br>
 
