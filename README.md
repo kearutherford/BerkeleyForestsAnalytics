@@ -1,33 +1,4 @@
 
-<details open>
-
-<summary>
-
-<strong>Table of contents</strong>
-</summary>
-
-<div style="
-  max-height: 120px;
-  overflow: auto;
-  border-left: 3px solid #d0d7de;
-  padding-left: 1em;
-  margin-top: 0.5em;
-">
-
-- [Installation instructions](#install-instructions)
-- [Vignette](#vign)
-- [Citation instructions](#cite-instructions)
-- [Copyright notice](#copyright)
-- [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
-  - [TreeBiomass()](#tree-bio)
-    - [Inputs](#tree-bio-input)
-    - [Outputs](#tree-bio-output)
-    - [Demonstrations](#tree-bio-demo)
-
-</div>
-
-</details>
-
 # Berkeley Forests Analytics
 
 The `BerkeleyForestsAnalytics` package (BFA) is a suite of open-source R
@@ -56,6 +27,29 @@ accommodate data recorded using imperial units (typical for forest
 management) or metric units (typical for forest science). We also
 provide a plethora of custom warnings when our error checking routines
 encounter unexpected inputs or formats.
+
+> :bulb: **Tip:** you can navigate this README file using the table of
+> contents below.
+
+<a id="toc"></a>
+<details open>
+
+<summary>
+
+<strong>Table of contents</strong>
+</summary>
+
+- [Installation instructions](#install-instructions)
+- [Vignette](#vign)
+- [Citation instructions](#cite-instructions)
+- [Copyright notice](#copyright)
+- [Tree biomass estimates (prior to NSVB workflow)](#tree-bio-overview)
+  - [TreeBiomass()](#tree-bio)
+    - [Inputs](#tree-bio-input)
+    - [Outputs](#tree-bio-output)
+    - [Demonstrations](#tree-bio-demo)
+
+</details>
 
 ## Installation instructions <a name="install-instructions"></a>
 
@@ -324,6 +318,8 @@ tree_bio_demo2
   - For the three standing dead trees, the biomass estimates are
     adjusted for structural decay.
   - For the live trees, the biomass estimates remain the same.
+
+[Back to TOC](#toc)
 
 <br>
 
@@ -761,7 +757,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -809,7 +805,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -847,7 +843,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.11 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -901,7 +897,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -954,7 +950,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
