@@ -14,7 +14,7 @@ A dataframe with 16 rows and 14 columns:
 \item{exp_factor}{Stems per hectare}
 \item{status}{Live (1) or dead (0)}
 \item{decay_class}{1-5 for standing dead trees. NA for live trees.}
-\item{Species}{Species of the individual tree, using four-letter species codes}
+\item{Species}{Species of the individual tree, using FIA species codes}
 \item{dbh}{Diameter at breast height in centimeters}
 \item{ht1}{Tree height 1 in meters}
 \item{ht2}{Tree height 2 in meters}

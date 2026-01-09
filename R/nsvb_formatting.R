@@ -1115,5 +1115,5 @@ globalVariables(c("CR", "DIVISION", "Decay.code", "DensProp", "JENKINS_SPGRPCD",
                   "fia", "foliage_bio", "ht1", "ht2", "k", "letter", "merch_bark_bio", "merch_top_bio",
                   "merch_total_bio", "merch_wood_bio", "path", "stump_bark_bio", "stump_total_bio",
                   "stump_wood_bio", "top", "total_ag_bio", "total_bark_bio", "total_branch_bio", "total_wood_bio",
-                  "type", "wood_prop"))
+                  "type", "wood_prop", "STDORGCD", "site_plot"))
 
