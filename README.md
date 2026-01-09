@@ -46,6 +46,73 @@ encounter unexpected inputs or formats.
 >     - [Inputs](#tree-bio-input)
 >     - [Outputs](#tree-bio-output)
 >     - [Demonstrations](#tree-bio-demo)
+>   - [SummaryBiomass()](#sum-bio)
+>     - [Inputs](#sum-bio-input)
+>     - [Outputs](#sum-bio-output)
+>     - [Demonstrations](#sum-bio-demo)
+> - [Tree biomass and carbon estimates (NSVB framework)](#nsvb-overview)
+>   - [BiomassNSVB()](#nsvb-bio)
+>     - [Inputs](#nsvb-input)
+>     - [Outputs](#nsvb-output)
+>     - [Demonstrations](#nsvb-demo)
+> - [Forest composition and structure
+>   compilations](#forest-comp-overview)
+>   - [ForestComp()](#forest-comp)
+>     - [Inputs](#comp-input)
+>     - [Outputs](#comp-output)
+>     - [Demonstrations](#comp-demo)
+>   - [ForestStr()](#forest-str)
+>     - [Inputs](#str-input)
+>     - [Outputs](#str-output)
+>     - [Demonstrations](#str-demo)
+> - [Surface and ground fuel load estimations](#surface-overview)
+>   - [FineFuels()](#fine-fuels)
+>     - [Inputs](#fwd-input)
+>     - [Outputs](#fwd-output)
+>     - [Demonstrations](#fwd-demo)
+>   - [CoarseFuels()](#coarse-fuels)
+>     - [Inputs](#cwd-input)
+>     - [Outputs](#cwd-output)
+>     - [Demonstrations](#cwd-demo)
+>   - [LitterDuff()](#litter-duff)
+>     - [Inputs](#duff-input)
+>     - [Outputs](#duff-output)
+>     - [Demonstrations](#duff-demo)
+> - [Further data summarization](#sum-overview)
+>   - [CompilePlots()](#comp-plots)
+>     - [Inputs](#comp-plots-input)
+>     - [Outputs](#comp-plots-output)
+>     - [Demonstrations](#comp-plots-demo)
+>   - [CompileSurfaceFuels()](#comp-fuels)
+>     - [Inputs](#comp-fuels-input)
+>     - [Outputs](#comp-fuels-output)
+>     - [Demonstrations](#comp-fuels-demo)
+> - [General background information for tree biomass
+>   estimations](#gen-background)
+>   - [Decay class code table](#decay-table)
+> - [Background information for tree biomass estimations (prior to NSVB
+>   framework)](#bio-background)
+>   - [Species code tables](#species-codes)
+>   - [Allometric equations](#allometric-eqns)
+>   - [Structural decay of standing dead trees](#decay)
+> - [Background information for tree biomass and carbon estimations
+>   (NSVB framework)](#nsvb-background)
+>   - [NSVB framework](#nsvb-framework)
+>   - [Divisions and provinces](#div-prov)
+> - [Background information for surface and ground fuel load
+>   calculations](#surface-background)
+>   - [Duff and litter loads](#duff-backround)
+>   - [Fine fuel loads](#fwd-backround)
+>   - [Coarse fuel loads](#cwd-backround)
+>   - [Slope-corrected transect length](#slope-backround)
+> - [Background information for further data
+>   summarization](#sum-background)
+>   - [Finite population correction factor](#fpcf-backround)
+>   - [General equations used in CompilePlots
+>     function](#comp-plots-backround)
+>   - [Weighted equations used in CompileSurfaceFuels
+>     function](#weighted-backround)  
+> - [Contact information](#contact-info)
 
 </details>
 
@@ -121,8 +188,8 @@ Inventory and Analysis (FIA) Regional Biomass Equations (prior to the
 new national-scale volume and biomass (NSVB) framework) to estimate
 above-ground stem, bark, and branch tree biomass.
 `BerkeleyForestsAnalytics` also offers the new national-scale volume and
-biomass (NSVB) framework (see “Tree biomass and carbon estimates (NSVB
-framework)” section below).
+biomass (NSVB) framework (see [Tree biomass and carbon estimates (NSVB
+framework)](#nsvb-overview) section below).
 
 ## :eight_spoked_asterisk: `TreeBiomass( )` <a name="tree-bio"></a>
 
@@ -130,9 +197,9 @@ The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA)
 Regional Biomass Equations (prior to the new national-scale volume and
 biomass (NSVB) framework) to estimate above-ground stem, bark, and
 branch tree biomass. It provides the option to adjust biomass estimates
-for the structural decay of standing dead trees. See “Background
-information for tree biomass estimations (prior to NSVB framework)”
-below for further details.
+for the structural decay of standing dead trees. See [Background
+information for tree biomass estimations (prior to NSVB
+framework)](#bio-background) below for further details.
 
 ### Inputs <a name="tree-bio-input"></a>
 
@@ -146,8 +213,8 @@ below for further details.
 3.  `species` Must be a character variable (column) in the provided
     dataframe or tibble. Specifies the species of the individual tree.
     Must follow four-letter species code or FIA naming conventions (see
-    “Species code tables” section in “General background information for
-    tree biomass estimations” below).
+    [Species code tables](#species-codes) in “Background information for
+    tree biomass estimations (prior to NSVB framework)” below).
 
 4.  `dbh` Must be a numeric variable (column) in the provided dataframe
     or tibble. Provides the diameter at breast height (DBH) of the
@@ -159,21 +226,21 @@ below for further details.
 
 6.  `decay_class` Default is set to “ignore”, indicating that biomass
     estimates for standing dead trees will not be adjusted for
-    structural decay (see “Structural decay of standing dead trees”
-    section in “Background information for tree biomass estimations
-    (prior to NSVB framework)” below). It can be set to a character
-    variable (column) in the provided dataframe or tibble. For standing
-    dead trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay
-    class code table” section in “General background information for
-    tree biomass estimations” below). For live trees, the decay class
-    should be NA or 0.
+    structural decay (see [Structural decay of standing dead
+    trees](#decay) section in “Background information for tree biomass
+    estimations (prior to NSVB framework)” below). It can be set to a
+    character variable (column) in the provided dataframe or tibble. For
+    standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see
+    [Decay class code table](#decay-table) section in “General
+    background information for tree biomass estimations” below). For
+    live trees, the decay class should be NA or 0.
 
 7.  `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see “Species code tables”
-    section in “General background information for tree biomass
-    estimations” below). Must be set to either “4letter” or “fia”. The
-    default is set to “4letter”.
+    four-letter code or FIA naming convention (see [Species code
+    tables](#species-codes) section in “Background information for tree
+    biomass estimations (prior to NSVB framework)” below). Must be set
+    to either “4letter” or “fia”. The default is set to “4letter”.
 
 8.  `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies whether the dbh and ht variables were measured using
@@ -319,13 +386,13 @@ tree_bio_demo2
 
 [Back to table of contents](#toc)
 
-## :eight_spoked_asterisk: `SummaryBiomass( )`
+## :eight_spoked_asterisk: `SummaryBiomass( )` <a name="sum-bio"></a>
 
 The `SummaryBiomass` function calls on the `TreeBiomass` function
 described above. Additionally, the outputs are summarized by plot or by
 plot as well as species.
 
-### Inputs
+### Inputs <a name="sum-bio-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
@@ -347,19 +414,19 @@ plot as well as species.
     alive (1) or dead (0).
 
 6.  `decay_class` Must be a character variable (column) in the provided
-    dataframe or tibble (see “Structural decay of standing dead trees”
-    section in “Background information for tree biomass estimations
-    (prior to NSVB framework)” below). For standing dead trees, the
-    decay class should be 1, 2, 3, 4, or 5 (see “Decay class code table”
-    section in “General background information for tree biomass
-    estimations” below). For live trees, the decay class should be NA or
-    0.
+    dataframe or tibble (see [Structural decay of standing dead
+    trees](#decay) section in “Background information for tree biomass
+    estimations (prior to NSVB framework)” below). For standing dead
+    trees, the decay class should be 1, 2, 3, 4, or 5 (see [Decay class
+    code table](#decay-table) section in “General background information
+    for tree biomass estimations” below). For live trees, the decay
+    class should be NA or 0.
 
 7.  `species` Must be a character variable (column) in the provided
     dataframe or tibble. Specifies the species of the individual tree.
     Must follow four-letter species code or FIA naming conventions (see
-    “Species code tables” in “General background information for tree
-    biomass estimations” below).
+    [Species code tables](#species-codes) in “Background information for
+    tree biomass estimations (prior to NSVB framework)” below).
 
 8.  `dbh` Must be a numeric variable (column) in the provided dataframe
     or tibble. Provides the diameter at breast height (DBH) of the
@@ -371,10 +438,10 @@ plot as well as species.
 
 10. `sp_codes` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see “Species code tables”
-    section in “General background information for tree biomass
-    estimations” below). Must be set to either “4letter” or “fia”. The
-    default is set to “4letter”.
+    four-letter code or FIA naming convention (see [Species code
+    tables](#species-codes) section in “Background information for tree
+    biomass estimations (prior to NSVB framework)” below). Must be set
+    to either “4letter” or “fia”. The default is set to “4letter”.
 
 11. `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies (1) whether the dbh and ht variables were measured using
@@ -390,7 +457,7 @@ plot as well as species.
     by plot as well as species. Must be set to either “by_plot” or
     “by_species.” The default is set to “by_plot”.
 
-### Outputs
+### Outputs <a name="sum-bio-output"></a>
 
 A dataframe with the following columns:
 
@@ -406,7 +473,7 @@ A dataframe with the following columns:
 5.  `dead_Mg_ha` (or `dead_ton_ac`): above-ground dead tree biomass in
     megagrams per hectare (or US tons per acre)
 
-### Demonstrations
+### Demonstrations <a name="sum-bio-demo"></a>
 
 ``` r
 # investigate input dataframe
@@ -536,33 +603,33 @@ sum_bio_demo3
 
 *Notice that the plot without trees has 0 live and dead biomass.*
 
-<br>
+[Back to table of contents](#toc)
 
-# Tree biomass and carbon estimates (NSVB framework)
+# Tree biomass and carbon estimates (NSVB framework) <a name="nsvb-overview"></a>
 
 The `BiomassNSVB` function follows the new national-scale volume and
 biomass (NSVB) framework to estimate above-ground wood, bark, branch,
 merchantable, stump, and foliage tree biomass and carbon. See
-“Background information for tree biomass estimations (NSVB framework)”
-below for further details.
+[Background information for tree biomass estimations (NSVB
+framework)](#nsvb-background) below for further details.
 
-## :eight_spoked_asterisk: `BiomassNSVB( )`
+## :eight_spoked_asterisk: `BiomassNSVB( )` <a name="nsvb-bio"></a>
 
-### Inputs
+### Inputs <a name="nsvb-inputs"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree. Must have at least these columns (column names are
     exact):
 
     - **division:** Must be a character variable. Describes the
-      ecodivision in which the data were collected (see “Division and
-      provinces” section in “Background information for tree biomass
-      estimates (NSVB framework)” below).
+      ecodivision in which the data were collected (see [Division and
+      provinces](#div-prov) section in “Background information for tree
+      biomass estimates (NSVB framework)” below).
 
     - **province:** Must be a character variable. Describes the province
       (within the ecodivision) in which the data were collected (see
-      “Division and provinces” section in “Background information for
-      tree biomass estimates (NSVB framework)” below).
+      [Division and provinces](#div-prov) section in “Background
+      information for tree biomass estimates (NSVB framework)” below).
 
     - **site:** Must be a character variable. Describes the broader
       location or forest where the data were collected.
@@ -586,10 +653,10 @@ below for further details.
       individual tree is alive (1) or dead (0).
 
     - **decay_class:** Must be a character variable. For standing dead
-      trees, the decay class should be 1, 2, 3, 4, or 5 (see “Decay
-      class code table” section in “General background information for
-      tree biomass estimations” below). For live trees, the decay class
-      should be NA or 0.
+      trees, the decay class should be 1, 2, 3, 4, or 5 (see [Decay
+      class code table](#decay-table) section in “General background
+      information for tree biomass estimations” below). For live trees,
+      the decay class should be NA or 0.
 
     - **species:** Must be a character variable. Specifies the species
       of the individual tree. Must follow FIA naming conventions
@@ -642,7 +709,7 @@ below for further details.
     to either “by_tree”, “by_plot”, “by_species”, “by_status”, or
     “by_sp_st”. The default is set to “by_plot”.
 
-### Outputs
+### Outputs <a name="nsvb-output"></a>
 
 Depends on the results setting:
 
@@ -694,7 +761,7 @@ How to interpret column names of the output dataframe:
 - **tons:** US tons
 - **t_ac:** US tons per acre
 
-### Demonstrations
+### Demonstrations <a name="nsvb-demo"></a>
 
 ``` r
 # investigate input dataframe
@@ -753,7 +820,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.11 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -801,7 +868,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.06 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -893,7 +960,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1013,18 +1080,18 @@ nsvb_demo5
     ## 7       0.00000       0.00000         0.00000         0.00000     0.00000
     ## 8       0.00000       0.00000         0.00000         0.00000     0.00000
 
-<br>
+[Back to table of contents](#toc)
 
-# Forest composition and structure compilations
+# Forest composition and structure compilations <a name="forest-comp-overview"></a>
 
 The forest composition and structure functions (`ForestComp` and
 `ForestStr`) assist with common plot-level data compilations. These
 functions help ensure that best practices in data compilation are
 observed.
 
-## :eight_spoked_asterisk: `ForestComp( )`
+## :eight_spoked_asterisk: `ForestComp( )` <a name="forest-comp"></a>
 
-### Inputs
+### Inputs <a name="comp-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
@@ -1062,7 +1129,7 @@ observed.
     (centimeters) or imperial (inches) units. Must be set to either
     “metric” or “imperial”. The default is set to “metric”.
 
-### Outputs
+### Outputs <a name="comp-output"></a>
 
 A dataframe with the following columns:
 
@@ -1075,7 +1142,7 @@ A dataframe with the following columns:
 4.  `dominance`: relative basal area (or relative density) in percent
     (%). Only compiled for LIVE trees.
 
-### Demonstrations
+### Demonstrations <a name="comp-demo"></a>
 
 ``` r
 # investigate input dataframe
@@ -1214,11 +1281,11 @@ comp_demo3
 
 *Notice that the plot without trees has NA dominance for all species.*
 
-<br>
+[Back to table of contents](#toc)
 
-## :eight_spoked_asterisk: `ForestStr( )`
+## :eight_spoked_asterisk: `ForestStr( )` <a name="forest-str"></a>
 
-### Inputs
+### Inputs <a name="str-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree.
@@ -1252,7 +1319,7 @@ comp_demo3
     will be given in metric or imperial units. Must be set to either
     “metric” or “imperial”. The default is set to “metric”.
 
-### Outputs
+### Outputs <a name="str-output"></a>
 
 A dataframe with the following columns:
 
@@ -1274,7 +1341,7 @@ A dataframe with the following columns:
 7.  `ht_m` (or `ht_ft`): average height in meters (or feet) if ht
     argument was set. Weighted by the expansion factor.
 
-### Demonstrations
+### Demonstrations <a name="str-demo"></a>
 
 ``` r
 # investigate input dataframe
@@ -1378,15 +1445,15 @@ str_demo3
 *Notice that the plot without trees has 0 stems/ha, 0 basal area, NA
 QMD, NA DBH, and NA height.*
 
-<br>
+[Back to table of contents](#toc)
 
-# Surface and ground fuel load estimations
+# Surface and ground fuel load estimations <a name="surface-overview"></a>
 
 The three functions (`FineFuels`, `CoarseFuels` and `LitterDuff`)
 estimate surface and ground fuel loads from line-intercept transects.
 Field data should have been collected following Brown (1974) or a
-similar method. See “Background information for surface and ground fuel
-load calculations” below for further details.
+similar method. See [Background information for surface and ground fuel
+load calculations](#surface-background) below for further details.
 
 This set of functions evolved from Rfuels, a package developed by Danny
 Foster ([See Rfuels GitHub](https://github.com/danfosterfire/Rfuels)).
@@ -1395,7 +1462,7 @@ follow the same general equations. The goal of this set of functions is
 to take the workflow outlined in Rfuels and make it more flexible and
 user-friendly. Rfuels will remain operational as the legacy program.
 
-## :eight_spoked_asterisk: `FineFuels( )`
+## :eight_spoked_asterisk: `FineFuels( )` <a name="fine-fuels"></a>
 
 The `FineFuels` function estimates fine woody debris (FWD) loads. FWD is
 defined as 1-hour (0-0.64cm or 0-0.25in), 10-hour (0.64-2.54cm or
@@ -1410,7 +1477,7 @@ FWD data collection:
 - The distances (or lengths) sampled along the transect may be different
   for each size class (1-hour, 10-hour, and 100-hour)
 
-### Inputs
+### Inputs <a name="fwd-input"></a>
 
 1.  `tree_data` A dataframe or tibble. Each row must be an observation
     of an individual tree. Must have at least these columns (column
@@ -1435,9 +1502,9 @@ FWD data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      “Species code tables” section in “Background information for tree
-      biomass estimations” below). The class of this variable must be
-      character.
+      [Species code tables](#species-codes) section in “Background
+      information for tree biomass estimations (prior to NSVB
+      framework)” below). The class of this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1486,10 +1553,10 @@ FWD data collection:
       0 (no slope).
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
-    the four-letter code or FIA naming convention (see “Species code
-    tables” section in “Background information for tree biomass
-    estimations” below). Must be set to either “4letter” or “fia”. The
-    default is set to “4letter”.
+    the four-letter code or FIA naming convention (see [Species code
+    tables](#species-codes) section in “Background information for tree
+    biomass estimations (prior to NSVB framework)” below). Must be set
+    to either “4letter” or “fia”. The default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -1502,7 +1569,7 @@ FWD data collection:
 *Note: there must be a one-to-one match between time:site:plot
 identities of tree and fuel data.*
 
-### Outputs
+### Outputs <a name="fwd-output"></a>
 
 A dataframe with the following columns:
 
@@ -1528,26 +1595,28 @@ A dataframe with the following columns:
 8.  `sc_length_1h`: slope-corrected transect length (i.e., horizontal
     transect length) for 1-hour fuels in either meters or feet. This is
     the total horizontal length of transect sampled for 1-hour fuels at
-    the specific time:site:plot. See “Slope-corrected transect length”
-    section in “Background information for surface and ground fuel load
-    calculations” for details on why and how this is calculated.
+    the specific time:site:plot. See [Slope-corrected transect
+    length](#slope-backround) section in “Background information for
+    surface and ground fuel load calculations” for details on why and
+    how this is calculated.
 
 9.  `sc_length_10h`: slope-corrected transect length (i.e., horizontal
     transect length) for 10-hour fuels in either meters or feet. This is
     the total horizontal length of transect sampled for 10-hour fuels at
-    the specific time:site:plot. See “Slope-corrected transect length”
-    section in “Background information for surface and ground fuel load
-    calculations” for details on why and how this is calculated.
+    the specific time:site:plot. See [Slope-corrected transect
+    length](#slope-backround) section in “Background information for
+    surface and ground fuel load calculations” for details on why and
+    how this is calculated.
 
 10. `sc_length_100h`: slope-corrected transect length (i.e., horizontal
     transect length) for 100-hour fuels in either meters or feet. This
     is the total horizontal length of transect sampled for 100-hour
-    fuels at the specific time:site:plot. See “Slope-corrected transect
-    length” section in “Background information for surface and ground
-    fuel load calculations” for details on why and how this is
-    calculated.
+    fuels at the specific time:site:plot. See [Slope-corrected transect
+    length](#slope-backround) section in “Background information for
+    surface and ground fuel load calculations” for details on why and
+    how this is calculated.
 
-### Demonstration
+### Demonstration <a name="fwd-demo"></a>
 
 ``` r
 # investigate input tree_data
@@ -1624,9 +1693,9 @@ fine_demo
     ## 3     5.981923      5.981923       8.972885
     ## 4     5.981923      5.981923       8.972885
 
-<br>
+[Back to table of contents](#toc)
 
-## :eight_spoked_asterisk: `CoarseFuels( )`
+## :eight_spoked_asterisk: `CoarseFuels( )` <a name="coarse-fuels"></a>
 
 The `CoarseFuels` function estimates coarse woody debris (CWD) loads.
 CWD is defined 1000-hour (7.62+ cm or 3+ in) fuels. Assumptions for CWD
@@ -1638,7 +1707,7 @@ data collection:
   particle that intersects the transect is individually recorded
   (diameter and decay status)
 
-### Inputs
+### Inputs <a name="cwd-input"></a>
 
 1.  `tree_data` A dataframe or tibble. Each row must be an observation
     of an individual tree. Must have at least these columns (column
@@ -1663,9 +1732,9 @@ data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      “Species code tables” section in “Background information for
-      surface and ground fuel load calculations” below). The class of
-      this variable must be character.
+      [Species code tables](#species-codes) section in “Background
+      information for tree biomass estimations (prior to NSVB
+      framework)” below). The class of this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1730,10 +1799,10 @@ data collection:
         of this variable must be character.
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
-    the four-letter code or FIA naming convention (see “Species code
-    tables” section in “Background information for tree biomass
-    estimations” below). Must be set to either “4letter” or “fia”. The
-    default is set to “4letter”.
+    the four-letter code or FIA naming convention (see [Species code
+    tables](#species-codes) section in “Background information for tree
+    biomass estimations (prior to NSVB framework)” below). Must be set
+    to either “4letter” or “fia”. The default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -1750,7 +1819,7 @@ data collection:
 *Note: there must be a one-to-one match between time:site:plot
 identities of tree and fuel data.*
 
-### Outputs
+### Outputs <a name="cwd-output"></a>
 
 A dataframe with the following columns:
 
@@ -1773,20 +1842,20 @@ A dataframe with the following columns:
 7.  `sc_length_1000s`: slope-corrected transect length (i.e., horizontal
     transect length) for sound 1000-hour fuels in either meters or feet.
     This is the total horizontal length of transect sampled for sound
-    1000-hour fuels at the specific time:site:plot. See “Slope-corrected
-    transect length” section in “Background information for surface and
-    ground fuel load calculations” for details on why and how this is
-    calculated.
+    1000-hour fuels at the specific time:site:plot. See [Slope-corrected
+    transect length](#slope-backround) section in “Background
+    information for surface and ground fuel load calculations” for
+    details on why and how this is calculated.
 
 8.  `sc_length_1000r`: slope-corrected transect length (i.e., horizontal
     transect length) for rotten 1000-hour fuels in either meters or
     feet. This is the total horizontal length of transect sampled for
     rotten 1000-hour fuels at the specific time:site:plot. See
-    “Slope-corrected transect length” section in “Background information
-    for surface and ground fuel load calculations” for details on why
-    and how this is calculated.
+    [Slope-corrected transect length](#slope-backround) section in
+    “Background information for surface and ground fuel load
+    calculations” for details on why and how this is calculated.
 
-### Demonstrations
+### Demonstrations <a name="cwd-demo"></a>
 
 ``` r
 # investigate input tree_data
@@ -1912,9 +1981,9 @@ coarse_demo2
     ## 3        37.82160        37.82160
     ## 4        37.74785        37.74785
 
-<br>
+[Back to table of contents](#toc)
 
-## :eight_spoked_asterisk: `LitterDuff( )`
+## :eight_spoked_asterisk: `LitterDuff( )` <a name="litter-duff"></a>
 
 The `LitterDuff` function estimates duff and litter loads. Assumptions
 for duff/litter data collection:
@@ -1925,7 +1994,7 @@ for duff/litter data collection:
   fixed locations along each transect (the number of samples per
   transect are variable)
 
-### Inputs
+### Inputs <a name="duff-input"></a>
 
 1.  `tree_data` A dataframe or tibble. Each row must be an observation
     of an individual tree. Must have at least these columns (column
@@ -1950,9 +2019,9 @@ for duff/litter data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      “Species code tables” section in “Background information for tree
-      biomass estimations” below). The class of this variable must be
-      character.
+      [Species code tables](#species-codes) section in “Background
+      information for tree biomass estimations (prior to NSVB
+      framework)” below). The class of this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -2010,10 +2079,10 @@ for duff/litter data collection:
     recorded at a specific time/site/plot/transect).*
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
-    the four-letter code or FIA naming convention (see “Species code
-    tables” section in “Background information for tree biomass
-    estimations” below). Must be set to either “4letter” or “fia”. The
-    default is set to “4letter”.
+    the four-letter code or FIA naming convention (see [Species code
+    tables](#species-codes) section in “Background information for tree
+    biomass estimations (prior to NSVB framework)” below). Must be set
+    to either “4letter” or “fia”. The default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -2030,7 +2099,7 @@ for duff/litter data collection:
 *Note: there must be a one-to-one match between time:site:plot
 identities of tree and fuel data.*
 
-### Outputs
+### Outputs <a name="duff-output"></a>
 
 A dataframe with the following columns:
 
@@ -2053,7 +2122,7 @@ A dataframe with the following columns:
     - `lit_duff_Mg_ha` (or `lit_duff_ton_ac`): combined litter and duff
       load in megagrams per hectare (or US tons per acre)
 
-### Demonstrations
+### Demonstrations <a name="duff-demo"></a>
 
 ``` r
 # investigate input tree_data
@@ -2171,21 +2240,21 @@ duff_demo2
     ## 3 2019 SEKI    2     19.43475   44.90932
     ## 4 2020 SEKI    2     31.83258   39.94238
 
-<br>
+[Back to table of contents](#toc)
 
-# Further data summarization
+# Further data summarization <a name="sum-overview"></a>
 
 The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize
 data beyond the plot level. These functions are specifically designed to
 further summarize the outputs from other `BerkeleyForestsAnalytics`
 functions. The functions recognize simple random sampling and stratified
 random sampling designs. They also recognize the design of the Fire and
-Fire Surrogate study. See “Background information for further data
-summarization” below for further details.
+Fire Surrogate study. See [Background information for further data
+summarization](#sum-background) below for further details.
 
-## :eight_spoked_asterisk: `CompilePlots( )`
+## :eight_spoked_asterisk: `CompilePlots( )` <a name="comp-plots"></a>
 
-### Inputs
+### Inputs <a name="comp-plots-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual plot. Required columns depend on the sampling design:
@@ -2243,11 +2312,11 @@ summarization” below for further details.
     left as such for design = “SRS” or design = “FFS”.
 
 4.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
-    population correction factor (FPC; see “Background information for
-    further data summarization: Finite population correction factor”
-    below for further details on the definition of the FPC and when the
-    FPC is applicable). The default is set to “not_needed”. Required
-    columns depend on the sampling design:
+    population correction factor (FPC; see [Finite population correction
+    factor](#fpcf-backround) in “Background information for further data
+    summarization” below for further details on the definition of the
+    FPC and when the FPC is applicable). The default is set to
+    “not_needed”. Required columns depend on the sampling design:
 
     - If sampling design is simple random:
       - **time:** Optional. As described above.
@@ -2269,7 +2338,7 @@ summarization” below for further details.
       - **N:** As described above.
       - **n:** As described above.
 
-### Outputs
+### Outputs <a name="comp-plots-output"></a>
 
 Depends on the sampling design:
 
@@ -2283,7 +2352,7 @@ Depends on the sampling design:
   with site-level (i.e., compartment-level) summaries and (2) a
   dataframe with treatment-level summaries.
 
-### Demonstrations
+### Demonstrations <a name="comp-plots-demo"></a>
 
 **Simple random sampling design:**
 
@@ -2514,21 +2583,22 @@ ffs_demo
     ##   avg_dbh_cm se_dbh_cm
     ## 1   38.33333  5.231953
 
-<br>
+[Back to table of contents](#toc)
 
-## :eight_spoked_asterisk: `CompileSurfaceFuels( )`
+## :eight_spoked_asterisk: `CompileSurfaceFuels( )` <a name="comp-fuels"></a>
 
 The `CompileSurfaceFuels` function is specifically designed to further
 summarize outputs from the `FineFuels` and `CoarseFuels` functions.
 Specifically, the function weights the fuel load estimates by the length
 of the line transect actually sampled (i.e., the slope-corrected
-transect length). See “Background information for surface and ground
-fuel load calculations: Slope-corrected transect length” and “Background
-information for further data summarization: Weighted equations” below
-for further details on why and how estimates should be weighted by the
-line transect length.
+transect length). See [Slope-corrected transect
+length](#slope-backround) in “Background information for surface and
+ground fuel load calculations” and [Weighted
+equations](#weighted-backround) section in “Background information for
+further data summarization” below for further details on why and how
+estimates should be weighted by the line transect length.
 
-### Inputs
+### Inputs <a name="comp-fuels-inputs"></a>
 
 1.  `fwd_data` A dataframe or tibble. Each row must be an observation of
     an individual plot. Default is set to “none”, indicating that no
@@ -2643,11 +2713,11 @@ line transect length.
     design = “FFS”.
 
 5.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
-    population correction factor (FPC; see “Background information for
-    further data summarization: Finite population correction factor”
-    below for further details on the definition of the FPC and when the
-    FPC is applicable). The default is set to “not_needed”. Required
-    columns depend on the sampling design:
+    population correction factor (FPC; see [Finite population correction
+    factor](#fpcf-backround) in “Background information for further data
+    summarization” below for further details on the definition of the
+    FPC and when the FPC is applicable). The default is set to
+    “not_needed”. Required columns depend on the sampling design:
 
     - If sampling design is simple random:
       - **time:** Optional. As described above.
@@ -2676,7 +2746,7 @@ line transect length.
     outputs will be in metric). Must be set to either “metric” or
     “imperial”. The default is set to “metric”.
 
-### Outputs
+### Outputs <a name="comp-fuels-output"></a>
 
 Depends on the sampling design:
 
@@ -2690,7 +2760,7 @@ Depends on the sampling design:
   with site-level (i.e., compartment-level) summaries and (2) a
   dataframe with treatment-level summaries.
 
-### Demonstrations
+### Demonstrations <a name="comp-fuels-demo"></a>
 
 ``` r
 # investigate input fwd_data
@@ -2828,11 +2898,11 @@ strs_surface_demo2
     ## 1     1.6174819
     ## 2     0.1367798
 
-<br>
+[Back to table of contents](#toc)
 
-# General background information for tree biomass estimations
+# General background information for tree biomass estimations <a name="gen-background"></a>
 
-## Decay class code table
+## Decay class code table <a name="decay-table"></a>
 
 | decay class | limbs and branches | top | % bark remaining | sapwood presence and condition | heartwood condition |
 |:---|:---|:---|:---|:---|:---|
@@ -2846,11 +2916,11 @@ strs_surface_demo2
 Analysis national core field guide, volume I: Field data collection
 procedures for phase 2 plots.* Version 9.0.
 
-<br>
+[Back to table of contents](#toc)
 
-# Background information for tree biomass estimations (prior to NSVB framework)
+# Background information for tree biomass estimations (prior to NSVB framework) <a name="bio-background"></a>
 
-## Species code tables
+## Species code tables <a name="species-codes"></a>
 
 All hardwood and softwood species currently included/recognized in the
 `TreeBiomass()` and `SummaryBiomass()` functions are listed in the
@@ -2906,7 +2976,7 @@ tables below.
 *Note: Four-letter species codes are generally the first two letters of
 the genus followed by the first two letters of the species.*
 
-## Allometric equations
+## Allometric equations <a name="allometric-eqns"></a>
 
 The `TreeBiomass()` and `SummaryBiomass()` functions calculate biomass
 using the Forest Inventory and Analysis (FIA) Regional Biomass Equations
@@ -2968,7 +3038,7 @@ the functions.
   to estimate bole, bark, and branches.*
   <https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf>
 
-## Structural decay of standing dead trees
+## Structural decay of standing dead trees <a name="decay"></a>
 
 Standing dead trees (often called snags) lose mass in two ways:
 
@@ -3066,11 +3136,11 @@ tree species*. Research Paper NRS-15. USDA Forest Service, Northern
 Research Station, Newtown Square, PA.
 <https://doi.org/10.2737/NRS-RP-15>
 
-<br>
+[Back to table of contents](#toc)
 
-# Background information for tree biomass and carbon estimations (NSVB framework)
+# Background information for tree biomass and carbon estimations (NSVB framework) <a name="nsvb-background"></a>
 
-## NSVB framework
+## NSVB framework <a name="nsvb-framework"></a>
 
 The `BiomassNSVB()` function follows the new national-scale volume and
 biomass (NSVB) framework. The full NSVB framework is detailed in
@@ -3084,7 +3154,7 @@ tree volume, biomass, and carbon modeling system for the United States.*
 General Technical Report WO-104. USDA Forest Service, Northern Research
 Station, Washington, DC. <https://doi.org/10.2737/WO-GTR-104>
 
-## Divisions and provinces
+## Divisions and provinces <a name="div-prov"></a>
 
 The NSVB framework uses ecodivisions (i.e., divisions). Divisions are
 further broken down into provinces. You can download the shapefile from
@@ -3100,7 +3170,9 @@ users.
 
 <br>
 
-# Background information for surface and ground fuel load calculations
+[Back to table of contents](#toc)
+
+# Background information for surface and ground fuel load calculations <a name="surface-background"></a>
 
 This suite of functions estimates surface and ground fuel loads (i.e.,
 mass per unit area) from line-intercept transect data. The functions
@@ -3122,7 +3194,7 @@ data collected in a different manner or region. Additionally, note that
 to stay consistent with previous studies, we use both live and dead
 trees to calculate percent basal area by species.
 
-## Duff and litter loads
+## Duff and litter loads <a name="duff-background"></a>
 
 Duff and litter (or combined duff/litter) are measured as depths at
 specific points along a sampling transect. Van Wagtendonk *et al.*
@@ -3209,7 +3281,7 @@ depths in cm and output fuel loads in $kg/m^2$. Any unit conversions
 (for input or outputs) must be done by the user.
 `BerkeleyForestAnalytics` does the necessary unit conversions for you!
 
-## Fine fuel loads
+## Fine fuel loads <a name="fwd-background"></a>
 
 Calculating fuel loads represented by transect counts of 1-hour,
 10-hour, and 100-hour fuels is more complicated, but follows the same
@@ -3397,7 +3469,7 @@ van Wagner (1982) and are used in van Wagtendonk *et al.* (1996).
 | in            | ft              | $lb/ft^2$          | 0.5348 |
 | in            | ft              | US tons/ac         | 11.65  |
 
-## Coarse fuel loads
+## Coarse fuel loads <a name="cwd-background"></a>
 
 Calculating loads for 1000-hour fuels is just a special case of the
 equations given above for 1-100 hour fuels. The difference is that
@@ -3441,7 +3513,7 @@ $W_{1000h,t} = \frac{\sum(d^2_{t}) * SEC_{1000h,p} * SG_{1000h,s,p} * SLP_{t} * 
 For $SEC_{1000h,p}$, $SG_{1000h,s,p}$, $SLP_{t}$, and $k$ see fine fuel
 loads documentation above - the same concepts are applied here.
 
-## Slope-corrected transect length
+## Slope-corrected transect length <a name="slope-background"></a>
 
 In the above calculations, we used the slope correction factor from
 Brown (1974) for converting mass per unit area on a slope basis to a
@@ -3555,9 +3627,11 @@ $SlopeDeg_t = tan^{-1}(\frac{SlopePerc_t}{100})$
 
 <br>
 
-# Background information for further data summarization
+[Back to table of contents](#toc)
 
-## Finite population correction factor
+# Background information for further data summarization <a name="sum-background"></a>
+
+## Finite population correction factor <a name="fpcf-background"></a>
 
 **General definition of finite population correction factor (FPC):**
 
@@ -3633,7 +3707,7 @@ recommend BFA users follow this accepted 5% rule.*
 - Shiver, B.D., & Borders, B.E. (1996). *Sampling techniques for forest
   resource inventory.* J. Wiley, New York, New York, USA.
 
-## General equations used in CompilePlots function
+## General equations used in CompilePlots function <a name="comp-plots-background"></a>
 
 A general note on data compilation: If you have a stratified random
 sampling design, you must calculate stratum values before calculating
@@ -3745,20 +3819,20 @@ Definitions:
 
 - $n$ number of compartments
 
-## Weighted equations used in CompileSurfaceFuels function
+## Weighted equations used in CompileSurfaceFuels function <a name="weighted-background"></a>
 
 A general note on data compilation: If you have a stratified random
 sampling design, you must calculate stratum values before calculating
 overall values. Similarly, for the Fire and Fire Surrogate design, you
 must calculate compartment values before calculating overall values.
 
-See “Slope-corrected transect length” section above for additional
-background information. The equations below are applicable for
-summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel loads. For
-other surface and ground fuel load combinations (e.g., 1-hour +
-10-hour + 100-hour + litter), create the necessary columns and use the
-general equations provided above (weighting the estimates by the length
-of the line transect is not applicable in the same way for these
+See [Slope-corrected transect length](#slope-backround) section above
+for additional background information. The equations below are
+applicable for summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel
+loads. For other surface and ground fuel load combinations (e.g.,
+1-hour + 10-hour + 100-hour + litter), create the necessary columns and
+use the general equations provided above (weighting the estimates by the
+length of the line transect is not applicable in the same way for these
 combined fuel loads).
 
 **Simple random sampling**
@@ -3876,7 +3950,7 @@ Definitions:
 
 <br>
 
-# Contact information
+# Contact information <a name="contact-info"></a>
 
 Kea Rutherford maintains `BerkeleyForestAnalytics`. You are welcome to
 reach out (1) if you find a bug or (2) need a tree species added to the
@@ -3889,7 +3963,4 @@ conifer species included in van Wagtendonk *et al.* (1996, 1998).
 
 <br>
 
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/kearutherford/BerkeleyForestsAnalytics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kearutherford/BerkeleyForestsAnalytics/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
+[Back to table of contents](#toc)
