@@ -101,10 +101,10 @@ encounter unexpected inputs or formats.
 >   - [Divisions and provinces](#div-prov)
 > - [Background information for surface and ground fuel load
 >   calculations](#surface-background)
->   - [Duff and litter loads](#duff-backround)
->   - [Fine fuel loads](#fwd-backround)
->   - [Coarse fuel loads](#cwd-backround)
->   - [Slope-corrected transect length](#slope-backround)
+>   - [Duff and litter loads](#duff-background)
+>   - [Fine fuel loads](#fwd-background)
+>   - [Coarse fuel loads](#cwd-background)
+>   - [Slope-corrected transect length](#slope-background)
 > - [Background information for further data
 >   summarization](#sum-background)
 >   - [Finite population correction factor](#fpcf-backround)
@@ -615,7 +615,7 @@ framework)](#nsvb-background) below for further details.
 
 ## :eight_spoked_asterisk: `BiomassNSVB( )` <a name="nsvb-bio"></a>
 
-### Inputs <a name="nsvb-inputs"></a>
+### Inputs <a name="nsvb-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
     individual tree. Must have at least these columns (column names are
@@ -820,7 +820,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.11 secs
+    ## Time difference of 0.27 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -868,7 +868,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.19 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -906,7 +906,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.19 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -960,7 +960,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.13 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1013,7 +1013,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha

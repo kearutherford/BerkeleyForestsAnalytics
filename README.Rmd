@@ -72,10 +72,10 @@ BFA’s overarching goal is to minimize potential inconsistencies introduced by 
 >     - [NSVB framework](#nsvb-framework)
 >     - [Divisions and provinces](#div-prov)
 > - [Background information for surface and ground fuel load calculations](#surface-background)
->     - [Duff and litter loads](#duff-backround)
->     - [Fine fuel loads](#fwd-backround)
->     - [Coarse fuel loads](#cwd-backround)
->     - [Slope-corrected transect length](#slope-backround)
+>     - [Duff and litter loads](#duff-background)
+>     - [Fine fuel loads](#fwd-background)
+>     - [Coarse fuel loads](#cwd-background)
+>     - [Slope-corrected transect length](#slope-background)
 > - [Background information for further data summarization](#sum-background)
 >     - [Finite population correction factor](#fpcf-backround)
 >     - [General equations used in CompilePlots function](#comp-plots-backround)
@@ -340,7 +340,7 @@ The `BiomassNSVB` function follows the new national-scale volume and biomass (NS
 
 ## :eight_spoked_asterisk: `BiomassNSVB( )` <a name="nsvb-bio"></a>
 
-### Inputs <a name="nsvb-inputs"></a>
+### Inputs <a name="nsvb-input"></a>
 
 1. `data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
 
