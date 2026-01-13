@@ -77,9 +77,9 @@ BFA’s overarching goal is to minimize potential inconsistencies introduced by 
 >     - [Coarse fuel loads](#cwd-background)
 >     - [Slope-corrected transect length](#slope-background)
 > - [Background information for further data summarization](#sum-background)
->     - [Finite population correction factor](#fpcf-backround)
->     - [General equations used in CompilePlots function](#comp-plots-backround)
->     - [Weighted equations used in CompileSurfaceFuels function](#weighted-backround)  
+>     - [Finite population correction factor](#fpcf-background)
+>     - [General equations used in CompilePlots function](#comp-plots-background)
+>     - [Weighted equations used in CompileSurfaceFuels function](#weighted-background)  
 > - [Contact information](#contact-info)
 
 </details>
@@ -1195,7 +1195,7 @@ ffs_demo
 
 The `CompileSurfaceFuels` function is specifically designed to further summarize outputs from the `FineFuels` and `CoarseFuels` functions. Specifically, the function weights the fuel load estimates by the length of the line transect actually sampled (i.e., the slope-corrected transect length). See [Slope-corrected transect length](#slope-backround) in "Background information for surface and ground fuel load calculations" and [Weighted equations](#weighted-backround) section in "Background information for further data summarization" below for further details on why and how estimates should be weighted by the line transect length. 
 
-### Inputs <a name="comp-fuels-inputs"></a>
+### Inputs <a name="comp-fuels-input"></a>
 
 1. `fwd_data` A dataframe or tibble. Each row must be an observation of an individual plot. Default is set to "none", indicating that no fine woody debris data will be supplied (Note: you must input at least one dataframe/tibble - fwd_data and/or cwd_data). Required columns depend on the sampling design: 
 

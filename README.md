@@ -107,11 +107,11 @@ encounter unexpected inputs or formats.
 >   - [Slope-corrected transect length](#slope-background)
 > - [Background information for further data
 >   summarization](#sum-background)
->   - [Finite population correction factor](#fpcf-backround)
+>   - [Finite population correction factor](#fpcf-background)
 >   - [General equations used in CompilePlots
->     function](#comp-plots-backround)
+>     function](#comp-plots-background)
 >   - [Weighted equations used in CompileSurfaceFuels
->     function](#weighted-backround)  
+>     function](#weighted-background)  
 > - [Contact information](#contact-info)
 
 </details>
@@ -820,7 +820,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.27 secs
+    ## Time difference of 0.13 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -868,7 +868,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -906,7 +906,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -960,7 +960,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.13 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1013,7 +1013,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.11 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2598,7 +2598,7 @@ equations](#weighted-backround) section in “Background information for
 further data summarization” below for further details on why and how
 estimates should be weighted by the line transect length.
 
-### Inputs <a name="comp-fuels-inputs"></a>
+### Inputs <a name="comp-fuels-input"></a>
 
 1.  `fwd_data` A dataframe or tibble. Each row must be an observation of
     an individual plot. Default is set to “none”, indicating that no
