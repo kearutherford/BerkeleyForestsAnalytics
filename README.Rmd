@@ -1050,7 +1050,7 @@ The two functions (`CompilePlots` and `CompileSurfaceFuels`) summarize data beyo
 
 3. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional; character), site (character), stratum (character), and wh (stratum weight; numeric). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
 
-4. `fpc_data` An optional dataframe or tibble. Incorporates the finite population correction factor (FPC; see [Finite population correction factor](#fpcf-backround) in "Background information for further data summarization" below for further details on the definition of the FPC and when the FPC is applicable). The default is set to "not_needed". Required columns depend on the sampling design:
+4. `fpc_data` An optional dataframe or tibble. Incorporates the finite population correction factor (FPC; see [Finite population correction factor](#fpcf-background) in "Background information for further data summarization" below for further details on the definition of the FPC and when the FPC is applicable). The default is set to "not_needed". Required columns depend on the sampling design:
     
     * If sampling design is simple random: 
         * **time:** Optional. As described above. 
@@ -1193,7 +1193,7 @@ ffs_demo
 
 ## :eight_spoked_asterisk: `CompileSurfaceFuels( )` <a name="comp-fuels"></a>
 
-The `CompileSurfaceFuels` function is specifically designed to further summarize outputs from the `FineFuels` and `CoarseFuels` functions. Specifically, the function weights the fuel load estimates by the length of the line transect actually sampled (i.e., the slope-corrected transect length). See [Slope-corrected transect length](#slope-backround) in "Background information for surface and ground fuel load calculations" and [Weighted equations](#weighted-backround) section in "Background information for further data summarization" below for further details on why and how estimates should be weighted by the line transect length. 
+The `CompileSurfaceFuels` function is specifically designed to further summarize outputs from the `FineFuels` and `CoarseFuels` functions. Specifically, the function weights the fuel load estimates by the length of the line transect actually sampled (i.e., the slope-corrected transect length). See [Slope-corrected transect length](#slope-background) in "Background information for surface and ground fuel load calculations" and [Weighted equations](#weighted-background) section in "Background information for further data summarization" below for further details on why and how estimates should be weighted by the line transect length. 
 
 ### Inputs <a name="comp-fuels-input"></a>
 
@@ -1254,7 +1254,7 @@ The `CompileSurfaceFuels` function is specifically designed to further summarize
 
 4. `wt_data` Only required for stratified random sampling designs. A dataframe or tibble with the following columns: time (optional), site, stratum, and wh (stratum weight). The default is set to "not_needed", and should be left as such for design = "SRS" or design = "FFS".
 
-5. `fpc_data` An optional dataframe or tibble. Incorporates the finite population correction factor (FPC; see [Finite population correction factor](#fpcf-backround) in "Background information for further data summarization" below for further details on the definition of the FPC and when the FPC is applicable). The default is set to "not_needed". Required columns depend on the sampling design:
+5. `fpc_data` An optional dataframe or tibble. Incorporates the finite population correction factor (FPC; see [Finite population correction factor](#fpcf-background) in "Background information for further data summarization" below for further details on the definition of the FPC and when the FPC is applicable). The default is set to "not_needed". Required columns depend on the sampling design:
     
     * If sampling design is simple random: 
         * **time:** Optional. As described above. 
@@ -2042,7 +2042,7 @@ Definitions:
 
 A general note on data compilation: If you have a stratified random sampling design, you must calculate stratum values before calculating overall values. Similarly, for the Fire and Fire Surrogate design, you must calculate compartment values before calculating overall values. 
 
-See [Slope-corrected transect length](#slope-backround) section above for additional background information. The equations below are applicable for summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel loads. For other surface and ground fuel load combinations (e.g., 1-hour + 10-hour + 100-hour + litter), create the necessary columns and use the general equations provided above (weighting the estimates by the length of the line transect is not applicable in the same way for these combined fuel loads). 
+See [Slope-corrected transect length](#slope-background) section above for additional background information. The equations below are applicable for summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel loads. For other surface and ground fuel load combinations (e.g., 1-hour + 10-hour + 100-hour + litter), create the necessary columns and use the general equations provided above (weighting the estimates by the length of the line transect is not applicable in the same way for these combined fuel loads). 
 
 **Simple random sampling**
 

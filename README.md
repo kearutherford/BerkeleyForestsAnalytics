@@ -820,7 +820,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.12 secs
+    ## Time difference of 0.14 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -906,7 +906,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -960,7 +960,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.1 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1013,7 +1013,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.1 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2313,9 +2313,9 @@ summarization](#sum-background) below for further details.
 
 4.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
     population correction factor (FPC; see [Finite population correction
-    factor](#fpcf-backround) in “Background information for further data
-    summarization” below for further details on the definition of the
-    FPC and when the FPC is applicable). The default is set to
+    factor](#fpcf-background) in “Background information for further
+    data summarization” below for further details on the definition of
+    the FPC and when the FPC is applicable). The default is set to
     “not_needed”. Required columns depend on the sampling design:
 
     - If sampling design is simple random:
@@ -2592,9 +2592,9 @@ summarize outputs from the `FineFuels` and `CoarseFuels` functions.
 Specifically, the function weights the fuel load estimates by the length
 of the line transect actually sampled (i.e., the slope-corrected
 transect length). See [Slope-corrected transect
-length](#slope-backround) in “Background information for surface and
+length](#slope-background) in “Background information for surface and
 ground fuel load calculations” and [Weighted
-equations](#weighted-backround) section in “Background information for
+equations](#weighted-background) section in “Background information for
 further data summarization” below for further details on why and how
 estimates should be weighted by the line transect length.
 
@@ -2714,9 +2714,9 @@ estimates should be weighted by the line transect length.
 
 5.  `fpc_data` An optional dataframe or tibble. Incorporates the finite
     population correction factor (FPC; see [Finite population correction
-    factor](#fpcf-backround) in “Background information for further data
-    summarization” below for further details on the definition of the
-    FPC and when the FPC is applicable). The default is set to
+    factor](#fpcf-background) in “Background information for further
+    data summarization” below for further details on the definition of
+    the FPC and when the FPC is applicable). The default is set to
     “not_needed”. Required columns depend on the sampling design:
 
     - If sampling design is simple random:
@@ -3826,7 +3826,7 @@ sampling design, you must calculate stratum values before calculating
 overall values. Similarly, for the Fire and Fire Surrogate design, you
 must calculate compartment values before calculating overall values.
 
-See [Slope-corrected transect length](#slope-backround) section above
+See [Slope-corrected transect length](#slope-background) section above
 for additional background information. The equations below are
 applicable for summarizing 1-hour, 10-hour, 100-hour, and 1000-hour fuel
 loads. For other surface and ground fuel load combinations (e.g.,
