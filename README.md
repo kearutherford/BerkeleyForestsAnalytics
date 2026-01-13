@@ -820,7 +820,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.13 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -868,7 +868,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -906,7 +906,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -1013,7 +1013,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.11 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1596,7 +1596,7 @@ A dataframe with the following columns:
     transect length) for 1-hour fuels in either meters or feet. This is
     the total horizontal length of transect sampled for 1-hour fuels at
     the specific time:site:plot. See [Slope-corrected transect
-    length](#slope-backround) section in “Background information for
+    length](#slope-background) section in “Background information for
     surface and ground fuel load calculations” for details on why and
     how this is calculated.
 
@@ -1604,7 +1604,7 @@ A dataframe with the following columns:
     transect length) for 10-hour fuels in either meters or feet. This is
     the total horizontal length of transect sampled for 10-hour fuels at
     the specific time:site:plot. See [Slope-corrected transect
-    length](#slope-backround) section in “Background information for
+    length](#slope-background) section in “Background information for
     surface and ground fuel load calculations” for details on why and
     how this is calculated.
 
@@ -1612,7 +1612,7 @@ A dataframe with the following columns:
     transect length) for 100-hour fuels in either meters or feet. This
     is the total horizontal length of transect sampled for 100-hour
     fuels at the specific time:site:plot. See [Slope-corrected transect
-    length](#slope-backround) section in “Background information for
+    length](#slope-background) section in “Background information for
     surface and ground fuel load calculations” for details on why and
     how this is calculated.
 
@@ -1843,7 +1843,7 @@ A dataframe with the following columns:
     transect length) for sound 1000-hour fuels in either meters or feet.
     This is the total horizontal length of transect sampled for sound
     1000-hour fuels at the specific time:site:plot. See [Slope-corrected
-    transect length](#slope-backround) section in “Background
+    transect length](#slope-background) section in “Background
     information for surface and ground fuel load calculations” for
     details on why and how this is calculated.
 
@@ -1851,7 +1851,7 @@ A dataframe with the following columns:
     transect length) for rotten 1000-hour fuels in either meters or
     feet. This is the total horizontal length of transect sampled for
     rotten 1000-hour fuels at the specific time:site:plot. See
-    [Slope-corrected transect length](#slope-backround) section in
+    [Slope-corrected transect length](#slope-background) section in
     “Background information for surface and ground fuel load
     calculations” for details on why and how this is calculated.
 

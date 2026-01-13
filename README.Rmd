@@ -757,11 +757,11 @@ A dataframe with the following columns:
 
 7. `load_fwd_Mg_ha` (or `load_fwd_ton_ac`): total fine woody debris fuel load (1-hour + 10-hour + 100-hour) in megagrams per hectare (or US tons per acre)
 
-8. `sc_length_1h`: slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-backround) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
+8. `sc_length_1h`: slope-corrected transect length (i.e., horizontal transect length) for 1-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 1-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-background) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
-9. `sc_length_10h`: slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 10-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-backround) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
+9. `sc_length_10h`: slope-corrected transect length (i.e., horizontal transect length) for 10-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 10-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-background) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
-10. `sc_length_100h`: slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-backround) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
+10. `sc_length_100h`: slope-corrected transect length (i.e., horizontal transect length) for 100-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for 100-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-background) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
 ### Demonstration <a name="fwd-demo"></a>
 
@@ -847,9 +847,9 @@ A dataframe with the following columns:
 
 6. `load_cwd_Mg_ha` (or `load_cwd_ton_ac`): total coarse woody debris fuel load (1000-hour sound + 1000-hour rotten) in megagrams per hectare (or US tons per acre)
 
-7. `sc_length_1000s`: slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for sound 1000-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-backround) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
+7. `sc_length_1000s`: slope-corrected transect length (i.e., horizontal transect length) for sound 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for sound 1000-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-background) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
-8. `sc_length_1000r`: slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for rotten 1000-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-backround) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
+8. `sc_length_1000r`: slope-corrected transect length (i.e., horizontal transect length) for rotten 1000-hour fuels in either meters or feet. This is the total horizontal length of transect sampled for rotten 1000-hour fuels at the specific time:site:plot. See [Slope-corrected transect length](#slope-background) section in "Background information for surface and ground fuel load calculations" for details on why and how this is calculated.
 
 ### Demonstrations <a name="cwd-demo"></a>
 
