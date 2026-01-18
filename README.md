@@ -118,7 +118,7 @@ encounter unexpected inputs or formats.
 
 ## Installation instructions <a name="install-instructions"></a>
 
-`BerkeleyForestsAnalytics` is now available for installation from CRAN:
+`BerkeleyForestsAnalytics` is available for installation from CRAN:
 
 ``` r
 install.packages("BerkeleyForestsAnalytics")
@@ -661,7 +661,8 @@ framework)](#nsvb-background) below for further details.
     - **species:** Must be a character variable. Specifies the species
       of the individual tree. Must follow FIA naming conventions
       (download FIADB REF_SPECIES file from
-      [HERE](inst/extdata/REF_SPECIES.csv) for reference).
+      [HERE](https://drive.google.com/uc?export=download&id=1bqJtRPjAreu8t3yPxNQk9JXqDWhtC4Im)
+      for reference).
 
     - **dbh:** Must be a numeric variable. Provides the diameter at
       breast height (DBH) of the individual tree in either centimeters
@@ -820,7 +821,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.14 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -906,7 +907,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -960,7 +961,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1013,7 +1014,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -3157,9 +3158,11 @@ Station, Washington, DC. <https://doi.org/10.2737/WO-GTR-104>
 ## Divisions and provinces <a name="div-prov"></a>
 
 The NSVB framework uses ecodivisions (i.e., divisions). Divisions are
-further broken down into provinces. You can download the shapefile from
-[HERE](inst/extdata/Ecosys_EcoMapProvinces_2007.zip) to determine the
-division(s) and province(s) your study site(s) fall into.
+further broken down into provinces. You can download the zipped
+shapefile from
+[HERE](https://drive.google.com/uc?export=download&id=1HQ3eo4kk6d4LKF1Z5EqNda6Rz_os3zpF)
+to determine the division(s) and province(s) your study site(s) fall
+into.
 
 We also created the map below as a quick help guide for California
 users.
