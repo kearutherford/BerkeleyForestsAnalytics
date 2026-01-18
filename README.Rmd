@@ -86,7 +86,7 @@ BFA’s overarching goal is to minimize potential inconsistencies introduced by 
 
 ## Installation instructions <a name="install-instructions"></a>
 
-`BerkeleyForestsAnalytics` is now available for installation from CRAN:
+`BerkeleyForestsAnalytics` is available for installation from CRAN:
 
 ```r
 install.packages("BerkeleyForestsAnalytics")
@@ -360,7 +360,7 @@ The `BiomassNSVB` function follows the new national-scale volume and biomass (NS
 
     * **decay_class:** Must be a character variable. For standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see [Decay class code table](#decay-table) section in "General background information for tree biomass estimations" below). For live trees, the decay class should be NA or 0.
 
-    * **species:** Must be a character variable. Specifies the species of the individual tree. Must follow FIA naming conventions (download FIADB REF_SPECIES file from [HERE](inst/extdata/REF_SPECIES.csv) for reference).
+    * **species:** Must be a character variable. Specifies the species of the individual tree. Must follow FIA naming conventions (download FIADB REF_SPECIES file from [HERE](https://drive.google.com/uc?export=download&id=1bqJtRPjAreu8t3yPxNQk9JXqDWhtC4Im) for reference).
 
     * **dbh:** Must be a numeric variable. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
 
@@ -1528,7 +1528,7 @@ Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.
 
 ## Divisions and provinces <a name="div-prov"></a>
 
-The NSVB framework uses ecodivisions (i.e., divisions). Divisions are further broken down into provinces. You can download the shapefile from [HERE](inst/extdata/Ecosys_EcoMapProvinces_2007.zip) to determine the division(s) and province(s) your study site(s) fall into. 
+The NSVB framework uses ecodivisions (i.e., divisions). Divisions are further broken down into provinces. You can download the zipped shapefile from [HERE](https://drive.google.com/uc?export=download&id=1HQ3eo4kk6d4LKF1Z5EqNda6Rz_os3zpF) to determine the division(s) and province(s) your study site(s) fall into. 
 
 We also created the map below as a quick help guide for California users. 
 
