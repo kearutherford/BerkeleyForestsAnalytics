@@ -24,6 +24,15 @@ test_that("outputs are lists with two components: (1) total run time and (2) dat
 })
 
 
+test_that("slash pine and loblolly pine run without issue", {
+
+  expect_no_error(BiomassNSVB(data = nsvb_g_stdorg, input_units = "metric", output_units = "metric", results = "by_tree"))
+  expect_no_warning(BiomassNSVB(data = nsvb_g_stdorg, input_units = "metric", output_units = "metric", results = "by_tree"))
+  expect_no_message(BiomassNSVB(data = nsvb_g_stdorg, input_units = "metric", output_units = "metric", results = "by_tree"))
+
+})
+
+
 test_that("by_tree dataframes have expected column names", {
 
   expect_named(BiomassNSVB(data = nsvb_gm, input_units = "metric", output_units = "metric", results = "by_tree")$dataframe,
