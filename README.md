@@ -821,7 +821,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.12 secs
+    ## Time difference of 0.11 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -869,7 +869,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -907,7 +907,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -3160,7 +3160,7 @@ Station, Washington, DC. <https://doi.org/10.2737/WO-GTR-104>
 The NSVB framework uses ecodivisions (i.e., divisions). Divisions are
 further broken down into provinces. You can download the zipped
 shapefile from
-[HERE](https://drive.google.com/uc?export=download&id=1HQ3eo4kk6d4LKF1Z5EqNda6Rz_os3zpF)
+[HERE](https://drive.google.com/uc?export=download&id=1DPffSnlwVutUC0O-Ykq56yj0wvTJRuDP)
 to determine the division(s) and province(s) your study site(s) fall
 into.
 
