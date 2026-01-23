@@ -8,10 +8,9 @@
 #' @title BiomassNSVB
 #'
 #' @description
-#' Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status. The package is specifically designed for use in California ecosystems, and, therefore, only covers the ecodivisions found in California (260, M260, 320, and 340).
+#' Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status.
 #'
-#' @param data A dataframe or tibble with the following columns: division, province, site, plot, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.
-#' @param sp_codes Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".
+#' @param data A dataframe or tibble with the following columns: division, province, site, plot, stand_org, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.
 #' @param input_units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #' @param output_units Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (kilograms or megagrams per hectare) or imperial (US tons or US tons per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #' @param results Not a variable (column) in the provided dataframe or tibble. Specifies whether the results will be summarized by tree, by plot, by plot as well as species, by plot as well as status (live/dead), or by plot as well as species and status. Must be set to either "by_tree", "by_plot", "by_species", "by_status", or "by_sp_st". The default is set to "by_plot".
@@ -27,20 +26,18 @@
 #'
 #' @examples
 #' BiomassNSVB(data = nsvb_demo,
-#'             sp_codes = "4letter",
 #'             input_units = "metric",
 #'             output_units = "metric",
 #'             results = "by_plot")
 #'
 #' BiomassNSVB(data = nsvb_demo,
-#'             sp_codes = "4letter",
 #'             input_units = "metric",
 #'             output_units = "metric",
 #'             results = "by_status")
 #'
 #' @export
 
-BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", output_units = "metric", results = "by_plot") {
+BiomassNSVB <- function(data, input_units = "metric", output_units = "metric", results = "by_plot") {
 
   # get start time
   start_time <- Sys.time()
@@ -49,16 +46,16 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
   step0 <- as.data.frame(data)
 
   # check input data
-  ValidateNSVB(data_val = step0, sp_val = sp_codes, in_units_val = input_units, out_units_val = output_units, results_val = results)
+  ValidateNSVB(data_val = step0, in_units_val = input_units, out_units_val = output_units, results_val = results)
 
   # prep input data
-  step1 <- DataPrep(data = step0, in_units = input_units, out_units = output_units, sp = sp_codes)
+  step1 <- DataPrep(data = step0, in_units = input_units, out_units = output_units)
 
   # calculate tree-level biomass & carbon
   step2 <- NSVBCalcs(data = step1)
 
   # format dataframe
-  step3 <- CleanDF(data = step2, in_units = input_units, out_units = output_units, sp = sp_codes)
+  step3 <- CleanDF(data = step2, in_units = input_units, out_units = output_units)
 
   # compile to the plot level, if desired
   if(results == "by_tree") {
@@ -96,17 +93,11 @@ BiomassNSVB <- function(data, sp_codes = "4letter", input_units = "metric", outp
 ################################################################################
 ################################################################################
 
-ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_val) {
+ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
 
   ###########################################################
   # Check that options are set appropriately
   ###########################################################
-
-  if(sp_val == "4letter" || sp_val == "fia") {
-    # do nothing
-  } else {
-    stop('The "sp_codes" parameter must be set to either "4letter" or "fia."')
-  }
 
   if(in_units_val == "metric" || in_units_val == "imperial") {
     # do nothing
@@ -343,17 +334,13 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   }
 
   # Check for unrecognized division codes --------------------------------------
-  # note, some divisions that are not relevant to CA added to be able to run
-  # the documented examples
-  if(!all(is.element(data_val$division,
-                     c("260", "M260", "320", "340", "240", "M210", "M220", "M240")))) {
+  div_codes <- c("120","130","210","220","230","240","250","260","310","320","330","340","410","M120","M130","M210","M220","M230","M240","M260","M310","M330","M340")
 
-    unrecognized_div <- sort(paste0(unique(data_val[!is.element(data_val$division,
-                                                                c("260", "M260", "320", "340", "240", "M210", "M220", "M240")), "division"]),
-                                    sep = " "))
+  if(!all(is.element(data_val$division, div_codes))) {
 
-    stop('division must be 260, M260, 320, or 340!\n',
-         'Unrecognized division codes: ', unrecognized_div)
+    unrecognized_div <- sort(paste0(unique(data_val[!is.element(data_val$division, div_codes), "division"]), sep = " "))
+    stop('Unrecognized division codes: ', unrecognized_div)
+
   }
 
 
@@ -366,62 +353,271 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   }
 
   # Check for unrecognized province codes --------------------------------------
-  # note, some provinces that are not relevant to CA added to be able to run
-  # the documented examples
-  if(!all(is.element(data_val$province,
-                     c("M261", "M262", "261", "262", "263", "322", "341", "342", "242", "M211", "M242", "M221")))) {
+  prov_codes <- c("121","122","131","132","133","211","212","221","222","223","231","232","234","242","251","255","261","262","263","313",
+                  "315","321","322","331","332","341","342","411","M121","M122","M131","M132","M133","M134","M211","M221","M223","M231",
+                  "M242","M261","M262","M313","M331","M332","M333","M334","M341")
 
-    unrecognized_prov <- sort(paste0(unique(data_val[!is.element(data_val$province,
-                              c("M261", "M262", "261", "262", "263", "322", "341", "342", "242", "M211", "M242", "M221")), "province"]), sep = " "))
+  if(!all(is.element(data_val$province, prov_codes))) {
 
-    stop('province must be M261, M262, 261, 262, 263, 322, 341, or 342!\n',
-         'Unrecognized province codes: ', unrecognized_prov)
+    unrecognized_prov <- sort(paste0(unique(data_val[!is.element(data_val$province, prov_codes), "province"]), sep = " "))
+    stop('Unrecognized province codes: ', unrecognized_prov)
+
   }
 
   # Check for mismatched division/province codes -------------------------------
-  div_M260 <- subset(data_val, data_val$division == "M260")
+  div_120 <- subset(data_val, data_val$division == "120")
+  div_130 <- subset(data_val, data_val$division == "130")
+  div_210 <- subset(data_val, data_val$division == "210")
+  div_220 <- subset(data_val, data_val$division == "220")
+  div_230 <- subset(data_val, data_val$division == "230")
+  div_240 <- subset(data_val, data_val$division == "240")
+  div_250 <- subset(data_val, data_val$division == "250")
   div_260 <- subset(data_val, data_val$division == "260")
+  div_310 <- subset(data_val, data_val$division == "310")
   div_320 <- subset(data_val, data_val$division == "320")
+  div_330 <- subset(data_val, data_val$division == "330")
   div_340 <- subset(data_val, data_val$division == "340")
+  div_410 <- subset(data_val, data_val$division == "410")
 
-  # division M260
-  if(!all(is.element(div_M260$province, c("M261", "M262")))) {
+  div_M120 <- subset(data_val, data_val$division == "M120")
+  div_M130 <- subset(data_val, data_val$division == "M130")
+  div_M210 <- subset(data_val, data_val$division == "M210")
+  div_M220 <- subset(data_val, data_val$division == "M220")
+  div_M230 <- subset(data_val, data_val$division == "M230")
+  div_M240 <- subset(data_val, data_val$division == "M240")
+  div_M260 <- subset(data_val, data_val$division == "M260")
+  div_M310 <- subset(data_val, data_val$division == "M310")
+  div_M330 <- subset(data_val, data_val$division == "M330")
+  div_M340 <- subset(data_val, data_val$division == "M340")
 
-    unrec_prov_M260 <- sort(paste0(unique(div_M260[!is.element(div_M260$province,
-                                   c("M261", "M262")), "province"]), sep = " "))
+  # division 120
+  if(!all(is.element(div_120$province, c("121","122")))) {
 
-    stop('for division M260, province must be M261 or M262!\n',
-         'Incorrect province codes for division M260: ', unrec_prov_M260)
+    unrec_prov_120 <- sort(paste0(unique(div_120[!is.element(div_120$province,
+                                                             c("121","122")), "province"]), sep = " "))
+
+    stop('for division 120, province must be 121 or 122!\n',
+         'Incorrect province codes for the division: ', unrec_prov_120)
+  }
+
+  # division 130
+  if(!all(is.element(div_130$province, c("131","132","133")))) {
+
+    unrec_prov_130 <- sort(paste0(unique(div_130[!is.element(div_130$province,
+                                                             c("131","132","133")), "province"]), sep = " "))
+
+    stop('for division 130, province must be 131, 132, or 133!\n',
+         'Incorrect province codes for the division: ', unrec_prov_130)
+  }
+
+  # division 210
+  if(!all(is.element(div_210$province, c("211","212")))) {
+
+    unrec_prov_210 <- sort(paste0(unique(div_210[!is.element(div_210$province,
+                                   c("211","212")), "province"]), sep = " "))
+
+    stop('for division 210, province must be 211 or 212!\n',
+         'Incorrect province codes for the division: ', unrec_prov_210)
+  }
+
+  # division 220
+  if(!all(is.element(div_220$province, c("221","222","223")))) {
+
+    unrec_prov_220 <- sort(paste0(unique(div_220[!is.element(div_220$province,
+                                                             c("221","222","223")), "province"]), sep = " "))
+
+    stop('for division 220, province must be 221, 222, or 223!\n',
+         'Incorrect province codes for the division: ', unrec_prov_220)
+  }
+
+  # division 230
+  if(!all(is.element(div_230$province, c("231","232","234")))) {
+
+    unrec_prov_230 <- sort(paste0(unique(div_230[!is.element(div_230$province,
+                                                             c("231","232","234")), "province"]), sep = " "))
+
+    stop('for division 230, province must be 231, 232, or 234!\n',
+         'Incorrect province codes for the division: ', unrec_prov_230)
+  }
+
+  # division 240
+  if(!all(is.element(div_240$province, c("242")))) {
+
+    unrec_prov_240 <- sort(paste0(unique(div_240[!is.element(div_240$province,
+                                                             c("242")), "province"]), sep = " "))
+
+    stop('for division 240, province must be 242!\n',
+         'Incorrect province codes for the division: ', unrec_prov_240)
+  }
+
+  # division 250
+  if(!all(is.element(div_250$province, c("251","255")))) {
+
+    unrec_prov_250 <- sort(paste0(unique(div_250[!is.element(div_250$province,
+                                                             c("251","255")), "province"]), sep = " "))
+
+    stop('for division 250, province must be 251 or 255!\n',
+         'Incorrect province codes for the division: ', unrec_prov_250)
   }
 
   # division 260
-  if(!all(is.element(div_260$province, c("261", "262", "263")))) {
+  if(!all(is.element(div_260$province, c("261","262","263")))) {
 
     unrec_prov_260 <- sort(paste0(unique(div_260[!is.element(div_260$province,
-                                  c("261", "262", "263")), "province"]), sep = " "))
+                                                             c("261","262","263")), "province"]), sep = " "))
 
     stop('for division 260, province must be 261, 262, or 263!\n',
-         'Incorrect province codes for division 260: ', unrec_prov_260)
+         'Incorrect province codes for the division: ', unrec_prov_260)
+  }
+
+  # division 310
+  if(!all(is.element(div_310$province, c("313","315")))) {
+
+    unrec_prov_310 <- sort(paste0(unique(div_310[!is.element(div_310$province,
+                                                             c("313","315")), "province"]), sep = " "))
+
+    stop('for division 310, province must be 313 or 315!\n',
+         'Incorrect province codes for the division: ', unrec_prov_310)
   }
 
   # division 320
-  if(!all(is.element(div_320$province, c("322")))) {
+  if(!all(is.element(div_320$province, c("321","322")))) {
 
     unrec_prov_320 <- sort(paste0(unique(div_320[!is.element(div_320$province,
-                                  c("322")), "province"]), sep = " "))
+                                                             c("321","322")), "province"]), sep = " "))
 
-    stop('for division 320, province must be 322!\n',
-         'Incorrect province codes for division 320: ', unrec_prov_320)
+    stop('for division 320, province must be 321 or 322!\n',
+         'Incorrect province codes for the division: ', unrec_prov_320)
+  }
+
+  # division 330
+  if(!all(is.element(div_330$province, c("331","332")))) {
+
+    unrec_prov_330 <- sort(paste0(unique(div_330[!is.element(div_330$province,
+                                                             c("331","332")), "province"]), sep = " "))
+
+    stop('for division 330, province must be 331 or 332!\n',
+         'Incorrect province codes for the division: ', unrec_prov_330)
   }
 
   # division 340
-  if(!all(is.element(div_340$province, c("341", "342")))) {
+  if(!all(is.element(div_340$province, c("341","342")))) {
 
     unrec_prov_340 <- sort(paste0(unique(div_340[!is.element(div_340$province,
-                                  c("341", "342")), "province"]), sep = " "))
+                                                             c("341","342")), "province"]), sep = " "))
 
     stop('for division 340, province must be 341 or 342!\n',
-         'Incorrect province codes for division 340: ', unrec_prov_340)
+         'Incorrect province codes for the division: ', unrec_prov_340)
+  }
+
+  # division 410
+  if(!all(is.element(div_410$province, c("411")))) {
+
+    unrec_prov_410 <- sort(paste0(unique(div_410[!is.element(div_410$province,
+                                                             c("411")), "province"]), sep = " "))
+
+    stop('for division 410, province must be 411!\n',
+         'Incorrect province codes for the division: ', unrec_prov_410)
+  }
+
+  # division M120
+  if(!all(is.element(div_M120$province, c("M121","M122")))) {
+
+    unrec_prov_M120 <- sort(paste0(unique(div_M120[!is.element(div_M120$province,
+                                                             c("M121","M122")), "province"]), sep = " "))
+
+    stop('for division M120, province must be M121 or M122!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M120)
+  }
+
+  # division M130
+  if(!all(is.element(div_M130$province, c("M131","M132","M133","M134")))) {
+
+    unrec_prov_M130 <- sort(paste0(unique(div_M130[!is.element(div_M130$province,
+                                                             c("M131","M132","M133","M134")), "province"]), sep = " "))
+
+    stop('for division M130, province must be M131, M132, M133, or M134!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M130)
+  }
+
+  # division M210
+  if(!all(is.element(div_210$province, c("M211")))) {
+
+    unrec_prov_M210 <- sort(paste0(unique(div_M210[!is.element(div_M210$province,
+                                                             c("M211")), "province"]), sep = " "))
+
+    stop('for division M210, province must be M211!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M210)
+  }
+
+  # division M220
+  if(!all(is.element(div_M220$province, c("M221","M223")))) {
+
+    unrec_prov_M220 <- sort(paste0(unique(div_M220[!is.element(div_M220$province,
+                                                             c("M221","M223")), "province"]), sep = " "))
+
+    stop('for division M220, province must be M221 or M223!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M220)
+  }
+
+  # division M230
+  if(!all(is.element(div_M230$province, c("M231")))) {
+
+    unrec_prov_M230 <- sort(paste0(unique(div_M230[!is.element(div_M230$province,
+                                                             c("M231")), "province"]), sep = " "))
+
+    stop('for division M230, province must be M231!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M230)
+  }
+
+  # division M240
+  if(!all(is.element(div_M240$province, c("M242")))) {
+
+    unrec_prov_M240 <- sort(paste0(unique(div_M240[!is.element(div_M240$province,
+                                                             c("M242")), "province"]), sep = " "))
+
+    stop('for division M240, province must be M242!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M240)
+  }
+
+  # division M260
+  if(!all(is.element(div_M260$province, c("M261","M262")))) {
+
+    unrec_prov_M260 <- sort(paste0(unique(div_M260[!is.element(div_M260$province,
+                                                             c("M261","M262")), "province"]), sep = " "))
+
+    stop('for division M260, province must be M261 or M262!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M260)
+  }
+
+  # division M310
+  if(!all(is.element(div_M310$province, c("M313")))) {
+
+    unrec_prov_M310 <- sort(paste0(unique(div_M310[!is.element(div_M310$province,
+                                                             c("M313")), "province"]), sep = " "))
+
+    stop('for division M310, province must be M313!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M310)
+  }
+
+  # division M330
+  if(!all(is.element(div_M330$province, c("M331","M332","M333","M334")))) {
+
+    unrec_prov_M330 <- sort(paste0(unique(div_M330[!is.element(div_M330$province,
+                                                             c("M331","M332","M333","M334")), "province"]), sep = " "))
+
+    stop('for division M330, province must be M331, M332, M333, or M334!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M330)
+  }
+
+  # division M340
+  if(!all(is.element(div_M340$province, c("M341")))) {
+
+    unrec_prov_M340 <- sort(paste0(unique(div_M340[!is.element(div_M340$province,
+                                                             c("M341")), "province"]), sep = " "))
+
+    stop('for division M340, province must be M341!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M340)
   }
 
 
@@ -500,46 +696,20 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
   ###########################################################
 
   # Check for unrecognized species codes ---------------------------------------
-  NSVB_sp_code_names2 <- stats::na.omit(NSVB_sp_code_names)
+  NSVB_sp_code_names <- c(REF_SPECIES_BFA$species, NA)
 
-  if (sp_val == "4letter") {
+  if(!('TRUE' %in% (data_val$species %in% REF_SPECIES_BFA$species))) {
 
-    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names2$letter))) {
+    stop('No species codes recognized!\n',
+         'Check that you are using FIA species codes.')
+  }
 
-      stop('No species codes recognized!\n',
-           'Check how you set the "sp_codes" parameter.')
-    }
+  if(!all(is.element(data_val$species, NSVB_sp_code_names))) {
 
-    if(!all(is.element(data_val$species,
-                       NSVB_sp_code_names$letter))) {
+    unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species, NSVB_sp_code_names), "species"]), sep = " "))
 
-      unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names$letter), "species"]),
-                                     sep = " "))
-
-      stop('Not all species codes were recognized!\n',
-           'Unrecognized codes: ', unrecognized_sp)
-    }
-
-  } else if (sp_val == "fia") {
-
-    if(!('TRUE' %in% (data_val$species %in% NSVB_sp_code_names2$fia))) {
-
-      stop('No species codes recognized!\n',
-           'Check how you set the "sp_codes" parameter.')
-    }
-
-    if(!all(is.element(data_val$species,
-                       NSVB_sp_code_names$fia))) {
-
-      unrecognized_sp <- sort(paste0(unique(data_val[!is.element(data_val$species,
-                                                                 NSVB_sp_code_names$fia), "species"]),
-                                     sep = " "))
-
-      stop('Not all species codes were recognized!\n',
-           'Unrecognized codes: ', unrecognized_sp)
-    }
-
+    stop('Not all species codes were recognized!\n',
+         'Unrecognized codes: ', unrecognized_sp)
   }
 
   # Check for NA ---------------------------------------------------------------
@@ -549,6 +719,45 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
             'Trees with NA species codes will have NA biomass/carbon estimates.\n',
             'Consider assigning unknown dead conifer, unknown dead hardwood, or unknown live or dead tree, as appropriate.\n',
             ' \n')
+  }
+
+
+  ###########################################################
+  # Check that stand_org is as expected
+  ###########################################################
+
+  if('111' %in% data_val$species | '131' %in% data_val$species) {
+
+    # Check that stand_org column exists
+    if(!("stand_org" %in% colnames(data_val))) {
+      stop('Input data is missing the "stand_org" column, which is necessary when species 111 or 131 are present.')
+    }
+
+    # Check that stand_org is the correct class
+    if(!is.character(data_val$stand_org)) {
+      stop('"stand_org" must be a character variable.\n',
+           'You have input a variable of class: ', class(data_val$stand_org))
+    }
+
+    # Check for unrecognized stand_org codes -----------------------------------
+    if(!all(is.element(data_val$stand_org, c("0","1", NA)))) {
+
+      unrecognized_stand_org <- sort(paste0(unique(data_val[!is.element(data_val$stand_org, c("0", "1", NA)), "stand_org"]), sep = " "))
+      stop('stand_org must be 0 or 1!\nUnrecognized stand_org codes: ', unrecognized_stand_org)
+
+    }
+
+    # Check for NA -------------------------------------------------------------
+    special_sp <- subset(data_val, species == "111" | species == "131")
+    special_sp$site_plot <- paste(special_sp$site, special_sp$plot, sep="-")
+    data_val$site_plot <- paste(data_val$site, data_val$plot, sep="-")
+    plots_w_special_sp <- subset(data_val, site_plot %in% special_sp$site_plot)
+
+    if ('TRUE' %in% is.na(plots_w_special_sp$stand_org)) {
+      stop('There are missing stand_org codes in plots with species 111 or 131.\n',
+           'Plots with these species must have a stand_org code of 0 or 1.')
+    }
+
   }
 
 
@@ -758,7 +967,7 @@ ValidateNSVB <- function(data_val, sp_val, in_units_val, out_units_val, results_
 ################################################################################
 ################################################################################
 
-DataPrep <- function(data, in_units, out_units, sp) {
+DataPrep <- function(data, in_units, out_units) {
 
   # unit conversions
   if(in_units == "metric") {
@@ -776,19 +985,6 @@ DataPrep <- function(data, in_units, out_units, sp) {
     data$dbh <- data$dbh/2.54
     data$ht1 <- data$ht1*3.28084
     data$ht2 <- data$ht2*3.28084
-
-  }
-
-  # FIA species codes
-  if(sp == "4letter") {
-
-    # preserve original column
-    data$letter <- data$species
-
-    # create column with FIA species codes
-    data <- merge(data, NSVB_sp_code_names, by = "letter", all.x = TRUE, all.y = FALSE)
-    data$species <- data$fia
-    data <- subset(data, select = -fia)
 
   }
 
@@ -839,7 +1035,7 @@ DataPrep <- function(data, in_units, out_units, sp) {
 ################################################################################
 ################################################################################
 
-CleanDF <- function(data, in_units, out_units, sp) {
+CleanDF <- function(data, in_units, out_units) {
 
   # make sure DBH and HT outputs are in correct units
   if(in_units == "imperial" & out_units == "metric") {
@@ -852,15 +1048,6 @@ CleanDF <- function(data, in_units, out_units, sp) {
   } else if(in_units == "metric" & out_units == "imperial") {
 
     data$exp_factor <- data$exp_factor/2.47105 # SPH to SPA
-
-  }
-
-  # make sure species outputs are clearly labeled
-  if(sp == "4letter") {
-
-    data$species_fia <- data$species
-    data$species <- data$letter
-    data <- subset(data, select = -letter)
 
   }
 
@@ -937,7 +1124,7 @@ CleanDF <- function(data, in_units, out_units, sp) {
 
   all_cols <- colnames(data)
 
-  if(out_units == "metric" & sp == "fia") {
+  if(out_units == "metric") {
 
     main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
                    "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
@@ -947,30 +1134,9 @@ CleanDF <- function(data, in_units, out_units, sp) {
                    "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
                    "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
 
-  } else if(out_units == "metric" & sp == "4letter") {
-
-    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia",
-                   "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
-                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
-                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
-                   "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
-                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
-
-  } else if(out_units == "imperial" & sp == "fia") {
+  } else if(out_units == "imperial") {
 
     main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
-                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
-                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
-                   "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
-                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
-
-  } else if(out_units == "imperial" & sp == "4letter") {
-
-    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "species_fia", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
                    "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
                    "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
                    "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
@@ -994,5 +1160,5 @@ globalVariables(c("CR", "DIVISION", "Decay.code", "DensProp", "JENKINS_SPGRPCD",
                   "fia", "foliage_bio", "ht1", "ht2", "k", "letter", "merch_bark_bio", "merch_top_bio",
                   "merch_total_bio", "merch_wood_bio", "path", "stump_bark_bio", "stump_total_bio",
                   "stump_wood_bio", "top", "total_ag_bio", "total_bark_bio", "total_branch_bio", "total_wood_bio",
-                  "type", "wood_prop"))
+                  "type", "wood_prop", "STDORGCD", "site_plot"))
 

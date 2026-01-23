@@ -6,16 +6,13 @@
 \usage{
 BiomassNSVB(
   data,
-  sp_codes = "4letter",
   input_units = "metric",
   output_units = "metric",
   results = "by_plot"
 )
 }
 \arguments{
-\item{data}{A dataframe or tibble with the following columns: division, province, site, plot, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.}
-
-\item{sp_codes}{Not a variable (column) in the provided dataframe or tibble. Specifies whether the species variable follows the four-letter code or FIA naming convention (see README file for more detail). Must be set to either "4letter" or "fia". The default is set to "4letter".}
+\item{data}{A dataframe or tibble with the following columns: division, province, site, plot, stand_org, exp_factor, status, decay_class, species, dbh, ht1, ht2, crown_ratio, top, and cull. Each row must be an observation of an individual tree.}
 
 \item{input_units}{Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh, ht1, and ht2 variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".}
 
@@ -34,17 +31,15 @@ Depends on the results setting:
 }
 }
 \description{
-Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status. The package is specifically designed for use in California ecosystems, and, therefore, only covers the ecodivisions found in California (260, M260, 320, and 340).
+Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status.
 }
 \examples{
 BiomassNSVB(data = nsvb_demo,
-            sp_codes = "4letter",
             input_units = "metric",
             output_units = "metric",
             results = "by_plot")
 
 BiomassNSVB(data = nsvb_demo,
-            sp_codes = "4letter",
             input_units = "metric",
             output_units = "metric",
             results = "by_status")

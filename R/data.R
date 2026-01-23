@@ -62,7 +62,7 @@
 #'   \item{exp_factor}{Stems per hectare}
 #'   \item{status}{Live (1) or dead (0)}
 #'   \item{decay_class}{1-5 for standing dead trees. NA for live trees.}
-#'   \item{Species}{Species of the individual tree, using four-letter species codes}
+#'   \item{Species}{Species of the individual tree, using FIA species codes}
 #'   \item{dbh}{Diameter at breast height in centimeters}
 #'   \item{ht1}{Tree height 1 in meters}
 #'   \item{ht2}{Tree height 2 in meters}
@@ -695,17 +695,6 @@ sp_code_names <- data.frame(
           "264", "998", "999", "920", NA)
 )
 
-NSVB_sp_code_names <- data.frame(
-  letter = c("ABCO", "ABRA", "ABMA", "ABPR", "JUCO", "CADE", "PICO", "PIJE", "PILA", "PIMO", "PIPO", "PISA", "PSME", "SESE", "SEGI", "TABR", "TOCA", "TSHE", "TSME", "UNCO",
-             "ACMA", "ACRU", "ALRH", "ARME", "CHCH", "CONU", "NODE", "POTR", "QUSP", "QUAG", "QUAL", "QUCH", "QUKE", "SASP", "UMCA", "UNHA", "UNTR",
-             "PRSE", "BEPO", "AMSP", "SOAM", "ACSP", "SAPU", "PRVI", "COSP", "TIAM", "QURU", "PIST", "OSVI",
-             "FAGR", "POGR", "ABBA", "FRNI", "TSCA", "BEPA", "PRPE", "PIRU", "ACSA", "ACPE", "FRAM", "BEAL", NA),
-  fia = c("15", "17", "20", "22", "64", "81", "108", "116", "117", "119", "122", "127", "202", "211", "212", "231", "251", "263", "264", "299",
-          "312", "316", "352", "361", "431", "492", "631", "746", "800", "801", "802", "805", "818", "920", "981", "998", "999",
-          "762", "379", "356", "935", "319", "6991", "763", "490", "951", "833", "129", "701",
-          "531", "743", "12", "543", "261", "375", "761", "97", "318", "315", "541", "371", NA)
-)
-
 VanWag_species <- data.frame (
   letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR", NA),
   fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "299", "998", "999", NA)
@@ -907,7 +896,7 @@ nsvb_sum_check <- data.frame(
   exp_factor = c(50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,0,50,50),
   status = as.character(c(1,0,1,1,0,1,1,1,0,1,1,1,1,1,1,NA,1,1)),
   decay_class = as.character(c(NA,2,NA,NA,3,NA,NA,NA,3,NA,NA,NA,NA,NA,NA,NA,NA,NA)),
-  species = c("PSME","ABCO","PSME","PSME","ABCO","ABCO","ABCO","ABCO","ABCO","PSME","PSME","ABCO","PSME","ABCO","PSME",NA,"PSME","PSME"),
+  species = c("202","15","202","202","15","15","15","15","15","202","202","15","202","15","202",NA,"202","202"),
   dbh = c(10.3,44.7,19.1,32.8,13.8,20.2,31.7,13.1,26.3,10.7,40.6,20.1,33.8,12.4,22.2,NA,NA,28.1),
   ht1 = c(5.1,26.4,8.0,23.3,11.1,8.5,22.3,9.7,15.6,5.5,28.4,7.9,22.3,10.8,9.5,NA,9.9,NA),
   ht2 = c(NA,NA,6.0,NA,8.2,NA,NA,NA,NA,NA,18.6,NA,NA,NA,NA,NA,NA,NA),
@@ -916,24 +905,7 @@ nsvb_sum_check <- data.frame(
   cull = c(0,0,10,0,0,0,5,0,10,5,0,10,0,0,0,NA,0,0)
 )
 
-nsvb_gm4 <- data.frame(
-  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
-  exp_factor = c(50,50,50,50,50,50,50,50,0),
-  division = "M260",
-  province = "M261",
-  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
-  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
-  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
-  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
-  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
-  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
-  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
-  cull = c(0,0,10,0,0,0,5,0,NA)
-)
-
-nsvb_gmf <- data.frame(
+nsvb_gm <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
   exp_factor = c(50,50,50,50,50,50,50,50,0),
@@ -952,24 +924,7 @@ nsvb_gmf <- data.frame(
   extra2 = "Z"
 )
 
-nsvb_gi4 <- data.frame(
-  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
-  exp_factor = c(20,20,20,20,20,20,20,20,0),
-  division = "M260",
-  province = "M261",
-  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
-  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
-  dbh = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, NA),
-  ht1 = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, NA),
-  ht2 = c(NA, NA, 20.0, NA, 26.9, NA, NA, NA, NA),
-  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
-  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
-  cull = c(0,0,10,0,0,0,5,0,NA)
-)
-
-nsvb_gif <- data.frame(
+nsvb_gi <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
   exp_factor = c(20,20,20,20,20,20,20,20,0),
@@ -994,7 +949,7 @@ nsvb_m_units <- data.frame(
   province = "M261",
   status = "1",
   decay_class = as.character(NA),
-  species = "PSME",
+  species = "202",
   dbh = 25.4,
   ht1 = 20,
   ht2 = 15,
@@ -1011,7 +966,7 @@ nsvb_i_units <- data.frame(
   province = "M261",
   status = "1",
   decay_class = as.character(NA),
-  species = "PSME",
+  species = "202",
   dbh = 10,
   ht1 = 65.6168,
   ht2 = 49.2126,
@@ -1028,7 +983,7 @@ nsvb_b1 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1045,7 +1000,7 @@ nsvb_b2 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1062,7 +1017,7 @@ nsvb_b3 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1079,7 +1034,7 @@ nsvb_b4 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1096,7 +1051,7 @@ nsvb_b5 <- data.frame(
   province = "M261",
   #status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1113,7 +1068,7 @@ nsvb_b6 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   #decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1130,7 +1085,7 @@ nsvb_b7 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  #species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  #species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1147,7 +1102,7 @@ nsvb_b8 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   #dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1164,7 +1119,7 @@ nsvb_b9 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   #ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1181,7 +1136,7 @@ nsvb_b10 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   #ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1198,7 +1153,7 @@ nsvb_b11 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1215,7 +1170,7 @@ nsvb_b12 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1232,7 +1187,7 @@ nsvb_b13 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1249,7 +1204,7 @@ nsvb_b14 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1266,7 +1221,7 @@ nsvb_b15 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA)), # wrong class
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1283,7 +1238,7 @@ nsvb_b16 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA)), # wrong class
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1300,7 +1255,7 @@ nsvb_b17 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = as.character(c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA)), # wrong class
@@ -1317,7 +1272,7 @@ nsvb_b18 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1334,7 +1289,7 @@ nsvb_b19 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1351,7 +1306,7 @@ nsvb_b20 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1368,7 +1323,7 @@ nsvb_b21 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1385,7 +1340,7 @@ nsvb_b22 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1402,7 +1357,7 @@ nsvb_b23 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1419,7 +1374,7 @@ nsvb_b24 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 10.1), # dbh for a no tree plot
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1436,7 +1391,7 @@ nsvb_b25 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1449,11 +1404,11 @@ nsvb_b26 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
   exp_factor = c(50,50,50,50,50,50,50,50,0),
-  division = c("M330","M260","220","M260","M260","M260","","M260","M260"), # unrecognized divisions
+  division = c("M830","M260","820","M260","M260","M260","","M260","M260"), # unrecognized divisions
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1470,7 +1425,7 @@ nsvb_b27 <- data.frame(
   province = "M261",
   status = c("L", "0", "1", "1", "1", "1", "1", "0", NA), # unrecognized code
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1487,7 +1442,7 @@ nsvb_b28 <- data.frame(
   province = "M261",
   status = c(NA, "0", "1", "1", "1", "1", "1", "0", NA), # NA value
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1504,7 +1459,7 @@ nsvb_b29 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 8, NA, NA, NA, NA, NA, 44, NA)), # wrong decay class codes
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1521,7 +1476,7 @@ nsvb_b30 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, NA, NA, NA, NA, NA, NA, 4, NA)), # NA decay class for dead tree
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1538,7 +1493,7 @@ nsvb_b31 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(1, 2, NA, NA, NA, NA, NA, 4, NA)), # live tree with a decay class
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1555,7 +1510,7 @@ nsvb_b32 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("202", "155", "202", "202", "15", "81", "818", "15", NA), # species typo
+  species = c("202", "15555", "202", "202", "15", "81", "818", "15", NA), # species typo
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1589,7 +1544,7 @@ nsvb_b38 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", NA, "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA), # NA value
+  species = c("202", NA, "202", "202", "15", "81", "818", "15", NA), # NA value
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1606,7 +1561,7 @@ nsvb_b39 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1623,7 +1578,7 @@ nsvb_b40 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1640,7 +1595,7 @@ nsvb_b41 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # NA value
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1657,7 +1612,7 @@ nsvb_b42 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 2.0, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # DBH below cutoff
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1683,7 +1638,6 @@ nsvb_b43 <- data.frame(
   cull = c(0,0,10,0,0,0,5,0,NA)
 )
 
-
 nsvb_b44 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
@@ -1692,7 +1646,7 @@ nsvb_b44 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(NA, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA), # NA value
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1709,7 +1663,7 @@ nsvb_b45 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, NA, NA, 8.2, NA, NA, NA, NA), # NA value
@@ -1726,7 +1680,7 @@ nsvb_b46 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(0.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA), # HT1 below cutoff
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1743,7 +1697,7 @@ nsvb_b47 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 1.0, NA, 8.2, NA, NA, NA, NA), # HT2 below cutoff
@@ -1794,7 +1748,7 @@ nsvb_b50 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 36.0, NA, 8.2, NA, NA, NA, NA), # HT2 > HT1
@@ -1811,7 +1765,7 @@ nsvb_b51 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, 20.0, 6.0, NA, 8.2, NA, NA, NA, NA), # non-NA value
@@ -1828,7 +1782,7 @@ nsvb_b52 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1845,7 +1799,7 @@ nsvb_b53 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1862,7 +1816,7 @@ nsvb_b54 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1879,7 +1833,7 @@ nsvb_b55 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1896,7 +1850,7 @@ nsvb_b56 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(16.7, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1913,7 +1867,7 @@ nsvb_b57 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1930,7 +1884,7 @@ nsvb_b58 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1947,7 +1901,7 @@ nsvb_b59 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1964,7 +1918,7 @@ nsvb_b60 <- data.frame(
   province = "M261",
   status = as.factor(c("1", "0", "1", "1", "1", "1", "1", "0", NA)), # wrong class
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1981,7 +1935,7 @@ nsvb_b61 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = c(NA, 2, NA, NA, NA, NA, NA, 4, NA), # wrong class
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -1998,7 +1952,7 @@ nsvb_b62 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = as.factor(c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA)), # wrong class
+  species = as.factor(c("202", "15", "202", "202", "15", "81", "818", "15", NA)), # wrong class
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2015,7 +1969,7 @@ nsvb_b63 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2032,7 +1986,7 @@ nsvb_b64 <- data.frame(
   province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2049,7 +2003,7 @@ nsvb_b65 <- data.frame(
   #province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2066,7 +2020,7 @@ nsvb_b66 <- data.frame(
   province = 261, # wrong class
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2083,7 +2037,7 @@ nsvb_b67 <- data.frame(
   province = c(NA, "M261", "M261", "M261", "M261", "M261", "M261", "M261", "M261"), # NA value
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2100,7 +2054,7 @@ nsvb_b68 <- data.frame(
   province = c("M2611", "M261", "261", "261", "3222", "322", "341", "341", "341"), # unrecognized codes
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2117,7 +2071,7 @@ nsvb_b69 <- data.frame(
   province = c("261", "M261", "261", "261", "322", "322", "341", "341", "341"), # mismatched code
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("202", "15", "202", "202", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2129,12 +2083,30 @@ nsvb_b69 <- data.frame(
 nsvb_b70 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
-  exp_factor = c(50,50,50,50,50,50,50,50,0),
-  division = c("M260", "M260", "260", "260", "320", "320", "340", "340", "340"),
-  province = c("M261", "M261", "261", "M261", "322", "322", "341", "341", "341"), # mismatched code
+  exp_factor = c(20,20,20,20,20,20,20,20,0),
+  division = "M260",
+  province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA), # all 4 letter
+  dbh = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, NA),
+  ht1 = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, NA),
+  ht2 = c(NA, NA, 20.0, NA, 26.9, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_g_stdorg <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  stand_org = c("1","1","0","0",NA,NA,NA,NA,NA),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  province = "M261",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("111", "15", "202", "131", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2146,12 +2118,13 @@ nsvb_b70 <- data.frame(
 nsvb_b71 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  #stand_org = c("1","1","0","0",NA,NA,NA,NA,NA),
   exp_factor = c(50,50,50,50,50,50,50,50,0),
-  division = c("M260", "M260", "260", "260", "320", "320", "340", "340", "340"),
-  province = c("M261", "M261", "261", "261", "341", "322", "341", "341", "341"), # mismatched code
+  division = "M260",
+  province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("111", "15", "202", "131", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
@@ -2163,12 +2136,49 @@ nsvb_b71 <- data.frame(
 nsvb_b72 <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  stand_org = c(1,1,0,0,NA,NA,NA,NA,NA), # wrong class
   exp_factor = c(50,50,50,50,50,50,50,50,0),
-  division = c("M260", "M260", "260", "260", "320", "320", "340", "340", "340"),
-  province = c("M261", "M261", "261", "261", "322", "322", "322", "341", "341"), # mismatched code
+  division = "M260",
+  province = "M261",
   status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
   decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  species = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
+  species = c("111", "15", "202", "131", "15", "81", "818", "15", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b73 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  stand_org = c("7","1","0","0",NA,NA,NA,NA,NA), # wrong code
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  province = "M261",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("111", "15", "202", "131", "15", "81", "818", "15", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
+  ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),
+  crown_ratio = c(0.3,NA,0.4,0.4,0.3,0.5,0.4,NA,NA),
+  top = c("Y", "Y", "N", "Y", "N", "Y", "Y", "Y", NA),
+  cull = c(0,0,10,0,0,0,5,0,NA)
+)
+
+nsvb_b74 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,2,2,1,1,2,2,3)),
+  stand_org = c("1","1",NA,NA,NA,NA,NA,NA,NA),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  division = "M260",
+  province = "M261",
+  status = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
+  decay_class = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
+  species = c("111", "15", "202", "131", "15", "81", "818", "15", NA),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
   ht1 = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA),
   ht2 = c(NA, NA, 6.0, NA, 8.2, NA, NA, NA, NA),

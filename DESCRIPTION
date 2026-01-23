@@ -1,6 +1,6 @@
 Package: BerkeleyForestsAnalytics
 Title: Compute and Summarize Core Forest Metrics from Field Data
-Version: 2.0.4
+Version: 3.0.0
 Authors@R: c(
     person("Kea", "Rutherford", , "krutherford@berkeley.edu", role = c("aut", "cre")),
     person("John", "Battles", role = "aut"),
@@ -16,7 +16,7 @@ Description: A suite of open-source R functions designed to produce standard
 License: file LICENSE
 URL: https://github.com/kearutherford/BerkeleyForestsAnalytics
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 Imports: 
     utils
 Suggests: 
