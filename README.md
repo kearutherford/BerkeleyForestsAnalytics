@@ -145,18 +145,18 @@ citation("BerkeleyForestsAnalytics")
 
     ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
-    ##   Kea Rutherford, Danny Foster, John Battles (2024).
-    ##   _BerkeleyForestsAnalytics, version 2.0.4_. Battles Lab: Forest
+    ##   Kea Rutherford, Danny Foster, John Battles (2026).
+    ##   _BerkeleyForestsAnalytics, version 3.0.0_. Battles Lab: Forest
     ##   Ecology and Ecosystem Dynamics, University of California, Berkeley.
     ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
-    ##     title = {BerkeleyForestsAnalytics, version 2.0.4},
+    ##     title = {BerkeleyForestsAnalytics, version 3.0.0},
     ##     author = {{Kea Rutherford} and {Danny Foster} and {John Battles}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
-    ##     year = {2024},
+    ##     year = {2026},
     ##     url = {https://github.com/kearutherford/BerkeleyForestsAnalytics},
     ##   }
 
@@ -907,7 +907,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -1014,7 +1014,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha

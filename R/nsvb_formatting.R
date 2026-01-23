@@ -353,8 +353,9 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
   }
 
   # Check for unrecognized province codes --------------------------------------
-  prov_codes <- c("211","212","221","222","223","231","232","234","242","251","255","261","262","263","313","315","321","322","331",
-                  "332","341","342","411","M211","M221","M223","M231","M242","M261","M262","M313","M331","M332","M333","M334","M341")
+  prov_codes <- c("121","122","131","132","133","211","212","221","222","223","231","232","234","242","251","255","261","262","263","313",
+                  "315","321","322","331","332","341","342","411","M121","M122","M131","M132","M133","M134","M211","M221","M223","M231",
+                  "M242","M261","M262","M313","M331","M332","M333","M334","M341")
 
   if(!all(is.element(data_val$province, prov_codes))) {
 
@@ -364,6 +365,8 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
   }
 
   # Check for mismatched division/province codes -------------------------------
+  div_120 <- subset(data_val, data_val$division == "120")
+  div_130 <- subset(data_val, data_val$division == "130")
   div_210 <- subset(data_val, data_val$division == "210")
   div_220 <- subset(data_val, data_val$division == "220")
   div_230 <- subset(data_val, data_val$division == "230")
@@ -376,6 +379,8 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
   div_340 <- subset(data_val, data_val$division == "340")
   div_410 <- subset(data_val, data_val$division == "410")
 
+  div_M120 <- subset(data_val, data_val$division == "M120")
+  div_M130 <- subset(data_val, data_val$division == "M130")
   div_M210 <- subset(data_val, data_val$division == "M210")
   div_M220 <- subset(data_val, data_val$division == "M220")
   div_M230 <- subset(data_val, data_val$division == "M230")
@@ -384,6 +389,26 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
   div_M310 <- subset(data_val, data_val$division == "M310")
   div_M330 <- subset(data_val, data_val$division == "M330")
   div_M340 <- subset(data_val, data_val$division == "M340")
+
+  # division 120
+  if(!all(is.element(div_120$province, c("121","122")))) {
+
+    unrec_prov_120 <- sort(paste0(unique(div_120[!is.element(div_120$province,
+                                                             c("121","122")), "province"]), sep = " "))
+
+    stop('for division 120, province must be 121 or 122!\n',
+         'Incorrect province codes for the division: ', unrec_prov_120)
+  }
+
+  # division 130
+  if(!all(is.element(div_130$province, c("131","132","133")))) {
+
+    unrec_prov_130 <- sort(paste0(unique(div_130[!is.element(div_130$province,
+                                                             c("131","132","133")), "province"]), sep = " "))
+
+    stop('for division 130, province must be 131, 132, or 133!\n',
+         'Incorrect province codes for the division: ', unrec_prov_130)
+  }
 
   # division 210
   if(!all(is.element(div_210$province, c("211","212")))) {
@@ -493,6 +518,26 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
 
     stop('for division 410, province must be 411!\n',
          'Incorrect province codes for the division: ', unrec_prov_410)
+  }
+
+  # division M120
+  if(!all(is.element(div_M120$province, c("M121","M122")))) {
+
+    unrec_prov_M120 <- sort(paste0(unique(div_M120[!is.element(div_M120$province,
+                                                             c("M121","M122")), "province"]), sep = " "))
+
+    stop('for division M120, province must be M121 or M122!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M120)
+  }
+
+  # division M130
+  if(!all(is.element(div_M130$province, c("M131","M132","M133","M134")))) {
+
+    unrec_prov_M130 <- sort(paste0(unique(div_M130[!is.element(div_M130$province,
+                                                             c("M131","M132","M133","M134")), "province"]), sep = " "))
+
+    stop('for division M130, province must be M131, M132, M133, or M134!\n',
+         'Incorrect province codes for the division: ', unrec_prov_M130)
   }
 
   # division M210
