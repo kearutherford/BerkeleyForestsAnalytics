@@ -29,7 +29,7 @@ library(tidyr)
 
 ## Description of data 
 
-This vignette uses data from the Fire and Fire Surrogate (FFS) Study. In brief, FFS is an experimental study that was designed to evaluate the impacts of fire-only (prescribed fire), mechanical-only (mechanical thinning from below followed by mastication), and mechanical + fire (mechanical thinning from below followed by mastication followed by prescribed fire) treatments on forest structure, ecological function, and future fire behavior ([Read more about the FFS Study here](https://forests.berkeley.edu/research/current-projects/fire-and-fire-surrogates-study)).
+This vignette uses data from the Fire and Fire Surrogate (FFS) Study. In brief, FFS is an experimental study that was designed to evaluate the impacts of fire-only (prescribed fire), mechanical-only (mechanical thinning from below followed by mastication), and mechanical + fire (mechanical thinning from below followed by mastication followed by prescribed fire) treatments on forest structure, ecological function, and future fire behavior.
 
 The data used in this vignette are from the fire-only (i.e., prescribed fire) stands. We used data from two time periods: before treatment (2001) and one year after treatment (2003). Note that the data were slightly modified for demonstrations purposes. Therefore, the outputs should not be taken to be actual findings from the FFS Study. 
 
