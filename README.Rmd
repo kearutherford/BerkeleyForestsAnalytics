@@ -88,11 +88,7 @@ BFA’s overarching goal is to minimize potential inconsistencies introduced by 
 
 The GitHub version may be slightly ahead of the CRAN version of `BerkeleyForestsAnalytics`. If CRAN and GitHub have different version numbers, the GitHub version is the public-ready, late-stage development version of the package that is safe to install. The CRAN version is the formally submitted and approved version of the package.
 
-**Current CRAN version:** 3.0.0
-
-**Current GitHub version:** 3.0.1
-
-<br>
+> **Current versions:** CRAN (v3.0.0), GitHub (v3.0.1)
 
 To install the `BerkeleyForestsAnalytics` package from CRAN:
 
@@ -136,7 +132,7 @@ vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 
 ## Citation instructions <a name="cite-instructions"></a>
 
-Cite the version you used in your project, which may be different than the version in the citation below.
+Cite the version used for your project, which may be different from the version in the citation below.
 
 ```{r}
 citation("BerkeleyForestsAnalytics")

@@ -121,11 +121,7 @@ numbers, the GitHub version is the public-ready, late-stage development
 version of the package that is safe to install. The CRAN version is the
 formally submitted and approved version of the package.
 
-**Current CRAN version:** 3.0.0
-
-**Current GitHub version:** 3.0.1
-
-<br>
+> **Current versions:** CRAN (v3.0.0), GitHub (v3.0.1)
 
 To install the `BerkeleyForestsAnalytics` package from CRAN:
 
@@ -169,8 +165,8 @@ vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 
 ## Citation instructions <a name="cite-instructions"></a>
 
-Cite the version you used in your project, which may be different than
-the version in the citation below.
+Cite the version used for your project, which may be different from the
+version in the citation below.
 
 ``` r
 citation("BerkeleyForestsAnalytics")
@@ -906,7 +902,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -998,7 +994,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
