@@ -31,7 +31,7 @@ Depends on the results setting:
 }
 }
 \description{
-Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status.
+Uses the national-scale volume and biomass (NSVB) framework, from GTR-WO-104, to estimate above-ground tree biomass and carbon for all Forest Inventory and Analysis species. The package will summarize to the tree or plot level, with options to additionally summarize by species and/or status.
 }
 \examples{
 BiomassNSVB(data = nsvb_demo,
