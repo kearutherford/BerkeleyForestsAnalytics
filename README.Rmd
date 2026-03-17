@@ -86,10 +86,39 @@ BFA’s overarching goal is to minimize potential inconsistencies introduced by 
 
 ## Installation instructions <a name="install-instructions"></a>
 
-`BerkeleyForestsAnalytics` is available for installation from CRAN:
+The GitHub version may be slightly ahead of the CRAN version of `BerkeleyForestsAnalytics`. If CRAN and GitHub have different version numbers, the GitHub version is the public-ready, late-stage development version of the package that is safe to install. The CRAN version is the formally submitted and approved version of the package.
+
+**Current CRAN version:** 3.0.0
+
+**Current GitHub version:** 3.0.1
+
+<br>
+
+To install the `BerkeleyForestsAnalytics` package from CRAN:
 
 ```r
 install.packages("BerkeleyForestsAnalytics")
+library(BerkeleyForestsAnalytics)
+```
+
+To install the `BerkeleyForestsAnalytics` package from GitHub:
+
+```r
+# install and load devtools
+install.packages("devtools")
+library(devtools)
+```
+
+```r
+# install and load BerkeleyForestsAnalytics 
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics')
+library(BerkeleyForestsAnalytics)
+```
+
+```r
+# install and load BerkeleyForestsAnalytics 
+# and request vignettes
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics', build_vignettes = TRUE)
 library(BerkeleyForestsAnalytics)
 ```
 
@@ -106,6 +135,8 @@ vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 ```
 
 ## Citation instructions <a name="cite-instructions"></a>
+
+Cite the version you used in your project, which may be different than the version in the citation below.
 
 ```{r}
 citation("BerkeleyForestsAnalytics")
@@ -1524,6 +1555,8 @@ The adjusted biomass of standing dead trees can be calculated using the followin
 The `BiomassNSVB()` function follows the new national-scale volume and biomass (NSVB) framework. The full NSVB framework is detailed in Westfall *et al.* (2024):
 
 Westfall, J.A., Coulston, J.W., Gray, A.N., Shaw, J.D., Radtke, P.J., Walker, D.M., Weiskittel, A.R., MacFarlane, D.W., Affleck, D.L.R., Zhao, D., Temesgen, H., Poudel, K.P., Frank, J.M., Prisley, S.P., Wang, Y., Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2024). *A national-scale tree volume, biomass, and carbon modeling system for the United States.* General Technical Report WO-104. USDA Forest Service, Northern Research Station, Washington, DC. https://doi.org/10.2737/WO-GTR-104
+
+Our large-scale validation of the `BiomassNSVB()` function, where we compared our implementation of the NSVB framework for estimating tree biomass with FIA’s implementation of NSVB, can be found in this repository: https://github.com/kearutherford/BFA_NSVB_Validation
 
 
 ## Divisions and provinces <a name="div-prov"></a>

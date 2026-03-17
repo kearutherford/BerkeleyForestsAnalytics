@@ -115,10 +115,43 @@ encounter unexpected inputs or formats.
 
 ## Installation instructions <a name="install-instructions"></a>
 
-`BerkeleyForestsAnalytics` is available for installation from CRAN:
+The GitHub version may be slightly ahead of the CRAN version of
+`BerkeleyForestsAnalytics`. If CRAN and GitHub have different version
+numbers, the GitHub version is the public-ready, late-stage development
+version of the package that is safe to install. The CRAN version is the
+formally submitted and approved version of the package.
+
+**Current CRAN version:** 3.0.0
+
+**Current GitHub version:** 3.0.1
+
+<br>
+
+To install the `BerkeleyForestsAnalytics` package from CRAN:
 
 ``` r
 install.packages("BerkeleyForestsAnalytics")
+library(BerkeleyForestsAnalytics)
+```
+
+To install the `BerkeleyForestsAnalytics` package from GitHub:
+
+``` r
+# install and load devtools
+install.packages("devtools")
+library(devtools)
+```
+
+``` r
+# install and load BerkeleyForestsAnalytics 
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics')
+library(BerkeleyForestsAnalytics)
+```
+
+``` r
+# install and load BerkeleyForestsAnalytics 
+# and request vignettes
+devtools::install_github('kearutherford/BerkeleyForestsAnalytics', build_vignettes = TRUE)
 library(BerkeleyForestsAnalytics)
 ```
 
@@ -136,6 +169,9 @@ vignette("BerkeleyForestsAnalytics", package = "BerkeleyForestsAnalytics")
 
 ## Citation instructions <a name="cite-instructions"></a>
 
+Cite the version you used in your project, which may be different than
+the version in the citation below.
+
 ``` r
 citation("BerkeleyForestsAnalytics")
 ```
@@ -143,14 +179,14 @@ citation("BerkeleyForestsAnalytics")
     ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
     ##   Kea Rutherford, Danny Foster, John Battles (2026).
-    ##   _BerkeleyForestsAnalytics, version 3.0.0_. Battles Lab: Forest
+    ##   _BerkeleyForestsAnalytics, version 3.0.1_. Battles Lab: Forest
     ##   Ecology and Ecosystem Dynamics, University of California, Berkeley.
     ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
-    ##     title = {BerkeleyForestsAnalytics, version 3.0.0},
+    ##     title = {BerkeleyForestsAnalytics, version 3.0.1},
     ##     author = {{Kea Rutherford} and {Danny Foster} and {John Battles}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
     ##     year = {2026},
@@ -822,7 +858,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.08 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -870,7 +906,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -908,7 +944,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -962,7 +998,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.1 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1015,7 +1051,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.12 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -3156,6 +3192,11 @@ Sánchez Meador, A.J., Auty, D., & Domke, G.M. (2024). *A national-scale
 tree volume, biomass, and carbon modeling system for the United States.*
 General Technical Report WO-104. USDA Forest Service, Northern Research
 Station, Washington, DC. <https://doi.org/10.2737/WO-GTR-104>
+
+Our large-scale validation of the `BiomassNSVB()` function, where we
+compared our implementation of the NSVB framework for estimating tree
+biomass with FIA’s implementation of NSVB, can be found in this
+repository: <https://github.com/kearutherford/BFA_NSVB_Validation>
 
 ## Divisions and provinces <a name="div-prov"></a>
 
