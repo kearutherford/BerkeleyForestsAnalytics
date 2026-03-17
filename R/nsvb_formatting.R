@@ -1126,23 +1126,51 @@ CleanDF <- function(data, in_units, out_units) {
 
   if(out_units == "metric") {
 
-    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
-                   "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
-                   "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
-                   "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
-                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
+    if("stand_org" %in% all_cols) {
+
+      main_cols <- c("division", "province", "site", "plot", "stand_org", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
+                     "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
+                     "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
+                     "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
+                     "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                     "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
+                     "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
+
+    } else {
+
+      main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_cm", "ht1_m", "ht2_m", "crown_ratio", "top", "cull",
+                     "total_wood_kg", "total_bark_kg", "total_branch_kg", "total_ag_kg",
+                     "merch_wood_kg", "merch_bark_kg", "merch_total_kg", "merch_top_kg",
+                     "stump_wood_kg", "stump_bark_kg", "stump_total_kg", "foliage_kg",
+                     "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                     "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
+                     "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
+
+    }
 
   } else if(out_units == "imperial") {
 
-    main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
-                   "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
-                   "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
-                   "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
-                   "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
-                   "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
-                   "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
+    if("stand_org" %in% all_cols) {
+
+      main_cols <- c("division", "province", "site", "plot", "stand_org", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+                     "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
+                     "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
+                     "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
+                     "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                     "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
+                     "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
+
+    } else {
+
+      main_cols <- c("division", "province", "site", "plot", "exp_factor", "status", "decay_class", "species", "dbh_in", "ht1_ft", "ht2_ft", "crown_ratio", "top", "cull",
+                     "total_wood_tons", "total_bark_tons", "total_branch_tons", "total_ag_tons",
+                     "merch_wood_tons", "merch_bark_tons", "merch_total_tons", "merch_top_tons",
+                     "stump_wood_tons", "stump_bark_tons", "stump_total_tons", "foliage_tons",
+                     "total_wood_c", "total_bark_c", "total_branch_c", "total_ag_c",
+                     "merch_wood_c", "merch_bark_c", "merch_total_c", "merch_top_c",
+                     "stump_wood_c", "stump_bark_c", "stump_total_c", "foliage_c", "calc_bio")
+
+    }
 
   }
 

@@ -95,6 +95,7 @@ encounter unexpected inputs or formats.
 > - [Background information for tree biomass and carbon estimations
 >   (NSVB framework)](#nsvb-background)
 >   - [NSVB framework](#nsvb-framework)
+>   - [Workflow validation](#nsvb-validation)
 >   - [Divisions and provinces](#div-prov)
 > - [Background information for surface and ground fuel load
 >   calculations](#surface-background)
@@ -122,7 +123,7 @@ development version of the package that is safe to install, whereas the
 CRAN version is the formally submitted and approved release.
 
 To install the `BerkeleyForestsAnalytics` package from CRAN (current
-version 3.0.0):
+version 3.0.1):
 
 ``` r
 install.packages("BerkeleyForestsAnalytics")
@@ -940,7 +941,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -1047,7 +1048,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -3189,10 +3190,13 @@ tree volume, biomass, and carbon modeling system for the United States.*
 General Technical Report WO-104. USDA Forest Service, Northern Research
 Station, Washington, DC. <https://doi.org/10.2737/WO-GTR-104>
 
+## Workflow validation <a name="nsvb-validation"></a>
+
 Our large-scale validation of the `BiomassNSVB()` function, where we
 compared our implementation of the NSVB framework for estimating tree
-biomass with FIA’s implementation of NSVB, can be found in this
-repository: <https://github.com/kearutherford/BFA_NSVB_Validation>
+biomass with FIA’s implementation of NSVB, can be found in the
+supporting repository
+[BFA_NSVB_Validation](https://github.com/kearutherford/BFA_NSVB_Validation).
 
 ## Divisions and provinces <a name="div-prov"></a>
 
