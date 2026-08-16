@@ -119,7 +119,7 @@ ValidateOverstory <- function(tree_data_val, sp_codes_val) {
 
     for(f in forest_ids) {
 
-      all_plots <- subset(all_forests, tree_data_val$site == f)
+      all_plots <- subset(all_forests, all_forests$site == f)
       plot_ids <- unique(all_plots$plot)
 
       for(p in plot_ids) {
