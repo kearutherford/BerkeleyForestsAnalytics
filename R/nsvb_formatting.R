@@ -989,7 +989,7 @@ DataPrep <- function(data, in_units, out_units) {
   }
 
   # fill in some missing values
-  data$decay_class <- ifelse(!is.na(data$status) & data$status == "0" & is.na(data$decay_class), "3", data$decay_class)
+  data$decay_class <- ifelse(!is.na(data$status) & data$status == "0" & (is.na(data$decay_class) | data$decay_class == "0" ), "3", data$decay_class)
   data$top <- ifelse(data$exp_factor > 0 & is.na(data$top), "Y", data$top)
   data$cull <- ifelse(data$exp_factor > 0 & is.na(data$cull), 0, data$cull)
 
