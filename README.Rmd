@@ -218,6 +218,10 @@ How to interpret column names of the output dataframe:
 
 ### Demonstrations <a name="nsvb-demo"></a>
 
+```{r, include = FALSE}
+library(BerkeleyForestsAnalytics)
+```
+
 ```{r}
 # investigate input dataframe
 nsvb_demo

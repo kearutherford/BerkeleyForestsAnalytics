@@ -37,16 +37,6 @@ encounter unexpected inputs or formats.
 > - [Vignette](#vign)
 > - [Citation instructions](#cite-instructions)
 > - [Copyright notice](#copyright)
-> - [Tree biomass estimates (prior to NSVB
->   workflow)](#tree-bio-overview)
->   - [TreeBiomass()](#tree-bio)
->     - [Inputs](#tree-bio-input)
->     - [Outputs](#tree-bio-output)
->     - [Demonstrations](#tree-bio-demo)
->   - [SummaryBiomass()](#sum-bio)
->     - [Inputs](#sum-bio-input)
->     - [Outputs](#sum-bio-output)
->     - [Demonstrations](#sum-bio-demo)
 > - [Tree biomass and carbon estimates (NSVB framework)](#nsvb-overview)
 >   - [BiomassNSVB()](#nsvb-bio)
 >     - [Inputs](#nsvb-input)
@@ -84,21 +74,15 @@ encounter unexpected inputs or formats.
 >     - [Inputs](#comp-fuels-input)
 >     - [Outputs](#comp-fuels-output)
 >     - [Demonstrations](#comp-fuels-demo)
-> - [General background information for tree biomass
->   estimations](#gen-background)
->   - [Decay class code table](#decay-table)
-> - [Background information for tree biomass estimations (prior to NSVB
->   framework)](#bio-background)
->   - [Species code tables](#species-codes)
->   - [Allometric equations](#allometric-eqns)
->   - [Structural decay of standing dead trees](#decay)
 > - [Background information for tree biomass and carbon estimations
 >   (NSVB framework)](#nsvb-background)
 >   - [NSVB framework](#nsvb-framework)
 >   - [Workflow validation](#nsvb-validation)
 >   - [Divisions and provinces](#div-prov)
+>   - [Decay class code table](#decay-table)
 > - [Background information for surface and ground fuel load
 >   calculations](#surface-background)
+>   - [Species code table](#species-codes)
 >   - [Duff and litter loads](#duff-background)
 >   - [Fine fuel loads](#fwd-background)
 >   - [Coarse fuel loads](#cwd-background)
@@ -211,432 +195,6 @@ PARTICULAR PURPOSE. THE SOFTWARE AND ACCOMPANYING DOCUMENTATION, IF ANY,
 PROVIDED HEREUNDER IS PROVIDED “AS IS”. REGENTS HAS NO OBLIGATION TO
 PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
-# Tree biomass estimates (prior to NSVB framework) <a name="tree-bio-overview"></a>
-
-These biomass functions (`TreeBiomass` and `SummaryBiomass`) use Forest
-Inventory and Analysis (FIA) Regional Biomass Equations (prior to the
-new national-scale volume and biomass (NSVB) framework) to estimate
-above-ground stem, bark, and branch tree biomass. These particular
-biomass functions are only parameterized for species found in the yellow
-pine-mixed conifer forests of the Sierra Nevada.
-`BerkeleyForestsAnalytics` also offers the new national-scale volume and
-biomass (NSVB) framework for all FIA species (see [Tree biomass and
-carbon estimates (NSVB framework)](#nsvb-overview) section below).
-
-## :eight_spoked_asterisk: `TreeBiomass( )` <a name="tree-bio"></a>
-
-The `TreeBiomass` function uses the Forest Inventory and Analysis (FIA)
-Regional Biomass Equations (prior to the new national-scale volume and
-biomass (NSVB) framework) to estimate above-ground stem, bark, and
-branch tree biomass. It provides the option to adjust biomass estimates
-for the structural decay of standing dead trees. See [Background
-information for tree biomass estimations (prior to NSVB
-framework)](#bio-background) below for further details.
-
-### Inputs <a name="tree-bio-input"></a>
-
-1.  `data` A dataframe or tibble. Each row must be an observation of an
-    individual tree.
-
-2.  `status` Must be a character variable (column) in the provided
-    dataframe or tibble. Specifies whether the individual tree is
-    alive (1) or dead (0).
-
-3.  `species` Must be a character variable (column) in the provided
-    dataframe or tibble. Specifies the species of the individual tree.
-    Must follow four-letter species code or FIA naming conventions (see
-    [Species code tables](#species-codes) in “Background information for
-    tree biomass estimations (prior to NSVB framework)” below).
-
-4.  `dbh` Must be a numeric variable (column) in the provided dataframe
-    or tibble. Provides the diameter at breast height (DBH) of the
-    individual tree in either centimeters or inches.
-
-5.  `ht` Must be a numeric variable (column) in the provided dataframe
-    or tibble. Provides the height of the individual tree in either
-    meters or feet.
-
-6.  `decay_class` Default is set to “ignore”, indicating that biomass
-    estimates for standing dead trees will not be adjusted for
-    structural decay (see [Structural decay of standing dead
-    trees](#decay) section in “Background information for tree biomass
-    estimations (prior to NSVB framework)” below). It can be set to a
-    character variable (column) in the provided dataframe or tibble. For
-    standing dead trees, the decay class should be 1, 2, 3, 4, or 5 (see
-    [Decay class code table](#decay-table) section in “General
-    background information for tree biomass estimations” below). For
-    live trees, the decay class should be NA or 0.
-
-7.  `sp_codes` Not a variable (column) in the provided dataframe or
-    tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see [Species code
-    tables](#species-codes) section in “Background information for tree
-    biomass estimations (prior to NSVB framework)” below). Must be set
-    to either “4letter” or “fia”. The default is set to “4letter”.
-
-8.  `units` Not a variable (column) in the provided dataframe or tibble.
-    Specifies whether the dbh and ht variables were measured using
-    metric (centimeters and meters) or imperial (inches and feet) units.
-    Also specifies whether the results will be given in metric
-    (kilograms) or imperial (US tons) units. Must be set to either
-    “metric” or “imperial”. The default is set to “metric”.
-
-### Outputs <a name="tree-bio-output"></a>
-
-The original dataframe will be returned, with four new columns. If
-decay_class is provided, the biomass estimates for standing dead trees
-will be adjusted for structural decay.
-
-1.  `stem_bio_kg` (or `stem_bio_tons`): biomass of stem in kilograms (or
-    US tons)
-
-2.  `bark_bio_kg` (or `bark_bio_tons`): biomass of bark in kilograms (or
-    US tons)
-
-3.  `branch_bio_kg` (or `branch_bio_tons`): biomass of branches in
-    kilograms (or US tons)
-
-4.  `total_bio_kg` (or `total_bio_tons`): biomass of tree (stem + bark +
-    branches) in kilograms (or US tons)
-
-*Important note: For some hardwood species, the `stem_bio` includes bark
-and branch biomass. In these cases, bark and branch biomass are not
-available as separate components of total biomass. `bark_bio` and
-`branch_bio` will appear as `NA` and the `total_bio` will be equivalent
-to the `stem_bio`.*
-
-### Demonstrations <a name="tree-bio-demo"></a>
-
-``` r
-# investigate input dataframe
-bio_demo_data
-```
-
-    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M
-    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1
-    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4
-    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0
-    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3
-    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1
-    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5
-    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3
-    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7
-    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6
-
-``` r
-# call the TreeBiomass() function in the BerkeleyForestsAnalytics package
-# keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
-tree_bio_demo1 <- TreeBiomass(data = bio_demo_data,
-                              status = "Live",
-                              species = "SPP",
-                              dbh = "DBH_CM",
-                              ht = "HT_M")
-
-tree_bio_demo1
-```
-
-    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M stem_bio_kg bark_bio_kg
-    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1       20.08        3.88
-    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4      535.66      260.36
-    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0       40.52       17.42
-    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3      347.02       64.81
-    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1       32.46       10.56
-    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5       42.34        8.91
-    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3      572.06          NA
-    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7       30.05        9.16
-    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6       48.34       10.98
-    ##   branch_bio_kg total_bio_kg
-    ## 1          3.64        27.60
-    ## 2         78.41       874.43
-    ## 3         13.64        71.58
-    ## 4         43.34       455.17
-    ## 5         15.62        58.64
-    ## 6         13.41        64.66
-    ## 7            NA       572.06
-    ## 8         15.06        54.27
-    ## 9          9.09        68.41
-
-**Notice in the output dataframe:**
-
-- QUKE (California black oak) has `NA` `bark_bio_kg` and
-  `branch_bio_kg`. For some hardwood species, the `stem_bio_kg` includes
-  bark and branch biomass. In these cases, bark and branch biomass are
-  not available as separate components of total biomass.
-
-- The column names of the input dataframe will remain intact in the
-  output dataframe.
-
-- The `Forest`, `Plot_id`, `SPH`, and `Decay` columns, which are not
-  directly used in the biomass calculations, remain in the output
-  dataframe. Any additional columns in the input dataframe will remain
-  in the output dataframe.
-
-<br>
-
-``` r
-# call the TreeBiomass() function in the BerkeleyForestsAnalytics package
-# keep default decay_class (= "ignore"), sp_codes (= "4letter") and units (= "metric")
-tree_bio_demo2 <- TreeBiomass(data = bio_demo_data,
-                              status = "Live",
-                              species = "SPP",
-                              dbh = "DBH_CM",
-                              ht = "HT_M",
-                              decay_class = "Decay",
-                              sp_codes = "4letter",
-                              units = "metric")
-
-tree_bio_demo2
-```
-
-    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M stem_bio_kg bark_bio_kg
-    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1       20.08        3.88
-    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4      467.63      227.29
-    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0       40.52       17.42
-    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3      347.02       64.81
-    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1       32.46       10.56
-    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5       42.34        8.91
-    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3      572.06          NA
-    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7       18.78        5.72
-    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6       28.57        6.49
-    ##   branch_bio_kg total_bio_kg
-    ## 1          3.64        27.60
-    ## 2         68.45       763.37
-    ## 3         13.64        71.58
-    ## 4         43.34       455.17
-    ## 5         15.62        58.64
-    ## 6         13.41        64.66
-    ## 7            NA       572.06
-    ## 8          9.41        33.91
-    ## 9          5.37        40.43
-
-**Notice in the output dataframe:**
-
-- Comparing between the outputs from demo1 and demo2:
-  - For the three standing dead trees, the biomass estimates are
-    adjusted for structural decay.
-  - For the live trees, the biomass estimates remain the same.
-
-[Back to table of contents](#toc)
-
-## :eight_spoked_asterisk: `SummaryBiomass( )` <a name="sum-bio"></a>
-
-The `SummaryBiomass` function calls on the `TreeBiomass` function
-described above. Additionally, the outputs are summarized by plot or by
-plot as well as species.
-
-### Inputs <a name="sum-bio-input"></a>
-
-1.  `data` A dataframe or tibble. Each row must be an observation of an
-    individual tree.
-
-2.  `site` Must be a character variable (column) in the provided
-    dataframe or tibble. Describes the broader location or forest where
-    the data were collected.
-
-3.  `plot` Must be a character variable (column) in the provided
-    dataframe or tibble. Identifies the plot in which the individual
-    tree was measured.
-
-4.  `exp_factor` Must be a numeric variable (column) in the provided
-    dataframe or tibble. The expansion factor specifies the number of
-    trees per hectare (or per acre) that a given plot tree represents.
-
-5.  `status` Must be a character variable (column) in the provided
-    dataframe or tibble. Specifies whether the individual tree is
-    alive (1) or dead (0).
-
-6.  `decay_class` Must be a character variable (column) in the provided
-    dataframe or tibble (see [Structural decay of standing dead
-    trees](#decay) section in “Background information for tree biomass
-    estimations (prior to NSVB framework)” below). For standing dead
-    trees, the decay class should be 1, 2, 3, 4, or 5 (see [Decay class
-    code table](#decay-table) section in “General background information
-    for tree biomass estimations” below). For live trees, the decay
-    class should be NA or 0.
-
-7.  `species` Must be a character variable (column) in the provided
-    dataframe or tibble. Specifies the species of the individual tree.
-    Must follow four-letter species code or FIA naming conventions (see
-    [Species code tables](#species-codes) in “Background information for
-    tree biomass estimations (prior to NSVB framework)” below).
-
-8.  `dbh` Must be a numeric variable (column) in the provided dataframe
-    or tibble. Provides the diameter at breast height (DBH) of the
-    individual tree in either centimeters or inches.
-
-9.  `ht` Must be a numeric variable (column) in the provided dataframe
-    or tibble. Provides the height of the individual tree in either
-    meters or feet.
-
-10. `sp_codes` Not a variable (column) in the provided dataframe or
-    tibble. Specifies whether the species variable follows the
-    four-letter code or FIA naming convention (see [Species code
-    tables](#species-codes) section in “Background information for tree
-    biomass estimations (prior to NSVB framework)” below). Must be set
-    to either “4letter” or “fia”. The default is set to “4letter”.
-
-11. `units` Not a variable (column) in the provided dataframe or tibble.
-    Specifies (1) whether the dbh and ht variables were measured using
-    metric (centimeters and meters) or imperial (inches and feet)
-    units; (2) whether the expansion factor is in metric (stems per
-    hectare) or imperial (stems per acre) units; and (3) whether results
-    will be given in metric (megagrams per hectare) or imperial (US tons
-    per acre) units. Must be set to either “metric” or “imperial”. The
-    default is set to “metric”.
-
-12. `results` Not a variable (column) in the provided dataframe or
-    tibble. Specifies whether the results will be summarized by plot or
-    by plot as well as species. Must be set to either “by_plot” or
-    “by_species.” The default is set to “by_plot”.
-
-### Outputs <a name="sum-bio-output"></a>
-
-A dataframe with the following columns:
-
-1.  `site`: as described above
-
-2.  `plot`: as described above
-
-3.  `species`: if results argument was set to “by_species”
-
-4.  `live_Mg_ha` (or `live_ton_ac`): above-ground live tree biomass in
-    megagrams per hectare (or US tons per acre)
-
-5.  `dead_Mg_ha` (or `dead_ton_ac`): above-ground dead tree biomass in
-    megagrams per hectare (or US tons per acre)
-
-### Demonstrations <a name="sum-bio-demo"></a>
-
-``` r
-# investigate input dataframe
-bio_demo_data
-```
-
-    ##   Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M
-    ## 1   SEKI       1  50    1  <NA> PSME   10.3  5.1
-    ## 2   SEKI       1  50    0     2 ABCO   44.7 26.4
-    ## 3   SEKI       2  50    1  <NA> PSME   19.1  8.0
-    ## 4   SEKI       2  50    1  <NA> PSME   32.8 23.3
-    ## 5   YOMI       1  50    1  <NA> ABCO   13.8 11.1
-    ## 6   YOMI       1  50    1  <NA> CADE   20.2  8.5
-    ## 7   YOMI       2  50    1  <NA> QUKE   31.7 22.3
-    ## 8   YOMI       2  50    0     4 ABCO   13.1  9.7
-    ## 9   YOMI       2  50    0     3 PSME   15.8 10.6
-
-<br>
-
-**Results summarized by plot:**
-
-``` r
-# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter") and units (= "metric")
-sum_bio_demo1 <- SummaryBiomass(data = bio_demo_data,
-                                site = "Forest",
-                                plot = "Plot_id",
-                                exp_factor = "SPH",
-                                status = "Live",
-                                decay_class = "Decay",
-                                species = "SPP",
-                                dbh = "DBH_CM",
-                                ht = "HT_M",
-                                results = "by_plot")
-
-sum_bio_demo1
-```
-
-    ##   site plot live_Mg_ha dead_Mg_ha
-    ## 1 SEKI    1       1.38      38.17
-    ## 2 SEKI    2      26.34       0.00
-    ## 3 YOMI    1       6.16       0.00
-    ## 4 YOMI    2      28.60       3.72
-
-<br>
-
-**Results summarized by plot as well as by species:**
-
-``` r
-# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
-# keep default sp_codes (= "4letter") and units (= "metric")
-sum_bio_demo2 <- SummaryBiomass(data = bio_demo_data,
-                                site = "Forest",
-                                plot = "Plot_id",
-                                exp_factor = "SPH",
-                                status = "Live",
-                                decay_class = "Decay",
-                                species = "SPP",
-                                dbh = "DBH_CM",
-                                ht = "HT_M",
-                                results = "by_species")
-
-sum_bio_demo2
-```
-
-    ##    site plot species live_Mg_ha dead_Mg_ha
-    ## 1  SEKI    1    PSME       1.38       0.00
-    ## 2  SEKI    1    ABCO       0.00      38.17
-    ## 3  SEKI    1    CADE       0.00       0.00
-    ## 4  SEKI    1    QUKE       0.00       0.00
-    ## 5  SEKI    2    PSME      26.34       0.00
-    ## 6  SEKI    2    ABCO       0.00       0.00
-    ## 7  SEKI    2    CADE       0.00       0.00
-    ## 8  SEKI    2    QUKE       0.00       0.00
-    ## 9  YOMI    1    PSME       0.00       0.00
-    ## 10 YOMI    1    ABCO       2.93       0.00
-    ## 11 YOMI    1    CADE       3.23       0.00
-    ## 12 YOMI    1    QUKE       0.00       0.00
-    ## 13 YOMI    2    PSME       0.00       2.02
-    ## 14 YOMI    2    ABCO       0.00       1.70
-    ## 15 YOMI    2    CADE       0.00       0.00
-    ## 16 YOMI    2    QUKE      28.60       0.00
-
-<br>
-
-**If there are plots without trees:**
-
-``` r
-# investigate input dataframe
-bio_NT_demo
-```
-
-    ##    Forest Plot_id SPH Live Decay  SPP DBH_CM HT_M
-    ## 1    SEKI       1  50    1  <NA> PSME   10.3  5.1
-    ## 2    SEKI       1  50    0     2 ABCO   44.7 26.4
-    ## 3    SEKI       2  50    1  <NA> PSME   19.1  8.0
-    ## 4    SEKI       2  50    1  <NA> PSME   32.8 23.3
-    ## 5    YOMI       1  50    1  <NA> ABCO   13.8 11.1
-    ## 6    YOMI       1  50    1  <NA> CADE   20.2  8.5
-    ## 7    YOMI       2  50    1  <NA> QUKE   31.7 22.3
-    ## 8    YOMI       2  50    0     4 ABCO   13.1  9.7
-    ## 9    YOMI       2  50    0     3 PSME   15.8 10.6
-    ## 10   YOMI       3   0 <NA>  <NA> <NA>     NA   NA
-
-``` r
-# call the SummaryBiomass() function in the BerkeleyForestsAnalytics package
-sum_bio_demo3 <- SummaryBiomass(data = bio_NT_demo,
-                                site = "Forest",
-                                plot = "Plot_id",
-                                exp_factor = "SPH",
-                                status = "Live",
-                                decay_class = "Decay",
-                                species = "SPP",
-                                dbh = "DBH_CM",
-                                ht = "HT_M",
-                                results = "by_plot")
-
-sum_bio_demo3
-```
-
-    ##   site plot live_Mg_ha dead_Mg_ha
-    ## 1 SEKI    1       1.38      38.17
-    ## 2 SEKI    2      26.34       0.00
-    ## 3 YOMI    1       6.16       0.00
-    ## 4 YOMI    2      28.60       3.72
-    ## 5 YOMI    3       0.00       0.00
-
-*Notice that the plot without trees has 0 live and dead biomass.*
-
-[Back to table of contents](#toc)
-
 # Tree biomass and carbon estimates (NSVB framework) <a name="nsvb-overview"></a>
 
 The `BiomassNSVB` function follows the new national-scale volume and
@@ -688,8 +246,8 @@ details.
 
     - **decay_class:** Must be a character variable. For standing dead
       trees, the decay class should be 1, 2, 3, 4, or 5 (see [Decay
-      class code table](#decay-table) section in “General background
-      information for tree biomass estimations” below). For live trees,
+      class code table](#decay-table) section in “Background information
+      for tree biomass and carbon estimations” below). For live trees,
       the decay class should be NA or 0.
 
     - **species:** Must be a character variable. Specifies the species
@@ -855,7 +413,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -903,7 +461,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -941,7 +499,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -995,7 +553,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.07 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -1129,37 +687,35 @@ observed.
 ### Inputs <a name="comp-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
-    individual tree.
+    individual tree. Must have at least these columns (column names are
+    exact):
 
-2.  `site` Must be a character variable (column) in the provided
-    dataframe or tibble. Describes the broader location or forest where
-    the data were collected.
+    - **site:** Must be a character variable. Describes the broader
+      location or forest where the data were collected.
 
-3.  `plot` Must be a character variable (column) in the provided
-    dataframe or tibble. Identifies the plot in which the individual
-    tree was measured.
+    - **plot:** Must be a character variable. Identifies the plot in
+      which the individual tree was measured.
 
-4.  `exp_factor` Must be a numeric variable (column) in the provided
-    dataframe or tibble. The expansion factor specifies the number of
-    trees per hectare (or per acre) that a given plot tree represents.
+    - **exp_factor:** Must be a numeric variable. The expansion factor
+      specifies the number of trees per hectare (or per acre) that a
+      given plot tree represents.
 
-5.  `status` Must be a character variable (column) in the provided
-    dataframe or tibble. Specifies whether the individual tree is
-    alive (1) or dead (0).
+    - **status:** Must be a character variable. Specifies whether the
+      individual tree is alive (1) or dead (0).
 
-6.  `species` Must be a character variable (column) in the provided
-    dataframe or tibble. Specifies the species of the individual tree.
+    - **species:** Must be a character variable. Specifies the species
+      of the individual tree.
 
-7.  `dbh` Must be a numeric variable (column) in the provided dataframe
-    or tibble. Provides the diameter at breast height (DBH) of the
-    individual tree in either centimeters or inches.
+    - **dbh:** Must be a numeric variable. Provides the diameter at
+      breast height (DBH) of the individual tree in either centimeters
+      or inches.
 
-8.  `relative` Not a variable (column) in the provided dataframe or
+2.  `relative` Not a variable (column) in the provided dataframe or
     tibble. Specifies whether forest composition should be measured as
     relative basal area or relative density. Must be set to either “BA”
     or “density”. The default is set to “BA”.
 
-9.  `units` Not a variable (column) in the provided dataframe or tibble.
+3.  `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies whether the dbh variable was measured using metric
     (centimeters) or imperial (inches) units. Must be set to either
     “metric” or “imperial”. The default is set to “metric”.
@@ -1184,16 +740,16 @@ A dataframe with the following columns:
 for_demo_data
 ```
 
-    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
-    ## 1   SEKI       1  50    1 PSME   10.3  5.1
-    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
-    ## 3   SEKI       1  50    1 ABCO   19.1  8.0
-    ## 4   YOMI       1  50    1 PSME   32.8 23.3
-    ## 5   YOMI       1  50    1 CADE   13.8 11.1
-    ## 6   YOMI       2  50    1 CADE   20.2  8.5
-    ## 7   YOMI       2  50    1 CADE   31.7 22.3
-    ## 8   YOMI       2  50    1 ABCO   13.1  9.7
-    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+    ##   site plot exp_factor status species  dbh   ht
+    ## 1 SEKI    1         50      1    PSME 10.3  5.1
+    ## 2 SEKI    1         50      0    ABCO 44.7 26.4
+    ## 3 SEKI    1         50      1    ABCO 19.1  8.0
+    ## 4 YOMI    1         50      1    PSME 32.8 23.3
+    ## 5 YOMI    1         50      1    CADE 13.8 11.1
+    ## 6 YOMI    2         50      1    CADE 20.2  8.5
+    ## 7 YOMI    2         50      1    CADE 31.7 22.3
+    ## 8 YOMI    2         50      1    ABCO 13.1  9.7
+    ## 9 YOMI    2         50      0    PSME 15.8 10.6
 
 <br>
 
@@ -1202,13 +758,7 @@ for_demo_data
 ``` r
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
 # keep default relative (= "BA") and units (= "metric")
-comp_demo1 <- ForestComp(data = for_demo_data,
-                         site = "Forest",
-                         plot = "Plot_id",
-                         exp_factor = "SPH",
-                         status = "Live",
-                         species = "SPP",
-                         dbh = "DBH_CM")
+comp_demo1 <- ForestComp(data = for_demo_data)
 ```
 
     ## The following species were present: ABCO CADE PSME
@@ -1235,12 +785,6 @@ comp_demo1
 ``` r
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
 comp_demo2 <- ForestComp(data = for_demo_data,
-                         site = "Forest",
-                         plot = "Plot_id",
-                         exp_factor = "SPH",
-                         status = "Live",
-                         species = "SPP",
-                         dbh = "DBH_CM",
                          relative = "density",
                          units = "metric")
 ```
@@ -1271,27 +815,21 @@ comp_demo2
 for_NT_demo
 ```
 
-    ##    Forest Plot_id SPH Live  SPP DBH_CM HT_M
-    ## 1    SEKI       1  50    1 PSME   10.3  5.1
-    ## 2    SEKI       1  50    0 ABCO   44.7 26.4
-    ## 3    SEKI       1  50    1 ABCO   19.1  8.0
-    ## 4    YOMI       1  50    1 PSME   32.8 23.3
-    ## 5    YOMI       1  50    1 CADE   13.8 11.1
-    ## 6    YOMI       2  50    1 CADE   20.2  8.5
-    ## 7    YOMI       2  50    1 CADE   31.7 22.3
-    ## 8    YOMI       2  50    1 ABCO   13.1  9.7
-    ## 9    YOMI       2  50    0 PSME   15.8 10.6
-    ## 10   YOMI       3   0 <NA> <NA>     NA   NA
+    ##    site plot exp_factor status species  dbh   ht
+    ## 1  SEKI    1         50      1    PSME 10.3  5.1
+    ## 2  SEKI    1         50      0    ABCO 44.7 26.4
+    ## 3  SEKI    1         50      1    ABCO 19.1  8.0
+    ## 4  YOMI    1         50      1    PSME 32.8 23.3
+    ## 5  YOMI    1         50      1    CADE 13.8 11.1
+    ## 6  YOMI    2         50      1    CADE 20.2  8.5
+    ## 7  YOMI    2         50      1    CADE 31.7 22.3
+    ## 8  YOMI    2         50      1    ABCO 13.1  9.7
+    ## 9  YOMI    2         50      0    PSME 15.8 10.6
+    ## 10 YOMI    3          0   <NA>    <NA>   NA   NA
 
 ``` r
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
-comp_demo3 <- ForestComp(data = for_NT_demo,
-                         site = "Forest",
-                         plot = "Plot_id",
-                         exp_factor = "SPH",
-                         status = "Live",
-                         species = "SPP",
-                         dbh = "DBH_CM")
+comp_demo3 <- ForestComp(data = for_NT_demo)
 ```
 
     ## The following species were present: ABCO CADE PSME
@@ -1323,30 +861,27 @@ comp_demo3
 ### Inputs <a name="str-input"></a>
 
 1.  `data` A dataframe or tibble. Each row must be an observation of an
-    individual tree.
+    individual tree. Must have at least these columns (column names are
+    exact):
 
-2.  `site` Must be a character variable (column) in the provided
-    dataframe or tibble. Describes the broader location or forest where
-    the data were collected.
+    - **site:** Must be a character variable. Describes the broader
+      location or forest where the data were collected.
 
-3.  `plot` Must be a character variable (column) in the provided
-    dataframe or tibble. Identifies the plot in which the individual
-    tree was measured.
+    - **plot:** Must be a character variable. Identifies the plot in
+      which the individual tree was measured.
 
-4.  `exp_factor` Must be a numeric variable (column) in the provided
-    dataframe or tibble. The expansion factor specifies the number of
-    trees per hectare (or per acre) that a given plot tree represents.
+    - **exp_factor:** Must be a numeric variable. The expansion factor
+      specifies the number of trees per hectare (or per acre) that a
+      given plot tree represents.
 
-5.  `dbh` Must be a numeric variable (column) in the provided dataframe
-    or tibble. Provides the diameter at breast height (DBH) of the
-    individual tree in either centimeters or inches.
+    - **dbh:** Must be a numeric variable. Provides the diameter at
+      breast height (DBH) of the individual tree in either centimeters
+      or inches.
 
-6.  `ht` Default is set to “ignore”, which indicates that tree heights
-    were not taken. If heights were taken, it can be set to a numeric
-    variable (column) in the provided dataframe or tibble, providing the
-    height of the individual tree in either meters or feet.
+    - **ht:** Must be a numeric variable. Provides the height of the
+      individual tree in either meters or feet. This column is OPTIONAL.
 
-7.  `units` Not a variable (column) in the provided dataframe or tibble.
+2.  `units` Not a variable (column) in the provided dataframe or tibble.
     Specifies (1) whether the dbh and ht variables were measured using
     metric (centimeters and meters) or imperial (inches and feet)
     units; (2) whether the expansion factor is in metric (stems per
@@ -1383,16 +918,16 @@ A dataframe with the following columns:
 for_demo_data
 ```
 
-    ##   Forest Plot_id SPH Live  SPP DBH_CM HT_M
-    ## 1   SEKI       1  50    1 PSME   10.3  5.1
-    ## 2   SEKI       1  50    0 ABCO   44.7 26.4
-    ## 3   SEKI       1  50    1 ABCO   19.1  8.0
-    ## 4   YOMI       1  50    1 PSME   32.8 23.3
-    ## 5   YOMI       1  50    1 CADE   13.8 11.1
-    ## 6   YOMI       2  50    1 CADE   20.2  8.5
-    ## 7   YOMI       2  50    1 CADE   31.7 22.3
-    ## 8   YOMI       2  50    1 ABCO   13.1  9.7
-    ## 9   YOMI       2  50    0 PSME   15.8 10.6
+    ##   site plot exp_factor status species  dbh   ht
+    ## 1 SEKI    1         50      1    PSME 10.3  5.1
+    ## 2 SEKI    1         50      0    ABCO 44.7 26.4
+    ## 3 SEKI    1         50      1    ABCO 19.1  8.0
+    ## 4 YOMI    1         50      1    PSME 32.8 23.3
+    ## 5 YOMI    1         50      1    CADE 13.8 11.1
+    ## 6 YOMI    2         50      1    CADE 20.2  8.5
+    ## 7 YOMI    2         50      1    CADE 31.7 22.3
+    ## 8 YOMI    2         50      1    ABCO 13.1  9.7
+    ## 9 YOMI    2         50      0    PSME 15.8 10.6
 
 <br>
 
@@ -1400,20 +935,15 @@ for_demo_data
 
 ``` r
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
-# keep default ht (= "ignore") and units (= "metric")
-str_demo1 <- ForestStr(data = for_demo_data,
-                       site = "Forest",
-                       plot = "Plot_id",
-                       exp_factor = "SPH",
-                       dbh = "DBH_CM")
-
+# keep default units (= "metric")
+str_demo1 <- ForestStr(data = for_demo_data)
 str_demo1
 ```
 
-    ##   site plot sph ba_m2_ha qmd_cm dbh_cm
-    ## 1 SEKI    1 150     9.70   28.7   24.7
-    ## 2 YOMI    1 100     4.97   25.2   23.3
-    ## 3 YOMI    2 200     7.20   21.4   20.2
+    ##   site plot sph ba_m2_ha qmd_cm dbh_cm ht_m
+    ## 1 SEKI    1 150     9.70   28.7   24.7 13.2
+    ## 2 YOMI    1 100     4.97   25.2   23.3 17.2
+    ## 3 YOMI    2 200     7.20   21.4   20.2 12.8
 
 <br>
 
@@ -1422,11 +952,6 @@ str_demo1
 ``` r
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
 str_demo2 <- ForestStr(data = for_demo_data,
-                       site = "Forest",
-                       plot = "Plot_id",
-                       exp_factor = "SPH",
-                       dbh = "DBH_CM",
-                       ht = "HT_M",
                        units = "metric")
 
 str_demo2
@@ -1446,26 +971,21 @@ str_demo2
 for_NT_demo
 ```
 
-    ##    Forest Plot_id SPH Live  SPP DBH_CM HT_M
-    ## 1    SEKI       1  50    1 PSME   10.3  5.1
-    ## 2    SEKI       1  50    0 ABCO   44.7 26.4
-    ## 3    SEKI       1  50    1 ABCO   19.1  8.0
-    ## 4    YOMI       1  50    1 PSME   32.8 23.3
-    ## 5    YOMI       1  50    1 CADE   13.8 11.1
-    ## 6    YOMI       2  50    1 CADE   20.2  8.5
-    ## 7    YOMI       2  50    1 CADE   31.7 22.3
-    ## 8    YOMI       2  50    1 ABCO   13.1  9.7
-    ## 9    YOMI       2  50    0 PSME   15.8 10.6
-    ## 10   YOMI       3   0 <NA> <NA>     NA   NA
+    ##    site plot exp_factor status species  dbh   ht
+    ## 1  SEKI    1         50      1    PSME 10.3  5.1
+    ## 2  SEKI    1         50      0    ABCO 44.7 26.4
+    ## 3  SEKI    1         50      1    ABCO 19.1  8.0
+    ## 4  YOMI    1         50      1    PSME 32.8 23.3
+    ## 5  YOMI    1         50      1    CADE 13.8 11.1
+    ## 6  YOMI    2         50      1    CADE 20.2  8.5
+    ## 7  YOMI    2         50      1    CADE 31.7 22.3
+    ## 8  YOMI    2         50      1    ABCO 13.1  9.7
+    ## 9  YOMI    2         50      0    PSME 15.8 10.6
+    ## 10 YOMI    3          0   <NA>    <NA>   NA   NA
 
 ``` r
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
 str_demo3 <- ForestStr(data = for_NT_demo,
-                       site = "Forest",
-                       plot = "Plot_id",
-                       exp_factor = "SPH",
-                       dbh = "DBH_CM",
-                       ht = "HT_M",
                        units = "metric")
 
 str_demo3
@@ -1538,9 +1058,9 @@ FWD data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      [Species code tables](#species-codes) section in “Background
-      information for tree biomass estimations (prior to NSVB
-      framework)” below). The class of this variable must be character.
+      [Species code table](#species-codes) section in “Background
+      information for surface and ground fuel load calculations” below).
+      The class of this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -1768,9 +1288,9 @@ data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      [Species code tables](#species-codes) section in “Background
-      information for tree biomass estimations (prior to NSVB
-      framework)” below). The class of this variable must be character.
+      [Species code table](#species-codes) section in “Background
+      information for surface and ground fuel load calculations” below).
+      The class of this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -2055,9 +1575,9 @@ for duff/litter data collection:
       class of this variable must be numeric.
     - **species:** Specifies the species of the individual tree. Must
       follow four-letter species code or FIA naming conventions (see
-      [Species code tables](#species-codes) section in “Background
-      information for tree biomass estimations (prior to NSVB
-      framework)” below). The class of this variable must be character.
+      [Species code table](#species-codes) section in “Background
+      information for surface and ground fuel load calculations” below).
+      The class of this variable must be character.
     - **dbh:** Provides diameter at breast height of the individual tree
       in either centimeters or inches. The class of this variable must
       be numeric.
@@ -2936,244 +2456,6 @@ strs_surface_demo2
 
 [Back to table of contents](#toc)
 
-# General background information for tree biomass estimations <a name="gen-background"></a>
-
-## Decay class code table <a name="decay-table"></a>
-
-| decay class | limbs and branches | top | % bark remaining | sapwood presence and condition | heartwood condition |
-|:---|:---|:---|:---|:---|:---|
-| 1 | All present | Pointed | 100 | Intact; sound, incipient decay, hard, original color | Sound, hard, original color |
-| 2 | Few limbs, no fine branches | May be broken | Variable | Sloughing; advanced decay, fibrous, firm to soft, light brown | Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown |
-| 3 | Limb studs only | Broken | Variable | Sloughing; fibrous, soft, light to reddish brown | Incipient decay at base, advanced decay throughout upper bole, fibrous, hard to firm, reddish brown |
-| 4 | Few or no studs | Broken | Variable | Sloughing; cubical, soft, reddish to dark crown | Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown |
-| 5 | None | Broken | Less than 20 | Gone | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
-
-**Reference:** USDA Forest Service. (2019). *Forest Inventory and
-Analysis national core field guide, volume I: Field data collection
-procedures for phase 2 plots.* Version 9.0.
-
-[Back to table of contents](#toc)
-
-# Background information for tree biomass estimations (prior to NSVB framework) <a name="bio-background"></a>
-
-## Species code tables <a name="species-codes"></a>
-
-All hardwood and softwood species currently included/recognized in the
-`TreeBiomass()` and `SummaryBiomass()` functions are listed in the
-tables below.
-
-**Softwoods**
-
-| common name        | scientific name           | 4-letter code | FIA code |
-|:-------------------|:--------------------------|:--------------|:---------|
-| White fir          | Abies concolor            | ABCO          | 15       |
-| Grand fir          | Abies grandis             | ABGR          | 17       |
-| California red fir | Abies magnifica           | ABMA          | 20       |
-| Noble fir          | Abies procera             | ABPR          | 22       |
-| Western juniper    | Juniperus occidentalis    | JUOC          | 64       |
-| Incense cedar      | Calocedrus decurrens      | CADE          | 81       |
-| Lodgepole pine     | Pinus contorta            | PICO          | 108      |
-| Jeffrey pine       | Pinus jeffreyi            | PIJE          | 116      |
-| Sugar pine         | Pinus lambertinana        | PILA          | 117      |
-| Western white pine | Pinus monticola           | PIMO          | 119      |
-| Ponderosa pine     | Pinus ponderosa           | PIPO          | 122      |
-| Foothill pine      | Pinus sabiniana           | PISA          | 127      |
-| White pine         | Pinus strobus             | PIST          | 129      |
-| Douglas-fir        | Pseudotsuga menziesii     | PSME          | 202      |
-| Redwood            | Sequoioideae sempervirens | SESE          | 211      |
-| Giant sequoia      | Sequoiadendron giganteum  | SEGI          | 212      |
-| Pacific yew        | Taxus brevifolia          | TABR          | 231      |
-| California nutmeg  | Torreya californica       | TOCA          | 251      |
-| Western hemlock    | Tsuga heterophylla        | TSHE          | 263      |
-| Mountain hemlock   | Tsuga mertensiana         | TSME          | 264      |
-| Unknown conifer    | NA                        | UNCO          | 299      |
-
-<br>
-
-**Hardwoods**
-
-| common name          | scientific name              | 4-letter code | FIA code |
-|:---------------------|:-----------------------------|:--------------|:---------|
-| Bigleaf maple        | Acer macrophyllum            | ACMA          | 312      |
-| White alder          | Alnus rhombifolia            | ALRH          | 352      |
-| Pacific madrone      | Arbutus menziesii            | ARME          | 361      |
-| Golden chinkapin     | Chrysolepis chrysophylla     | CHCH          | 431      |
-| Pacific dogwood      | Cornus nuttallii             | CONU          | 492      |
-| Tanoak               | Notholithocarpus densiflorus | NODE          | 631      |
-| Quaking aspen        | Populus tremuloides          | POTR          | 746      |
-| California live oak  | Quercus agrifolia            | QUAG          | 801      |
-| Canyon live oak      | Quercus chrysolepis          | QUCH          | 805      |
-| California black oak | Quercus kelloggii            | QUKE          | 818      |
-| Willow species       | Salix spp.                   | SASP          | 920      |
-| California-laurel    | Umbellularia californica     | UMCA          | 981      |
-| Unknown hardwood     | NA                           | UNHA          | 998      |
-| Unknown tree         | NA                           | UNTR          | 999      |
-
-*Note: Four-letter species codes are generally the first two letters of
-the genus followed by the first two letters of the species.*
-
-## Allometric equations <a name="allometric-eqns"></a>
-
-The `TreeBiomass()` and `SummaryBiomass()` functions calculate biomass
-using the Forest Inventory and Analysis (FIA) Regional Biomass Equations
-(prior to the new national-scale volume and biomass (NSVB) framework).
-Specifically, we use the equation set for the California (CA) region.
-This suite of biomass functions should not be used for data collected in
-a different region.
-
-**Stem biomass**
-
-Calculating stem biomass is a 3 step process:
-
-1.  For each tree species present in the data, find the appropriate **CA
-    region** volume equation number using the tables provided in USDA
-    Forest Service (2014a)
-
-2.  Using the assigned volume equations, calculate the volume of the
-    total stem (ground to tip). This calculation is named “CVTS” in the
-    FIA volume equation documentation (USDA Forest Service 2014a).
-
-3.  Calculate biomass using the following equation from USDA Forest
-    Service (2014b):
-
-    $BioStem_{i} = \frac{volume_{i}*density_{sp}}{2000}$
-
-    *where*
-
-    - $BioStem_{i}$ is the stem biomass of tree i in US tons
-    - $volume_{i}$ is the volume of tree i in $ft^3$ calculated in step
-      2
-    - $density_{sp}$ is the wood density in $lbs/ft^3$ for the species
-      (sp) of tree i (see tables provided in USDA Forest Service
-      (2014b))
-
-**Bark and branch biomass**
-
-Calculating bark or branch biomass is a 2 step process:
-
-1.  For each tree species present in the data, find the appropriate **CA
-    region** biomass equation number using the tables provided in USDA
-    Forest Service (2014b)
-2.  Using the assigned biomass equations, calculate the biomass of
-    bark/branches. The equations will always give biomass in kg (USDA
-    Forest Service 2014b)
-
-A note on units: the equations provided by USDA Forest Service (2014a,b)
-require inputs in specific units and provide outputs in specific units.
-`BerkeleyForestAnalytics` does the necessary unit conversions (for
-inputs and outputs) based on how the user sets the “units” parameter in
-the functions.
-
-**References:**
-
-- USDA Forest Service. (2014a). *Volume estimation for Pacific Northwest
-  (PNW) databases.*
-  <https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/volume_equations.pdf>
-
-- USDA Forest Service. (2014b). *Regional Biomass Equations used by FIA
-  to estimate bole, bark, and branches.*
-  <https://ww2.arb.ca.gov/sites/default/files/cap-and-trade/protocols/usforest/2014/biomass_equations.pdf>
-
-## Structural decay of standing dead trees <a name="decay"></a>
-
-Standing dead trees (often called snags) lose mass in two ways:
-
-1.  They degrade with pieces falling and “transferring” to other biomass
-    pools. For example, stem stops break and become coarse woody debris.
-
-2.  The remaining structures decay as measured by their density
-    (mass/volume).
-
-`BerkeleyForestAnalytics` is compliant with the Forest Inventory and
-Analysis (FIA) approach to accounting for degradation and decay:
-
-1.  Degradation: calculate biomass using the regional biomass equations,
-    inputting the diameter and height of the standing dead tree. The
-    assumption is that degradation will be captured with lower tree
-    height. Note that this assumes that the taper/allometry stays the
-    same, which is often not true.
-
-2.  Decay: once the biomass is calculated, account for decay by
-    assigning a species and decay class specific density reduction
-    factor (dead:live ratio). Density reduction factors are further
-    discussed below.
-
-Harmon *et al.* (2011) developed density reduction factors for standing
-dead trees by species and decay class. Most values in the table below
-are pulled from Appendix D of Harmon *et al.* (2011). The exceptions are
-unknown tree (UNTR), unknown conifer (UNCO), and unknown hardwood
-(UNHA). UNTR is assigned the average density reduction factor for
-standing dead trees for all species combined by decay class (see Table 7
-of Harmon *et al* 2011). UNCO and UNHA are assigned the average density
-reduction factor for standing dead trees by hardwood/softwood and decay
-class (see Table 6 of Harmon *et al.* 2011).
-
-| common name | scientific name | 4-letter code | FIA code | DRF 1 | DRF 2 | DRF 3 | DRF 4 | DRF 5 |
-|:---|:---|:---|:---|:---|:---|:---|:---|:---|
-| White fir | Abies concolor | ABCO | 15 | 0.996 | 0.873 | 0.625 | 0.625 | 0.541 |
-| Grand fir | Abies grandis | ABGR | 17 | 1.013 | 0.966 | 0.855 | 0.855 | 0.574 |
-| California red fir | Abies magnifica | ABMA | 20 | 1.04 | 1.08 | 0.626 | 0.626 | 0.467 |
-| Noble fir | Abies procera | ABPR | 22 | 1.035 | 0.836 | 0.845 | 0.845 | 0.575 |
-| Western juniper | Juniperus occidentalis | JUOC | 64 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Incense cedar | Calocedrus decurrens | CADE | 81 | 0.936 | 0.94 | 0.668 | 0.668 | 0.525 |
-| Lodgepole pine | Pinus contorta | PICO | 108 | 0.98 | 1.04 | 1.02 | 1.02 | 0.727 |
-| Jeffrey pine | Pinus jeffreyi | PIJE | 116 | 0.904 | 0.96 | 0.883 | 0.883 | 0.645 |
-| Sugar pine | Pinus lambertinana | PILA | 117 | 1.04 | 0.906 | 0.735 | 0.735 | 0.517 |
-| Western white pine | Pinus monticola | PIMO | 119 | 0.953 | 0.95 | 0.927 | 0.927 | 0.598 |
-| Ponderosa pine | Pinus ponderosa | PIPO | 122 | 0.925 | 1.007 | 1.154 | 1.154 | 0.481 |
-| Foothill pine | Pinus sabiniana | PISA | 127 | 0.953 | 0.95 | 0.927 | 0.927 | 0.598 |
-| Douglas-fir | Pseudotsuga menziesii | PSME | 202 | 0.892 | 0.831 | 0.591 | 0.591 | 0.433 |
-| Redwood | Sequoioideae sempervirens | SESE | 211 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Pacific yew | Taxus brevifolia | TABR | 231 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| California nutmeg | Torreya californica | TOCA | 251 | 0.994 | 0.951 | 0.902 | 0.902 | 0.605 |
-| Western hemlock | Tsuga heterophylla | TSHE | 263 | 0.9 | 0.83 | 0.661 | 0.661 | 0.38 |
-| Mountain hemlock | Tsuga mertensiana | TSME | 264 | 0.953 | 0.882 | 0.906 | 0.906 | 0.604 |
-| Unknown conifer | NA | UNCO | 299 | 0.97 | 1.0 | 0.92 | 0.92 | 0.55 |
-| Bigleaf maple | Acer macrophyllum | ACMA | 312 | 0.979 | 0.766 | 0.565 | 0.565 | 0.45 |
-| White alder | Alnus rhombifolia | ALRH | 352 | 1.03 | 0.903 | 0.535 | 0.535 | 0.393 |
-| Pacific madrone | Arbutus menziesii | ARME | 361 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Golden chinkapin | Chrysolepis chrysophylla | CHCH | 431 | 0.99 | 0.8 | 0.54 | 0.54 | 0.43 |
-| Pacific dogwood | Cornus nuttallii | CONU | 492 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Tanoak | Notholithocarpus densiflorus | NODE | 631 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Quaking aspen | Populus tremuloides | POTR | 746 | 0.97 | 0.75 | 0.54 | 0.54 | 0.613 |
-| California live oak | Quercus agrifolia | QUAG | 801 | 1.02 | 0.841 | 0.705 | 0.705 | 0.591 |
-| Canyon live oak | Quercus chrysolepis | QUCH | 805 | 1.02 | 0.841 | 0.705 | 0.705 | 0.591 |
-| California black oak | Quercus kelloggii | QUKE | 818 | 1.02 | 0.841 | 0.705 | 0.705 | 0.591 |
-| Willow species | Salix spp. | SASP | 920 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| California-laurel | Umbellularia californica | UMCA | 981 | 0.982 | 0.793 | 0.618 | 0.618 | 0.525 |
-| Unknown hardwood | NA | UNHA | 998 | 0.99 | 0.8 | 0.54 | 0.54 | 0.43 |
-| Unknown tree | NA | UNTR | 999 | 0.97 | 0.97 | 0.86 | 0.86 | 0.53 |
-
-*Note: DRF 1 = density reduction factor for decay class 1, etc.*
-
-<br>
-
-The adjusted biomass of standing dead trees can be calculated using the
-following equation:
-
-$BioAdj_{i} = Bio_{i}*DRF_{c,sp}$
-
-*where*
-
-- $BioAdj_{i}$ is the biomass (either stem, bark, or branch) of standing
-  dead tree i adjusted for structural decay
-- $Bio_{i}$ is the biomass (either stem, bark, or branch) of standing
-  dead tree i not adjusted for structural decay
-- $DRF_{c,sp}$ is the density reduction factor for decay class c and
-  species sp of standing dead tree i
-
-<br>
-
-**Reference:** Harmon, M.E., Woodall, C.W., Fasth, B., Sexton, J., &
-Yatkov, M. (2011). *Differences between standing and downed dead tree
-wood density reduction factors: A comparison across decay classes and
-tree species*. Research Paper NRS-15. USDA Forest Service, Northern
-Research Station, Newtown Square, PA.
-<https://doi.org/10.2737/NRS-RP-15>
-
-[Back to table of contents](#toc)
-
 # Background information for tree biomass and carbon estimations (NSVB framework) <a name="nsvb-background"></a>
 
 ## NSVB framework <a name="nsvb-framework"></a>
@@ -3218,6 +2500,22 @@ located outside of California).
 
 <br>
 
+## Decay class code table <a name="decay-table"></a>
+
+| decay class | limbs and branches | top | % bark remaining | sapwood presence and condition | heartwood condition |
+|:---|:---|:---|:---|:---|:---|
+| 1 | All present | Pointed | 100 | Intact; sound, incipient decay, hard, original color | Sound, hard, original color |
+| 2 | Few limbs, no fine branches | May be broken | Variable | Sloughing; advanced decay, fibrous, firm to soft, light brown | Sound at base, incipient decay in outer edge of upper bole, hard, light to reddish brown |
+| 3 | Limb studs only | Broken | Variable | Sloughing; fibrous, soft, light to reddish brown | Incipient decay at base, advanced decay throughout upper bole, fibrous, hard to firm, reddish brown |
+| 4 | Few or no studs | Broken | Variable | Sloughing; cubical, soft, reddish to dark crown | Advanced decay at base, sloughing from upper bole, fibrous to cubical, soft, dark reddish brown |
+| 5 | None | Broken | Less than 20 | Gone | Sloughing, cubical, soft, dark brown, OR fibrous, very soft, dark reddish brown, encased in hardened shell |
+
+**Reference:** USDA Forest Service. (2019). *Forest Inventory and
+Analysis national core field guide, volume I: Field data collection
+procedures for phase 2 plots.* Version 9.0.
+
+<br>
+
 [Back to table of contents](#toc)
 
 # Background information for surface and ground fuel load calculations <a name="surface-background"></a>
@@ -3241,6 +2539,36 @@ method in the **Sierra Nevada**. These functions should not be used for
 data collected in a different manner or region. Additionally, note that
 to stay consistent with previous studies, we use both live and dead
 trees to calculate percent basal area by species.
+
+## Species code table <a name="species-codes"></a>
+
+All species currently recognized in the surface and ground fuel load
+functions are listed below.
+
+| common name | scientific name | 4-letter code | FIA code |  |  |  |
+|:---|:---|:---|:---|:---|:---|:---|
+| White fir | Abies concolor | ABCO | 15 |  |  |  |
+| California red fir | Abies grandis | ABMA | 20 |  |  |  |
+| Incense cedar | Calocedrus decurrens | CADE | 81 |  |  |  |
+| Western juniper | Juniperus occidentalis | JUOC | 64 |  |  |  |
+| Whitebark pine | Pinus albicaulis | PIAL | 101 |  |  |  |
+| Knobcone pine | Pinus attenuata | PIAT | 103 |  |  |  |
+| Foxtail pine | Pinus balfourianae | PIBA | 104 |  |  |  |
+| Lodgepole pine | Pinus contorta | PICO | 108 |  |  |  |
+| Limber pine | Pinus flexilis | PIFL | 113 |  |  |  |
+| Jeffrey pine | Pinus jeffreyi | PIJE | 116 |  |  |  |
+| Sugar pine | Pinus lambertinana | PILA | 117 |  |  |  |
+| Singleleaf pinyon | Pinus monophylla | PIMO1 | 133 |  |  |  |
+| Western white pine | Pinus monticola | PIMO2 | 119 |  |  |  |
+| Ponderosa pine | Pinus ponderosa | PIPO | 122 |  |  |  |
+| Foothill pine | Pinus sabiniana | PISA | 127 |  |  |  |
+| Washoe pine | Pinus ponderosa var. washoensis | PIWA | 137 |  |  |  |
+| Douglas-fir | Pseudotsuga menziesii | PSME | 202 |  |  |  |
+| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 |  |  |  |
+| Mountain hemlock | Tsuga mertensiana | TSME | 264 |  |  |  |
+| Unknown conifer | NA | UNCO | 299 |  |  |  |
+| Unknown hardwood | NA | UNHA | 998 |  |  |  |
+| Unknown tree | NA | UNTR | 999 |  |  |  |
 
 ## Duff and litter loads <a name="duff-background"></a>
 
