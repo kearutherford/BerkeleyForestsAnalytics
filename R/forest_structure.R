@@ -179,9 +179,9 @@ ValidateStrData <- function(data_val, units_val) {
   }
 
   if('ht' %in% names(data_val)) {
-    plots_wo_trees <- subset(data_val, exp_factor == 0, select = c(dbh))
-  } else {
     plots_wo_trees <- subset(data_val, exp_factor == 0, select = c(dbh, ht))
+  } else {
+    plots_wo_trees <- subset(data_val, exp_factor == 0, select = c(dbh))
   }
 
   if('FALSE' %in% is.na(plots_wo_trees)) {

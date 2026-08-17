@@ -2057,6 +2057,15 @@ good_comp_metric <- data.frame(
   ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
 )
 
+good_comp_metric_no_ht <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)
+)
+
 good_comp_imperial <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
   plot = as.character(c(1,1,1,1,1,2,2,2,2)),
@@ -2067,42 +2076,283 @@ good_comp_imperial <- data.frame(
   ht = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
 )
 
-bad_comp <- data.frame(
+good_comp_imperial_no_ht <- data.frame(
   site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  site = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
-  site = c(1,1,1,2,2,2,2,2,2), # wrong class
-
   plot = as.character(c(1,1,1,1,1,2,2,2,2)),
-  plot = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
-  plot = as.character(c(1,1,1,1,1,2,2,2,3)), # no tree plot
-  plot = c(1,1,1,1,1,2,2,2,2), # wrong class
-
-  sph = c(50,50,50,50,50,50,50,50,50),
-  sph = c(50,NA,50,50,50,50,50,50,50), # NA value
-  sph = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
-  sph = c(50,50,50,50,50,50,50,50,0), # no tree plot
-
+  exp_factor = c(20,20,20,20,20,20,20,20,20),
   status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  status = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
-  status = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
-  status = c("1", "0", "1", "1", "1", "1", "1", "1", NA), # no tree plot
-  status = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
-
   species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  species = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
-  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA), # no tree plot
-  species = 15, # wrong class
+  dbh = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2)
+)
 
+good_comp_no_trees <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", NA),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA)
+)
+
+bad_comp_1 <- data.frame(
+  site = c(1,1,1,2,2,2,2,2,2), # wrong class
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
   dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  dbh = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_2 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,1,1,1,1,2,2,2,2), # wrong class
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_3 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_4 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = 15, # wrong class
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_5 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_6 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
   dbh = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
-  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # no tree plot
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
-  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6),
-  ht = c(5.1, NA, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6), # NA value
-  ht = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)), # wrong class
-  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # no tree plot
+bad_comp_7 <- data.frame(
+  site = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
+bad_comp_8 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_9 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,NA,50,50,50,50,50,50,50), # NA value
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_10 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,-50,50,50,50,50,50,50,50), # negative value
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_11 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0), # wrong use of 0
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_12 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_13 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_14 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_15 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(-10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # negative value
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_16 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_17 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)) # wrong class
+)
+
+bad_comp_18 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(-5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6) # negative value
+)
+
+bad_comp_19 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # NA value
+)
+
+bad_comp_20 <- data.frame(
+  #site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_21 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_22 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  #exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_23 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  #status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_24 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  #species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_25 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  #dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_26 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
 )
 
 
