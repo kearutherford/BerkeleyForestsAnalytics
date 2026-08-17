@@ -4,32 +4,10 @@
 \alias{ForestComp}
 \title{ForestComp}
 \usage{
-ForestComp(
-  data,
-  site,
-  plot,
-  exp_factor,
-  status,
-  species,
-  dbh,
-  relative = "BA",
-  units = "metric"
-)
+ForestComp(data, relative = "BA", units = "metric")
 }
 \arguments{
-\item{data}{A dataframe or tibble. Each row must be an observation of an individual tree.}
-
-\item{site}{Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.}
-
-\item{plot}{Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.}
-
-\item{exp_factor}{Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.}
-
-\item{status}{Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).}
-
-\item{species}{Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree.}
-
-\item{dbh}{Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.}
+\item{data}{A dataframe or tibble with the following columns: site, plot, exp_factor, status, species, and dbh. Each row must be an observation of an individual tree.}
 
 \item{relative}{Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".}
 
@@ -49,12 +27,6 @@ Compiles forest composition at the plot level. Measured as relative basal area o
 }
 \examples{
 ForestComp(data = for_demo_data,
-           site = "Forest",
-           plot = "Plot_id",
-           exp_factor = "SPH",
-           status = "Live",
-           species = "SPP",
-           dbh = "DBH_CM",
            relative = "BA",
            units = "metric")
 

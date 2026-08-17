@@ -279,7 +279,7 @@ ValidateNSVB <- function(data_val, in_units_val, out_units_val, results_val) {
          'For plots with no trees, put 0 for the exp_factor.')
   }
 
-  # Check for negative ef ------------------------------------------------------{
+  # Check for negative ef ------------------------------------------------------
   if (min(data_val$exp_factor) < 0) {
       stop('There are negative expansion factors in the provided dataframe. All expansion factors must be >= 0.')
   }

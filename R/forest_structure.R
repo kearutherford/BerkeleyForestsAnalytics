@@ -10,18 +10,13 @@
 #' @description
 #' Compiles forest structure at the plot level.
 #'
-#' @param data A dataframe or tibble. Each row must be an observation of an individual tree.
-#' @param site Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
-#' @param plot Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
-#' @param exp_factor Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
-#' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
-#' @param ht Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a numeric variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
+#' @param data A dataframe or tibble with the following columns: site, plot, exp_factor, dbh, and ht (optional). Each row must be an observation of an individual tree.
 #' @param units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric or imperial units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #'
 #' @return A dataframe with the following columns:
 #' \itemize{
-#' \item site: as described above
-#' \item plot: as described above
+#' \item site
+#' \item plot
 #' \item sph (or spa): stems per hectare (or stems per acre)
 #' \item ba_m2_ha (or ba_ft2_ac): basal area in meters squared per hectare (or feet squared per acre).
 #' \item qmd_cm (or qmd_in): quadratic mean diameter in centimeters (or inches). Weighted by the expansion factor.
@@ -31,31 +26,19 @@
 #'
 #' @examples
 #' ForestStr(data = for_demo_data,
-#'           site = "Forest",
-#'           plot = "Plot_id",
-#'           exp_factor = "SPH",
-#'           dbh = "DBH_CM",
-#'           ht = "HT_M",
 #'           units = "metric")
 #'
 #' @export
 
-ForestStr <- function(data, site, plot, exp_factor, dbh, ht = "ignore", units = "metric") {
+ForestStr <- function(data, units = "metric") {
 
   # Check and prep input data
-  step1 <- ValidateStrData(data_val = data,
-                           site_val = site,
-                           plot_val = plot,
-                           ef_val = exp_factor,
-                           ht_val = ht,
-                           dbh_val = dbh,
-                           units_val = units)
+  ValidateStrData(data_val = data, units_val = units)
 
   # Calculate composition
-  step2 <- StrCalc(str_data = step1,
-                   str_units = units)
+  step1 <- StrCalc(str_data = data, str_units = units)
 
-  return(step2)
+  return(step1)
 
 }
 
@@ -66,79 +49,10 @@ ForestStr <- function(data, site, plot, exp_factor, dbh, ht = "ignore", units = 
 ################################################################################
 ################################################################################
 
-ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_val, units_val) {
+ValidateStrData <- function(data_val, units_val) {
 
   # coerce tibble inputs into data.frame
   data_val <- as.data.frame(data_val)
-
-
-  ###########################################################
-  # Check that all columns are in the provided dataframe
-  ###########################################################
-
-  if(!(site_val %in% colnames(data_val))) {
-    stop('There is no column named "', site_val, '" in the provided dataframe.')
-  }
-
-  if(!(plot_val %in% colnames(data_val))) {
-    stop('There is no column named "', plot_val, '" in the provided dataframe.')
-  }
-
-  if(!(ef_val %in% colnames(data_val))) {
-    stop('There is no column named "', ef_val, '" in the provided dataframe.')
-  }
-
-  if(!(dbh_val %in% colnames(data_val))) {
-    stop('There is no column named "', dbh_val, '" in the provided dataframe.')
-  }
-
-  if(ht_val == "ignore") {
-    # do nothing
-  } else {
-
-    if(!(ht_val %in% colnames(data_val))) {
-       stop('There is no column named "', ht_val, '" in the provided dataframe.')
-    }
-
-  }
-
-
-  ###########################################################
-  # Check that column classes are as expected
-  ###########################################################
-
-  # Categorical variables ------------------------------------------------------
-  if(!is.character(data_val[[site_val]])) {
-    stop('The parameter site requires a character variable.\n',
-         'You have input a variable of class: ', class(data_val[[site_val]]))
-  }
-
-  if(!is.character(data_val[[plot_val]])) {
-    stop('The parameter plot requires a character variable.\n',
-         'You have input a variable of class: ', class(data_val[[plot_val]]))
-  }
-
-  # Numeric variables ----------------------------------------------------------
-  if(!is.numeric(data_val[[ef_val]])) {
-    stop('The parameter exp_factor requires a numerical variable.\n',
-         'You have input a variable of class: ', class(data_val[[ef_val]]))
-  }
-
-  if(!is.numeric(data_val[[dbh_val]])) {
-     stop('The parameter dbh requires a numerical variable.\n',
-         'You have input a variable of class: ', class(data_val[[dbh_val]]))
-  }
-
-  if(ht_val == "ignore") {
-    # do nothing
-  } else {
-
-    if(!is.numeric(data_val[[ht_val]])) {
-       stop('The parameter ht requires a numerical variable.\n',
-            'You have input a variable of class: ', class(data_val[[ht_val]]))
-    }
-
-  }
 
 
   ###########################################################
@@ -153,19 +67,68 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
 
   ###########################################################
+  # Check that all columns are in the provided dataframe
+  ###########################################################
+
+  if(!("site" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "site" column.')
+  }
+
+  if(!("plot" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "plot" column.')
+  }
+
+  if(!("exp_factor" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "exp_factor" column.')
+  }
+
+  if(!("dbh" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "dbh" column.')
+  }
+
+
+  ###########################################################
+  # Check that column classes are as expected
+  ###########################################################
+
+  # Categorical variables ------------------------------------------------------
+  if(!is.character(data_val$site)) {
+    stop('"site" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$site))
+  }
+
+  if(!is.character(data_val$plot)) {
+    stop('"plot" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$plot))
+  }
+
+  # Numeric variables ----------------------------------------------------------
+  if(!is.numeric(data_val$exp_factor)) {
+    stop('"exp_factor" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$exp_factor))
+  }
+
+  if(!is.numeric(data_val$dbh)) {
+    stop('"dbh" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$dbh))
+  }
+
+  if("ht" %in% names(data_val) && !is.numeric(data_val$ht)) {
+    stop('"ht" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$ht))
+  }
+
+
+  ###########################################################
   # Check that site and plot are as expected
   ###########################################################
 
-  if ('TRUE' %in% is.na(data_val[[site_val]])) {
-
+  if ('TRUE' %in% is.na(data_val$site)) {
     stop('There are missing site names in the provided dataframe.')
-
   }
 
-  if ('TRUE' %in% is.na(data_val[[plot_val]])) {
-
+  if ('TRUE' %in% is.na(data_val$plot)) {
     stop('There are missing plot names in the provided dataframe.')
-
   }
 
 
@@ -174,26 +137,31 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
   ##########################################################
 
   # Check for NA ---------------------------------------------------------------
-  if ('TRUE' %in% is.na(data_val[[ef_val]])) {
+  if ('TRUE' %in% is.na(data_val$exp_factor)) {
 
     stop('There are missing expansion factors in the provided dataframe.\n',
-         'For plots with no trees, put zero for the expansion factor.')
+         'For plots with no trees, put 0 for the exp_factor.')
 
   }
 
-  # First check for proper use of 0 ef -----------------------------------------
-  forests <- unique(data_val[[site_val]])
+  # Check for negative ef ------------------------------------------------------
+  if (min(data_val$exp_factor) < 0) {
+    stop('There are negative expansion factors in the provided dataframe. All expansion factors must be >= 0.')
+  }
+
+  # Check for proper use of 0 ef -----------------------------------------------
+  forests <- unique(data_val$site)
 
   for(f in forests) {
 
-    all_plots <- subset(data_val, data_val[[site_val]] == f)
-    plot_ids <- unique(all_plots[[plot_val]])
+    all_plots <- subset(data_val, site == f)
+    plot_ids <- unique(all_plots$plot)
 
     for(p in plot_ids) {
 
-      all_trees <- subset(all_plots, all_plots[[plot_val]] == p)
+      all_trees <- subset(all_plots, plot == p)
 
-      if('TRUE' %in% is.element(all_trees[[ef_val]], 0)) {
+      if('TRUE' %in% is.element(all_trees$exp_factor, 0)) {
 
         n <- nrow(all_trees)
 
@@ -210,17 +178,10 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
   }
 
-
-  if(ht_val == "ignore") {
-
-    plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
-                             select = c(dbh_val))
-
+  if('ht' %in% names(data_val)) {
+    plots_wo_trees <- subset(data_val, exp_factor == 0, select = c(dbh))
   } else {
-
-    plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
-                             select = c(dbh_val, ht_val))
-
+    plots_wo_trees <- subset(data_val, exp_factor == 0, select = c(dbh, ht))
   }
 
   if('FALSE' %in% is.na(plots_wo_trees)) {
@@ -233,12 +194,18 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
 
   ###########################################################
-  # Check for other NAs
+  # Check that dbh is as expected
   ###########################################################
 
-  plots_w_trees <- subset(data_val, data_val[[ef_val]] > 0) # pull out plots that have trees
+  plots_w_trees <- subset(data_val, exp_factor > 0) # pull out plots that have trees
 
-  if ('TRUE' %in% is.na(plots_w_trees[[dbh_val]])) {
+  # Check for negative dbh -----------------------------------------------------
+  if (min(data_val$dbh, na.rm = TRUE) < 0) {
+    stop('There are negative DBH values in the provided dataframe. All DBH values must be >= 0.')
+  }
+
+  # Check for NA ---------------------------------------------------------------
+  if ('TRUE' %in% is.na(plots_w_trees$dbh)) {
 
     warning('There are trees with missing DBH values in the provided dataframe.\n',
             'Consider addressing these missing values in your data.\n',
@@ -246,11 +213,20 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
 
   }
 
-  if(ht_val == "ignore") {
-    # do nothing
-  } else {
 
-    if ('TRUE' %in% is.na(plots_w_trees[[ht_val]])) {
+  ###########################################################
+  # Check that ht is as expected
+  ###########################################################
+
+  if ('ht' %in% names(data_val)) {
+
+    # Check for negative ht ----------------------------------------------------
+    if (min(data_val$ht, na.rm = TRUE) < 0) {
+      stop('There are negative heights in the provided dataframe. All heights must be >= 0.')
+    }
+
+    # Check for NA -------------------------------------------------------------
+    if ('TRUE' %in% is.na(plots_w_trees$ht)) {
 
       warning('There are trees with missing height values in the provided dataframe.\n',
               'Consider addressing these missing values in your data.\n',
@@ -259,30 +235,6 @@ ValidateStrData <- function(data_val, site_val, plot_val, ef_val, dbh_val, ht_va
     }
 
   }
-
-
-  ###########################################################
-  # Final dataframe prep
-  ###########################################################
-
-  # rename other columns to use moving forward ---------------------------------
-  colnames(data_val)[which(names(data_val) == colnames(data_val[site_val]))] <- "site"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[plot_val]))] <- "plot"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[ef_val]))] <- "ef"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[dbh_val]))] <- "dbh"
-
-  if(ht_val == "ignore") {
-
-    data_val <- subset(data_val, select = c(site, plot, ef, dbh))
-
-  } else {
-
-    colnames(data_val)[which(names(data_val) == colnames(data_val[ht_val]))] <- "ht"
-    data_val <- subset(data_val, select = c(site, plot, ef, dbh, ht))
-
-  }
-
-  return(data_val)
 
 }
 
@@ -306,12 +258,12 @@ StrCalc <- function(str_data, str_units) {
 
   }
 
-  str_data$ba_area <- str_data$ba_tree*str_data$ef
-  str_data$dbh_ef <- str_data$dbh*str_data$ef
+  str_data$ba_area <- str_data$ba_tree*str_data$exp_factor
+  str_data$dbh_ef <- str_data$dbh*str_data$exp_factor
 
   if ("ht" %in% colnames(str_data)) {
 
-    str_data$ht_ef <- str_data$ht*str_data$ef
+    str_data$ht_ef <- str_data$ht*str_data$exp_factor
 
   }
 
@@ -354,7 +306,7 @@ StrCalc <- function(str_data, str_units) {
       k <- nrow(fill_df)
 
       ba_area_plot <- round(sum(all_trees$ba_area, na.rm = TRUE),2)
-      den_plot <- sum(all_trees$ef)
+      den_plot <- sum(all_trees$exp_factor)
 
       if (den_plot > 0) {
 
@@ -417,5 +369,3 @@ StrCalc <- function(str_data, str_units) {
   return(fill_df)
 
 }
-
-globalVariables(c("dbh", "ef", "ht"))

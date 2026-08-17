@@ -39,13 +39,13 @@
 #' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
-#'   \item{Forest}{Broader location or forest where the data were collected}
-#'   \item{Plot_id}{Plot in which the individual tree was measured}
-#'   \item{SPH}{Stems per hectare}
-#'   \item{Live}{Live (1) or dead (0)}
-#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
-#'   \item{DBH_CM}{Diameter at breast height in centimeters}
-#'   \item{HT_M}{Tree height in meters}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{status}{Live (1) or dead (0)}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{Diameter at breast height in centimeters}
+#'   \item{ht}{Tree height in meters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes
@@ -60,13 +60,13 @@
 #' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
-#'   \item{Forest}{Broader location or forest where the data were collected}
-#'   \item{Plot_id}{Plot in which the individual tree was measured}
-#'   \item{SPH}{Stems per hectare}
-#'   \item{Live}{Live (1) or dead (0)}
-#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
-#'   \item{DBH_CM}{Diameter at breast height in centimeters}
-#'   \item{HT_M}{Tree height in meters}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{status}{Live (1) or dead (0)}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{Diameter at breast height in centimeters}
+#'   \item{ht}{Tree height in meters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
@@ -2048,60 +2048,60 @@ nsvb_b74 <- data.frame(
 ######################################################################
 
 good_comp_metric <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  SPH = c(50,50,50,50,50,50,50,50,50),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
 )
 
 good_comp_imperial <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  SPA = c(20,20,20,20,20,20,20,20,20),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
-  HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(20,20,20,20,20,20,20,20,20),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
+  ht = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
 )
 
 bad_comp <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Forest_NA = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
-  Forest_bad = c(1,1,1,2,2,2,2,2,2), # wrong class
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  site = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+  site = c(1,1,1,2,2,2,2,2,2), # wrong class
 
-  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  Plot_id_NA = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
-  Plot_id_NT = as.character(c(1,1,1,1,1,2,2,2,3)), # no tree plot
-  Plot_id_bad = c(1,1,1,1,1,2,2,2,2), # wrong class
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  plot = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
+  plot = as.character(c(1,1,1,1,1,2,2,2,3)), # no tree plot
+  plot = c(1,1,1,1,1,2,2,2,2), # wrong class
 
-  SPH = c(50,50,50,50,50,50,50,50,50),
-  SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
-  SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
-  SPH_NT = c(50,50,50,50,50,50,50,50,0), # no tree plot
+  sph = c(50,50,50,50,50,50,50,50,50),
+  sph = c(50,NA,50,50,50,50,50,50,50), # NA value
+  sph = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+  sph = c(50,50,50,50,50,50,50,50,0), # no tree plot
 
-  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  Live_NA = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
-  Live_bad = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
-  Live_NT = c("1", "0", "1", "1", "1", "1", "1", "1", NA), # no tree plot
-  Live_bad2 = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  status = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
+  status = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", NA), # no tree plot
+  status = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
 
-  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  SPP_NA = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
-  SPP_NT = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA), # no tree plot
-  SPP_bad = 15, # wrong class
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  species = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA), # no tree plot
+  species = 15, # wrong class
 
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
-  DBH_bad = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
-  DBH_NT = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # no tree plot
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  dbh = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
+  dbh = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # no tree plot
 
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6),
-  HT_NA = c(5.1, NA, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6), # NA value
-  HT_bad = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)), # wrong class
-  HT_NT = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # no tree plot
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6),
+  ht = c(5.1, NA, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6), # NA value
+  ht = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)), # wrong class
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # no tree plot
 
 )
 
