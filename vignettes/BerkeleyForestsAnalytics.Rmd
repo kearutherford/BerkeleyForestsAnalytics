@@ -180,12 +180,6 @@ Let's try using `ForestComp()` first:
 
 ```{r, error = TRUE}
 for_comp <- ForestComp(data = vign_trees_5,
-                       site = "id",
-                       plot = "plot",
-                       exp_factor = "exp_factor",
-                       status = "status",
-                       species = "species",
-                       dbh = "dbh",
                        relative = "ba",
                        units = "metric")
 ```
@@ -194,12 +188,6 @@ We get an error message. It looks like we set the "relative" parameter to "ba" i
 
 ```{r}
 for_comp <- ForestComp(data = vign_trees_5,
-                       site = "id",
-                       plot = "plot",
-                       exp_factor = "exp_factor",
-                       status = "status",
-                       species = "species",
-                       dbh = "dbh",
                        relative = "BA",
                        units = "metric")
 
@@ -232,28 +220,11 @@ If there are no trees present on plot p, then \(BA_{total,p}\) will be 0. And an
 Now let's try using `ForestStr()`. We'll keep the default for units (= "metric"): 
 
 ```{r, error = TRUE}
-for_str <- ForestStr(data = vign_trees_5,
-                     site = "id",
-                     plot = "plot",
-                     exp_factor = "Exp_factor",
-                     dbh = "dbh",
-                     ht = "ht")
-```
-
-We get an error message. Right, we have a column named "exp_factor" but not "Exp_factor" (column names are case sensitive)! That's easy to fix: 
-
-```{r}
-for_str <- ForestStr(data = vign_trees_5,
-                     site = "id",
-                     plot = "plot",
-                     exp_factor = "exp_factor",
-                     dbh = "dbh",
-                     ht = "ht")
-
+for_str <- ForestStr(data = vign_trees_5)
 head(for_str)
 ```
 
-This time the function runs without any warning or error messages. But before moving on, let's once again look at the output for the plot with no trees:
+The function runs without any warning or error messages. But before moving on, let's once again look at the output for the plot with no trees:
 
 ```{r}
 for_str %>%

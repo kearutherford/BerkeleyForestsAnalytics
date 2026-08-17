@@ -295,23 +295,23 @@ The forest composition and structure functions (`ForestComp` and `ForestStr`) as
 
 ### Inputs <a name="comp-input"></a>
 
-1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
+1. `data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
 
-2. `site` Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
+    * **site:** Must be a character variable. Describes the broader location or forest where the data were collected.
 
-3. `plot` Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
+    * **plot:** Must be a character variable. Identifies the plot in which the individual tree was measured.
 
-4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+    * **exp_factor:** Must be a numeric variable. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
-5. `status` Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).
+    * **status:** Must be a character variable. Specifies whether the individual tree is alive (1) or dead (0).
 
-6. `species` Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree.
+    * **species:** Must be a character variable. Specifies the species of the individual tree.
 
-7. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+    * **dbh:** Must be a numeric variable. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 
-8. `relative` Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".
+2. `relative` Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".
 
-9. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh variable was measured using metric (centimeters) or imperial (inches) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+3. `units` Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh variable was measured using metric (centimeters) or imperial (inches) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
 ### Outputs <a name="comp-output"></a>
 
@@ -338,14 +338,7 @@ for_demo_data
 ```{r}
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
 # keep default relative (= "BA") and units (= "metric")
-comp_demo1 <- ForestComp(data = for_demo_data,
-                         site = "Forest",
-                         plot = "Plot_id",
-                         exp_factor = "SPH",
-                         status = "Live",
-                         species = "SPP",
-                         dbh = "DBH_CM")
-
+comp_demo1 <- ForestComp(data = for_demo_data)
 comp_demo1
 ```
 
@@ -355,12 +348,6 @@ comp_demo1
 ```{r}
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
 comp_demo2 <- ForestComp(data = for_demo_data,
-                         site = "Forest",
-                         plot = "Plot_id",
-                         exp_factor = "SPH",
-                         status = "Live",
-                         species = "SPP",
-                         dbh = "DBH_CM",
                          relative = "density",
                          units = "metric")
 
@@ -377,14 +364,7 @@ for_NT_demo
 
 ```{r}
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
-comp_demo3 <- ForestComp(data = for_NT_demo,
-                         site = "Forest",
-                         plot = "Plot_id",
-                         exp_factor = "SPH",
-                         status = "Live",
-                         species = "SPP",
-                         dbh = "DBH_CM")
-
+comp_demo3 <- ForestComp(data = for_NT_demo)
 comp_demo3
 ```
 
@@ -396,19 +376,19 @@ comp_demo3
 
 ### Inputs <a name="str-input"></a>
 
-1. `data` A dataframe or tibble. Each row must be an observation of an individual tree.
+1. `data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
 
-2. `site` Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
+    * **site:** Must be a character variable. Describes the broader location or forest where the data were collected.
 
-3. `plot` Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
+    * **plot:** Must be a character variable. Identifies the plot in which the individual tree was measured.
 
-4. `exp_factor` Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+    * **exp_factor:** Must be a numeric variable. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
 
-5. `dbh` Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+    * **dbh:** Must be a numeric variable. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
 
-6. `ht` Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a numeric variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.
+    * **ht:** Must be a numeric variable. Provides the height of the individual tree in either meters or feet. This column is OPTIONAL.
 
-7. `units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric or imperial units. Must be set to either "metric" or "imperial". The default is set to "metric".
+2. `units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric or imperial units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
 ### Outputs <a name="str-output"></a>
 
@@ -440,13 +420,8 @@ for_demo_data
 **If tree heights were not measured:**
 ```{r}
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
-# keep default ht (= "ignore") and units (= "metric")
-str_demo1 <- ForestStr(data = for_demo_data,
-                       site = "Forest",
-                       plot = "Plot_id",
-                       exp_factor = "SPH",
-                       dbh = "DBH_CM")
-
+# keep default units (= "metric")
+str_demo1 <- ForestStr(data = for_demo_data)
 str_demo1
 ```
 
@@ -456,11 +431,6 @@ str_demo1
 ```{r}
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
 str_demo2 <- ForestStr(data = for_demo_data,
-                       site = "Forest",
-                       plot = "Plot_id",
-                       exp_factor = "SPH",
-                       dbh = "DBH_CM",
-                       ht = "HT_M",
                        units = "metric")
 
 str_demo2
@@ -477,11 +447,6 @@ for_NT_demo
 ```{r}
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
 str_demo3 <- ForestStr(data = for_NT_demo,
-                       site = "Forest",
-                       plot = "Plot_id",
-                       exp_factor = "SPH",
-                       dbh = "DBH_CM",
-                       ht = "HT_M",
                        units = "metric")
 
 str_demo3

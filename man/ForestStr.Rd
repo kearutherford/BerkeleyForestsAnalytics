@@ -4,28 +4,18 @@
 \alias{ForestStr}
 \title{ForestStr}
 \usage{
-ForestStr(data, site, plot, exp_factor, dbh, ht = "ignore", units = "metric")
+ForestStr(data, units = "metric")
 }
 \arguments{
-\item{data}{A dataframe or tibble. Each row must be an observation of an individual tree.}
-
-\item{site}{Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.}
-
-\item{plot}{Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.}
-
-\item{exp_factor}{Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.}
-
-\item{dbh}{Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.}
-
-\item{ht}{Default is set to "ignore", which indicates that tree heights were not taken. If heights were taken, it can be set to a numeric variable (column) in the provided dataframe or tibble, providing the height of the individual tree in either meters or feet.}
+\item{data}{A dataframe or tibble with the following columns: site, plot, exp_factor, dbh, and ht (optional). Each row must be an observation of an individual tree.}
 
 \item{units}{Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the dbh and ht variables were measured using metric (centimeters and meters) or imperial (inches and feet) units; (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units; and (3) whether results will be given in metric or imperial units. Must be set to either "metric" or "imperial". The default is set to "metric".}
 }
 \value{
 A dataframe with the following columns:
 \itemize{
-\item site: as described above
-\item plot: as described above
+\item site
+\item plot
 \item sph (or spa): stems per hectare (or stems per acre)
 \item ba_m2_ha (or ba_ft2_ac): basal area in meters squared per hectare (or feet squared per acre).
 \item qmd_cm (or qmd_in): quadratic mean diameter in centimeters (or inches). Weighted by the expansion factor.
@@ -38,11 +28,6 @@ Compiles forest structure at the plot level.
 }
 \examples{
 ForestStr(data = for_demo_data,
-          site = "Forest",
-          plot = "Plot_id",
-          exp_factor = "SPH",
-          dbh = "DBH_CM",
-          ht = "HT_M",
           units = "metric")
 
 }

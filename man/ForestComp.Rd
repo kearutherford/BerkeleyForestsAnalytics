@@ -16,9 +16,9 @@ ForestComp(data, relative = "BA", units = "metric")
 \value{
 A dataframe with the following columns:
 \itemize{
-\item site: as described above
-\item plot: as described above
-\item species: as described above
+\item site
+\item plot
+\item species
 \item dominance: relative basal area (or relative density) in percent (\%)
 }
 }
