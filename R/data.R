@@ -66,7 +66,6 @@
 #'   \item{status}{Live (1) or dead (0)}
 #'   \item{species}{Species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{Diameter at breast height in centimeters}
-#'   \item{ht}{Tree height in meters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.

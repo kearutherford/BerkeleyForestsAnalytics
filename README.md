@@ -461,7 +461,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -499,7 +499,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -553,7 +553,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -737,6 +737,8 @@ A dataframe with the following columns:
 
 ``` r
 # investigate input dataframe
+# note that tree height isn't needed for this function
+# but can be kept in the input dataframe (ht will just be ignored)
 for_demo_data
 ```
 
@@ -815,17 +817,17 @@ comp_demo2
 for_NT_demo
 ```
 
-    ##    site plot exp_factor status species  dbh   ht
-    ## 1  SEKI    1         50      1    PSME 10.3  5.1
-    ## 2  SEKI    1         50      0    ABCO 44.7 26.4
-    ## 3  SEKI    1         50      1    ABCO 19.1  8.0
-    ## 4  YOMI    1         50      1    PSME 32.8 23.3
-    ## 5  YOMI    1         50      1    CADE 13.8 11.1
-    ## 6  YOMI    2         50      1    CADE 20.2  8.5
-    ## 7  YOMI    2         50      1    CADE 31.7 22.3
-    ## 8  YOMI    2         50      1    ABCO 13.1  9.7
-    ## 9  YOMI    2         50      0    PSME 15.8 10.6
-    ## 10 YOMI    3          0   <NA>    <NA>   NA   NA
+    ##    site plot exp_factor status species  dbh
+    ## 1  SEKI    1         50      1    PSME 10.3
+    ## 2  SEKI    1         50      0    ABCO 44.7
+    ## 3  SEKI    1         50      1    ABCO 19.1
+    ## 4  YOMI    1         50      1    PSME 32.8
+    ## 5  YOMI    1         50      1    CADE 13.8
+    ## 6  YOMI    2         50      1    CADE 20.2
+    ## 7  YOMI    2         50      1    CADE 31.7
+    ## 8  YOMI    2         50      1    ABCO 13.1
+    ## 9  YOMI    2         50      0    PSME 15.8
+    ## 10 YOMI    3          0   <NA>    <NA>   NA
 
 ``` r
 # call the ForestComp() function in the BerkeleyForestsAnalytics package
@@ -913,6 +915,8 @@ A dataframe with the following columns:
 
 ### Demonstrations <a name="str-demo"></a>
 
+**If tree heights were measured:**
+
 ``` r
 # investigate input dataframe
 for_demo_data
@@ -929,10 +933,6 @@ for_demo_data
     ## 8 YOMI    2         50      1    ABCO 13.1  9.7
     ## 9 YOMI    2         50      0    PSME 15.8 10.6
 
-<br>
-
-**If tree heights were not measured:**
-
 ``` r
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
 # keep default units (= "metric")
@@ -947,58 +947,41 @@ str_demo1
 
 <br>
 
-**If tree heights were measured:**
-
-``` r
-# call the ForestStr() function in the BerkeleyForestsAnalytics package
-str_demo2 <- ForestStr(data = for_demo_data,
-                       units = "metric")
-
-str_demo2
-```
-
-    ##   site plot sph ba_m2_ha qmd_cm dbh_cm ht_m
-    ## 1 SEKI    1 150     9.70   28.7   24.7 13.2
-    ## 2 YOMI    1 100     4.97   25.2   23.3 17.2
-    ## 3 YOMI    2 200     7.20   21.4   20.2 12.8
-
-<br>
-
-**If there are plots without trees:**
+**If tree heights were not measured and there are plots without trees:**
 
 ``` r
 # investigate input dataframe
 for_NT_demo
 ```
 
-    ##    site plot exp_factor status species  dbh   ht
-    ## 1  SEKI    1         50      1    PSME 10.3  5.1
-    ## 2  SEKI    1         50      0    ABCO 44.7 26.4
-    ## 3  SEKI    1         50      1    ABCO 19.1  8.0
-    ## 4  YOMI    1         50      1    PSME 32.8 23.3
-    ## 5  YOMI    1         50      1    CADE 13.8 11.1
-    ## 6  YOMI    2         50      1    CADE 20.2  8.5
-    ## 7  YOMI    2         50      1    CADE 31.7 22.3
-    ## 8  YOMI    2         50      1    ABCO 13.1  9.7
-    ## 9  YOMI    2         50      0    PSME 15.8 10.6
-    ## 10 YOMI    3          0   <NA>    <NA>   NA   NA
+    ##    site plot exp_factor status species  dbh
+    ## 1  SEKI    1         50      1    PSME 10.3
+    ## 2  SEKI    1         50      0    ABCO 44.7
+    ## 3  SEKI    1         50      1    ABCO 19.1
+    ## 4  YOMI    1         50      1    PSME 32.8
+    ## 5  YOMI    1         50      1    CADE 13.8
+    ## 6  YOMI    2         50      1    CADE 20.2
+    ## 7  YOMI    2         50      1    CADE 31.7
+    ## 8  YOMI    2         50      1    ABCO 13.1
+    ## 9  YOMI    2         50      0    PSME 15.8
+    ## 10 YOMI    3          0   <NA>    <NA>   NA
 
 ``` r
 # call the ForestStr() function in the BerkeleyForestsAnalytics package
-str_demo3 <- ForestStr(data = for_NT_demo,
+str_demo2 <- ForestStr(data = for_NT_demo,
                        units = "metric")
 
-str_demo3
+str_demo2
 ```
 
-    ##   site plot sph ba_m2_ha qmd_cm dbh_cm ht_m
-    ## 1 SEKI    1 150     9.70   28.7   24.7 13.2
-    ## 2 YOMI    1 100     4.97   25.2   23.3 17.2
-    ## 3 YOMI    2 200     7.20   21.4   20.2 12.8
-    ## 4 YOMI    3   0     0.00     NA     NA   NA
+    ##   site plot sph ba_m2_ha qmd_cm dbh_cm
+    ## 1 SEKI    1 150     9.70   28.7   24.7
+    ## 2 YOMI    1 100     4.97   25.2   23.3
+    ## 3 YOMI    2 200     7.20   21.4   20.2
+    ## 4 YOMI    3   0     0.00     NA     NA
 
 *Notice that the plot without trees has 0 stems/ha, 0 basal area, NA
-QMD, NA DBH, and NA height.*
+QMD, and NA DBH.*
 
 [Back to table of contents](#toc)
 
@@ -1110,9 +1093,9 @@ FWD data collection:
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
     the four-letter code or FIA naming convention (see [Species code
-    tables](#species-codes) section in “Background information for tree
-    biomass estimations (prior to NSVB framework)” below). Must be set
-    to either “4letter” or “fia”. The default is set to “4letter”.
+    table](#species-codes) section in “Background information for
+    surface and ground fuel load calculations” below). Must be set to
+    either “4letter” or “fia”. The default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -1356,9 +1339,9 @@ data collection:
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
     the four-letter code or FIA naming convention (see [Species code
-    tables](#species-codes) section in “Background information for tree
-    biomass estimations (prior to NSVB framework)” below). Must be set
-    to either “4letter” or “fia”. The default is set to “4letter”.
+    table](#species-codes) section in “Background information for
+    surface and ground fuel load calculations” below). Must be set to
+    either “4letter” or “fia”. The default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -1636,9 +1619,9 @@ for duff/litter data collection:
 
 3.  `sp_codes` Specifies whether the species column in tree_data follows
     the four-letter code or FIA naming convention (see [Species code
-    tables](#species-codes) section in “Background information for tree
-    biomass estimations (prior to NSVB framework)” below). Must be set
-    to either “4letter” or “fia”. The default is set to “4letter”.
+    table](#species-codes) section in “Background information for
+    surface and ground fuel load calculations” below). Must be set to
+    either “4letter” or “fia”. The default is set to “4letter”.
 
 4.  `units` Specifies whether the input data are in metric (centimeters,
     meters, and trees per hectare) or imperial (inches, feet, and trees
@@ -2498,8 +2481,6 @@ located outside of California).
 
 <img src = "man/figures/province_map.png" />
 
-<br>
-
 ## Decay class code table <a name="decay-table"></a>
 
 | decay class | limbs and branches | top | % bark remaining | sapwood presence and condition | heartwood condition |
@@ -2545,30 +2526,30 @@ trees to calculate percent basal area by species.
 All species currently recognized in the surface and ground fuel load
 functions are listed below.
 
-| common name | scientific name | 4-letter code | FIA code |  |  |  |
-|:---|:---|:---|:---|:---|:---|:---|
-| White fir | Abies concolor | ABCO | 15 |  |  |  |
-| California red fir | Abies grandis | ABMA | 20 |  |  |  |
-| Incense cedar | Calocedrus decurrens | CADE | 81 |  |  |  |
-| Western juniper | Juniperus occidentalis | JUOC | 64 |  |  |  |
-| Whitebark pine | Pinus albicaulis | PIAL | 101 |  |  |  |
-| Knobcone pine | Pinus attenuata | PIAT | 103 |  |  |  |
-| Foxtail pine | Pinus balfourianae | PIBA | 104 |  |  |  |
-| Lodgepole pine | Pinus contorta | PICO | 108 |  |  |  |
-| Limber pine | Pinus flexilis | PIFL | 113 |  |  |  |
-| Jeffrey pine | Pinus jeffreyi | PIJE | 116 |  |  |  |
-| Sugar pine | Pinus lambertinana | PILA | 117 |  |  |  |
-| Singleleaf pinyon | Pinus monophylla | PIMO1 | 133 |  |  |  |
-| Western white pine | Pinus monticola | PIMO2 | 119 |  |  |  |
-| Ponderosa pine | Pinus ponderosa | PIPO | 122 |  |  |  |
-| Foothill pine | Pinus sabiniana | PISA | 127 |  |  |  |
-| Washoe pine | Pinus ponderosa var. washoensis | PIWA | 137 |  |  |  |
-| Douglas-fir | Pseudotsuga menziesii | PSME | 202 |  |  |  |
-| Giant sequoia | Sequoiadendron giganteum | SEGI | 212 |  |  |  |
-| Mountain hemlock | Tsuga mertensiana | TSME | 264 |  |  |  |
-| Unknown conifer | NA | UNCO | 299 |  |  |  |
-| Unknown hardwood | NA | UNHA | 998 |  |  |  |
-| Unknown tree | NA | UNTR | 999 |  |  |  |
+| common name        | scientific name                 | 4-letter code | FIA code |
+|:-------------------|:--------------------------------|:--------------|:---------|
+| White fir          | Abies concolor                  | ABCO          | 15       |
+| California red fir | Abies grandis                   | ABMA          | 20       |
+| Incense cedar      | Calocedrus decurrens            | CADE          | 81       |
+| Western juniper    | Juniperus occidentalis          | JUOC          | 64       |
+| Whitebark pine     | Pinus albicaulis                | PIAL          | 101      |
+| Knobcone pine      | Pinus attenuata                 | PIAT          | 103      |
+| Foxtail pine       | Pinus balfourianae              | PIBA          | 104      |
+| Lodgepole pine     | Pinus contorta                  | PICO          | 108      |
+| Limber pine        | Pinus flexilis                  | PIFL          | 113      |
+| Jeffrey pine       | Pinus jeffreyi                  | PIJE          | 116      |
+| Sugar pine         | Pinus lambertinana              | PILA          | 117      |
+| Singleleaf pinyon  | Pinus monophylla                | PIMO1         | 133      |
+| Western white pine | Pinus monticola                 | PIMO2         | 119      |
+| Ponderosa pine     | Pinus ponderosa                 | PIPO          | 122      |
+| Foothill pine      | Pinus sabiniana                 | PISA          | 127      |
+| Washoe pine        | Pinus ponderosa var. washoensis | PIWA          | 137      |
+| Douglas-fir        | Pseudotsuga menziesii           | PSME          | 202      |
+| Giant sequoia      | Sequoiadendron giganteum        | SEGI          | 212      |
+| Mountain hemlock   | Tsuga mertensiana               | TSME          | 264      |
+| Unknown conifer    | NA                              | UNCO          | 299      |
+| Unknown hardwood   | NA                              | UNHA          | 998      |
+| Unknown tree       | NA                              | UNTR          | 999      |
 
 ## Duff and litter loads <a name="duff-background"></a>
 
