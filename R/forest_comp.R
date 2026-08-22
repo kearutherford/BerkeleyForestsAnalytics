@@ -31,11 +31,14 @@
 
 ForestComp <- function(data, relative = "BA", units = "metric") {
 
+  # coerce tibble inputs into data.frame
+  step0 <- as.data.frame(data)
+
   # Check and prep input data
-  ValidateCompData(data_val = data, rel_val = relative, units_val = units)
+  ValidateCompData(data_val = step0, rel_val = relative, units_val = units)
 
   # assign NA species as "other"
-  step1 <- NaSp(sp_data = data)
+  step1 <- NaSp(sp_data = step0)
 
   # Calculate composition
   if (relative == "BA") {
@@ -60,10 +63,6 @@ ForestComp <- function(data, relative = "BA", units = "metric") {
 ################################################################################
 
 ValidateCompData <- function(data_val, rel_val, units_val) {
-
-  # coerce tibble inputs into data.frame
-  data_val <- as.data.frame(data_val)
-
 
   ###########################################################
   # Check that options are set appropriately

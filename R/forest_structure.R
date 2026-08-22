@@ -32,11 +32,14 @@
 
 ForestStr <- function(data, units = "metric") {
 
+  # coerce tibble inputs into data.frame
+  step0 <- as.data.frame(data)
+
   # Check and prep input data
-  ValidateStrData(data_val = data, units_val = units)
+  ValidateStrData(data_val = step0, units_val = units)
 
   # Calculate composition
-  step1 <- StrCalc(str_data = data, str_units = units)
+  step1 <- StrCalc(str_data = step0, str_units = units)
 
   return(step1)
 
@@ -50,10 +53,6 @@ ForestStr <- function(data, units = "metric") {
 ################################################################################
 
 ValidateStrData <- function(data_val, units_val) {
-
-  # coerce tibble inputs into data.frame
-  data_val <- as.data.frame(data_val)
-
 
   ###########################################################
   # Check that options are set appropriately
