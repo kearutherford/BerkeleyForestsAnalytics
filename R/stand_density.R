@@ -1,25 +1,30 @@
 
-tree_trial <- data.frame(
-  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
-  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
-  status = c("0", "0", "0", "1", NA, "1", "1", "0", "0",NA),
-  dbh = c(1.3, 44.7, 19.1, NA, 13.8, 2.2, 1.7, 13.1, 15.8,NA)
-)
-
-sub_trial <- data.frame(
-  site = c("SEKI", "YOMI"),
-  subsection = c("413Hr", "313Ga")
-)
-
-StandDensity(tree_trial, sub_trial)
-
-
 ################################################################################
 ################################################################################
 # Top-level function
 ################################################################################
 ################################################################################
+
+#' @title StandDensity
+#'
+#' @description
+#' Calculates stand density index.
+#'
+#' @param tree_data A dataframe or tibble with the following columns: site, plot, exp_factor, status, and dbh. Each row must be an observation of an individual tree.
+#' @param subsec_data A dataframe or tibble with the following columns: site, plot (optional), and subsection.
+#' @param input_units Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether dbh was measured using metric (centimeters) or imperial (inches) units; and (2) whether the expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#' @param output_units Not a variable (column) in the provided dataframe or tibble. Specifies whether output SDI values will be given in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+#'
+#' @return A dataframe with the following columns:
+#' \itemize{
+#' \item site
+#' \item plot
+#' \item current_sdi_sph (or current_sdi_spa): current stand density index in stems per hectare (or stems per acre)
+#' \item max_sdi_sph (or max_sdi_spa): max stand density index in stems per hectare (or stems per acre)
+#' \item rel_density: relative stand density index
+#' }
+#'
+#' @export
 
 StandDensity <- function(tree_data, subsec_data, input_units = "metric", output_units = "metric") {
 
@@ -32,14 +37,15 @@ StandDensity <- function(tree_data, subsec_data, input_units = "metric", output_
                      out_units_val = output_units)
 
   # Check input tree data
-  ValidateSDITrees(tree_data_val = tree_step0)
+  ValidateSDITrees(tree_data_val = tree_step0,
+                   in_units = input_units)
 
   # check input subsection data
-  #ValidateSDISubs(sub_data_val = subsec_step0)
+  ValidateSDISubs(sub_data_val = subsec_step0)
 
   # check for site or site:plot matches for tree and subsection data
-  #ValidateSDIMatches(tree_match = tree_step0,
-  #                   sub_match = subsec_step0)
+  ValidateSDIMatches(tree_match = tree_step0,
+                     sub_match = subsec_step0)
 
   # Calculate SDIs
   step1 <- CalcSDI(sdi_tree_data = tree_step0,
@@ -71,19 +77,30 @@ ValidateSDIOptions <- function(in_units_val, out_units_val) {
 }
 
 
-ValidateSDITrees <- function(tree_data_val) {
+ValidateSDITrees <- function(tree_data_val, in_units) {
 
   ###########################################################
   # Check that all columns are in the provided dataframe
   ###########################################################
 
-  necessary_columns = c("site", "plot", "exp_factor", "status", "dbh")
+  if(!("site" %in% colnames(tree_data_val))) {
+    stop('tree_data is missing the necessary "site" column.')
+  }
 
-  if(!all(is.element(necessary_columns, names(tree_data_val)))) {
+  if(!("plot" %in% colnames(tree_data_val))) {
+    stop('tree_data is missing the necessary "plot" column.')
+  }
 
-    stop('tree_data is missing necessary columns!\n',
-         'tree_data must include: time, site, plot, exp_factor, status, dbh')
+  if(!("exp_factor" %in% colnames(tree_data_val))) {
+    stop('tree_data is missing the necessary "exp_factor" column.')
+  }
 
+  if(!("status" %in% colnames(tree_data_val))) {
+    stop('tree_data is missing the necessary "status" column.')
+  }
+
+  if(!("dbh" %in% colnames(tree_data_val))) {
+    stop('tree_data is missing the necessary "dbh" column.')
   }
 
 
@@ -123,11 +140,11 @@ ValidateSDITrees <- function(tree_data_val) {
   # Check that site and plot are as expected
   ###########################################################
 
-  if ('TRUE' %in% is.na(tree_data_val$site)) {
+  if(any(is.na(tree_data_val$site))) {
     stop('"site" in tree_data has missing values.')
   }
 
-  if ('TRUE' %in% is.na(tree_data_val$plot)) {
+  if(any(is.na(tree_data_val$plot))) {
     stop('"plot" in tree_data has missing values.')
   }
 
@@ -137,7 +154,7 @@ ValidateSDITrees <- function(tree_data_val) {
   ##########################################################
 
   # Check for NA ---------------------------------------------------------------
-  if ('TRUE' %in% is.na(tree_data_val$exp_factor)) {
+  if('TRUE' %in% is.na(tree_data_val$exp_factor)) {
 
     stop('"exp_factor" in tree_data has missing values.\n',
          'For plots with no trees, set "exp_factor" to 0.')
@@ -145,7 +162,7 @@ ValidateSDITrees <- function(tree_data_val) {
   }
 
   # Check for negative ef ------------------------------------------------------
-  if (min(tree_data_val$exp_factor) < 0) {
+  if(min(tree_data_val$exp_factor) < 0) {
     stop('"exp_factor" in tree_data has values < 0. All values must be >= 0.')
   }
 
@@ -205,7 +222,7 @@ ValidateSDITrees <- function(tree_data_val) {
   # Check for NA ---------------------------------------------------------------
   plots_w_trees <- subset(tree_data_val, exp_factor > 0)
 
-  if (any(is.na(plots_w_trees$status))) {
+  if(any(is.na(plots_w_trees$status))) {
 
     warning('There are missing "status" values in tree_data outside of plots with an "exp_factor" of 0.\n',
             'Plots with an "exp_factor" of 0 represent plots with no trees and should have NA "status".\n',
@@ -219,12 +236,12 @@ ValidateSDITrees <- function(tree_data_val) {
   ###########################################################
 
   # Check for negative dbh -----------------------------------------------------
-  if (min(tree_data_val$dbh, na.rm = TRUE) <= 0) {
+  if(min(tree_data_val$dbh, na.rm = TRUE) <= 0) {
     stop('"dbh" in tree_data has values <= 0. All values must be > 0.')
   }
 
   # Check for NA ---------------------------------------------------------------
-  if (any(is.na(plots_w_trees$dbh))) {
+  if(any(is.na(plots_w_trees$dbh))) {
 
     warning('There are missing "dbh" values in tree_data outside of plots with an "exp_factor" of 0.\n',
             'Plots with an "exp_factor" of 0 represent plots with no trees and should have NA "dbh".\n',
@@ -232,17 +249,28 @@ ValidateSDITrees <- function(tree_data_val) {
             ' \n')
   }
 
+  # Check for dbh cutoffs ------------------------------------------------------
+  if(!all(is.na(tree_data_val$dbh))) {
+
+    if(in_units == "metric") {
+
+      if(any(tree_data_val$dbh < 2.54, na.rm = TRUE)) {
+        warning('tree_data has trees with DBH < 2.54 cm, which will be ignored in the SDI calculations.\n',
+                ' \n')
+      }
+
+    } else {
+
+      if(any(tree_data_val$dbh < 1.0, na.rm = TRUE)) {
+        warning('tree_data has trees with DBH < 1.0 in, which will be ignored in the SDI calculations.\n',
+                ' \n')
+      }
+
+    }
+
+  }
+
 }
-
-
-
-
-
-
-
-
-
-
 
 
 ValidateSDISubs <- function(sub_data_val) {
@@ -251,16 +279,12 @@ ValidateSDISubs <- function(sub_data_val) {
   # Check that all columns are in the provided dataframe
   ###########################################################
 
+  if(!("site" %in% colnames(sub_data_val))) {
+    stop('subsec_data is missing the necessary "site" column.')
+  }
 
-  # CHANGE THIS STYLE TO MATCH NSVB
-
-  necessary_columns = c("site", "plot", "exp_factor", "status", "dbh")
-
-  if(!all(is.element(necessary_columns, names(tree_data_val)))) {
-
-    stop('tree_data is missing necessary columns!\n',
-         'tree_data must include: time, site, plot, exp_factor, status, dbh')
-
+  if(!("subsection" %in% colnames(sub_data_val))) {
+    stop('subsec_data is missing the necessary "subsection" column.')
   }
 
 
@@ -268,20 +292,19 @@ ValidateSDISubs <- function(sub_data_val) {
   # Check that column classes are as expected
   ###########################################################
 
-  # Categorical variables ------------------------------------------------------
-  if(!is.character(tree_data_val$site)) {
-    stop('"site" in tree_data must be a character variable.\n',
-         'You have input a variable of class: ', class(tree_data_val$site))
+  if(!is.character(sub_data_val$site)) {
+    stop('"site" in subsec_data must be a character variable.\n',
+         'You have input a variable of class: ', class(sub_data_val$site))
   }
 
-  if(!is.character(tree_data_val$plot)) {
-    stop('"plot" in tree_data must be a character variable.\n',
-         'You have input a variable of class: ', class(tree_data_val$plot))
+  if("plot" %in% names(sub_data_val) && !is.character(sub_data_val$plot)) {
+    stop('"plot" in subsec_data must be a character variable.\n',
+         'You have input a variable of class: ', class(sub_data_val$plot))
   }
 
-  if(!is.character(tree_data_val$status)) {
-    stop('"status" in tree_data must be a character variable.\n',
-         'You have input a variable of class: ', class(tree_data_val$status))
+  if(!is.character(sub_data_val$subsection)) {
+    stop('"subsection" in subsec_data must be a character variable.\n',
+         'You have input a variable of class: ', class(sub_data_val$subsection))
   }
 
 
@@ -289,85 +312,71 @@ ValidateSDISubs <- function(sub_data_val) {
   # Check that site and plot are as expected
   ###########################################################
 
-  if ('TRUE' %in% is.na(tree_data_val$site)) {
-    stop('"site" in tree_data has missing values.')
+  if(any(is.na(sub_data_val$site))) {
+    stop('"site" in subsec_data has missing values.')
   }
 
-  if ('TRUE' %in% is.na(tree_data_val$plot)) {
-    stop('"plot" in tree_data has missing values.')
-  }
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ValidateMatches <- function(tree_match, fuel_match) {
-
-  tree_match$obs_id <- NA
-  n <- nrow(tree_match)
-
-  for(i in 1:n) {
-
-    t <- tree_match$time[i]
-    s <- tree_match$site[i]
-    p <- tree_match$plot[i]
-
-    tree_match$obs_id[i] <- paste0(t,'-',s,'-',p)
-
+  if("plot" %in% names(sub_data_val) && any(is.na(sub_data_val$plot))) {
+    stop('"plot" in subsec_data has missing values.')
   }
 
 
-  fuel_match$obs_id <- NA
-  n <- nrow(fuel_match)
+  ###########################################################
+  # Check that subsection is as expected
+  ###########################################################
 
-  for(i in 1:n) {
-
-    t <- fuel_match$time[i]
-    s <- fuel_match$site[i]
-    p <- fuel_match$plot[i]
-
-    fuel_match$obs_id[i] <- paste0(t,'-',s,'-',p)
-
+  # Check for NA ---------------------------------------------------------------
+  if(any(is.na(sub_data_val$subsection))) {
+    stop('"subsection" in subsec_data has missing values.')
   }
 
-  if(!all(is.element(tree_match$obs_id,fuel_match$obs_id)) ||
-     !all(is.element(fuel_match$obs_id,tree_match$obs_id))) {
+  # Check for unrecognized subsection codes ------------------------------------
+  if(!any(sub_data_val$subsection %in% subsec_max_sdi$subsection)) {
 
-    trees_wo_fuels <- paste0(unique(tree_match[!is.element(tree_match$obs_id,fuel_match$obs_id), "obs_id"]), sep = " ")
-    fuels_wo_trees <- paste0(unique(fuel_match[!is.element(fuel_match$obs_id,tree_match$obs_id), "obs_id"]), sep = " ")
+    stop('No subsection codes were recognized.\n',
+         'Check that you are using the correct subsection reference.')
+  }
 
-    stop('Tree and fuel data did not completely match!\n',
-         'These time:site:plot combinations have tree data but no fuel data: ', trees_wo_fuels, '\n',
-         'These time:site:plot combinations have fuel data but no tree data: ', fuels_wo_trees)
+  if(!all(sub_data_val$subsection %in% subsec_max_sdi$subsection)) {
 
+    unrecognized_subs <- sort(unique(
+      sub_data_val$subsection[!(sub_data_val$subsection %in% subsec_max_sdi$subsection)]
+    ))
+
+    stop('Not all subsection codes were recognized.\n',
+         'Unrecognized subsection codes: ', paste(unrecognized_subs, collapse = ", "))
   }
 
 }
 
 
+ValidateSDIMatches <- function(tree_match, sub_match) {
 
+  if("plot" %in% names(sub_match)) {
 
+    tree_match$obs_id <- paste(tree_match$site, tree_match$plot, sep = "-")
+    sub_match$obs_id <- paste(sub_match$site, sub_match$plot, sep = "-")
 
+  } else {
+
+    tree_match$obs_id <- tree_match$site
+    sub_match$obs_id <- sub_match$site
+
+  }
+
+  if(!all(is.element(tree_match$obs_id, sub_match$obs_id)) ||
+     !all(is.element(sub_match$obs_id, tree_match$obs_id))) {
+
+    trees_wo_subs <- unique(tree_match[!is.element(tree_match$obs_id, sub_match$obs_id), "obs_id"])
+    subs_wo_trees <- unique(sub_match[!is.element(sub_match$obs_id, tree_match$obs_id), "obs_id"])
+
+    stop('tree_data and subsec_data did not completely match.\n',
+         'These site or site:plot combinations have tree data but no subsection data: ', paste(trees_wo_subs, collapse = ", "), '\n',
+         'These site or site:plot combinations have subsection data but no tree data: ', paste(subs_wo_trees, collapse = ", "))
+
+  }
+
+}
 
 
 ################################################################################

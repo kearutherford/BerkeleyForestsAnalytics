@@ -2043,6 +2043,277 @@ nsvb_b74 <- data.frame(
 
 
 ######################################################################
+# dataframes used for StandDensity function tests
+######################################################################
+
+sdi_good <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_special_cases <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("0", "0", "0", "1", NA, "1", "1", "0", "0",NA),
+  dbh = c(1.3, 44.7, 19.1, NA, 13.8, 2.2, 1.7, 13.1, 15.8,NA)
+)
+
+sub_good <- data.frame(
+  site = c("SEKI", "YOMI"),
+  subsection = c("413Hr", "313Ga")
+)
+
+sub_plot_good <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sdi_b1 <- data.frame(
+  #site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b2 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b3 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  #exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b4 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  #status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b5 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA)
+  #dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b6 <- data.frame(
+  site = as.factor(c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI")),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b7 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,1,1,1,1,2,2,2,2,3),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b8 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c(1, 1, 0, 1, 1, 1, 1, 0, 1, NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b9 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = as.character(c(50,50,50,50,50,50,50,50,50,0)),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b10 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = as.character(c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA))
+)
+
+sdi_b11 <- data.frame(
+  site = c(NA, "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b12 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(NA,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b13 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(NA,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b14 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,-50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b15 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b16 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", "0"),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b17 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("live", "dead", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b18 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", NA, NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b19 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(-12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b20 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, NA, NA)
+)
+
+sdi_b21 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(0.8, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sub_plot_b1 <- data.frame(
+  #site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b2 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3")
+  #subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b3 <- data.frame(
+  site = as.factor(c("SEKI", "YOMI", "YOMI", "YOMI")),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b4 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1, 1, 2, 3),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b5 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c(413, 313, 313, 313)
+)
+
+sub_plot_b6 <- data.frame(
+  site = c(NA, "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b7 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", NA, "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b8 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c(NA, "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b9 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413", "313", "313", "313")
+)
+
+sub_plot_b10 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b11 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("2", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_b1 <- data.frame(
+  site = c("YOPI", "YOMI"),
+  subsection = c("413Hr", "313Ga")
+)
+
+
+######################################################################
 # dataframes used for ForestComp and ForestStr function tests
 ######################################################################
 
