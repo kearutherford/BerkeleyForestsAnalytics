@@ -33,3 +33,15 @@ A dataframe with the following columns:
 \description{
 Calculates stand density index.
 }
+\examples{
+StandDensity(tree_data = sdi_demo_trees,
+             subsec_data = sdi_demo_subs,
+             input_units = "metric",
+             output_units = "metric")
+
+StandDensity(tree_data = sdi_demo_trees,
+             subsec_data = sdi_demo_subs_plots,
+             input_units = "metric",
+             output_units = "metric")
+
+}

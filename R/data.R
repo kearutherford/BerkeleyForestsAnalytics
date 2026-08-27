@@ -31,6 +31,58 @@
 "nsvb_demo"
 
 
+#' @title Tree data for stand density index demonstrations
+#'
+#' @description
+#' A fake dataset created for stand density index demonstration purposes only
+#'
+#' @format
+#' A dataframe with 10 rows and 5 columns:
+#' \describe{
+#'   \item{site}{Forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{status}{Live (1) or dead (0)}
+#'   \item{dbh}{Diameter at breast height in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes
+"sdi_demo_trees"
+
+
+#' @title Subsection data for stand density index demonstrations
+#'
+#' @description
+#' A fake dataset created for stand density index demonstration purposes only
+#'
+#' @format
+#' A dataframe with 2 rows and 2 columns:
+#' \describe{
+#'   \item{site}{Forest where the data were collected}
+#'   \item{subsection}{Subsection in which the data were collected}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes
+"sdi_demo_subs"
+
+
+#' @title Subsection data for stand density index demonstrations
+#'
+#' @description
+#' A fake dataset created for stand density index demonstration purposes only
+#'
+#' @format
+#' A dataframe with 4 rows and 3 columns:
+#' \describe{
+#'   \item{site}{Forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{subsection}{Subsection in which the data were collected}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes
+"sdi_demo_subs_plots"
+
+
 #' @title Data for forest composition and structure demonstrations
 #'
 #' @description

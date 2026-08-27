@@ -319,7 +319,7 @@ The `StandDensity` function estimates current stand density index (SDI), maximum
 
     * **subsection:** Must be a numeric variable. Described the subsection in which the data were collected (see [Subsections](#subsecs) section in "Background information for stand density index" below).
   
-3. `input_units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh was measured using metric (centimeters) or imperial (inches) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+3. `input_units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh was measured using metric (centimeters) or imperial (inches) units and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
 4. `output_units` Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
@@ -335,34 +335,13 @@ A dataframe with the following columns:
 
 4. `max_sdi_sph` (or `max_sdi_spa`): maximum stand density index in stems per hectare (or stems per acre)
 
-5. `rel_density`: relative density (current SDI/max SDI; unitless)
+5. `rel_density`: relative density (current SDI/max SDI; unit less)
 
 ### Demonstrations <a name="sdi-demo"></a>
 
 ```{r}
-sdi_demo_trees <- data.frame(
-  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
-  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
-  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
-  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
-)
-
-sdi_demo_subs <- data.frame(
-  site = c("SEKI", "YOMI"),
-  subsection = c("313Hp", "313Ho")
-)
-
-sdi_demo_subs_plots <- data.frame(
-  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
-  plot = c("1", "1", "2", "3"),
-  subsection = c("313Hp", "313Hl", "313Ho", "313Ho")
-)
-```
-
-```{r}
 # investigate input tree_data
-sdi_demo_data
+sdi_demo_trees
 ```
 
 <br>
