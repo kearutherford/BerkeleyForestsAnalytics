@@ -291,6 +291,119 @@ nsvb_demo5
 
 [Back to table of contents](#toc)
 
+# Stand density index <a name="sdi-overview"></a>
+
+The `StandDensity` function estimates current stand density index (SDI), maximum SDI, and relative density. See [Background information for stand density index](#sdi-background) below for further details.
+
+## :eight_spoked_asterisk: `StandDensity( )` <a name="sdi"></a>
+
+### Inputs <a name="sdi-input"></a>
+
+1. `tree_data` A dataframe or tibble. Each row must be an observation of an individual tree. Must have at least these columns (column names are exact):
+
+    * **site:** Must be a character variable. Describes the broader location or forest where the data were collected.
+
+    * **plot:** Must be a character variable. Identifies the plot in which the individual tree was measured.
+
+    * **exp_factor:** Must be a numeric variable. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
+
+    * **status:** Must be a character variable. Specifies whether the individual tree is alive (1) or dead (0).
+
+    * **dbh:** Must be a numeric variable. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches. 
+
+2. `subsec_data` A dataframe or tibble. Each row must correspond to an individual site or site/plot. Must have at least these columns (column names are exact):
+
+    * **site:** Must be a character variable. Describes the broader location or forest where the data were collected.
+
+    * **plot:** Must be a character variable. Identifies the plot in which the individual tree was measured. This column is OPTIONAL. If all the plots in your site are in the same subsection then this column is not needed; but if the plots at your site are in different ecological subsections then this column may be included. 
+
+    * **subsection:** Must be a numeric variable. Described the subsection in which the data were collected (see [Subsections](#subsecs) section in "Background information for stand density index" below).
+  
+3. `input_units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh was measured using metric (centimeters) or imperial (inches) units; and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+
+4. `output_units` Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+
+### Outputs <a name="sdi-output"></a>
+
+A dataframe with the following columns: 
+
+1. `site`: as described above
+
+2. `plot`: as described above
+
+3. `current_sdi_sph` (or `current_sdi_spa`): current stand density index in stems per hectare (or stems per acre)
+
+4. `max_sdi_sph` (or `max_sdi_spa`): maximum stand density index in stems per hectare (or stems per acre)
+
+5. `rel_density`: relative density (current SDI/max SDI; unitless)
+
+### Demonstrations <a name="sdi-demo"></a>
+
+```{r}
+sdi_demo_trees <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_demo_subs <- data.frame(
+  site = c("SEKI", "YOMI"),
+  subsection = c("313Hp", "313Ho")
+)
+
+sdi_demo_subs_plots <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("313Hp", "313Hl", "313Ho", "313Ho")
+)
+```
+
+```{r}
+# investigate input tree_data
+sdi_demo_data
+```
+
+<br>
+
+**Plots within sites are in the same subsection:**
+```{r}
+# investigate input subsec_data
+sdi_demo_subs
+```
+
+```{r}
+# call the StandDensity() function in the BerkeleyForestsAnalytics package
+# keep default input_units (= "metric") and output_units (= "metric")
+sdi_demo1 <- StandDensity(tree_data = sdi_demo_trees,
+                          subsec_data = sdi_demo_subs)
+
+sdi_demo1
+```
+
+*Notice that the plot without trees (site YOMI, plot 3) has 0 current SDI and 0 relative density.*
+
+<br>
+
+**Plots within sites are in different subsections:**
+```{r}
+# investigate input subsec_data
+sdi_demo_subs_plots
+```
+
+```{r}
+# call the StandDensity() function in the BerkeleyForestsAnalytics package
+# keep default input_units (= "metric")
+sdi_demo2 <- StandDensity(tree_data = sdi_demo_trees,
+                          subsec_data = sdi_demo_subs_plots,
+                          output_units = "imperial")
+
+sdi_demo2
+```
+
+[Back to table of contents](#toc)
+
 # Forest composition and structure compilations <a name="forest-comp-overview"></a>
 
 The forest composition and structure functions (`ForestComp` and `ForestStr`) assist with common plot-level data compilations. These functions help ensure that best practices in data compilation are observed.
