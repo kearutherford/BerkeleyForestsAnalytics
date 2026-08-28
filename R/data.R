@@ -11,8 +11,8 @@
 #' @format
 #' A dataframe with 16 rows and 14 columns:
 #' \describe{
-#'   \item{division}{Ecodivision in which the data were collected}
-#'   \item{province}{Province in which the data were collected}
+#'   \item{division}{Ecological Division in which the data were collected}
+#'   \item{province}{Ecological Province in which the data were collected}
 #'   \item{site}{Forest where the data were collected}
 #'   \item{plot}{Plot in which the individual tree was measured}
 #'   \item{exp_factor}{Stems per hectare}
@@ -59,7 +59,7 @@
 #' A dataframe with 2 rows and 2 columns:
 #' \describe{
 #'   \item{site}{Forest where the data were collected}
-#'   \item{subsection}{Subsection in which the data were collected}
+#'   \item{subsection}{Ecological Subsection in which the data were collected}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes
@@ -76,7 +76,7 @@
 #' \describe{
 #'   \item{site}{Forest where the data were collected}
 #'   \item{plot}{Plot in which the individual tree was measured}
-#'   \item{subsection}{Subsection in which the data were collected}
+#'   \item{subsection}{Ecological Subsection in which the data were collected}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes

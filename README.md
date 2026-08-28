@@ -42,6 +42,11 @@ encounter unexpected inputs or formats.
 >     - [Inputs](#nsvb-input)
 >     - [Outputs](#nsvb-output)
 >     - [Demonstrations](#nsvb-demo)
+> - [Stand density index](#sdi-overview)
+>   - [StandDensity()](#sdi)
+>     - [Inputs](#sdi-input)
+>     - [Outputs](#sdi-output)
+>     - [Demonstrations](#sdi-demo)
 > - [Forest composition and structure
 >   compilations](#forest-comp-overview)
 >   - [ForestComp()](#forest-comp)
@@ -78,8 +83,12 @@ encounter unexpected inputs or formats.
 >   (NSVB framework)](#nsvb-background)
 >   - [NSVB framework](#nsvb-framework)
 >   - [Workflow validation](#nsvb-validation)
->   - [Divisions and provinces](#div-prov)
+>   - [Ecological Divisions and Provinces](#div-prov)
 >   - [Decay class code table](#decay-table)
+> - [Background information for stand density index](#sdi-background)
+>   - [Current SDI](#sdi-current)
+>   - [Maximum SDI](#sdi-max)
+>   - [Ecological Subsections](#sdi-subsecs)
 > - [Background information for surface and ground fuel load
 >   calculations](#surface-background)
 >   - [Species code table](#species-codes)
@@ -214,14 +223,16 @@ details.
     exact):
 
     - **division:** Must be a character variable. Describes the
-      ecodivision in which the data were collected (see [Division and
-      provinces](#div-prov) section in “Background information for tree
-      biomass estimates (NSVB framework)” below).
+      Ecological Division in which the data were collected (see
+      [Ecological Divisions and Provinces](#div-prov) section in
+      “Background information for tree biomass estimates (NSVB
+      framework)” below).
 
-    - **province:** Must be a character variable. Describes the province
-      (within the ecodivision) in which the data were collected (see
-      [Division and provinces](#div-prov) section in “Background
-      information for tree biomass estimates (NSVB framework)” below).
+    - **province:** Must be a character variable. Describes the
+      Ecological Province (within the Ecological Division) in which the
+      data were collected (see [Ecological Divisions and
+      Provinces](#div-prov) section in “Background information for tree
+      biomass estimates (NSVB framework)” below).
 
     - **site:** Must be a character variable. Describes the broader
       location or forest where the data were collected.
@@ -461,7 +472,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.17 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -499,7 +510,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.22 secs
+    ## Time difference of 0.19 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -553,7 +564,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.2 secs
+    ## Time difference of 0.18 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -606,7 +617,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.21 secs
+    ## Time difference of 0.2 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -719,10 +730,10 @@ density index](#sdi-background) below for further details.
       column is not needed; but if the plots at your site are in
       different ecological subsections then this column may be included.
 
-    - **subsection:** Must be a numeric variable. Described the
-      subsection in which the data were collected (see
-      [Subsections](#subsecs) section in “Background information for
-      stand density index” below).
+    - **subsection:** Must be a numeric variable. Describes the
+      Ecological Subsection in which the data were collected (see
+      [Ecological Subsections](#sdi-subsecs) section in “Background
+      information for stand density index” below).
 
 3.  `input_units` Not a variable (column) in the provided dataframe or
     tibble. Specifies (1) whether the input dbh was measured using
@@ -2623,11 +2634,19 @@ biomass with FIA’s implementation of NSVB, can be found in the
 supporting repository
 [BFA_NSVB_Validation](https://github.com/kearutherford/BFA_NSVB_Validation).
 
-## Divisions and provinces <a name="div-prov"></a>
+## Ecological Divisions and Provinces <a name="div-prov"></a>
 
-The NSVB framework uses ecodivisions (i.e., divisions). Divisions are
-further broken down into provinces. You can download the zipped
-shapefile from
+The US Forest Service developed the National Hierarchical Framework of
+Ecological Units, which has five nested levels: domains, divisions,
+provinces, sections, and subsections. The framework was initially
+deployed in 2007 and updated in 2025. The NSVB framework was developed
+based on the 2007 version. The maximum SDI in the `StandDensity()`
+function uses the updated 2025 version. It is important to recognize
+that although both versions internally exhibit the intended nesting
+pattern, there is not perfect nesting between the different versions.
+
+The NSVB framework uses Ecological Divisions. Divisions are further
+broken down into provinces. You can download the zipped shapefile from
 [HERE](https://drive.google.com/uc?export=download&id=1DPffSnlwVutUC0O-Ykq56yj0wvTJRuDP)
 to determine the division(s) and province(s) your study site(s) fall
 into. The provided shapefile covers the entire continental United
@@ -2654,6 +2673,56 @@ located outside of California).
 **Reference:** USDA Forest Service. (2019). *Forest Inventory and
 Analysis national core field guide, volume I: Field data collection
 procedures for phase 2 plots.* Version 9.0.
+
+<br>
+
+[Back to table of contents](#toc)
+
+# Background information for stand density index <a name="sdi-background"></a>
+
+## Current SDI <a name="sdi-current"></a>
+
+Current SDI (at the plot level) is calculated for live trees with DBH
+\>= 2.65 cm (1.0 in) as:
+
+$\sum sph_{i} \left(\frac{dbh_{i}}{25.4}\right)^{1.6}$
+
+*where*
+
+- $sph_{i}$ is the number of trees per hectare represented by the
+  $i^{th}$ tree on the plot
+- $dbh_{i}$ is the diameter at breast height of the $i^{th}$ tree on the
+  plot
+
+## Maximum SDI <a name="sdi-max"></a>
+
+Maximum SDI uses the 30 x 30 m spatial dataset for across the
+continental US developed by Chivhenge *et. al.* (2025). Upon
+consultation with one of the authors, Christopher Woodall, we aggregated
+the 30 x 30 m dataset to the Ecological Subsection level (see below for
+details on subsections). Specifically, we calculated the median of the
+max SDI for each subsection.
+
+Chivhenge, E., A.R. Weiskittel, C.W. Woodall, A.W. D’Amato, & A.
+Daigneault. (2025). Geospatial estimation of forest relative density for
+carbon stewardship decision support across the continental US.
+*Scientific Data*, 12, 1728.
+<https://doi.org/10.1038/s41597-025-06012-6>
+
+## Ecological Subsections <a name="sdi-subsecs"></a>
+
+The US Forest Service developed the National Hierarchical Framework of
+Ecological Units, which has five nested levels: domains, divisions,
+provinces, sections, and subsections. The framework was initially
+deployed in 2007 and updated in 2025. The NSVB framework was developed
+based on the 2007 version. The maximum SDI in the `StandDensity()`
+function uses the updated 2025 version. It is important to recognize
+that although both versions internally exhibit the intended nesting
+pattern, there is not perfect nesting between the different versions.
+
+You can download the Ecosys_EcomapSubsections_2025 shapefile from
+[HERE](https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=Ecosys_EcomapSubsections_2025)
+to determine the subsection(s) your study site(s) fall into.
 
 <br>
 

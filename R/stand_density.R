@@ -20,8 +20,8 @@
 #' \item site
 #' \item plot
 #' \item current_sdi_sph (or current_sdi_spa): current stand density index in stems per hectare (or stems per acre)
-#' \item max_sdi_sph (or max_sdi_spa): max stand density index in stems per hectare (or stems per acre)
-#' \item rel_density: relative stand density index
+#' \item max_sdi_sph (or max_sdi_spa): maximum stand density index in stems per hectare (or stems per acre)
+#' \item rel_density: relative density
 #' }
 #'
 #' @examples

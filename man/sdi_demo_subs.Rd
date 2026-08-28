@@ -8,7 +8,7 @@
 A dataframe with 2 rows and 2 columns:
 \describe{
 \item{site}{Forest where the data were collected}
-\item{subsection}{Subsection in which the data were collected}
+\item{subsection}{Ecological Subsection in which the data were collected}
 }
 }
 \source{

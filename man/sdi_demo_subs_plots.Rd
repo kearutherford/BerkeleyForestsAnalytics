@@ -9,7 +9,7 @@ A dataframe with 4 rows and 3 columns:
 \describe{
 \item{site}{Forest where the data were collected}
 \item{plot}{Plot in which the individual tree was measured}
-\item{subsection}{Subsection in which the data were collected}
+\item{subsection}{Ecological Subsection in which the data were collected}
 }
 }
 \source{
