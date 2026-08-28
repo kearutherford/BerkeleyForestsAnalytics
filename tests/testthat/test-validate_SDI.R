@@ -132,11 +132,6 @@ test_that("DBH handling works (tree data)", {
 })
 
 
-
-
-
-
-
 test_that("Missing columns throw an error (subsection data)", {
 
   expect_error(ValidateSDISubs(sub_data_val = sub_plot_b1),
@@ -171,6 +166,17 @@ test_that("Missing id information throws an error (subsection data)", {
 
   expect_error(ValidateSDISubs(sub_data_val = sub_plot_b7),
                '"plot" in subsec_data has missing values.')
+
+})
+
+
+test_that("Duplicate site/plot combinations throw an error (subsection data)", {
+
+  expect_error(ValidateSDISubs(sub_data_val = sub_plot_b12),
+               'In subsec_data there must be only one row per site-plot combination.\nDuplicate site-plot combinations: SEKI-1')
+
+  expect_error(ValidateSDISubs(sub_data_val = sub_b2),
+               'In subsec_data there must be only one row per site.\nDuplicate sites: SEKI')
 
 })
 

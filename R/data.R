@@ -2359,10 +2359,22 @@ sub_plot_b11 <- data.frame(
   subsection = c("413Hr", "313He", "313Ga", "313Ga")
 )
 
+sub_plot_b12 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  plot = c("1", "1", "1", "2"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
 sub_b1 <- data.frame(
   site = c("YOPI", "YOMI"),
   subsection = c("413Hr", "313Ga")
 )
+
+sub_b2 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI"),
+  subsection = c("413Hr", "413Hr", "313Ga")
+)
+
 
 
 ######################################################################

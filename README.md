@@ -424,7 +424,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.28 secs
+    ## Time difference of 0.31 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -472,7 +472,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.19 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -510,7 +510,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.2 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -564,7 +564,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.18 secs
+    ## Time difference of 0.23 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -617,7 +617,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.2 secs
+    ## Time difference of 0.21 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -726,9 +726,9 @@ density index](#sdi-background) below for further details.
 
     - **plot:** Must be a character variable. Identifies the plot in
       which the individual tree was measured. This column is OPTIONAL.
-      If all the plots in your site are in the same subsection then this
-      column is not needed; but if the plots at your site are in
-      different ecological subsections then this column may be included.
+      If all plots within a site are located in the same subsection,
+      this column is not needed. If plots within a site span multiple
+      subsections, this column may be included.
 
     - **subsection:** Must be a numeric variable. Describes the
       Ecological Subsection in which the data were collected (see
@@ -761,7 +761,7 @@ A dataframe with the following columns:
 4.  `max_sdi_sph` (or `max_sdi_spa`): maximum stand density index in
     stems per hectare (or stems per acre)
 
-5.  `rel_density`: relative density (current SDI/max SDI; unit less)
+5.  `rel_density`: relative density (current SDI/maximum SDI; unitless)
 
 ### Demonstrations <a name="sdi-demo"></a>
 
@@ -2637,13 +2637,13 @@ supporting repository
 ## Ecological Divisions and Provinces <a name="div-prov"></a>
 
 The US Forest Service developed the National Hierarchical Framework of
-Ecological Units, which has five nested levels: domains, divisions,
-provinces, sections, and subsections. The framework was initially
-deployed in 2007 and updated in 2025. The NSVB framework was developed
-based on the 2007 version. The maximum SDI in the `StandDensity()`
-function uses the updated 2025 version. It is important to recognize
-that although both versions internally exhibit the intended nesting
-pattern, there is not perfect nesting between the different versions.
+Ecological Units, which consists of five nested levels: domains,
+divisions, provinces, sections, and subsections. The framework was
+initially implemented in 2007 and updated in 2025. The NSVB framework
+was developed using the 2007 version, whereas the maximum SDI values
+used in `StandDensity()` are based on the updated 2025 version. The
+spatial boundaries and naming conventions of ecological units do not
+align perfectly between the 2007 and 2025 versions.
 
 The NSVB framework uses Ecological Divisions. Divisions are further
 broken down into provinces. You can download the zipped shapefile from
@@ -2682,8 +2682,8 @@ procedures for phase 2 plots.* Version 9.0.
 
 ## Current SDI <a name="sdi-current"></a>
 
-Current SDI (at the plot level) is calculated for live trees with DBH
-\>= 2.65 cm (1.0 in) as:
+Current SDI is calculated at the plot level for live trees with DBH \>=
+2.65 cm (1.0 in) as:
 
 $\sum sph_{i} \left(\frac{dbh_{i}}{25.4}\right)^{1.6}$
 
@@ -2691,17 +2691,17 @@ $\sum sph_{i} \left(\frac{dbh_{i}}{25.4}\right)^{1.6}$
 
 - $sph_{i}$ is the number of trees per hectare represented by the
   $i^{th}$ tree on the plot
-- $dbh_{i}$ is the diameter at breast height of the $i^{th}$ tree on the
-  plot
+- $dbh_{i}$ is the diameter at breast height, in cm, of the $i^{th}$
+  tree on the plot
 
 ## Maximum SDI <a name="sdi-max"></a>
 
-Maximum SDI uses the 30 x 30 m spatial dataset for across the
-continental US developed by Chivhenge *et. al.* (2025). Upon
-consultation with one of the authors, Christopher Woodall, we aggregated
-the 30 x 30 m dataset to the Ecological Subsection level (see below for
-details on subsections). Specifically, we calculated the median of the
-max SDI for each subsection.
+Maximum SDI is derived from the 30 × 30 m spatial dataset developed by
+Chivhenge *et al.* (2025) for the continental US. In consultation with
+one of the authors, Christopher Woodall, we aggregated the 30 × 30 m
+estimates to the Ecological Subsection level (see below for details on
+subsections). Specifically, we calculated the median maximum SDI within
+each ecological subsection.
 
 Chivhenge, E., A.R. Weiskittel, C.W. Woodall, A.W. D’Amato, & A.
 Daigneault. (2025). Geospatial estimation of forest relative density for
@@ -2712,13 +2712,13 @@ carbon stewardship decision support across the continental US.
 ## Ecological Subsections <a name="sdi-subsecs"></a>
 
 The US Forest Service developed the National Hierarchical Framework of
-Ecological Units, which has five nested levels: domains, divisions,
-provinces, sections, and subsections. The framework was initially
-deployed in 2007 and updated in 2025. The NSVB framework was developed
-based on the 2007 version. The maximum SDI in the `StandDensity()`
-function uses the updated 2025 version. It is important to recognize
-that although both versions internally exhibit the intended nesting
-pattern, there is not perfect nesting between the different versions.
+Ecological Units, which consists of five nested levels: domains,
+divisions, provinces, sections, and subsections. The framework was
+initially implemented in 2007 and updated in 2025. The NSVB framework
+was developed using the 2007 version, whereas the maximum SDI values
+used in `StandDensity()` are based on the updated 2025 version. The
+spatial boundaries and naming conventions of ecological units do not
+align perfectly between the 2007 and 2025 versions.
 
 You can download the Ecosys_EcomapSubsections_2025 shapefile from
 [HERE](https://data.fs.usda.gov/geodata/edw/datasets.php?xmlKeyword=Ecosys_EcomapSubsections_2025)

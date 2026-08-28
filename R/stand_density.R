@@ -323,12 +323,41 @@ ValidateSDISubs <- function(sub_data_val) {
   # Check that site and plot are as expected
   ###########################################################
 
+  # Check for NA ---------------------------------------------------------------
   if(any(is.na(sub_data_val$site))) {
     stop('"site" in subsec_data has missing values.')
   }
 
   if("plot" %in% names(sub_data_val) && any(is.na(sub_data_val$plot))) {
     stop('"plot" in subsec_data has missing values.')
+  }
+
+  # Check for duplicate site/plot combinations ---------------------------------
+  if("plot" %in% names(sub_data_val)) {
+
+    duplicated_rows <- duplicated(sub_data_val[c("site", "plot")])
+
+    if(any(duplicated_rows)) {
+
+      duplicates <- unique(sub_data_val[duplicated_rows, c("site", "plot")])
+
+      stop('In subsec_data there must be only one row per site-plot combination.\n',
+           'Duplicate site-plot combinations: ',
+           paste(paste0(duplicates$site, "-", duplicates$plot), collapse = ", "))
+    }
+
+  } else {
+
+      duplicated_rows <- duplicated(sub_data_val$site)
+
+      if(any(duplicated_rows)) {
+
+        duplicates <- unique(sub_data_val[duplicated_rows, "site"])
+
+        stop('In subsec_data there must be only one row per site.\n',
+             'Duplicate sites: ', paste(duplicates, collapse = ", "))
+      }
+
   }
 
 
