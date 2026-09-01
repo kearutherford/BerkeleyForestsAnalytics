@@ -424,7 +424,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.31 secs
+    ## Time difference of 0.13 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -472,7 +472,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.19 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -510,7 +510,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.2 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -564,7 +564,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.23 secs
+    ## Time difference of 0.09 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -617,7 +617,7 @@ nsvb_demo5
 ```
 
     ## $run_time
-    ## Time difference of 0.21 secs
+    ## Time difference of 0.08 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -724,8 +724,7 @@ density index](#sdi-background) below for further details.
     - **site:** Must be a character variable. Describes the broader
       location or forest where the data were collected.
 
-    - **plot:** Must be a character variable. Identifies the plot in
-      which the individual tree was measured. This column is OPTIONAL.
+    - **plot:** Must be a character variable. This column is OPTIONAL.
       If all plots within a site are located in the same subsection,
       this column is not needed. If plots within a site span multiple
       subsections, this column may be included.
@@ -746,6 +745,9 @@ density index](#sdi-background) below for further details.
     tibble. Specifies whether results will be given in metric (stems per
     hectare) or imperial (stems per acre) units. Must be set to either
     “metric” or “imperial”. The default is set to “metric”.
+
+*Note: there must be a one-to-one match between site or site:plot
+identities of tree and subsection data.*
 
 ### Outputs <a name="sdi-output"></a>
 
@@ -784,7 +786,7 @@ sdi_demo_trees
 
 <br>
 
-**Plots within sites are in the same subsection:**
+**Plots within sites are located in the same subsection:**
 
 ``` r
 # investigate input subsec_data
@@ -815,7 +817,7 @@ SDI and 0 relative density.*
 
 <br>
 
-**Plots within sites are in different subsections:**
+**Plots within sites are located in different subsections:**
 
 ``` r
 # investigate input subsec_data

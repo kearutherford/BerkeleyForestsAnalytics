@@ -452,7 +452,7 @@ CalcSDI <- function(sdi_tree_data, sdi_subsec_data, sdi_input, sdi_output) {
 
       all_trees <- subset(all_plots, plot == p)
 
-      complete <- complete.cases(all_trees[c("status", "dbh")])
+      complete <- stats::complete.cases(all_trees[c("status", "dbh")])
       alert_na <- !any(complete)
       alert_all_dead <- any(complete) && all(all_trees$status[complete] == "0")
 

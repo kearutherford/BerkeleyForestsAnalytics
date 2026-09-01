@@ -324,13 +324,15 @@ The `StandDensity` function estimates current stand density index (SDI), maximum
 
     * **site:** Must be a character variable. Describes the broader location or forest where the data were collected.
 
-    * **plot:** Must be a character variable. Identifies the plot in which the individual tree was measured. This column is OPTIONAL. If all plots within a site are located in the same subsection, this column is not needed. If plots within a site span multiple subsections, this column may be included.
+    * **plot:** Must be a character variable. This column is OPTIONAL. If all plots within a site are located in the same subsection, this column is not needed. If plots within a site span multiple subsections, this column may be included.
 
     * **subsection:** Must be a numeric variable. Describes the Ecological Subsection in which the data were collected (see [Ecological Subsections](#sdi-subsecs) section in "Background information for stand density index" below).
   
 3. `input_units` Not a variable (column) in the provided dataframe or tibble. Specifies (1) whether the input dbh was measured using metric (centimeters) or imperial (inches) units and (2) whether the input expansion factor is in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 
 4. `output_units` Not a variable (column) in the provided dataframe or tibble. Specifies whether results will be given in metric (stems per hectare) or imperial (stems per acre) units. Must be set to either "metric" or "imperial". The default is set to "metric".
+
+*Note: there must be a one-to-one match between site or site:plot identities of tree and subsection data.*
 
 ### Outputs <a name="sdi-output"></a>
 
@@ -355,7 +357,7 @@ sdi_demo_trees
 
 <br>
 
-**Plots within sites are in the same subsection:**
+**Plots within sites are located in the same subsection:**
 ```{r}
 # investigate input subsec_data
 sdi_demo_subs
@@ -374,7 +376,7 @@ sdi_demo1
 
 <br>
 
-**Plots within sites are in different subsections:**
+**Plots within sites are located in different subsections:**
 ```{r}
 # investigate input subsec_data
 sdi_demo_subs_plots
