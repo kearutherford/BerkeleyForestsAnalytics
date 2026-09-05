@@ -85,14 +85,14 @@ BFA’s overarching goal is to minimize potential inconsistencies introduced by 
 
 The GitHub version may be slightly ahead of the CRAN version of `BerkeleyForestsAnalytics`. If CRAN and GitHub have different version numbers, the GitHub version represents a public-ready, late-stage development version of the package that is safe to install, whereas the CRAN version is the formally submitted and approved release.
 
-To install the `BerkeleyForestsAnalytics` package from CRAN (current version 3.0.1):
+To install the `BerkeleyForestsAnalytics` package from CRAN (current version 4.0.0):
 
 ```r
 install.packages("BerkeleyForestsAnalytics")
 library(BerkeleyForestsAnalytics)
 ```
 
-To install the `BerkeleyForestsAnalytics` package from GitHub (current version 3.0.1):
+To install the `BerkeleyForestsAnalytics` package from GitHub (current version 4.0.0):
 
 ```r
 # install and load devtools
@@ -1243,7 +1243,7 @@ We also created the map below as a quick help guide specifically for California 
 
 ## Current SDI <a name="sdi-current"></a>
 
-Current SDI is calculated at the plot level for live trees with DBH >= 2.65 cm (1.0 in) as:
+Current SDI is calculated at the plot level for live trees with DBH >= 2.54 cm (1.0 in) as:
 
 \(\sum sph_{i} \left(\frac{dbh_{i}}{25.4}\right)^{1.6}\)
 
@@ -1255,7 +1255,7 @@ Current SDI is calculated at the plot level for live trees with DBH >= 2.65 cm (
 
 ## Maximum SDI <a name="sdi-max"></a>
 
-Maximum SDI is derived from the 30 × 30 m spatial dataset developed by Chivhenge *et al.* (2025) for the continental US. In consultation with one of the authors, Christopher Woodall, we aggregated the 30 × 30 m estimates to the Ecological Subsection level (see below for details on subsections). Specifically, we calculated the median maximum SDI within each ecological subsection.
+Maximum SDI is derived from the 30 × 30 m spatial dataset developed by Chivhenge *et al.* (2025) for the continental US. We aggregated these estimates by calculating the median maximum SDI within Ecological Subsections (see below for details on subsections). We chose this spatial scale because (1) subsections represent the finest level of the US Forest Service National Hierarchical Framework of Ecological Units (one of the few frameworks that systematically divides the entire continental US into areas with similar geophysical and ecological characteristics) and delineate areas with similar soils, climate, hydrology, and vegetation; and (2) there is substantial uncertainty associated with individual 30 x 30 m estimates. We used the median rather than the mean to reduce the influence of skewed values within subsections. We consulted with Christopher Woodall, a coauthor of Chivhenge *et al.* (2025), regarding our framework and the associated methodological decisions.
 
 Chivhenge, E., A.R. Weiskittel, C.W. Woodall, A.W. D'Amato, & A. Daigneault. (2025). Geospatial estimation of forest relative density for carbon stewardship decision support across the continental US. *Scientific Data*, 12, 1728. https://doi.org/10.1038/s41597-025-06012-6
 

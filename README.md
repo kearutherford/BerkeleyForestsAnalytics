@@ -116,7 +116,7 @@ development version of the package that is safe to install, whereas the
 CRAN version is the formally submitted and approved release.
 
 To install the `BerkeleyForestsAnalytics` package from CRAN (current
-version 3.0.1):
+version 4.0.0):
 
 ``` r
 install.packages("BerkeleyForestsAnalytics")
@@ -124,7 +124,7 @@ library(BerkeleyForestsAnalytics)
 ```
 
 To install the `BerkeleyForestsAnalytics` package from GitHub (current
-version 3.0.1):
+version 4.0.0):
 
 ``` r
 # install and load devtools
@@ -169,14 +169,14 @@ citation("BerkeleyForestsAnalytics")
     ## To cite package 'BerkeleyForestsAnalytics' in publications use:
     ## 
     ##   Kea Rutherford, Danny Foster, John Battles (2026).
-    ##   _BerkeleyForestsAnalytics, version 3.0.1_. Battles Lab: Forest
+    ##   _BerkeleyForestsAnalytics, version 4.0.0_. Battles Lab: Forest
     ##   Ecology and Ecosystem Dynamics, University of California, Berkeley.
     ##   <https://github.com/kearutherford/BerkeleyForestsAnalytics>.
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
     ##   @Manual{,
-    ##     title = {BerkeleyForestsAnalytics, version 3.0.1},
+    ##     title = {BerkeleyForestsAnalytics, version 4.0.0},
     ##     author = {{Kea Rutherford} and {Danny Foster} and {John Battles}},
     ##     organization = {Battles Lab: Forest Ecology and Ecosystem Dynamics, University of California, Berkeley},
     ##     year = {2026},
@@ -424,7 +424,7 @@ nsvb_demo1 <- BiomassNSVB(data = nsvb_demo,
 nsvb_demo1$run_time
 ```
 
-    ## Time difference of 0.13 secs
+    ## Time difference of 0.12 secs
 
 ``` r
 head(nsvb_demo1$dataframe, 3)
@@ -472,7 +472,7 @@ nsvb_demo2
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha total_ag_Mg_ha
@@ -510,7 +510,7 @@ nsvb_demo3
 ```
 
     ## $run_time
-    ## Time difference of 0.08 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot species total_wood_Mg_ha total_bark_Mg_ha total_branch_Mg_ha
@@ -564,7 +564,7 @@ nsvb_demo4
 ```
 
     ## $run_time
-    ## Time difference of 0.09 secs
+    ## Time difference of 0.07 secs
     ## 
     ## $dataframe
     ##   site plot total_wood_L_Mg_ha total_wood_D_Mg_ha total_bark_L_Mg_ha
@@ -2685,7 +2685,7 @@ procedures for phase 2 plots.* Version 9.0.
 ## Current SDI <a name="sdi-current"></a>
 
 Current SDI is calculated at the plot level for live trees with DBH \>=
-2.65 cm (1.0 in) as:
+2.54 cm (1.0 in) as:
 
 $\sum sph_{i} \left(\frac{dbh_{i}}{25.4}\right)^{1.6}$
 
@@ -2699,11 +2699,20 @@ $\sum sph_{i} \left(\frac{dbh_{i}}{25.4}\right)^{1.6}$
 ## Maximum SDI <a name="sdi-max"></a>
 
 Maximum SDI is derived from the 30 × 30 m spatial dataset developed by
-Chivhenge *et al.* (2025) for the continental US. In consultation with
-one of the authors, Christopher Woodall, we aggregated the 30 × 30 m
-estimates to the Ecological Subsection level (see below for details on
-subsections). Specifically, we calculated the median maximum SDI within
-each ecological subsection.
+Chivhenge *et al.* (2025) for the continental US. We aggregated these
+estimates by calculating the median maximum SDI within Ecological
+Subsections (see below for details on subsections). We chose this
+spatial scale because (1) subsections represent the finest level of the
+US Forest Service National Hierarchical Framework of Ecological Units
+(one of the few frameworks that systematically divides the entire
+continental US into areas with similar geophysical and ecological
+characteristics) and delineate areas with similar soils, climate,
+hydrology, and vegetation; and (2) there is substantial uncertainty
+associated with individual 30 x 30 m estimates. We used the median
+rather than the mean to reduce the influence of skewed values within
+subsections. We consulted with Christopher Woodall, a coauthor of
+Chivhenge *et al.* (2025), regarding our framework and the associated
+methodological decisions.
 
 Chivhenge, E., A.R. Weiskittel, C.W. Woodall, A.W. D’Amato, & A.
 Daigneault. (2025). Geospatial estimation of forest relative density for
