@@ -9,3 +9,7 @@
 # BerkeleyForestsAnalytics 3.0.1
 
 * Address small bugs in BiomassNSVB function.
+
+# BerkeleyForestsAnalytics 4.0.0
+
+* Add StandDensity function for estimating stand density index (SDI). Update ForestComp and ForestStr to match the style of other BFA functions. Deprecate TreeBiomass function, which has been replaced by BiomassNSVB.

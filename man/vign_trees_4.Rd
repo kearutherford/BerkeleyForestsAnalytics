@@ -5,18 +5,22 @@
 \alias{vign_trees_4}
 \title{Tree data for vignette, version 4}
 \format{
-A dataframe with 2250 rows and 10 columns:
+A dataframe with 2250 rows and 14 columns:
 \describe{
-\item{id}{time:site combined}
-\item{time}{pre (pre-burn) or post (post-burn)}
-\item{site}{compartment (60, 340, or 400)}
+\item{division}{ecodivision}
+\item{province}{province within ecodivision}
+\item{site}{time (pre- or post-burn) and compartment (60, 340, or 400)}
 \item{plot}{plot in which the individual tree was measured}
 \item{exp_factor}{stems per hectare}
 \item{status}{live (1) or dead (0)}
 \item{decay}{1-5 for standing dead trees. 0 for live trees.}
-\item{species}{Species of the individual tree, using four-letter species codes}
+\item{species}{species of the individual tree, using four-letter species codes}
 \item{dbh}{diameter at breast height in centimeters}
-\item{ht}{tree height in meters}
+\item{ht1}{tree height in meters}
+\item{ht2}{tree height in meters, only for trees without tops}
+\item{crown_ratio}{live crown ratio, set to fixed 0.5 for demo}
+\item{top}{tree has top yes (Y) or no (N)}
+\item{cull}{percent wood cull, set to 0 for demo}
 }
 }
 \source{

@@ -3,50 +3,6 @@
 # datasets that need to be documented
 #####################################################################
 
-#' @title Data for biomass demonstrations
-#'
-#' @description
-#' A fake dataset created for biomass demonstration purposes only
-#'
-#' @format
-#' A dataframe with 9 rows and 7 columns:
-#' \describe{
-#'   \item{Forest}{Broader location or forest where the data were collected}
-#'   \item{Plot_id}{Plot in which the individual tree was measured}
-#'   \item{SPH}{Stems per hectare}
-#'   \item{Live}{Live (1) or dead (0)}
-#'   \item{Decay}{1-5 for standing dead trees. NA for live trees.}
-#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
-#'   \item{DBH_CM}{Diameter at breast height in centimeters}
-#'   \item{HT_M}{Tree height in meters}
-#' }
-#'
-#' @source Created by Kea Rutherford for demonstration purposes
-"bio_demo_data"
-
-
-#' @title Data for biomass demonstrations
-#'
-#' @description
-#' A fake dataset created for biomass demonstration purposes only. Includes a plot without trees.
-#'
-#' @format
-#' A dataframe with 9 rows and 7 columns:
-#' \describe{
-#'   \item{Forest}{Broader location or forest where the data were collected}
-#'   \item{Plot_id}{Plot in which the individual tree was measured}
-#'   \item{SPH}{Stems per hectare}
-#'   \item{Live}{Live (1) or dead (0)}
-#'   \item{Decay}{1-5 for standing dead trees. NA for live trees.}
-#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
-#'   \item{DBH_CM}{Diameter at breast height in centimeters}
-#'   \item{HT_M}{Tree height in meters}
-#' }
-#'
-#' @source Created by Kea Rutherford for demonstration purposes
-"bio_NT_demo"
-
-
 #' @title Data for NSVB framework biomass and carbon demonstrations
 #'
 #' @description
@@ -55,8 +11,8 @@
 #' @format
 #' A dataframe with 16 rows and 14 columns:
 #' \describe{
-#'   \item{division}{Ecodivision in which the data were collected}
-#'   \item{province}{Province in which the data were collected}
+#'   \item{division}{Ecological Division in which the data were collected}
+#'   \item{province}{Ecological Province in which the data were collected}
 #'   \item{site}{Forest where the data were collected}
 #'   \item{plot}{Plot in which the individual tree was measured}
 #'   \item{exp_factor}{Stems per hectare}
@@ -75,6 +31,58 @@
 "nsvb_demo"
 
 
+#' @title Tree data for stand density index demonstrations
+#'
+#' @description
+#' A fake dataset created for stand density index demonstration purposes only
+#'
+#' @format
+#' A dataframe with 10 rows and 5 columns:
+#' \describe{
+#'   \item{site}{Forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{status}{Live (1) or dead (0)}
+#'   \item{dbh}{Diameter at breast height in centimeters}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes
+"sdi_demo_trees"
+
+
+#' @title Subsection data for stand density index demonstrations
+#'
+#' @description
+#' A fake dataset created for stand density index demonstration purposes only
+#'
+#' @format
+#' A dataframe with 2 rows and 2 columns:
+#' \describe{
+#'   \item{site}{Forest where the data were collected}
+#'   \item{subsection}{Ecological Subsection in which the data were collected}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes
+"sdi_demo_subs"
+
+
+#' @title Subsection data for stand density index demonstrations
+#'
+#' @description
+#' A fake dataset created for stand density index demonstration purposes only
+#'
+#' @format
+#' A dataframe with 4 rows and 3 columns:
+#' \describe{
+#'   \item{site}{Forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{subsection}{Ecological Subsection in which the data were collected}
+#' }
+#'
+#' @source Created by Kea Rutherford for demonstration purposes
+"sdi_demo_subs_plots"
+
+
 #' @title Data for forest composition and structure demonstrations
 #'
 #' @description
@@ -83,13 +91,13 @@
 #' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
-#'   \item{Forest}{Broader location or forest where the data were collected}
-#'   \item{Plot_id}{Plot in which the individual tree was measured}
-#'   \item{SPH}{Stems per hectare}
-#'   \item{Live}{Live (1) or dead (0)}
-#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
-#'   \item{DBH_CM}{Diameter at breast height in centimeters}
-#'   \item{HT_M}{Tree height in meters}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{status}{Live (1) or dead (0)}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{Diameter at breast height in centimeters}
+#'   \item{ht}{Tree height in meters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes
@@ -104,13 +112,12 @@
 #' @format
 #' A dataframe with 9 rows and 7 columns:
 #' \describe{
-#'   \item{Forest}{Broader location or forest where the data were collected}
-#'   \item{Plot_id}{Plot in which the individual tree was measured}
-#'   \item{SPH}{Stems per hectare}
-#'   \item{Live}{Live (1) or dead (0)}
-#'   \item{SPP}{Species of the individual tree, using four-letter species codes}
-#'   \item{DBH_CM}{Diameter at breast height in centimeters}
-#'   \item{HT_M}{Tree height in meters}
+#'   \item{site}{Broader location or forest where the data were collected}
+#'   \item{plot}{Plot in which the individual tree was measured}
+#'   \item{exp_factor}{Stems per hectare}
+#'   \item{status}{Live (1) or dead (0)}
+#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{dbh}{Diameter at breast height in centimeters}
 #' }
 #'
 #' @source Created by Kea Rutherford for demonstration purposes.
@@ -418,18 +425,22 @@
 #' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
-#' A dataframe with 2250 rows and 10 columns:
+#' A dataframe with 2250 rows and 14 columns:
 #' \describe{
-#'   \item{id}{time:site combined}
-#'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment (60, 340, or 400)}
+#'   \item{division}{ecodivision}
+#'   \item{province}{province within ecodivision}
+#'   \item{site}{time (pre- or post-burn) and compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
 #'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
-#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{species}{species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
-#'   \item{ht}{tree height in meters}
+#'   \item{ht1}{tree height in meters}
+#'   \item{ht2}{tree height in meters, only for trees without tops}
+#'   \item{crown_ratio}{live crown ratio, set to fixed 0.5 for demo}
+#'   \item{top}{tree has top yes (Y) or no (N)}
+#'   \item{cull}{percent wood cull, set to 0 for demo}
 #' }
 #'
 #' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
@@ -442,18 +453,22 @@
 #' A dataset with intentional errors for demonstration purposes
 #'
 #' @format
-#' A dataframe with 2250 rows and 10 columns:
+#' A dataframe with 2250 rows and 14 columns:
 #' \describe{
-#'   \item{id}{time:site combined}
-#'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment (60, 340, or 400)}
+#'   \item{division}{ecodivision}
+#'   \item{province}{province within ecodivision}
+#'   \item{site}{time (pre- or post-burn) and compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
 #'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
-#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{species}{species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
-#'   \item{ht}{tree height in meters}
+#'   \item{ht1}{tree height in meters}
+#'   \item{ht2}{tree height in meters, only for trees without tops}
+#'   \item{crown_ratio}{live crown ratio, set to fixed 0.5 for demo}
+#'   \item{top}{tree has top yes (Y) or no (N)}
+#'   \item{cull}{percent wood cull, set to 0 for demo}
 #' }
 #'
 #' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
@@ -466,18 +481,22 @@
 #' A dataset with intentional warnings for demonstration purposes
 #'
 #' @format
-#' A dataframe with 2250 rows and 10 columns:
+#' A dataframe with 2250 rows and 14 columns:
 #' \describe{
-#'   \item{id}{time:site combined}
-#'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment (60, 340, or 400)}
+#'   \item{division}{ecodivision}
+#'   \item{province}{province within ecodivision}
+#'   \item{site}{time (pre- or post-burn) and compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
 #'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
-#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{species}{species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
-#'   \item{ht}{tree height in meters}
+#'   \item{ht1}{tree height in meters}
+#'   \item{ht2}{tree height in meters, only for trees without tops}
+#'   \item{crown_ratio}{live crown ratio, set to fixed 0.5 for demo}
+#'   \item{top}{tree has top yes (Y) or no (N)}
+#'   \item{cull}{percent wood cull, set to 0 for demo}
 #' }
 #'
 #' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
@@ -490,18 +509,22 @@
 #'  A dataset with intentional warnings for demonstration purposes
 #'
 #' @format
-#' A dataframe with 2250 rows and 10 columns:
+#' A dataframe with 2250 rows and 14 columns:
 #' \describe{
-#'   \item{id}{time:site combined}
-#'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment (60, 340, or 400)}
+#'   \item{division}{ecodivision}
+#'   \item{province}{province within ecodivision}
+#'   \item{site}{time (pre- or post-burn) and compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
 #'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
-#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{species}{species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
-#'   \item{ht}{tree height in meters}
+#'   \item{ht1}{tree height in meters}
+#'   \item{ht2}{tree height in meters, only for trees without tops}
+#'   \item{crown_ratio}{live crown ratio, set to fixed 0.5 for demo}
+#'   \item{top}{tree has top yes (Y) or no (N)}
+#'   \item{cull}{percent wood cull, set to 0 for demo}
 #' }
 #'
 #' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
@@ -514,18 +537,22 @@
 #' A clean dataset for demonstration purposes
 #'
 #' @format
-#' A dataframe with 2250 rows and 10 columns:
+#' A dataframe with 2250 rows and 14 columns:
 #' \describe{
-#'   \item{id}{time:site combined}
-#'   \item{time}{pre (pre-burn) or post (post-burn)}
-#'   \item{site}{compartment (60, 340, or 400)}
+#'   \item{division}{ecodivision}
+#'   \item{province}{province within ecodivision}
+#'   \item{site}{time (pre- or post-burn) and compartment (60, 340, or 400)}
 #'   \item{plot}{plot in which the individual tree was measured}
 #'   \item{exp_factor}{stems per hectare}
 #'   \item{status}{live (1) or dead (0)}
 #'   \item{decay}{1-5 for standing dead trees. 0 for live trees.}
-#'   \item{species}{Species of the individual tree, using four-letter species codes}
+#'   \item{species}{species of the individual tree, using four-letter species codes}
 #'   \item{dbh}{diameter at breast height in centimeters}
-#'   \item{ht}{tree height in meters}
+#'   \item{ht1}{tree height in meters}
+#'   \item{ht2}{tree height in meters, only for trees without tops}
+#'   \item{crown_ratio}{live crown ratio, set to fixed 0.5 for demo}
+#'   \item{top}{tree has top yes (Y) or no (N)}
+#'   \item{cull}{percent wood cull, set to 0 for demo}
 #' }
 #'
 #' @source Fire and Fire Surrogate Study, Stephens Lab, University of California, Berkeley
@@ -686,15 +713,6 @@
 # dataframes used for validating input data
 ######################################################################
 
-sp_code_names <- data.frame(
-  letter = c("PSME", "PIJE", "PIPO", "PISA", "TSHE", "TOCA", "TABR", "PICO", "UNCO", "ABMA", "CADE", "PILA",
-             "PIMO", "JUOC", "ABCO", "SESE", "SEGI", "CONU", "ALRH", "POTR", "UMCA", "NODE", "ACMA", "QUKE",
-             "ARME", "QUCH", "QUAG", "CHCH", "ABPR", "ABGR", "TSME", "UNHA", "UNTR", "SASP", NA),
-  fia = c("202", "116", "122", "127", "263", "251", "231", "108", "299", "20", "81", "117", "119", "64", "15",
-          "211", "212", "492", "352", "746", "981", "631", "312", "818", "361", "805", "801", "431", "22", "17",
-          "264", "998", "999", "920", NA)
-)
-
 VanWag_species <- data.frame (
   letter = c("PSME","PISA","PIBA", "SEGI", "CADE", "PIJE", "PIAT", "PIFL", "PICO", "TSME", "PIPO", "ABMA", "PIMO1", "PILA", "PIWA", "JUOC", "PIMO2", "ABCO", "PIAL", "UNCO", "UNHA", "UNTR", NA),
   fia = c("202", "127", "104", "212", "81", "116", "103", "113", "108", "264", "122", "20", "133", "117", "137", "64", "119", "15", "101", "299", "998", "999", NA)
@@ -751,118 +769,6 @@ SG_table <- data.frame(
   sg_10h = c(0.54,0.56,0.54,0.65,0.49,0.55,0.61,0.48,0.57,0.55,0.59,0.64,0.56,0.56,0.61,0.52,0.61,0.57,0.65,0.57,0.57,0.57),
   sg_100h = c(0.57,0.47,0.55,0.62,0.48,0.39,0.53,0.54,0.54,0.55,0.52,0.53,0.49,0.48,0.43,0.44,0.59,0.56,0.62,0.53,0.53,0.53),
   sg_1000s = c(0.32,0.38,0.41,0.47,0.42,0.47,0.47,0.58,0.63,0.47,0.43,0.47,0.47,0.40,0.47,0.35,0.35,0.54,0.66,0.47,0.47,0.47)
-)
-
-
-######################################################################
-# dataframes used for TreeBiomass function tests
-######################################################################
-
-good_trees_metric <- data.frame(
-  Plot = as.character(c(1,1,1,2,2)),
-  Live = as.character(c(1, 0, 1, 1, 0)),
-  Decay = as.character(c(NA, 3, NA, NA, 2)),
-  SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8),
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1)
-)
-
-good_trees_imperial <- data.frame(
-  Plot = as.character(c(1,1,1,2,2)),
-  Live = as.character(c(1, 0, 1, 1, 0)),
-  Decay = as.character(c(NA, 3, NA, NA, 2)),
-  SPP = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
-  DBH_IN = c(4.1, 17.6, 7.5, 12.9, 5.4),
-  HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4)
-)
-
-bad_trees <- data.frame(
-
-  Live_v1 = as.character(c(1, 0, 1, 1, 0)),
-  Live_v2 = as.character(c(0, 0, 1, 1, 0)),
-  Live_NA = as.character(c(1, 0, NA, 1, 0)), # NA value
-  Live_bad1 = c("L", "D", "L", "L", "D"), # not following 0/1
-  Live_bad2 = c(1, 0, 1, 1, 0), # wrong class
-
-  SPP4 = c("CADE", "PIPO", "QUKE", "ABCO", "PSME"),
-  SPP4_NA = c("CADE", NA, "QUKE", "ABCO", "PSME"), # NA value
-  SPP4_bad1 = c("CADD", "PIPO", "QUKE", "ABCO", "PSME"), # one wrong
-  SPP4_bad2 = c("CADD", "PIPP", "QUKK", "ABCC", "PSMM"), # all wrong
-  SPP_fia_bad1 = c("81", "1222", "818", "15", "202"), # one wrong
-  SPP_fia_bad2 = c("8111", "1222", "8188", "1555", "2022"), # all wrong
-  SPP_fia_bad3 = c(81, 122, 818, 15, 202), # wrong class
-
-  Decay = as.character(c(NA, 3, NA, NA, 2)),
-  Decay_bad1 = as.character(c(NA, 8, NA, NA, 2)), # one wrong
-  Decay_bad2 = as.character(c(NA, 3, 4, NA, 2)), # L tree w a D code
-  Decay_bad3 = as.character(c(NA, 0, NA, NA, 2)), # D tree w a L code
-  Decay_bad4 = c(NA, 3, NA, NA, 2), # wrong class
-
-  DBH_CM = c(15.3, 44.7, 19.1, 32.8, 13.8),
-  DBH_IN = c(6.0, 17.6, 7.5, 12.9, 5.4),
-  DBH_NA = c(15.3, NA, 19.1, 32.8, 13.8), # NA value
-  DBH_CM_bad1 = as.character(c(15.3, 44.7, 19.1, 32.8, 13.8)), # wrong class
-  DBH_CM_bad2 = c(2.2, 44.7, 19.1, 32.8, 13.8), # below 2.5 cm cutoff for live trees (use with Live_v1)
-  DBH_CM_bad3 = c(10.3, 44.7, 19.1, 32.8, 13.8), # below 12.7 cm cutoff for dead trees (use with Live_v2)
-  DBH_IN_bad1 = c(0.8, 17.6, 7.5, 12.9, 5.4), # below 1.0 in cutoff for live trees (use with Live_v1)
-  DBH_IN_bad2 = c(4.1, 17.6, 7.5, 12.9, 5.4), # below 5.0 in cutoff for dead trees (use with Live_v2)
-
-  HT_M = c(9.1, 26.4, 8.0, 23.3, 11.1),
-  HT_FT = c(29.9, 86.6, 26.2, 76.4, 36.4),
-  HT_NA = c(9.1, NA, 8.0, 23.3, 11.1), # NA value
-  HT_M_bad1 = as.factor(c(9.1, 26.4, 8.0, 23.3, 11.1)), # wrong class
-  HT_M_bad2 = c(1.27, 26.4, 8.0, 23.3, 11.1), # below 1.37 m cutoff
-  HT_FT_bad1 = c(4.3, 86.6, 26.2, 76.4, 36.4) # below 4.5 ft in cutoff
-)
-
-
-######################################################################
-# dataframes used for SummaryBiomass function tests
-######################################################################
-
-good_sum_metric <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,2,2,1,1,2,2,3)),
-  SPH = c(50,50,50,50,50,50,50,50,0),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "0", NA),
-  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, NA)),
-  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", NA),
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA)
-)
-
-good_sum_imperial <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
-  SPA = c(20,20,20,20,20,20,20,20,20),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
-  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),
-  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
-  DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
-  HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
-)
-
-bad_sum <- data.frame(
-
-  Forest = c("SEKI", "SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Forest_NA = c("SEKI", NA, "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
-  Forest_bad1 = c(1,1,1,1,2,2,2,2,2), # wrong class
-
-  Plot_id = as.character(c(1,1,2,2,1,1,2,2,2)),
-  Plot_id_NA = as.character(c(1,NA,2,2,1,1,2,2,2)), # NA value
-  Plot_id_bad1 = c(1,1,2,2,1,1,2,2,2), # wrong class
-  Plot_id_bad2 = as.character(c(1,1,2,2,1,1,2,2,3)), # misuse of 0 ef
-
-  SPH = c(50,50,50,50,50,50,50,50,50),
-  SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
-  SPH_bad1 = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
-  SPH_bad2 = c(50,50,50,50,50,50,50,50,0), # misuse of 0 ef (use with Plot_id & Plot_id_bad2)
-
-  Live = c("1", "0", "1", "1", "1", "1", "1", "0", "0"),
-  Decay = as.character(c(NA, 2, NA, NA, NA, NA, NA, 4, 3)),
-  SPP = c("PSME", "ABCO", "PSME", "PSME", "ABCO", "CADE", "QUKE", "ABCO", "PSME"),
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
 )
 
 
@@ -2189,65 +2095,598 @@ nsvb_b74 <- data.frame(
 
 
 ######################################################################
+# dataframes used for StandDensity function tests
+######################################################################
+
+sdi_good <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_special_cases <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("0", "0", "0", "1", NA, "1", "1", "0", "0",NA),
+  dbh = c(1.3, 44.7, 19.1, NA, 13.8, 2.2, 1.7, 13.1, 15.8,NA)
+)
+
+sub_good <- data.frame(
+  site = c("SEKI", "YOMI"),
+  subsection = c("413Hr", "313Ga")
+)
+
+sub_plot_good <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sdi_b1 <- data.frame(
+  #site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b2 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b3 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  #exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b4 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  #status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b5 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA)
+  #dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b6 <- data.frame(
+  site = as.factor(c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI")),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b7 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,1,1,1,1,2,2,2,2,3),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b8 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c(1, 1, 0, 1, 1, 1, 1, 0, 1, NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b9 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = as.character(c(50,50,50,50,50,50,50,50,50,0)),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b10 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = as.character(c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA))
+)
+
+sdi_b11 <- data.frame(
+  site = c(NA, "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b12 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(NA,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b13 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(NA,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b14 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,-50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b15 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1",NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b16 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", "0"),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b17 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("live", "dead", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b18 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", NA, NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b19 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(-12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sdi_b20 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(12.3, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, NA, NA)
+)
+
+sdi_b21 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50,0),
+  status = c("1", "1", "0", "1", "1", "1", "1", "0", "1", NA),
+  dbh = c(0.8, 44.7, 19.1, 13.5, 13.8, 12.2, 16.7, 13.1, 15.8,NA)
+)
+
+sub_plot_b1 <- data.frame(
+  #site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b2 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3")
+  #subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b3 <- data.frame(
+  site = as.factor(c("SEKI", "YOMI", "YOMI", "YOMI")),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b4 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1, 1, 2, 3),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b5 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c(413, 313, 313, 313)
+)
+
+sub_plot_b6 <- data.frame(
+  site = c(NA, "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b7 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", NA, "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b8 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c(NA, "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b9 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413", "313", "313", "313")
+)
+
+sub_plot_b10 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("1", "1", "2", "3"),
+  subsection = c("413", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b11 <- data.frame(
+  site = c("SEKI", "YOMI", "YOMI", "YOMI"),
+  plot = c("2", "1", "2", "3"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_plot_b12 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI", "YOMI"),
+  plot = c("1", "1", "1", "2"),
+  subsection = c("413Hr", "313He", "313Ga", "313Ga")
+)
+
+sub_b1 <- data.frame(
+  site = c("YOPI", "YOMI"),
+  subsection = c("413Hr", "313Ga")
+)
+
+sub_b2 <- data.frame(
+  site = c("SEKI", "SEKI", "YOMI"),
+  subsection = c("413Hr", "413Hr", "313Ga")
+)
+
+
+
+######################################################################
 # dataframes used for ForestComp and ForestStr function tests
 ######################################################################
 
 good_comp_metric <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  SPH = c(50,50,50,50,50,50,50,50,50),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+good_comp_metric_no_ht <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)
 )
 
 good_comp_imperial <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  SPA = c(20,20,20,20,20,20,20,20,20),
-  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  DBH_IN = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
-  HT_FT = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(20,20,20,20,20,20,20,20,20),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2),
+  ht = c(16.7, 86.6, 26.2, 76.4, 36.4, 27.9, 73.2, 31.8, 34.8)
 )
 
-bad_comp <- data.frame(
-  Forest = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
-  Forest_NA = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
-  Forest_bad = c(1,1,1,2,2,2,2,2,2), # wrong class
+good_comp_imperial_no_ht <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(20,20,20,20,20,20,20,20,20),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(4.0, 17.6, 7.5, 12.9, 5.4, 8.0, 12.5, 5.2, 6.2)
+)
 
-  Plot_id = as.character(c(1,1,1,1,1,2,2,2,2)),
-  Plot_id_NA = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
-  Plot_id_NT = as.character(c(1,1,1,1,1,2,2,2,3)), # no tree plot
-  Plot_id_bad = c(1,1,1,1,1,2,2,2,2), # wrong class
+good_comp_no_trees <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", NA),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA)
+)
 
-  SPH = c(50,50,50,50,50,50,50,50,50),
-  SPH_NA = c(50,NA,50,50,50,50,50,50,50), # NA value
-  SPH_bad = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
-  SPH_NT = c(50,50,50,50,50,50,50,50,0), # no tree plot
+bad_comp_1 <- data.frame(
+  site = c(1,1,1,2,2,2,2,2,2), # wrong class
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
-  Live = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
-  Live_NA = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
-  Live_bad = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
-  Live_NT = c("1", "0", "1", "1", "1", "1", "1", "1", NA), # no tree plot
-  Live_bad2 = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
+bad_comp_2 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = c(1,1,1,1,1,2,2,2,2), # wrong class
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
-  SPP = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
-  SPP_NA = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
-  SPP_NT = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", NA), # no tree plot
-  SPP_bad = 15, # wrong class
+bad_comp_3 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c(1, 0, 1, 1, 1, 1, 1, 1, 0), # wrong class
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
-  DBH_CM = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
-  DBH_NA = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
-  DBH_bad = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
-  DBH_NT = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, NA), # no tree plot
+bad_comp_4 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = 15, # wrong class
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
-  HT_M = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6),
-  HT_NA = c(5.1, NA, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6), # NA value
-  HT_bad = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)), # wrong class
-  HT_NT = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # no tree plot
+bad_comp_5 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = as.character(c(50,50,50,50,50,50,50,50,50)), # wrong class
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
 
+bad_comp_6 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = as.character(c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8)), # wrong class
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_7 <- data.frame(
+  site = c("SEKI", NA, "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"), # NA value
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_8 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,NA,1,1,1,2,2,2,2)), # NA value
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_9 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,NA,50,50,50,50,50,50,50), # NA value
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_10 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,-50,50,50,50,50,50,50,50), # negative value
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_11 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0), # wrong use of 0
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_12 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("L", "D", "L", "L", "L", "L", "L", "L", "D"), # not following 0/1
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_13 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", NA, "1", "1", "1", "1", "1", "0"), # NA value
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_14 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", NA, "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"), # NA value
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_15 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(-10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # negative value
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_16 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, NA, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8), # NA value
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_17 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = as.character(c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)) # wrong class
+)
+
+bad_comp_18 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(-5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6) # negative value
+)
+
+bad_comp_19 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, NA) # NA value
+)
+
+bad_comp_20 <- data.frame(
+  #site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_21 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  #plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_22 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  #exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_23 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  #status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_24 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  #species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_25 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,2)),
+  exp_factor = c(50,50,50,50,50,50,50,50,50),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  #dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
+)
+
+bad_comp_26 <- data.frame(
+  site = c("SEKI", "SEKI", "SEKI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI", "YOMI"),
+  plot = as.character(c(1,1,1,1,1,2,2,2,3)),
+  exp_factor = c(50,50,50,50,50,50,50,50,0),
+  status = c("1", "0", "1", "1", "1", "1", "1", "1", "0"),
+  species = c("PSME", "ABCO", "ABCO", "PSME", "CADE", "CADE", "CADE", "ABCO", "PSME"),
+  dbh = c(10.3, 44.7, 19.1, 32.8, 13.8, 20.2, 31.7, 13.1, 15.8),
+  ht = c(5.1, 26.4, 8.0, 23.3, 11.1, 8.5, 22.3, 9.7, 10.6)
 )
 
 

@@ -7,13 +7,13 @@
 \format{
 A dataframe with 9 rows and 7 columns:
 \describe{
-\item{Forest}{Broader location or forest where the data were collected}
-\item{Plot_id}{Plot in which the individual tree was measured}
-\item{SPH}{Stems per hectare}
-\item{Live}{Live (1) or dead (0)}
-\item{SPP}{Species of the individual tree, using four-letter species codes}
-\item{DBH_CM}{Diameter at breast height in centimeters}
-\item{HT_M}{Tree height in meters}
+\item{site}{Broader location or forest where the data were collected}
+\item{plot}{Plot in which the individual tree was measured}
+\item{exp_factor}{Stems per hectare}
+\item{status}{Live (1) or dead (0)}
+\item{species}{Species of the individual tree, using four-letter species codes}
+\item{dbh}{Diameter at breast height in centimeters}
+\item{ht}{Tree height in meters}
 }
 }
 \source{

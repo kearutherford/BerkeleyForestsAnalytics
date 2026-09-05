@@ -10,66 +10,48 @@
 #' @description
 #' Compiles forest composition at the plot level. Measured as relative basal area or relative density for live trees.
 #'
-#' @param data A dataframe or tibble. Each row must be an observation of an individual tree.
-#' @param site Must be a character variable (column) in the provided dataframe or tibble. Describes the broader location or forest where the data were collected.
-#' @param plot Must be a character variable (column) in the provided dataframe or tibble. Identifies the plot in which the individual tree was measured.
-#' @param exp_factor Must be a numeric variable (column) in the provided dataframe or tibble. The expansion factor specifies the number of trees per hectare (or per acre) that a given plot tree represents.
-#' @param status Must be a character variable (column) in the provided dataframe or tibble. Specifies whether the individual tree is alive (1) or dead (0).
-#' @param species Must be a character variable (column) in the provided dataframe or tibble. Specifies the species of the individual tree.
-#' @param dbh Must be a numeric variable (column) in the provided dataframe or tibble. Provides the diameter at breast height (DBH) of the individual tree in either centimeters or inches.
+#' @param data A dataframe or tibble with the following columns: site, plot, exp_factor, status, species, and dbh. Each row must be an observation of an individual tree.
 #' @param relative Not a variable (column) in the provided dataframe or tibble. Specifies whether forest composition should be measured as relative basal area or relative density. Must be set to either "BA" or "density". The default is set to "BA".
 #' @param units Not a variable (column) in the provided dataframe or tibble. Specifies whether the dbh variable was measured using metric (centimeters) or imperial (inches) units. Must be set to either "metric" or "imperial". The default is set to "metric".
 #'
 #' @return A dataframe with the following columns:
 #' \itemize{
-#' \item site: as described above
-#' \item plot: as described above
-#' \item species: as described above
+#' \item site
+#' \item plot
+#' \item species
 #' \item dominance: relative basal area (or relative density) in percent (%)
 #' }
 #'
 #' @examples
 #' ForestComp(data = for_demo_data,
-#'            site = "Forest",
-#'            plot = "Plot_id",
-#'            exp_factor = "SPH",
-#'            status = "Live",
-#'            species = "SPP",
-#'            dbh = "DBH_CM",
 #'            relative = "BA",
 #'            units = "metric")
 #'
 #' @export
 
-ForestComp <- function(data, site, plot, exp_factor, status, species, dbh, relative = "BA", units = "metric") {
+ForestComp <- function(data, relative = "BA", units = "metric") {
+
+  # coerce tibble inputs into data.frame
+  step0 <- as.data.frame(data)
 
   # Check and prep input data
-  step1 <- ValidateCompData(data_val = data,
-                            site_val = site,
-                            plot_val = plot,
-                            ef_val = exp_factor,
-                            status_val = status,
-                            sp_val = species,
-                            dbh_val = dbh,
-                            rel_val = relative,
-                            units_val = units)
+  ValidateCompData(data_val = step0, rel_val = relative, units_val = units)
 
   # assign NA species as "other"
-  step2 <- NaSp(sp_data = step1)
+  step1 <- NaSp(sp_data = step0)
 
   # Calculate composition
   if (relative == "BA") {
 
-    step3 <- CompCalcBA(comp_data = step2,
-                        comp_units = units)
+    step2 <- CompCalcBA(comp_data = step1, comp_units = units)
 
   } else if (relative == "density") {
 
-    step3 <- CompCalcDensity(comp_data = step2)
+    step2 <- CompCalcDensity(comp_data = step1)
 
   }
 
-  return(step3)
+  return(step2)
 
 }
 
@@ -80,77 +62,7 @@ ForestComp <- function(data, site, plot, exp_factor, status, species, dbh, relat
 ################################################################################
 ################################################################################
 
-ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, sp_val, dbh_val, rel_val, units_val) {
-
-  # coerce tibble inputs into data.frame
-  data_val <- as.data.frame(data_val)
-
-
-  ###########################################################
-  # Check that all columns are in the provided dataframe
-  ###########################################################
-
-  if(!(site_val %in% colnames(data_val))) {
-    stop('There is no column named "', site_val, '" in the provided dataframe.')
-  }
-
-  if(!(plot_val %in% colnames(data_val))) {
-    stop('There is no column named "', plot_val, '" in the provided dataframe.')
-  }
-
-  if(!(ef_val %in% colnames(data_val))) {
-    stop('There is no column named "', ef_val, '" in the provided dataframe.')
-  }
-
-  if(!(status_val %in% colnames(data_val))) {
-    stop('There is no column named "', status_val, '" in the provided dataframe.')
-  }
-
-  if(!(sp_val %in% colnames(data_val))) {
-    stop('There is no column named "', sp_val, '" in the provided dataframe.')
-  }
-
-  if(!(dbh_val %in% colnames(data_val))) {
-    stop('There is no column named "', dbh_val, '" in the provided dataframe.')
-  }
-
-
-  ###########################################################
-  # Check that column classes are as expected
-  ###########################################################
-
-  # Categorical variables ------------------------------------------------------
-  if(!is.character(data_val[[site_val]])) {
-    stop('The parameter site requires a character variable.\n',
-         'You have input a variable of class: ', class(data_val[[site_val]]))
-  }
-
-  if(!is.character(data_val[[plot_val]])) {
-    stop('The parameter plot requires a character variable.\n',
-         'You have input a variable of class: ', class(data_val[[plot_val]]))
-  }
-
-  if(!is.character(data_val[[status_val]])) {
-    stop('The parameter status requires a character variable.\n',
-         'You have input a variable of class: ', class(data_val[[status_val]]))
-  }
-
-  if(!is.character(data_val[[sp_val]])) {
-    stop('The parameter species requires a character variable.\n',
-         'You have input a variable of class: ', class(data_val[[sp_val]]))
-  }
-
-  # Numeric variables ----------------------------------------------------------
-  if(!is.numeric(data_val[[ef_val]])) {
-    stop('The parameter exp_factor requires a numerical variable.\n',
-         'You have input a variable of class: ', class(data_val[[ef_val]]))
-  }
-
-  if(!is.numeric(data_val[[dbh_val]])) {
-    stop('The parameter dbh requires a numerical variable.\n',
-         'You have input a variable of class: ', class(data_val[[dbh_val]]))
-  }
-
+ValidateCompData <- function(data_val, rel_val, units_val) {
 
   ###########################################################
   # Check that options are set appropriately
@@ -170,19 +82,81 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
 
 
   ###########################################################
+  # Check that all columns are in the provided dataframe
+  ###########################################################
+
+  if(!("site" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "site" column.')
+  }
+
+  if(!("plot" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "plot" column.')
+  }
+
+  if(!("exp_factor" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "exp_factor" column.')
+  }
+
+  if(!("status" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "status" column.')
+  }
+
+  if(!("species" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "species" column.')
+  }
+
+  if(!("dbh" %in% colnames(data_val))) {
+    stop('Input data is missing the necessary "dbh" column.')
+  }
+
+
+  ###########################################################
+  # Check that column classes are as expected
+  ###########################################################
+
+  # Categorical variables ------------------------------------------------------
+  if(!is.character(data_val$site)) {
+    stop('"site" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$site))
+  }
+
+  if(!is.character(data_val$plot)) {
+    stop('"plot" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$plot))
+  }
+
+  if(!is.character(data_val$status)) {
+    stop('"status" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$status))
+  }
+
+  if(!is.character(data_val$species)) {
+    stop('"species" must be a character variable.\n',
+         'You have input a variable of class: ', class(data_val$species))
+  }
+
+  # Numeric variables ----------------------------------------------------------
+  if(!is.numeric(data_val$exp_factor)) {
+    stop('"exp_factor" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$exp_factor))
+  }
+
+  if(!is.numeric(data_val$dbh)) {
+    stop('"dbh" must be a numerical variable.\n',
+         'You have input a variable of class: ', class(data_val$dbh))
+  }
+
+
+  ###########################################################
   # Check that site and plot are as expected
   ###########################################################
 
-  if ('TRUE' %in% is.na(data_val[[site_val]])) {
-
+  if ('TRUE' %in% is.na(data_val$site)) {
     stop('There are missing site names in the provided dataframe.')
-
   }
 
-  if ('TRUE' %in% is.na(data_val[[plot_val]])) {
-
+  if ('TRUE' %in% is.na(data_val$plot)) {
     stop('There are missing plot names in the provided dataframe.')
-
   }
 
 
@@ -191,26 +165,31 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
   ##########################################################
 
   # Check for NA ---------------------------------------------------------------
-  if ('TRUE' %in% is.na(data_val[[ef_val]])) {
+  if ('TRUE' %in% is.na(data_val$exp_factor)) {
 
     stop('There are missing expansion factors in the provided dataframe.\n',
-         'For plots with no trees, put zero for the expansion factor.')
+         'For plots with no trees, put 0 for the exp_factor.')
 
   }
 
-  # First check for proper use of 0 ef -----------------------------------------
-  forests <- unique(data_val[[site_val]])
+  # Check for negative ef ------------------------------------------------------
+  if (min(data_val$exp_factor) < 0) {
+    stop('There are negative expansion factors in the provided dataframe. All expansion factors must be >= 0.')
+  }
+
+  # Check for proper use of 0 ef -----------------------------------------------
+  forests <- unique(data_val$site)
 
   for(f in forests) {
 
-    all_plots <- subset(data_val, data_val[[site_val]] == f)
-    plot_ids <- unique(all_plots[[plot_val]])
+    all_plots <- subset(data_val, site == f)
+    plot_ids <- unique(all_plots$plot)
 
     for(p in plot_ids) {
 
-      all_trees <- subset(all_plots, all_plots[[plot_val]] == p)
+      all_trees <- subset(all_plots, plot == p)
 
-      if('TRUE' %in% is.element(all_trees[[ef_val]], 0)) {
+      if('TRUE' %in% is.element(all_trees$exp_factor, 0)) {
 
         n <- nrow(all_trees)
 
@@ -227,8 +206,8 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
 
   }
 
-  plots_wo_trees <- subset(data_val, data_val[[ef_val]] == 0,
-                           select = c(status_val, sp_val, dbh_val))
+  plots_wo_trees <- subset(data_val, exp_factor == 0,
+                           select = c(status, species, dbh))
 
   if('FALSE' %in% is.na(plots_wo_trees)) {
 
@@ -244,11 +223,11 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
   ###########################################################
 
   # Check for unrecognized status codes ----------------------------------------
-  if(!all(is.element(data_val[[status_val]],
+  if(!all(is.element(data_val$status,
                      c("0","1", NA)))) {
 
-    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val[[status_val]],
-                                       c("0", "1", NA)), status_val]),
+    unrecognized_status <- sort(paste0(unique(data_val[!is.element(data_val$status,
+                                                                   c("0", "1", NA)), "status"]),
                                        sep = " "))
 
     stop('Status must be 0 or 1!\n',
@@ -256,54 +235,53 @@ ValidateCompData <- function(data_val, site_val, plot_val, ef_val, status_val, s
   }
 
   # Check for NA ---------------------------------------------------------------
-  plots_w_trees <- subset(data_val, data_val[[ef_val]] > 0)
+  plots_w_trees <- subset(data_val, exp_factor > 0)
 
-  if ('TRUE' %in% is.na(plots_w_trees[[status_val]])) {
+  if ('TRUE' %in% is.na(plots_w_trees$status)) {
 
     warning('There are trees with missing status codes in the provided dataframe.\n',
             'Trees with NA status codes will not be included in the composition calculations.\n',
             'Consider addressing these missing values in your data.\n',
             ' \n')
+
   }
 
 
   ###########################################################
-  # Check for other NAs
+  # Check that species is as expected
   ###########################################################
 
-  if ('TRUE' %in% is.na(plots_w_trees[[sp_val]])) {
+  if ('TRUE' %in% is.na(plots_w_trees$species)) {
 
     warning('There are trees with missing species codes in the provided dataframe.\n',
             'Trees with NA species codes will be assigned "UNTR" for unknown tree.\n',
             ' \n')
-  }
-
-  # NA DBH is only an issue for relative BA (not relative density)
-  if ('TRUE' %in% is.na(plots_w_trees[[dbh_val]]) & rel_val == "BA") {
-
-    warning('There are trees with missing DBH values in the provided dataframe.\n',
-            'Trees with NA DBH will not be included in the composition calculations.\n',
-            'Consider addressing these missing values in your data.\n',
-            ' \n')
 
   }
 
 
   ###########################################################
-  # Final dataframe prep
+  # Check that DBH is as expected (if using relative BA)
   ###########################################################
 
-  # rename other columns to use moving forward ---------------------------------
-  colnames(data_val)[which(names(data_val) == colnames(data_val[site_val]))] <- "site"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[plot_val]))] <- "plot"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[ef_val]))] <- "ef"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[status_val]))] <- "status"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[sp_val]))] <- "species"
-  colnames(data_val)[which(names(data_val) == colnames(data_val[dbh_val]))] <- "dbh"
+  if (rel_val == "BA") {
 
-  data_val <- subset(data_val, select = c(site, plot, ef, status, species, dbh))
+    # Check for negative dbh ---------------------------------------------------
+    if (min(data_val$dbh, na.rm = TRUE) < 0) {
+      stop('There are negative DBH values in the provided dataframe. All DBH values must be >= 0.')
+    }
 
-  return(data_val)
+    # Check for NA -------------------------------------------------------------
+    if ('TRUE' %in% is.na(plots_w_trees$dbh)) {
+
+      warning('There are trees with missing DBH values in the provided dataframe.\n',
+              'Trees with NA DBH will not be included in the composition calculations.\n',
+              'Consider addressing these missing values in your data.\n',
+              ' \n')
+
+    }
+
+  }
 
 }
 
@@ -320,7 +298,7 @@ NaSp <- function(sp_data) {
 
   for (i in 1:n) {
 
-    if(sp_data$ef[i] > 0 & is.na(sp_data$species[i])) {
+    if(sp_data$exp_factor[i] > 0 & is.na(sp_data$species[i])) {
 
       sp_data$species[i] <- "UNTR"
 
@@ -370,7 +348,7 @@ CompCalcBA <- function(comp_data, comp_units) {
           live_trees$ba_tree <- (pi*((live_trees$dbh^2)/576))
         }
 
-        live_trees$ba_area <- live_trees$ba_tree*live_trees$ef
+        live_trees$ba_area <- live_trees$ba_tree*live_trees$exp_factor
         total_ba <- sum(live_trees$ba_area)
         species_ids <- unique(live_trees$species)
 
@@ -436,7 +414,7 @@ CompCalcDensity <- function(comp_data) {
 
       if (nrow(live_trees) > 0) {
 
-        total_stems <- sum(live_trees$ef)
+        total_stems <- sum(live_trees$exp_factor)
         species_ids <- unique(live_trees$species)
 
         temp_df <- data.frame(site = f,
@@ -447,7 +425,7 @@ CompCalcDensity <- function(comp_data) {
         for(sp in species_ids) {
 
           single_sp <- subset(live_trees, species == sp)
-          sum_sp_stems <- sum(single_sp$ef)
+          sum_sp_stems <- sum(single_sp$exp_factor)
           temp_df[temp_df$species == sp, "dominance"] <- round((sum_sp_stems/total_stems)*100,1)
 
         }

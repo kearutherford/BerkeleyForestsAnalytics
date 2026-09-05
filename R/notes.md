@@ -13,7 +13,8 @@ REF_SPECIES_BFA is based on FIADB REF_SPECIES csv file.
   
 To update internal data run the following:  
 
-use_data(discount, REF_SPECIES_BFA, results_by_hand,
+use_data(discount, REF_SPECIES_BFA, 
+         results_by_hand, subsec_max_sdi,
          Table_S10a, Table_S10b,
          Table_S11,
          Table_S1a, Table_S1b,
